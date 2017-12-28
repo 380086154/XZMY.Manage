@@ -1,0 +1,208 @@
+﻿@model XZMY.Manage.Model.ViewModel.Planners.VmPlannerEdit
+@{
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+    ViewBag.Title = "规划师学生课程管理列表";
+}
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home/index">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="module">规划师管理</span>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="action">学生课程管理</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+<div class="mt-bootstrap-tables" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet light bordered">
+                <div class="tabbable-line">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            @*<i class="icon-globe font-green-sharp"></i>
+                                <span class="caption-subject font-green-sharp bold uppercase">Iconic</span>*@
+                        </div>
+
+                        @Html.HiddenFor(x => x.DataId)
+                        @Html.HiddenFor(x => x.Name)
+                    </div>
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#dropdown_fontawesome" data-toggle="tab"> 未参加过课程学生列表 </a>
+                        </li>
+                        <li>
+                            <a href="#dropdown_simplelineicons" data-toggle="tab"> 已参加课程</a>
+                        </li>
+                        <li>
+                            <a href="#dropdown_glyphicon" data-toggle="tab"> 已取消课程 </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        @*<div class="portlet-body util-btn-margin-bottom-5">*@
+                        <div class="tab-pane active" id="dropdown_fontawesome">
+                            <div class="clearfix">
+                                <!-- BEGIN FORM-->
+                                <form id="defaultForm1" class="form-horizontal" method="post" novalidate="novalidate">
+                                    <div class="mt-checkbox-inline" style="margin-top: -37px">
+                                        <div class="pull-left">
+                                            <h3 class="form-section">未参加过课程学生列表</h3>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <!-- END FORM-->
+                                <table id="table-pagination1" data-toggle="table" data-url="/Planner/AjaxPlannerStudentList/"
+                                       data-height="526"
+                                       data-form-id="defaultForm1"
+                                       data-show-refresh="true"
+                                       data-page-size="10"
+                                       data-page-list="[5, 10, 20, 50, 100, 200]"
+                                       data-search="true"
+                                       data-query-params="postQueryParams">
+                                    <thead>
+                                    <tr>
+                                        <th data-field="StudentName">学生姓名</th>
+                                        <th data-field="StudentMobile">手机号</th>
+                                        <th data-field="StudentGrade">学历</th>
+                                        <th data-formatter="opColumns" data-align="center">操作</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="dropdown_simplelineicons">
+                            <div class="clearfix">
+                                <!-- BEGIN FORM-->
+                                <form id="defaultForm2" class="form-horizontal" method="post" novalidate="novalidate">
+                                    <div class="mt-checkbox-inline" style="margin-top: -37px">
+                                        <div class="pull-left">
+                                            <h3 class="form-section">已参加课程</h3>
+                                        </div>
+                                    </div>
+                                </form>
+                                <!-- END FORM-->
+                                <table id="table-pagination2" data-toggle="table" data-url="/Planner/AjaxOrderCourseList/"
+                                       data-height="526"
+                                       data-form-id="defaultForm2"
+                                       data-show-refresh="true"
+                                       data-page-size="10"
+                                       data-page-list="[5, 10, 20, 50, 100, 200]"
+                                       data-search="true"
+                                       data-query-params="postQueryParamsOrderCourse">
+                                    <thead>
+                                    <tr>
+                                        <th data-field="OrderNo">订单号</th>
+                                        <th data-field="CourseName">活动名称</th>
+                                        <th data-field="Name">学生姓名</th>
+                                        <th data-field="Mobile">手机号</th>
+                                        <th data-field="OrderCourseProcessStateName" data-align="center">状态</th>
+                                        <th data-field="CreatedTime" data-align="center">下单时间</th>
+                                        <th data-formatter="opColumnsOrderCourse" data-align="center">操作</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="dropdown_glyphicon">
+                            <div class="clearfix">
+                                <!-- BEGIN FORM-->
+                                <form id="defaultForm3" class="form-horizontal" method="post" novalidate="novalidate">
+                                    <div class="mt-checkbox-inline" style="margin-top: -37px">
+                                        <div class="pull-left">
+                                            <h3 class="form-section">已取消课程</h3>
+                                        </div>
+                                    </div>
+                                </form>
+                                <!-- END FORM-->
+                                <table id="table-pagination3" data-toggle="table" data-url="/Planner/AjaxOrderCourseList/"
+                                       data-height="526"
+                                       data-form-id="defaultForm3"
+                                       data-show-refresh="true"
+                                       data-page-size="10"
+                                       data-page-list="[5, 10, 20, 50, 100, 200]"
+                                       data-search="true"
+                                       data-query-params="postQueryParamsOrderCourseCancel">
+                                    <thead>
+                                    <tr>
+                                        <th data-field="OrderNo">订单号</th>
+                                        <th data-field="CourseName">活动名称</th>
+                                        <th data-field="Name">学生姓名</th>
+                                        <th data-field="Mobile">手机号</th>
+                                        <th data-field="CreatedTime" data-align="center">下单时间</th>
+                                        <th data-field="CancelTime" data-align="center">取消时间</th>
+                                        <th data-formatter="opColumnsOrderCourseCancel" data-align="center">操作</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        @*</div>*@
+                    </div>
+                    概要：学生总数 @(Model.StatisticsStudent) 人， 其中 @(Model.StatisticsAttendCourse) 个学生参加过课程。
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section JavaScript{
+<script src="~/Content/Metronic4.5.6/global/plugins/ladda/ladda.min.js"></script>
+<script type="text/javascript">
+    /*为参加过课程学生列表*/
+    var postQueryParams = function (params) {
+        params.limit = 5;
+        params.PlannerId = $("#Id").val();
+        params.StudentOrderCourseCount = 0;
+        return params; // body data
+    };
+    var opColumns = function (value, row, index) {
+        return '<a href="/Parent/details/_StudentParentsId_">家长</a>&nbsp;|&nbsp;<a href="/Student/details/_StudentId_?go=1">查看</a>'.replace(/_StudentParentsId_/ig, row.StudentParentsId).replace(/_StudentId_/ig, row.StudentId);
+    };
+
+    //活动订单
+    var postQueryParamsOrderCourse = function (params) {
+        params.PlannersId = $("#Id").val();
+        params.IsCancel = false;
+        params.limit = 5;
+        return params; // body data
+    };
+    var opColumnsOrderCourse = function (value, row, index) {
+        var buf = [];
+        buf.push('<a href="/OrderCourse/details/?id=_id_">查看</a>');
+        buf.push('&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/Parent/details/_ParentsId_">家长</a>');
+        buf.push('&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/Planner/ExtendedRecommendCourse/?StudentId=_StudentId_&PlannerId=_PlannerId_">推荐课程</a>');
+        buf.push('&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/OrderCourse/details/?id=_id_&type=1">评论</a>');
+        return buf.join('').replace(/_id_/ig, row.Id).replace(/_ParentsId_/ig, row.Id).replace(/_StudentId_/ig, row.StudentId).replace(/_PlannerId_/ig, row.PlannerId);
+    }
+
+
+    //已取消的活动订单
+    var postQueryParamsOrderCourseCancel = function (params) {
+        params.PlannersId = $("#Id").val();
+        params.IsCancel = true;
+        params.limit = 5;
+        return params; // body data
+    };
+    var opColumnsOrderCourseCancel = function (value, row, index) {
+        var buf = [];
+        buf.push('<a href="/OrderCourse/details/?id=_id_">查看</a>');
+        buf.push('&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/Parent/details/_ParentsId_">家长</a>');
+        buf.push('&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/Planner/ExtendedRecommendCourse/?StudentId=_StudentId_&PlannerId=_PlannerId_">推荐课程</a>');
+        return buf.join('').replace(/_id_/ig, row.Id).replace(/_ParentsId_/ig, row.Id).replace(/_StudentId_/ig, row.StudentId).replace(/_PlannerId_/ig, row.PlannerId);
+    }
+
+    //页面加载时加载的JS方法
+    jQuery(document).ready(function () {
+
+    });
+</script>
+}

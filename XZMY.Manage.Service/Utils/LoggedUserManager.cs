@@ -1,0 +1,177 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Web;
+using XZMY.Manage.Model.DataModel.Planners;
+using XZMY.Manage.Model.DataModel.User;
+using T2M.Common.DataServiceComponents.Data.Query;
+using T2M.Common.DataServiceComponents.Service;
+using XZMY.Manage.Model.DataModel;
+
+namespace XZMY.Manage.Service.Utils
+{
+
+    /// <summary>
+    ///     登录用户管理
+    /// </summary>
+    public class LoggedUserManager
+    {
+        private const string CURRENT_INFO = "CURRENT_INFO";
+
+        /// <summary>
+        ///     测试帐号Id
+        /// </summary>
+        private static readonly Guid TestGuid = Guid.Parse("A372649D-97FD-4D8F-A33F-A38800F5C489");
+
+        public static CurrentUserAccountModel GetSystemAccount()
+        {
+            return new CurrentUserAccountModel
+            {
+                AccountId = Guid.Empty,
+                Name = "System",
+                AccountName = "System"
+            };
+
+        }
+
+        /// <summary>
+        ///     当前登录用户
+        /// </summary>
+        /// <returns></returns>
+        public static CurrentUserAccountModel GetCurrentUserAccount()
+        {
+            try
+            {
+                var currentAccount =
+                    HttpContext.Current.Session != null ?
+                    HttpContext.Current.Session[CURRENT_INFO] as CurrentUserAccountModel :
+                    HttpContext.Current.Items[CURRENT_INFO] as CurrentUserAccountModel;
+
+                return currentAccount ?? GetSystemAccount();
+            }
+            catch
+            {
+                return GetSystemAccount();
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="accountid"></param>
+        /// <param name="ip"></param>
+        public static void SetCurrentUserAccount(Guid accountid, string ip)
+        {
+            //return;
+            //var cache = new UserProfileStaticDataCache();
+            //var acache = new UserAccountStaticDataCache();
+            //var profile = cache.Find(accountid);
+            //var account = acache.Find(accountid);
+            //if (profile == null) return;
+            var service = new GetEntityByIdService<UserAccount>(accountid);
+            var profile = service.Invoke();
+            if (profile == null) return;
+
+            #region Planner
+
+            //Planner modelPlanner = new Planner();
+            //var servicePlanner = new CustomSearchWithPaginationService<Planner>
+            //{
+            //    PageIndex = 1,
+            //    PageSize = 1,
+            //    CustomConditions = new List<CustomCondition<Planner>>
+            //    {
+            //        new CustomConditionPlus<Planner>
+            //        {
+            //            Value = profile.Id,
+            //            Operation = SqlOperation.Equals,
+            //            Member = new Expression<Func<Planner, object>>[] { x => x.UserId}
+            //        }
+            //    },
+            //    SortMember = new Expression<Func<Planner, object>>[] { x => x.CreatedTime }
+            //};
+            //var resultPlanner = servicePlanner.Invoke();
+            //var listPlanner = resultPlanner.Results;
+            
+            //if (resultPlanner.TotalCount > 0)
+            //{
+            //    modelPlanner = listPlanner[0];
+            //}
+
+            #endregion
+     
+            //var servicePlanner = new GetEntityByIdService<Planner>(Xml;
+            //var profilePlanner = servicePlanner.Invoke();
+            var currentAccount = new CurrentUserAccountModel
+            {
+                AccountId = profile.DataId,
+                Name = profile.LoginName,
+                Email = profile.Email,
+                AccountName = profile.LoginName ?? profile.Mobile,
+                IP = ip,
+                //PlannerId= modelPlanner.Id,
+                //PlannerName=modelPlanner.Name
+                //DepartmentId = profile.DepartmentId,
+                //DepartmentName = profile.DepartmentName,
+                //DepartmentId = profile.DepartmentId,
+                //DepartmentName = profile.DepartmentName,
+                //Position = profile.Position
+            };
+
+            if (HttpContext.Current.Session != null)
+                HttpContext.Current.Session[CURRENT_INFO] = currentAccount;
+            else
+                HttpContext.Current.Items[CURRENT_INFO] = currentAccount;
+        }
+
+        /// <summary>
+        /// 判断是否登录
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsLogin()
+        {
+            var currentAccount =
+                HttpContext.Current.Session != null ?
+                HttpContext.Current.Session[CURRENT_INFO] as CurrentUserAccountModel :
+                HttpContext.Current.Items[CURRENT_INFO] as CurrentUserAccountModel;
+
+            return currentAccount != null;
+        }
+
+        /// <summary>
+        /// 退出
+        /// </summary>
+        public static void Loginout()
+        {
+            if (HttpContext.Current.Session != null)
+                HttpContext.Current.Session[CURRENT_INFO] = null;
+            else
+                HttpContext.Current.Items[CURRENT_INFO] = null;
+        }
+
+        ///// <summary>
+        ///// 保存用户登录信息
+        ///// </summary>
+        ///// <param name="entity"></param>
+        //public static void SetCurrentAccount(Models.UserAccount entity)
+        //{
+        //    var currentAccount = new CurrentUserAccountModel
+        //    {
+        //        Id = entity.Id,
+        //        Name = entity.Name,
+        //        Password = entity.Password,
+        //        Nickname = entity.Nickname,
+        //        Email = entity.Email,
+        //        DepartmentId = entity.DepartmentId,
+        //        DepartmentName = entity.DepartmentName,
+        //        DepartmentId = entity.DepartmentId,
+        //        DepartmentName = entity.DepartmentName,
+        //        Position = entity.Position,
+        //        State = entity.State,
+        //        SysBonus = entity.SysBonus
+        //    };
+
+        //    HttpContext.Current.Session[CURRENT_INFO] = currentAccount;
+        //}
+    }
+}

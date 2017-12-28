@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{24D5761F-F4F4-4984-A787-E819FB2764D1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>XZMY.Manage.Service</RootNamespace>
+    <AssemblyName>XZMY.Manage.Service</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <DocumentationFile>bin\Debug\XZMY.Manage.Service.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI, Version=2.2.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.2.1\lib\net40\NPOI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.2.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.2.1\lib\net40\NPOI.OOXML.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.2.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.2.1\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.2.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.2.1\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="T2M.Common.DataServiceComponents">
+      <HintPath>..\Assembly\T2M.Common.DataServiceComponents.dll</HintPath>
+    </Reference>
+    <Reference Include="T2M.Common.Utils">
+      <HintPath>..\Assembly\T2M.Common.Utils.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Auth\Attributes\AutoCreateAuthActionAttribute.cs" />
+    <Compile Include="Auth\Attributes\AutoCreateAuthModuleAttribute.cs" />
+    <Compile Include="Auth\AuthCenter.cs" />
+    <Compile Include="Auth\AuthDatasource.cs" />
+    <Compile Include="Auth\Data\BasicAuthCacheLoader.cs" />
+    <Compile Include="Auth\Data\BasicAuthDataCacheWritter.cs" />
+    <Compile Include="Auth\Data\SqlServer\Impl\UpdateModuleBase.cs" />
+    <Compile Include="Auth\Data\SqlServer\Impl\UpdateActionBase.cs" />
+    <Compile Include="Auth\Data\SqlServer\Query\IUpdateModuleBase.cs" />
+    <Compile Include="Auth\Data\SqlServer\Query\IUpdateActionBase.cs" />
+    <Compile Include="Auth\Data\SqlServer\SqlAuthDataInitalizer.cs" />
+    <Compile Include="Auth\Data\SqlServer\SqlAuthDataLoader.cs" />
+    <Compile Include="Auth\IAuthDataCacheLoader.cs" />
+    <Compile Include="Auth\IAuthDataCacheWritter.cs" />
+    <Compile Include="Auth\IAuthDataInitializer.cs" />
+    <Compile Include="Auth\IAuthDataLoader.cs" />
+    <Compile Include="Auth\Models\DataModels\SqlServer\Sys_Action.cs" />
+    <Compile Include="Auth\Models\DataModels\SqlServer\Sys_Module.cs" />
+    <Compile Include="Auth\Models\DataModels\SqlServer\Sys_Role.cs" />
+    <Compile Include="Auth\Models\DataModels\SqlServer\Sys_RoleAction.cs" />
+    <Compile Include="Auth\Models\DataModels\SqlServer\Sys_RoleModule.cs" />
+    <Compile Include="Auth\Models\DataModels\SqlServer\Sys_UserRole.cs" />
+    <Compile Include="Auth\Models\MenuItem.cs" />
+    <Compile Include="Auth\Models\MenuModule.cs" />
+    <Compile Include="Auth\Models\RoleMenu.cs" />
+    <Compile Include="Auth\Models\RoleResource.cs" />
+    <Compile Include="Auth\Models\UserMenu.cs" />
+    <Compile Include="Auth\Models\UserResource.cs" />
+    <Compile Include="Auth\Models\ViewModel\VmUserRoleEdit.cs" />
+    <Compile Include="Auth\Models\ViewModel\VmActionEdit.cs" />
+    <Compile Include="Auth\Models\ViewModel\VmMenu.cs" />
+    <Compile Include="Auth\Models\ViewModel\VmModuleEdit.cs" />
+    <Compile Include="Auth\Models\ViewModel\VmRoleEdit.cs" />
+    <Compile Include="CurrentUserAccountModel.cs" />
+    <Compile Include="Handlers\Action\ActionCreateHandler.cs" />
+    <Compile Include="Handlers\Action\ActionBaseModifyHandler.cs" />
+    <Compile Include="Handlers\Action\ActionModifyHandler.cs" />
+    <Compile Include="Handlers\NewFolder1\Agent\AgentCreateHandler.cs" />
+    <Compile Include="Handlers\NewFolder1\Agent\AgentModifyHandler.cs" />
+    <Compile Include="Handlers\Assessment\AssessmentAnswerDeleteHandler.cs" />
+    <Compile Include="Handlers\Assessment\AssessmentAnswerUltimatesHandler.cs" />
+    <Compile Include="Handlers\Assessment\AssessmentQuestionEnableHandler.cs" />
+    <Compile Include="Handlers\Assessment\AssessmentAnswerModifyHandler.cs" />
+    <Compile Include="Handlers\Assessment\AssessmentAnswerCreateHandler.cs" />
+    <Compile Include="Handlers\BaseCreateHandler.cs" />
+    <Compile Include="Handlers\BaseModifyHandler.cs" />
+    <Compile Include="Handlers\NewFolder1\Course\CourseDateRefreshHandler.cs" />
+    <Compile Include="Handlers\HandlerInvokeResult.cs" />
+    <Compile Include="Handlers\NewFolder1\Member\ModuleCreateHandler.cs" />
+    <Compile Include="Handlers\NewFolder1\Member\ModuleModifyHandler.cs" />
+    <Compile Include="Handlers\Module\ModuleBaseModifyHandler.cs" />
+    <Compile Include="Handlers\Module\ModuleCreateHandler.cs" />
+    <Compile Include="Handlers\Module\ModuleModifyHandler.cs" />
+    <Compile Include="Handlers\NewFolder1\Order\OrderProjectCreateHandler.cs" />
+    <Compile Include="Handlers\NewFolder1\Project\ProjectCreateHandler.cs" />
+    <Compile Include="Handlers\NewFolder1\Project\ProjectDateRefreshHandler.cs" />
+    <Compile Include="Handlers\Role\RoleCreateHandler.cs" />
+    <Compile Include="Handlers\Role\RoleModifyHandler.cs" />
+    <Compile Include="Handlers\SiteSetting\SiteADCreateHandler.cs" />
+    <Compile Include="Handlers\SiteSetting\SiteADModifyHandler.cs" />
+    <Compile Include="Handlers\UserRole\UserRoleModifyHandler.cs" />
+    <Compile Include="Handlers\User\UserAccountCreateHandler.cs" />
+    <Compile Include="Handlers\User\UserAccountModifyHandler.cs" />
+    <Compile Include="Handlers\Weixin\WeixinHandler.cs" />
+    <Compile Include="Project\ProjectCreateService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="User\SearchUserService.cs" />
+    <Compile Include="Utils\DataDictionary\DataDictionaryItem.cs" />
+    <Compile Include="Utils\DataDictionary\DataDictionaryManager.cs" />
+    <Compile Include="Utils\ExcelHelper.cs" />
+    <Compile Include="Utils\Extendsions\AuthViewModelExtendsions.cs" />
+    <Compile Include="Utils\LoggedUserManager.cs" />
+    <Compile Include="Utils\LogHelper.cs" />
+    <Compile Include="Utils\RequestHelper.cs" />
+    <Compile Include="Utils\StringHtml.cs" />
+    <Compile Include="Utils\StudentPlanExporter.cs" />
+    <Compile Include="WebApiHandlers\Members\MemberCreateHandler.cs" />
+    <Compile Include="WebApiHandlers\Order\IncomeCreateHandler.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Customer\" />
+    <Folder Include="Handlers\NewFolder1\Planner\" />
+    <Folder Include="Handlers\Sys\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\XZMY.Manage.Data.Impl\XZMY.Manage.Data.Impl.csproj">
+      <Project>{3bc56905-d4ac-4432-bacd-b7a3fca4f4dc}</Project>
+      <Name>XZMY.Manage.Data.Impl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XZMY.Manage.Data\XZMY.Manage.Data.csproj">
+      <Project>{4e39b5da-c3b2-4eba-b797-8ba8064e09a5}</Project>
+      <Name>XZMY.Manage.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XZMY.Manage.Log\XZMY.Manage.Log.csproj">
+      <Project>{cd4644f7-1678-4b7a-81c8-d00b147098e1}</Project>
+      <Name>XZMY.Manage.Log</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XZMY.Manage.Model\XZMY.Manage.Model.csproj">
+      <Project>{9d03ab55-d804-446e-8878-ea279891e9bb}</Project>
+      <Name>XZMY.Manage.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

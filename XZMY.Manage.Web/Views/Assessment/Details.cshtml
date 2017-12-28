@@ -1,0 +1,147 @@
+﻿@using XZMY.Manage.Model.DataModel.Assessment
+@using XZMY.Manage.Model.DataModel.SiteSetting
+@model XZMY.Manage.Model.ViewModel.Assessment.VmAssessmentQuestion
+@{
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+    ViewBag.Title = "详细";
+}
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home/index">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="module">评估中心</span>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="action">问题详细</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+<div class="row" style="margin-top:20px">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet light bordered" id="form_wizard_1">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span style="font-size: 25px;color: #000">问题</span>
+                </div>
+                <div class="actions">
+                    @if (Model.DataId != Guid.Empty)
+                    {
+                        <a class="btn btn-default" href="/Assessment/Edit/@Model.DataId">
+                            <i class="fa fa-pencil"></i> 编辑
+                        </a>
+                    }
+                    @*<a class="btn btn-default get-back" href="javascript:void(0);">
+                        <i class="fa fa-list-ul"></i> 返回
+                    </a>*@
+                    <a class="btn btn-default get-back" href="/Assessment/List">
+                        <i class="fa fa-list-ul"></i> 返回列表
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                    <div class="form-body">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">内容：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Html.Raw(Model.Description) </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="form-section">答案</h3>
+
+                        <div id="items">
+                            <input type="hidden" id="hfAnswerCount" name="AnswerCount" value="@ViewBag.AnswerCount" />
+                            @if (ViewBag.AnswerList != null)
+                            {
+                                var answersList = ViewBag.AnswerList as List<AssessmentAnswers>;
+                                var sourceList = (ViewBag.AnswerSourceList as List<Scores>);
+                                var startDiv = "<div class=\"row\">";
+                                var endDiv = "</div>";
+                                for (int i = 0; i < answersList.Count; i++)
+                                {
+                                    var entity = answersList[i];
+                                    var index = i + 1;
+
+                                    if (i != 0)
+                                    {
+                                        <h3 class="form-section"></h3>
+                                    }
+
+                                    <div class="row" index="@(index)">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3" for="txtDescription@(i)">答案@(index)　描述：</label>
+                                                <div class="col-md-9">
+                                                    <div class="input-icon right">
+                                                        <i class="fa"></i>
+                                                        <p class="form-control-static"> @Html.Raw(entity.Description) </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    var answerSourceList = sourceList.Where(x => x.SourceId == entity.Id).OrderBy(x => x.ScoreItemsName).ToList();
+                                                                    for (int j = 0; j < answerSourceList.Count(); j++)
+                                                                    {
+                                                                        var source = answerSourceList[j];
+                                                                        var flag = j % 2 == 0;
+                                                                        if (flag)
+                                                                        {
+                                                                            @Html.Raw(startDiv)
+                                                                                        }
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3" for="txtScoreValue@(j + 1)_@source.Id">@source.ScoreItemsName：</label>
+                                                <div class="col-md-9">
+                                                    <div class="input-icon right">
+                                                        <i class="fa"></i>
+                                                        <p class="form-control-static"> @source.ScoreValue.ToString("N2") </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        if (!flag)
+                                        {
+                                            @Html.Raw(endDiv)
+                                        }
+                                                        }
+                                }
+                            }
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                @*<button type="submit" class="btn green">保存</button>
+                                <button type="reset" class="btn default">重置</button>*@
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+</div>

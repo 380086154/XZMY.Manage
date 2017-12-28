@@ -1,0 +1,91 @@
+﻿ 
+@{
+    ViewBag.Title = "答题卡列表";
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+}
+
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home/index">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="module">在线评估</span>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="action">答题卡列表</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+<div class="mt-bootstrap-tables" style="margin-top:20px">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="icon-social-dribbble font-green hide"></i>
+                        <span style="font-size: 25px;color: #000"></span>
+                    </div>
+                    <div class="actions">
+                        @*<a class="btn btn-circle btn-icon-only btn-default" href="javascript:;"><i class="icon-cloud-upload"></i></a>*@
+                        <a class="btn btn-default" href="/OnlineTranscript/Edit/">
+                            <i class="fa fa-plus"></i> 创建
+                        </a>
+                        @*<a class="btn btn-circle btn-icon-only btn-default" href="javascript:;"><i class="icon-wrench"></i></a>
+                            <a class="btn btn-circle btn-icon-only btn-default delete" href="javascript:;"><i class="icon-trash"></i></a>*@
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <!-- BEGIN FORM-->
+                    <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                        <div class="mt-checkbox-inline" style="margin-top: -37px">
+                            <div class="pull-left" style="margin-top: 20px">
+                                状态：<select class="form-control input-inline" name="State" id="State">
+                                    <option value="2">未开始</option>
+                                    <option value="3">已完成</option>
+                                    <option value="1">答题中</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- END FORM-->
+                    <table id="table-pagination" data-toggle="table" data-url="/OnlineTranscript/AjaxList/"
+                           data-height="526"
+                           data-form-id="defaultForm"
+                           data-show-refresh="true"
+                           data-page-size="20"
+                           data-page-list="[5, 10, 20, 50, 100, 200]"
+                           data-search="true">
+                        <thead>
+                            <tr>
+                                <th data-field="Name" data-align="center">学生姓名</th>
+                                <th data-field="LoginName" data-align="center">登录名</th>
+                                @*<th data-field="OnlineAssessmentSecurityName" data-align="center">试卷</th>*@
+                                <th data-field="BeginTimeStr" data-align="center">答题开始时间</th>
+                                <th data-field="EndTimeStr" data-align="center">结束时间</th>
+                                <th data-field="UsedTime" data-align="center">答题用时</th>
+                                <th data-field="StateName" data-align="center">状态</th>
+                                <th data-formatter="opColumns" data-align="center">操作</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section JavaScript{
+    <script type="text/javascript">
+        var opColumns = function (value, row, index) {
+            var html = row.StateName == "未开始" ? '<a href="/OnlineTranscript/Edit/_id_">编辑</a>'.replace(/_id_/ig, row.Id) : "";
+            var html2 = row.StateName == "完成" ? '<a href="/OnlineTranscript/AnswerList/_id_?index=1">查看结果</a>'.replace(/_id_/ig, row.Id) : "";
+            var html_line = (html != "" && html2 != "") ? " | " : "";
+            return html + html_line + html2;
+        };
+    </script>
+}
+

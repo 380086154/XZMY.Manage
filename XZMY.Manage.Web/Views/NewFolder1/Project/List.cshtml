@@ -1,0 +1,122 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+    ViewBag.Title = "列表";
+}
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home/index">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="module">活动中心</span>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="action">活动列表</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+<div class="mt-bootstrap-tables" style="margin-top:20px">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="icon-social-dribbble font-green hide"></i>
+                        <span style="font-size: 25px;color: #000"></span>
+                    </div>
+                    <div class="actions">
+                        @*<a class="btn btn-circle btn-icon-only btn-default" href="javascript:;"><i class="icon-cloud-upload"></i></a>*@
+                        <a class="btn btn-default" href="/Project/Edit/">
+                            <i class="fa fa-plus"></i> 创建
+                        </a>
+                        @*<a class="btn btn-circle btn-icon-only btn-default" href="javascript:;"><i class="icon-wrench"></i></a>
+                            <a class="btn btn-circle btn-icon-only btn-default delete" href="javascript:;"><i class="icon-trash"></i></a>*@
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <!-- BEGIN FORM-->
+                    <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                        <div class="mt-checkbox-inline" style="margin-top: -37px">
+                            <div class="pull-left" style="margin-top: 20px">
+                                状态：
+                                <select class="form-control input-inline" name="State" id="State">
+                                    <option value="1" selected="selected">启用</option>
+                                    <option value="2">禁用</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- END FORM-->
+                    <table id="table-pagination" data-toggle="table" data-url="/Project/AjaxList/"
+                           data-height="526"
+                           data-form-id="defaultForm"
+                           data-show-refresh="true"
+                           data-page-size="10"
+                           data-page-list="[5, 10, 20, 50, 100, 200]"
+                           data-search="true">
+                        <thead>
+                            <tr>
+                                <th data-field="ProjectName" data-align="lift">活动名称</th>
+                                <th data-field="HotKey" data-formatter="opColumnsHotkey" data-align="center">热点标识</th>
+                                <th data-field="ProjectPlaceName" data-align="lift">区域</th>
+                                <th data-field="BeginDate" data-align="center" data-formatter="yyyy_mm_dd">开始时间</th>
+                                <th data-field="EndDate" data-align="center" data-formatter="yyyy_mm_dd">结束时间</th>
+                                <th data-field="Sponsor" data-align="lift">主办方</th>
+                                <th data-field="StateName" data-align="center">活动状态</th>
+                                <th data-field="CreatorName" data-align="lift">添加人</th>
+                                <th data-formatter="opColumns" data-align="center">操作</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section JavaScript{
+    <script type="text/javascript">
+        var opColumns = function (value, row, index) {
+            var _state = row.State;
+            var _stateTextName = (_state == 0 || _state == 2) ? "启用" : "禁用";
+            _state = (_state == 0 || _state == 2) ? 1 : 2;
+            return ("<a id=\"_id_\" onclick=\"enabled(this," + _state + ")\" href=\"javascript:void(0)\">" + _stateTextName + "</a> | <a href=\"edit?id=_id_\">编辑</a> | <a href=\"details/_id_\">查看</a>").replace(/_id_/ig, row.Id);
+        };
+        var opColumnsHotkey = function (value, row, index) {
+            if (value) {
+                return "<span style=\"color:blue;\">" + value + "</span>";
+            }
+            return "";
+        };
+        var enabled = function (obj, state) {
+            var titleMsg = $(obj).text();
+            bootbox.confirm("确定要" + titleMsg + "该活动吗？", function (result) {
+                if (!result) return;
+                $.ajax({ 
+                    type: 'POST',
+                    url: '/Project/AjaxUpdateProjectState',
+                    data: { id: $(obj).attr('id'), state: state },
+                    dataType: 'JSON',
+                    success: function (result) {
+                        if (result.success) {
+                            $('#table-pagination').bootstrapTable('refresh', postQueryParams);
+                            showToast(0, '系统消息', '操作成功，该活动已' + titleMsg);//成功信息
+                        } else {
+                            showToast(3, '系统消息', result.message);//错误信息
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        showToast(3, '系统消息', JSON.stringify(errorThrown));//错误信息
+                        //LigerEP.ShowMsg('error', '网络错误！即将重新登录！');
+                        //window.location.replace("/MCustoms/Login");
+                    },
+                    async: false
+                });
+            });
+        }
+        
+    </script>
+}

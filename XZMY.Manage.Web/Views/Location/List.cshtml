@@ -1,0 +1,261 @@
+﻿@using Newtonsoft.Json;
+@using XZMY.Manage.Model.DataModel.Location
+@{
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+    ViewBag.Title = "列表";
+}
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home/index">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="module">系统管理</span>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="action">地区管理</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+
+<link href="~/Content/Metronic4.5.6/global/plugins/jstree/dist/themes/default/style.min.css" rel="stylesheet" type="text/css" />
+<div class="row" style="margin-top: 20px">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div id="nestable_list_menu" class="margin-bottom-10">
+            @{
+                var root = ViewBag.RootList as IList<Location>;
+                if (root != null)
+                {
+                    foreach (var item in root)
+                    {
+                        <a data-action="expand-all" class="btn green btn-outline sbold uppercase @(ViewBag.Id.ToString() == item.Id.ToString() ? "active" : "" )" href="/location/list/@item.Id">@item.Name</a>
+                    }
+                    <input id="JsonlistLocation" type="hidden" value="@JsonConvert.SerializeObject(root)" />
+                }
+                @*<div class="actions">
+
+                </div>*@
+                @*jsc-addCountry<a class="btn btn-default" href="javascript:void(0)" onclick="addCountry()">
+        <i class="fa fa-plus"></i> 创建国家
+    </a>*@
+            }
+        </div>
+
+
+        <div class="portlet light bordered" id="form_wizard_1">
+            @*<div class="portlet-title">
+                    <div class="actions">
+
+                    </div>
+                </div>*@
+            <div class="portlet-body form">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="portlet light bordered left">
+                            <!-- BEGIN FORM-->
+                            @*<div class="portlet light bordered" >*@
+                            <div class="portlet-body">
+                                <div id="tree" class="tree-demo"> </div>
+                            </div>
+                            @*</div>*@
+                            <!-- END FORM-->
+                        </div>
+                    </div>
+                    <div  class="col-md-6">
+                        <div class="portlet light bordered right">
+                            <!-- BEGIN FORM-->
+                            <div class="portlet">
+                                <input id="txtId" type="hidden" name="Id" value="" />
+                                <input id="txtParentId" type="hidden" value="@Model.DataId" />
+                                <input type="hidden" id="txtParentName" name="ParentName" value="@Model.Name" autocomplete="off" class="form-control" />
+                                <div class="form-group" style="height:30px;">
+                                    <label class="control-label col-md-3">上级行政区域：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <span id="spanParentName">@Model.Name</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="height:30px;">
+                                    <label class="control-label col-md-3">名称：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" id="txtName" name="Name" value="" autocomplete="off" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="height:30px;">
+                                    <label class="control-label col-md-3">英文名称：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" id="txtEName" name="EName" value="" autocomplete="off" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <div class="row">
+                                        <div class="col-md-offset-3 col-md-9">
+                                            <button type="button" id="btnSubmitForm2" class="btn green">保存</button>
+                                            <button type="reset" id="btnResetForm2" class="btn default ">重置</button>
+                                            <button type="button" id="btnForm4" class="btn default ">添加下级地区</button>
+                                            <button type="button" id="btnDel" class="btn default ">删除地区及下级地区</button>
+                                            @*<button type="button" id="btnTest" class="btn default">测试</button>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END FORM-->
+                        </div>
+                    </div>
+
+
+                    
+
+                </div>
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+</div>
+
+@section JavaScript{
+    <script src="~/Content/Metronic4.5.6/global/plugins/jstree/dist/jstree.min.js" type="text/javascript"></script>
+    <script src="~/Content/Metronic4.5.6/pages/scripts/ui-tree.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+        var fullData;
+
+        var drawTree = function (data) {
+            if (data.length == 0) {
+                $('#tree').html('无地区信息');
+                return;
+            }
+            
+            $('#tree').empty();
+            $('#tree').jstree({
+                'plugins': ["wholerow", "types"],
+                'core': {
+                    "themes": {
+                        "responsive": false
+                    },
+                    'data': data
+                },
+                "types": {
+                    "default": {
+                        "icon": "fa fa-folder icon-state-warning icon-lg"
+                    },
+                    "file": {
+                        "icon": "fa fa-file icon-state-warning icon-lg"
+                    }
+                }
+            }).on('changed.jstree', function (node, data) {
+                var item = data.node.original;
+                $("#txtId").val(item.Id);
+                $("#txtParentId").val(item.ParentId);
+                $("#txtName").val(item.Name);
+                $("#txtEName").val(item.EName);
+                $("#txtParentName").val(item.ParentName);
+                $("#spanParentName").html(item.ParentName);
+                $("#btnForm4").show();
+                $("#btnDel").show();
+            });
+        };
+
+        var loadData = function () {
+            $.getJSON('/Location/AjaxList?id=@ViewBag.Id&p='+ new Date(), function (result) {
+                fullData = eval('(' + result.rows + ')');
+                
+                drawTree(fullData);
+            });
+        };
+
+        var addCountry = function () {
+            $(".jsc-addCountry").removeClass("active");
+            $('#tree').html('');
+            $('#Country-Edit').hide();
+            $('#Country-Add').show();
+        }
+        //var test = function() {
+        //    $('#tree').jstree().refresh();
+        //};
+
+        jQuery(document).ready(function () {
+            $("#btnForm4").hide();
+            $("#btnDel").hide();
+            loadData();
+            $("#btnSubmitForm2").click(function () {
+                //保存按钮
+                var VmLocation = {
+                    Id: $("#txtId").val(),
+                    Name: $("#txtName").val(),
+                    EName: $("#txtEName").val(),
+                    ParentId: $("#txtParentId").val()
+                };
+                if (VmLocation.Name != "" && VmLocation.ParentId != "") {
+                    $.ajax({
+                    url: "/Location/AjaxEdit",
+                    data: VmLocation,
+                    type: 'post',
+                    async: false, //默认为true 异步
+                    error: function () { alert('error'); },
+                    success: function (data) {
+                        loadData();
+                        $("#txtId").val("");
+                        $("#txtName").val("");
+                        $("#txtEName").val("");
+                    }
+                });
+                }
+            });
+            ////添加下级地区
+            $("#btnForm4").click(function () {
+                $("#txtParentId").val($("#txtId").val());
+                $("#txtParentName").val($("#txtName").val());
+                $("#spanParentName").html($("#txtName").val());
+                $("#txtId").val("");
+                $("#txtName").val("");
+                $("#txtEName").val("");
+                $("#btnForm4").hide();
+                $("#btnDel").hide();
+            });
+            //删除地区及下级地区
+            $("#btnDel").click(function () {
+                if ($("#txtId").val() != "") {
+                    $.ajax({
+                        url: "/Location/AjaxDelete",
+                        data: { Id: $("#txtId").val() },
+                        type: 'post',
+                        async: true, //默认为true 异步
+                        error: function () { alert('error'); },
+                        success: function (data) {
+                            location.reload();
+                            //loadData();
+                            //$("#txtId").val("");
+                            //$("#txtName").val("");
+                            //$("#txtEName").val("");
+                            //$("#btnDel").hide();
+                        }
+                    });
+                }
+            });
+
+            //$('#btnSubmitForm3').click(function () {
+                                                
+
+            //});
+            //$('#btnResetForm3').click(function () {
+               
+            //});
+
+        });
+    </script>
+}

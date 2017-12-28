@@ -1,0 +1,301 @@
+﻿@model XZMY.Manage.Model.ViewModel.Planners.VmPlannerEdit
+@using XZMY.Manage.Web.Content.Code
+@{
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+    ViewBag.Title = "规划师详细";
+}
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home/index">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="module">规划师管理</span>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="action">规划师详细</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+<div class="row" style="margin-top: 20px">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet light bordered" id="form_wizard_1">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span style="font-size: 25px;color: #000">基础信息</span>
+                </div>
+                <div class="actions">
+                    @if (Model.DataId != Guid.Empty)
+                    {
+                        <a class="btn btn-default" href="/Planner/Edit/@Model.DataId">
+                            <i class="fa fa-pencil"></i> 编辑
+                        </a>
+                    }
+                    <a class="btn btn-default" href="/Planner/List">
+                        <i class="fa fa-list-ul"></i> 返回列表
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                    <div class="form-body">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">真实姓名：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.Name </p>
+                                            @Html.HiddenFor(x => x.DataId)
+                                            @Html.HiddenFor(x => x.UserId)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">编码：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.Code </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">资质：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.QualificationsName </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">等级：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.LevelName </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">照片：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <div class="photo-list" style="float:left;width:100%; ">
+                                            </div>
+                                            @Html.HiddenFor(x => x.Pictures)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">描述：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right"><p class="form-control-static">@(Model.Description.ReplaceHtmlTag())</p></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="form-section">账号信息</h3>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">登录名：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <span class="form-control-static" id="User_LoginName"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="display:none;">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">真实姓名：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <span class="form-control-static" id="User_RealName"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">手机号：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <span class="form-control-static" id="User_Mobile"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Email：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <span class="form-control-static" id="User_Email"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">QQ：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <span class="form-control-static" id="User_QQ"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">邮编：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <span class="form-control-static" id="User_Zipcode"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">性别：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <span class="form-control-static" id="User_Gender"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">状态：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <span class="form-control-static" id="User_State"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">所在地：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <span class="form-control-static" id="User_Location"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+</div>
+@section JavaScript{
+    <script src="~/Content/Metronic/js/jquery.inputmask.bundle.min.js"></script>
+    <script src="/UploadCode/webuploader/webuploader.min.js" type="text/javascript"></script>
+    <script src="/UploadCode/js/uploader.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        //加载账号
+        var ShowUser = function () {
+            if ($("#UserId").val() != "00000000-0000-0000-0000-000000000000" && $("#UserId").val() != "") {
+                var dataSearchBase = {
+                    PageIndex: 1,
+                    PageSize: 1,
+                    Keyword: ""
+                };
+                $.ajaxSettings.async = false;
+                $.getJSON(
+                    "/UserAccount/AjaxList/",
+                    { model: dataSearchBase, UserId: $("#UserId").val() },
+                    function (data) {
+                        if (data.total > 0) {
+                            var rModel = data.rows[0];
+                            $("#User_LoginName").html(rModel["LoginName"]);
+                            $("#User_RealName").html(rModel["RealName"]);
+                            $("#User_Gender").html(rModel["GenderName"]);
+                            $("#User_Mobile").html(rModel["Mobile"]);
+                            $("#User_Email").html(rModel["Email"]);
+                            $("#User_QQ").html(rModel["QQ"]);
+                            $("#User_Zipcode").html(rModel["Zipcode"]);
+                            $("#User_Location").html(rModel["Location"]);
+                            $("#User_State").html(rModel["StateName"]);
+                        }
+                    });
+            }
+        };
+        //显示图片
+        var ShowImageList = function () {
+            if ($("#Pictures").val() != "") {
+                var ImageUrls = $("#Pictures").val().split(",");
+                var divimage = "";
+                for (var i = 0; i < ImageUrls.length; i++) {
+                    divimage = ShowImage(ImageUrls[i], "", false, false);
+                    $(divimage).appendTo(".photo-list");
+                }
+            }
+        }
+        //页面加载时加载的JS方法
+        $(function () {
+            //加载图片
+            ShowImageList();
+            //显示账号信息
+            ShowUser();
+        });
+
+    </script>
+}

@@ -1,0 +1,4 @@
+<Data>
+  <Item Id="a7c87011-b6c1-4a9b-b275-c4905067f3b7" Name="语言课程" EName="CourseType001" Default="False" Sys="False" State="1" Sort="1" Descr="语言课程" />
+  <Item Id="f9bdb8fe-a84e-47c4-8393-b8e3503bdede" Name="暑期课程" EName="CourseType002" Default="False" Sys="False" State="1" Sort="1" Descr="暑期课程" />
+</Data>

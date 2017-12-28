@@ -1,0 +1,664 @@
+﻿@model XZMY.Manage.Model.ViewModel.Agent.VmAgentEdit
+@using XZMY.Manage.Model.Enum
+@{
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+    ViewBag.Title = "创建/编辑";
+}
+@section Style{
+    <link href="/UploadCode/css/smart-green.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/UploadCode/webuploader/webuploader.css" />
+}
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home/index">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="module">代理商管理</span>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="action">编辑代理商</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+<div class="row" style="margin-top:20px">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet light bordered" id="form_wizard_1">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span style="font-size: 25px;color: #000">基础信息</span>
+                </div>
+                <div class="actions">
+                    @if (Model.DataId != Guid.Empty)
+                    {
+                        <a class="btn btn-default" href="/Agent/Details/@Model.DataId">
+                            <i class="fa fa-eye"></i> 详细
+                        </a>
+                    }
+                    <a class="btn btn-default" href="/Agent/List">
+                        <i class="fa fa-list-ul"></i> 返回列表
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM--> 
+                <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                    <div class="form-body">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">企业名称</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.CompanyName, new { @data_required = "1", @maxlength = "50", @class = "form-control" })
+                                            @Html.HiddenFor(x => x.UserId)
+                                            @Html.HiddenFor(x => x.DataId)
+                                            @Html.HiddenFor(x => x.LocationPathName)
+                                            @Html.HiddenFor(x=>x.LocationCityPathName)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">法人代表</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.LegalPerson, new { @maxlength = "50", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">法人联系电话</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.LegalMobile, new { @maxlength = "50", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">代理类型</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <select id="CategoryId" name="CategoryId" class="form-control">
+                                                <option value="">请选择</option>
+                                                @{
+                                                    //AgentLevel,AgentNature,AgentCategory
+                                                    var listDataItemAgentCategory = XZMY.Manage.Service.Utils.DataDictionary.DataDictionaryManager.GetCatagory("AgentCategory");
+                                                    foreach (var modelDataItem in listDataItemAgentCategory)
+                                                    {
+                                                        if (modelDataItem.Value.State == 1)
+                                                        {
+                                                            if (modelDataItem.Value.Id == Model.CategoryId)
+                                                            {
+                                                                <option value="@modelDataItem.Value.Id" selected="selected">@modelDataItem.Value.Name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@modelDataItem.Value.Id">@modelDataItem.Value.Name</option>
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">代理商性质</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <select id="NatureId" name="NatureId" class="form-control">
+                                                <option value="">请选择</option>
+                                                @{
+                                                    //AgentLevel,AgentNature,AgentCategory
+                                                    var listDataItemAgentNature = XZMY.Manage.Service.Utils.DataDictionary.DataDictionaryManager.GetCatagory("AgentNature");
+                                                    foreach (var modelDataItem in listDataItemAgentNature)
+                                                    {
+                                                        if (modelDataItem.Value.State == 1)
+                                                        {
+                                                            if (modelDataItem.Value.Id == Model.NatureId)
+                                                            {
+                                                                <option value="@modelDataItem.Value.Id" selected="selected">@modelDataItem.Value.Name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@modelDataItem.Value.Id">@modelDataItem.Value.Name</option>
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">代理商等级</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <select id="LevelId" name="LevelId" class="form-control">
+                                                <option value="">请选择</option>
+                                                @{
+                                                    //AgentLevel,AgentNature,AgentCategory
+                                                    var listDataItemAgentLevel = XZMY.Manage.Service.Utils.DataDictionary.DataDictionaryManager.GetCatagory("AgentLevel");
+                                                    foreach (var modelDataItem in listDataItemAgentLevel)
+                                                    {
+                                                        if (modelDataItem.Value.State == 1)
+                                                        {
+                                                            if (modelDataItem.Value.Id == Model.LevelId)
+                                                            {
+                                                                <option value="@modelDataItem.Value.Id" selected="selected">@modelDataItem.Value.Name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@modelDataItem.Value.Id">@modelDataItem.Value.Name</option>
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">佣金比例</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @if (Model.Commission > 0)
+                                            {
+                                                <input id="Commission" name="Commission" type="text" maxlength="3" class="form-control" value="@Model.Commission" />
+                                            }
+                                            else
+                                            {
+                                                <input id="Commission" name="Commission" type="text" maxlength="3" class="form-control" value="20" />
+                                            }
+                                           
+                                        </div>
+                                        <span class="help-inline">百分比数值(0-99)</span>
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">状态</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <div class="mt-radio-inline">
+                                                @if (Model.State == EState.禁用)
+                                                {
+                                                    <label class="mt-radio mt-radio-outline">
+                                                        <input type="radio" name="State" id="State1" value="1"> 启用
+                                                        <span></span>
+                                                    </label>
+                                                    <label class="mt-radio mt-radio-outline">
+                                                        <input type="radio" name="State" id="State2" value="2" checked> 禁用
+                                                        <span></span>
+                                                    </label>
+                                                }
+                                                else
+                                                {
+                                                    <label class="mt-radio mt-radio-outline">
+                                                        <input type="radio" name="State" id="State1" value="1" checked> 启用
+                                                        <span></span>
+                                                    </label>
+                                                    <label class="mt-radio mt-radio-outline">
+                                                        <input type="radio" name="State" id="State2" value="2"> 禁用
+                                                        <span></span>
+                                                    </label>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                @*<div class="form-group">
+                                    <label class="control-label col-md-3">地区层级</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <select id="LocationId" name="LocationId" class="form-control">
+                                                <option value="">请选择</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>*@
+
+                                <div class="control-group">
+                                    <label class="control-label col-md-3">地区层级</label>
+                                    <div class="controls col-md-6">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <select id="LocationId" name="LocationId" class="form-control">
+                                                <option value="">请选择</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="controls col-md-3">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <select id="LocationCityId" name="LocationCityId" class="form-control">
+                                                <option value="">请选择</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">详细地址</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.Address, new { @maxlength = "200", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="form-section">联系人信息</h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">姓名</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.AgentContact.Name, new { @maxlength = "50", @class = "form-control" })
+                                            @Html.HiddenFor(x=>x.AgentContact.Id)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">手机号</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.AgentContact.Mobile, new { @maxlength = "11", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Email</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.AgentContact.Email, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">QQ</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.AgentContact.QQ, new { @maxlength = "11", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">座机</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.AgentContact.Tel, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">备注</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.AgentContact.Description, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="form-section">开户行信息</h3>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">开户行</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.BankName, new { @maxlength = "50", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">开户行地址</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.BankFullName, new { @maxlength = "100", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">开户人</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.BankAccount, new { @maxlength = "100", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">卡号</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.BankNumber, new { @maxlength = "50", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="form-section">帐号信息</h3>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">登录名</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @if (Model.DataId != Guid.Empty)
+                                            {
+                                                <span class="form-control-static">@Model.LoginName</span>
+                                            }
+                                            else
+                                            {
+                                                @Html.TextBoxFor(x => x.LoginName, new { @maxlength = "50", @class = "form-control", @autocomplete = "off" })
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">真实姓名</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.RealName, new { @maxlength = "50", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">性别</label>
+                                    <div class="col-md-9">
+                                        <div class="mt-radio-inline">
+                                            <label class="mt-radio mt-radio-outline">
+                                                <input type="radio" name="Gender" id="Gender1" value="1" checked> 男
+                                                <span></span>
+                                            </label>
+                                            <label class="mt-radio mt-radio-outline">
+                                                <input type="radio" name="Gender" id="Gender2" value="2"> 女
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">密码</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.PasswordFor(x => x.Password, new { @maxlength = "50", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">确认密码</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="password" id="txtPasswordAgain" name="txtPasswordAgain" maxlength="50" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="submit" class="btn green">保存</button>
+                                <button type="reset" class="btn default">重置</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+</div>
+@section JavaScript{
+    <script src="~/Content/Metronic/js/jquery.inputmask.bundle.min.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            var form1 = $('#defaultForm');
+            var hfId = $('#Id');
+            var error1 = $('.alert-error', form1);
+            var success1 = $('.alert-success', form1);
+            var isRequired = hfId.val() == '00000000-0000-0000-0000-000000000000';
+
+            //$("input[name='State'][value=]").attr("checked", true);
+
+            //$('#CategoryId,#NatureId,#LevelId').select2({ allowClear: true });
+
+            $("input[name='Gender'][value=@Model.Gender.GetHashCode()]").attr("checked", true);
+
+            form1.validate({
+                errorElement: 'span', //default input error message container
+                errorClass: 'help-block help-block-error', // default input error message class
+                focusInvalid: false, // do not focus the last invalid input
+                ignore: "",
+                rules: {
+                    CompanyName: { required: true },
+                    LegalPerson: { required: true },
+                    LegalMobile: { required: true },
+                    CategoryId: { required: true },
+                    NatureId: { required: true },
+                    LevelId: { required: true },
+                    Commission: { required: true },
+                    LocationPathName: { required: true },
+                    //Address: { required: true },
+
+                    "AgentContact.Name": { required: true },
+                    "AgentContact.Mobile": { required: true },
+                    "AgentContact.Email": { required: true, email: true },
+
+                    BankName: { required: true },
+                    BankFullName: { required: true },
+                    BankAccount: { required: true },
+                    BankNumber: { required: true },
+                    ContactMobile: { required: true },
+                    LoginName: { required: true, remote: { url: '/UserAccount/AjaxIsExist/@Model.DataId', message: '已存在' } }
+                },
+
+                //invalidHandler: function (event, validator) { //display error alert on form submit
+                //success1.hide();
+                //error1.show();
+                //App.scrollTo(error1, -200);
+                //},
+
+                errorPlacement: function (error, element) { // render error placement for each input type
+                    var icon = $(element).parent('.input-icon').children('i');
+                    icon.removeClass('fa-check').addClass("fa-warning");
+                    icon.attr("data-original-title", error.text()).tooltip({ 'container': 'body' });
+                },
+
+                highlight: function (element) { // hightlight error inputs
+                    $(element).closest('.form-group').removeClass("has-success").addClass('has-error'); // set error class to the control group
+                },
+
+                unhighlight: function (element) { // revert the change done by hightlight
+
+                },
+
+                success: function (label, element) {
+                    var icon = $(element).parent('.input-icon').children('i');
+                    $(element).closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                    icon.removeClass("fa-warning").addClass("fa-check");
+                },
+
+                submitHandler: function (form) {
+                    //success1.show();
+                    //error1.hide();
+                    //form1.submit();
+
+                    var data = form1.serializeObject();
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Agent/AjaxEdit',
+                        data: data,
+                        dataType: 'JSON',
+                        success: function (result) {
+                            if (result.success)
+                                location.replace('/Agent/details/' + result.Id);
+                            else {
+                                showToast(3, '系统消息', result.message);//错误信息
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            showToast(3, '系统消息', JSON.stringify(errorThrown));//错误信息
+                        },
+                        async: false
+                    });
+                }
+            });
+
+            $('.select2me', form1).change(function () {
+                form1.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
+            });
+
+            var bindDataDictionary = function () {
+             
+                var _LocationId = '@(Model.LocationId == Guid.Empty ? string.Empty : Model.LocationId.ToString())';
+                $.getJSON('/Content/Custom/Location.ashx', { action: 'GetLocationLevel', Level: '1' }, function (data) {
+                    
+                    appendOption(data, '#LocationId', _LocationId);
+                });
+                if (_LocationId != "") {
+                    $.getJSON('/Content/Custom/Location.ashx', { action: 'GetLocationLevel', Level: '2' }, function (data) {
+                        appendOption(data, '#LocationCityId', '@(Model.LocationCityId == Guid.Empty ? string.Empty : Model.LocationCityId.ToString())');
+                    });
+                }
+            };
+
+            var handleInputMasks = function () {
+                $.extend($.inputmask.defaults, {
+                    'autounmask': true
+                });
+
+                //$("#Commission").inputmask('100.00,3', { numericInput: true });
+                //$('#Commission').inputmask('decimal', { rightAlignNumerics: false });
+                $("#Commission").inputmask({ "mask": "9", "repeat": 2, "greedy": false });
+            };
+
+           
+            handleInputMasks();
+            bindDataDictionary();
+            //选择地区信息时，给LocationPathName赋值
+            $('#LocationId').change(function () {
+                var locationName = $('#LocationId option:selected').text();
+                var locationId = $('#LocationId option:selected').val();
+                $('#LocationPathName').val(locationName);
+                $.getJSON('/Content/Custom/Location.ashx', { action: 'GetLocationParentId', ParentId: locationId }, function (data) {
+                    appendOption(data, '#LocationCityId', '@(Model.LocationCityId == Guid.Empty ? string.Empty : Model.LocationCityId.ToString())');
+                });
+            });
+            //城市
+            $('#LocationCityId').change(function () {
+                var LocationName = $('#LocationPathName').val();
+                $('#LocationCityPathName').val(LocationName + '.' + $('#LocationCityId option:selected').text());
+
+            });
+        });
+
+    </script>
+}
+

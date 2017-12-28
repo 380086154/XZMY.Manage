@@ -1,0 +1,308 @@
+﻿@model XZMY.Manage.Model.ViewModel.Members.VmStudent
+@{
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+    ViewBag.Title = "详细";
+}
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home/index">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="module">学生管理</span>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="action">学生详细</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+<div class="row" style="margin-top: 20px">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet light bordered" id="form_wizard_1">
+            <div class="portlet-title">
+                <span style="font-size: 25px">基础信息</span>
+                <div class="actions">
+                    @*@if (Model.DataId != Guid.Empty)
+                    {
+                        <a class="btn btn-default" href="/Vip/studentdetails/@Model.DataId">
+                            <i class="fa fa-pencil"></i> 编辑
+                        </a>
+                    }*@
+                    <a class="btn btn-default" href="@ViewBag.refUrl">
+                        <i class="fa fa-list-ul"></i> 返回列表
+                    </a>
+                </div>
+            </div>
+            @Html.HiddenFor(x => x.DataId)
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">姓名：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.Name </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">学生编号：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.Code </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">邮箱：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.Email </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">电话：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.Mobile </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">性别：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <p class="form-control-static"> @Model.Gender </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">出生日期：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            @if (Model.BirthDate == DateTime.MinValue)
+                                            {
+                                                <p class="form-control-static"> 未知 </p>
+                                            }
+                                            else
+                                            {
+                                                <p class="form-control-static"> @Model.BirthDate.ToString("yyyy-MM-dd") </p>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">政治面貌：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.PoliticalStatus </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">民族：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.PoliticalStatus </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">籍贯：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.NativePlace </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">户口类型：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.RegisteredPermanentResidenceType </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">户口所在地：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.RegisteredPermanentResidenceLocation </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">通讯地址：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.CorrespondenceAddress </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">在读状态：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <p class="form-control-static"> @Model.LearningState </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">所在学校：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <p class="form-control-static"> @Model.School </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">年级：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <p class="form-control-static"> @Model.Grade </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @if (Model.IsHelp)
+                        {
+                        <h3 class="form-section">规划师帮助翻译</h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3"></label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <p class="form-control-static"> 学生申请集资料需要规划师帮助翻译 </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">翻译是否完成</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <p class="form-control-static"> <button id="btnHelpComplete" type="button" class="btn green">完成</button> </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+
+                    @*<div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="submit" class="btn green">保存</button>
+                                <button type="reset" class="btn default">重置</button>
+                            </div>
+                        </div>
+                    </div>*@
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+</div>
+
+@section JavaScript{
+    <script type="text/javascript">
+        $(function () {
+            $("#btnHelpComplete").click(function(){
+                $.ajax({
+                    type: 'POST',
+                    url: '/Student/AjaxStudentHelpComplete',
+                    data: { StudentId:$("#Id").val() },
+                    dataType: 'JSON',
+                    success: function (result) {
+                        if (result.success) {
+                            location.replace('/Vip/studentdetails/' + result.Id);
+                        } else {
+                            alert(result.errors);
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        showToast(3, '系统消息', JSON.stringify(errorThrown));//错误信息
+                    },
+                    async: false
+                });
+            });
+        });
+           
+
+        
+</script>
+}

@@ -1,0 +1,458 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+ <!--<![endif]-->
+<!-- BEGIN HEAD -->
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <title>Metronic | Login Page</title>
+
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <meta content="" name="description" />
+
+    <meta content="" name="author" />
+
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+
+    <link href="Content/Metronic/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="Content/Metronic/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="Content/Metronic/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="Content/Metronic/css/style-metro.css" rel="stylesheet" type="text/css" />
+
+    <link href="Content/Metronic/css/style.css" rel="stylesheet" type="text/css" />
+
+    <link href="Content/Metronic/css/style-responsive.css" rel="stylesheet" type="text/css" />
+
+    <link href="Content/Metronic/css/default.css" rel="stylesheet" type="text/css" id="style_color" />
+
+    <link href="Content/Metronic/css/uniform.default.css" rel="stylesheet" type="text/css" />
+
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL STYLES -->
+
+    <link href="Content/Metronic/css/login.css" rel="stylesheet" type="text/css" />
+
+    <!-- END PAGE LEVEL STYLES -->
+
+    <link rel="shortcut icon" href="Content/Metronic/image/favicon.ico" />
+
+</head>
+
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+
+<body class="login">
+
+    <!-- BEGIN LOGO -->
+
+    <div class="logo">
+
+        <img src="Content/Metronic/image/logo-big.png" alt="" />
+
+    </div>
+
+    <!-- END LOGO -->
+    <!-- BEGIN LOGIN -->
+
+    <div class="content">
+
+        <!-- BEGIN LOGIN FORM -->
+
+        <form id="defaultForm" class="form-vertical login-form">
+
+            <h3 class="form-title">登录到您的帐户</h3>
+
+            <div class="alert alert-error hide">
+
+                <button class="close" data-dismiss="alert"></button>
+
+                <span>Enter any username and password.</span>
+
+            </div>
+
+            <div class="control-group">
+
+                <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+
+                <label class="control-label visible-ie8 visible-ie9">Username</label>
+
+                <div class="controls">
+
+                    <div class="input-icon left">
+
+                        <i class="icon-user"></i>
+
+                        <input class="m-wrap placeholder-no-fix" type="text" placeholder="用户名" name="LoginName" />
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="control-group">
+
+                <label class="control-label visible-ie8 visible-ie9">Password</label>
+
+                <div class="controls">
+
+                    <div class="input-icon left">
+
+                        <i class="icon-lock"></i>
+
+                        <input class="m-wrap placeholder-no-fix" type="password" placeholder="密码" name="password" />
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="form-actions">
+
+                <label class="checkbox">
+
+                    <input type="checkbox" name="remember" value="1" /> 记住我
+
+                </label>
+
+                <button type="submit" class="btn green pull-right">
+
+                    登录 <i class="m-icon-swapright m-icon-white"></i>
+
+                </button>
+
+            </div>
+
+            <div class="forget-password">
+
+                <h4>忘记密码了 ?</h4>
+
+                <p>
+
+                    别担心， 点击 <a href="javascript:;" class="" id="forget-password">这里</a>
+
+                    重置你的密码。
+
+                </p>
+
+            </div>
+
+            @*<div class="create-account">
+
+                <p>
+
+                    Don't have an account yet ?&nbsp;
+
+                    <a href="javascript:;" id="register-btn" class="">Create an account</a>
+
+                </p>
+
+            </div>*@
+
+        </form>
+
+        <!-- END LOGIN FORM -->
+        <!-- BEGIN FORGOT PASSWORD FORM -->
+
+        <form class="form-vertical forget-form" action="index.html">
+
+            <h3 class="">Forget Password ?</h3>
+
+            <p>Enter your e-mail address below to reset your password.</p>
+
+            <div class="control-group">
+
+                <div class="controls">
+
+                    <div class="input-icon left">
+
+                        <i class="icon-envelope"></i>
+
+                        <input class="m-wrap placeholder-no-fix" type="text" placeholder="Email" name="email" />
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="form-actions">
+
+                <button type="button" id="back-btn" class="btn">
+
+                    <i class="m-icon-swapleft"></i> Back
+
+                </button>
+
+                <button type="submit" class="btn green pull-right">
+
+                    Submit <i class="m-icon-swapright m-icon-white"></i>
+
+                </button>
+
+            </div>
+
+        </form>
+
+        <!-- END FORGOT PASSWORD FORM -->
+        <!-- BEGIN REGISTRATION FORM -->
+
+        <form class="form-vertical register-form" action="index.html">
+
+            <h3 class="">Sign Up</h3>
+
+            <p>Enter your account details below:</p>
+
+            <div class="control-group">
+
+                <label class="control-label visible-ie8 visible-ie9">Username</label>
+
+                <div class="controls">
+
+                    <div class="input-icon left">
+
+                        <i class="icon-user"></i>
+
+                        <input class="m-wrap placeholder-no-fix" type="text" placeholder="Username" name="username" />
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="control-group">
+
+                <label class="control-label visible-ie8 visible-ie9">Password</label>
+
+                <div class="controls">
+
+                    <div class="input-icon left">
+
+                        <i class="icon-lock"></i>
+
+                        <input class="m-wrap placeholder-no-fix" type="password" id="register_password" placeholder="Password" name="password" />
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="control-group">
+
+                <label class="control-label visible-ie8 visible-ie9">Re-type Your Password</label>
+
+                <div class="controls">
+
+                    <div class="input-icon left">
+
+                        <i class="icon-ok"></i>
+
+                        <input class="m-wrap placeholder-no-fix" type="password" placeholder="Re-type Your Password" name="rpassword" />
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="control-group">
+
+                <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+
+                <label class="control-label visible-ie8 visible-ie9">Email</label>
+
+                <div class="controls">
+
+                    <div class="input-icon left">
+
+                        <i class="icon-envelope"></i>
+
+                        <input class="m-wrap placeholder-no-fix" type="text" placeholder="Email" name="email" />
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="control-group">
+
+                <div class="controls">
+
+                    <label class="checkbox">
+
+                        <input type="checkbox" name="tnc" /> I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+
+                    </label>
+
+                    <div id="register_tnc_error"></div>
+
+                </div>
+
+            </div>
+
+            <div class="form-actions">
+
+                <button id="register-back-btn" type="button" class="btn">
+
+                    <i class="m-icon-swapleft"></i>  Back
+
+                </button>
+
+                <button type="submit" id="register-submit-btn" class="btn green pull-right">
+
+                    Sign Up <i class="m-icon-swapright m-icon-white"></i>
+
+                </button>
+
+            </div>
+
+        </form>
+
+        <!-- END REGISTRATION FORM -->
+
+    </div>
+
+    <!-- END LOGIN -->
+    <!-- BEGIN COPYRIGHT -->
+
+    <div class="copyright">
+
+        2013 &copy; Metronic. Admin Dashboard Template.
+
+    </div>
+
+    <!-- END COPYRIGHT -->
+    <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+    <!-- BEGIN CORE PLUGINS -->
+
+    <script src="Content/Metronic/js/jquery-1.10.1.min.js" type="text/javascript"></script>
+
+    <script src="Content/Metronic/js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+
+    <!-- IMPORTANT! Load jquery-ui-1.10.1.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+
+    <script src="Content/Metronic/js/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+
+    <script src="Content/Metronic/js/bootstrap.min.js" type="text/javascript"></script>
+
+    <!--[if lt IE 9]>
+
+    <script src="Content/Metronic/js/excanvas.min.js"></script>
+
+    <script src="Content/Metronic/js/respond.min.js"></script>
+
+    <![endif]-->
+
+    <script src="Content/Metronic/js/jquery.slimscroll.min.js" type="text/javascript"></script>
+
+    <script src="Content/Metronic/js/jquery.blockui.min.js" type="text/javascript"></script>
+
+    <script src="Content/Metronic/js/jquery.cookie.min.js" type="text/javascript"></script>
+
+    <script src="Content/Metronic/js/jquery.uniform.min.js" type="text/javascript"></script>
+
+    <!-- END CORE PLUGINS -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+
+    <script src="Content/Metronic/js/jquery.validate.min.js" type="text/javascript"></script>
+
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+
+    <script src="Content/Metronic/js/app.js" type="text/javascript"></script>
+
+    <script src="Content/Metronic/js/login.js" type="text/javascript"></script>
+    <script src="~/Content/Metronic/js/custom.js"></script>
+
+    <!-- END PAGE LEVEL SCRIPTS -->
+
+    <script>
+
+        jQuery(document).ready(function () {
+            var form1 = $('#defaultForm');
+            var error1 = $('.alert-error', form1);
+            var success1 = $('.alert-success', form1);
+
+            form1.validate({
+                errorElement: 'span', //default input error message container
+                errorClass: 'help-inline', // default input error message class
+                focusInvalid: false, // do not focus the last invalid input
+                ignore: "",
+                rules: {
+                    Password: { required: true },
+                    LoginName: { required: true },
+                },
+
+                //invalidHandler: function (event, validator) { //display error alert on form submit
+                //    success1.hide();
+                //    error1.show();
+                //    App.scrollTo(error1, -200);
+                //},
+
+                highlight: function (element) { // hightlight error inputs
+                    $(element).closest('.help-inline').removeClass('ok'); // display OK icon
+                    $(element).closest('.control-group').removeClass('success').addClass('error'); // set error class to the control group
+                },
+
+                unhighlight: function (element) { // revert the change dony by hightlight
+                    $(element).closest('.control-group').removeClass('error'); // set error class to the control group
+                },
+
+                success: function (label) {
+                    label.addClass('valid').addClass('help-inline ok') // mark the current input as valid and display OK icon
+                    .closest('.control-group').removeClass('error').addClass('success'); // set success class to the control group
+                },
+
+                submitHandler: function (form) {
+                    //success1.show();
+                    //error1.hide();
+                    //form1.submit();
+
+
+                    var data = form1.serializeObject();
+                    alert('submitHandler：' + JSON.stringify(data));
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Login/AjaxLogin',
+                        data: data,
+                        dataType: 'JSON',
+                        success: function (result) {
+                            if (result.success)
+                                location.replace('/home/index');
+                            else
+                                alert(result.errors);
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert(JSON.stringify(errorThrown));
+                        },
+                        async: false
+                    });
+                }
+            });
+        });
+
+    </script>
+
+    <!-- END JAVASCRIPTS -->
+</body>
+
+<!-- END BODY -->
+
+</html>

@@ -1,0 +1,275 @@
+﻿@model XZMY.Manage.Model.ViewModel.School.VmSchool
+@using XZMY.Manage.Web.Content.Code
+    @{
+        Layout = "~/Views/Shared/_Layout456.cshtml";
+        ViewBag.Title = "创建/编辑";
+    }
+    <!-- BEGIN PAGE BAR -->
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <a href="/home/index">主页</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <span id="module">学校中心</span>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <span id="action">学校详细</span>
+            </li>
+        </ul>
+    </div>
+    <!-- END PAGE BAR -->
+    <div class="row" style="margin-top: 20px">
+        <div class="col-md-12">
+            <!-- BEGIN VALIDATION STATES-->
+            <div class="portlet light bordered" id="form_wizard_1">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span style="font-size: 25px;color: #000">基础信息</span>
+                    </div>
+                    <div class="actions">
+                        @if (Model.DataId != Guid.Empty)
+                        {
+                            <a class="btn btn-default" href="/School/Edit/@Model.DataId">
+                                <i class="fa fa-pencil"></i> 编辑
+                            </a>
+                        }
+                        <a class="btn btn-default" href="/School/List">
+                            <i class="fa fa-list-ul"></i> 返回列表
+                        </a>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <!-- BEGIN FORM-->
+                    <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                        <div class="form-body">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">学校名称：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <p class="form-control-static"> @Model.Name </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">英文名称：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <p class="form-control-static"> @Model.EnglishName </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">学校属性：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <p class="form-control-static">
+                                                    @Model.SchoolTypeName
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3"></label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <p class="form-control-static">  </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">性质：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <p class="form-control-static"> @(Model.Nature == 1 ? "公立" : "私立") </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6" style="display:none;">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">学校类别：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <p class="form-control-static"> @Model.SchoolCategoryPathName </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">学校排名：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <p class="form-control-static"> @Model.Ranking </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">课程：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <p class="form-control-static"> @Model.Courses </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">教师人数：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <p class="form-control-static"> @Model.TeacherCount </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">学生人数：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <p class="form-control-static"> @Model.StudentCount </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">所在国家：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <p class="form-control-static"> @Model.CountryLocationName </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">所在地区：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <p class="form-control-static"> @Model.LocationPathName </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">学区：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <p class="form-control-static"> @Model.SchoolDistrict </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">详细地址：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <p class="form-control-static"> @Model.Address </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">建校时间：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <p class="form-control-static">
+                                                    @if (Model.EstablishDate != DateTime.Parse("1000-01-01") && Model.EstablishDate != DateTime.Parse("1900-01-01"))
+                                                    {
+                                                        @Model.EstablishDate.ToString("yyyy-MM-dd")
+                                                    }
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">电话：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <p class="form-control-static"> @Model.Moblie </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">学校描述：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <p class="form-control-static">@(Model.Description.ReplaceHtmlTag())</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- END FORM-->
+                </div>
+            </div>
+            <!-- END VALIDATION STATES-->
+        </div>
+    </div>

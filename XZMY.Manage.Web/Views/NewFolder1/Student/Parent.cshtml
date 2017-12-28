@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "列表";
+}
+<div class="row-fluid">
+    <div class="span12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption"><i class="icon-globe"></i>Show/Hide Columns</div>
+                <div class="actions">
+                    <div class="btn-group">
+                        <a class="btn" href="#" data-toggle="dropdown">
+                            Columns
+
+                            <i class="icon-angle-down"></i>
+                        </a>
+                        <div id="sample_2_column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
+                            <label><input type="checkbox" checked data-column="0">Rendering engine</label>
+                            <label><input type="checkbox" checked data-column="1">Browser</label>
+                            <label><input type="checkbox" checked data-column="2">Platform(s)</label>
+                            <label><input type="checkbox" checked data-column="3">Engine version</label>
+                            <label><input type="checkbox" checked data-column="4">CSS grade</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portlet-body ">
+                <div class="container">
+                    <table data-toggle="table"
+                           data-toolbar="#post"
+                           data-url="/Student/AjaxList/"
+                           data-form-id="defaultForm"
+                           data-page-size="10"
+                           data-page-list="[5, 10, 20, 50, 100, 200]"
+                           data-search="true"
+                           data-height="526"
+                           data-method="post">
+                        <thead>
+                            <tr>
+                                @*<th data-checkbox="true"></th>*@
+                                <th data-field="Name">姓名</th>
+                                <th data-field="Mobile">电话</th>
+                                <th data-field="Grade">学历</th>
+                                <th data-field="LocationPathName">所在地</th>
+                                <th data-field="AverageScore">平均成绩</th>
+                                <th data-formatter="opColumns" data-align="center">操作</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+    <div class="modal fade" id="ajax" tabindex="-1" role="basic" aria-hidden="true">
+       @* <img src="assets/img/ajax-modal-loading.gif" alt="" class="loading">*@
+    </div>
+</div>
+<script type="text/javascript">
+    var opColumns = function (value, row, index) {
+        return '<a href="/parent?id=_pid_" data-target="#ajax" data-toggle="modal">家长</a> | <a href="#">安排任务</a> |<a href="details/_id_">管理主页</a>'.replace(/_id_/ig, row.Id).replace(/_pid_/ig, row.ParentsId);
+    };
+</script>

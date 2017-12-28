@@ -1,0 +1,110 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+    ViewBag.Title = "列表";
+}
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home/index">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="module">系统管理</span>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="action">日志管理</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+<div class="mt-bootstrap-tables" style="margin-top:20px">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet light bordered">
+                @*<div class="portlet-title">
+                    <div class="caption">
+                        <span style="font-size: 25px;color: #000"></span>
+                    </div>
+                    <div class="actions">
+                        <a class="btn btn-default" href="/CourseTemplate/Edit">
+                            <i class="fa fa-plus"></i> 创建
+                        </a>
+                    </div>
+                </div>*@
+                <div class="portlet-body">
+                    <!-- BEGIN FORM-->
+                    <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                        <div class="mt-checkbox-inline" style="margin-top: -37px">
+                            <div class="pull-left" style="margin-top: 20px">
+                                状态：
+                                <select class="form-control input-inline" name="State" id="State">
+                                    <option value="0">全部</option>
+                                    <option value="1">调试记录</option>
+                                    <option value="2">普通记录</option>
+                                    <option value="3">警告记录</option>
+                                    <option value="4">错误记录</option>
+                                    <option value="5">致命错误</option>
+                                    <option value="6">未定义等级</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- END FORM-->
+                    <table id="table-pagination" data-toggle="table" data-url="/Log/AjaxList/"
+                           data-height="526"
+                           data-form-id="defaultForm"
+                           data-show-refresh="true"
+                           data-page-size="10"
+                           data-page-list="[5, 10, 20, 50, 100, 200]"
+                           data-search="true">
+                        <thead>
+                            <tr>
+                                <th data-field="Title">标题</th>
+                                <th data-field="Message">消息</th>
+                                @*<th data-field="Exception">异常信息</th>*@
+                                <th data-field="Level">等级</th>
+                                <th data-field="UserName">用户</th>
+                                <th data-field="CreatedTime">时间</th>
+                                <th data-formatter="opColumns" data-align="center">操作</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var opColumns = function (value, row, index) {
+        return '<a onclick="deletelog(this)" href="javascript:void(0)" id="_id_">删除</a> | <a href="details/_id_">查看</a>'.replace(/_id_/ig, row.Id);//
+    };
+
+    function deletelog(obj) {
+
+        bootbox.confirm("确定要删除该项日志吗？", function (result) {
+            if (!result) return;
+
+            $.ajax({
+                type: 'POST',
+                url: '/log/Delete',
+                data: { id: $(obj).attr('id') },
+                dataType: 'JSON',
+                success: function (result) {
+                    if (result.success) {
+                        $('#table-pagination').bootstrapTable('refresh', postQueryParams);
+                        showToast(0, '系统消息', '操作成功，列表已刷新');//错误信息
+                    } else {
+                        showToast(3, '系统消息', result.message);//错误信息
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    showToast(3, '系统消息', JSON.stringify(errorThrown));//错误信息
+                },
+                async: false
+            });
+        });
+    }
+
+</script>

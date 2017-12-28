@@ -1,0 +1,110 @@
+﻿@model XZMY.Manage.Model.ViewModel.Agent.VmAgent
+@{
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+    ViewBag.Title = "代理商查看学生列表";
+}
+
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home/index">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="module">代理商管理</span>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="action">学生列表</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+<div class="mt-bootstrap-tables" style="margin-top:20px">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet light bordered">
+                @*<div class="portlet-title">
+                        <div class="caption">
+                        <span style="font-size: 25px;color: #000"></span>
+                        </div>
+                        <div class="actions">
+                            <a class="btn btn-default" href="/OrderProject/edit">
+                                <i class="fa fa-plus"></i> 创建
+                            </a>
+                        </div>
+                    </div>*@
+                <div class="portlet-body">
+                    <!-- BEGIN FORM-->
+                    <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                        @Html.HiddenFor(x => x.DataId)
+                        <div class="mt-checkbox-inline" style="margin-top: -37px">
+                            <div class="pull-left" style="margin-top: 20px">
+                                状态：
+                                <select id="State" name="State" class="form-control input-inline">
+                                    <option value="0">全部</option>
+                                    <option value="1">启用</option>
+                                    <option value="2">禁用</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- END FORM-->
+                        <table id="table-pagination" data-toggle="table" data-url="/Student/AjaxList/"
+                               data-height="526"
+                               data-form-id="defaultForm"
+                               data-show-refresh="true"
+                               data-page-size="10"
+                               data-page-list="[5, 10, 20, 50, 100, 200]"
+                               data-search="true"
+                               data-query-params="postQueryParams">
+                            <thead>
+                                <tr>
+                                    <th data-field="Name">姓名</th>
+                                    <th data-field="Mobile">电话</th>
+                                    <th data-field="Grade">学历</th>
+                                    <th data-field="LocationPathName">所在地</th>
+                                    <th data-field="PlannerName">规划师</th>
+                                    <th data-field="AverageScore">平均成绩</th>
+                                    <th data-formatter="opColumns" data-align="center">操作</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+<script type="text/javascript">
+    var opColumns = function (value, row, index) {
+        return '<a onclick="parent(_pid_)" data-target="#ajax" data-toggle="modal">家长</a>&nbsp;|&nbsp;<a href="details/_id_">管理主页</a>&nbsp;|&nbsp;<a href="EditStudentPlanner/?StudentId=_id_">分配规划师</a>'.replace(/_id_/ig, row.Id).replace(/_pid_/ig, "'" + row.ParentsId + "'");
+    };
+    function parent(id) {
+        $.ajax({
+            type: 'GET',
+            url: '/Student/AjaxParent?id=' + id,
+            //data: data,
+            //dataType: 'JSON',
+            success: function (result) {
+                if (result.success) {
+                    $("#parentName").text(result.result.Name);
+                    $("#parentMobile").text(result.result.WorkPhone);
+                    $("#parentUnit").text(result.result.CompanyName);
+                    $("#parentPosition").text(result.result.Position);
+                }
+                else
+                    alert(result.errors);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                showToast(3, '系统消息', JSON.stringify(errorThrown));//错误信息
+            },
+            async: false
+        });
+    }
+
+
+</script>

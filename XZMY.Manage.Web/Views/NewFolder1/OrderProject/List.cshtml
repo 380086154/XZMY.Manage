@@ -1,0 +1,75 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+    ViewBag.Title = "活动订单列表";
+}
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home/index">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="module">订单管理</span>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="action">活动订单</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+<div class="mt-bootstrap-tables" style="margin-top:20px">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet light bordered">
+                <div class="portlet-body">
+                    <!-- BEGIN FORM-->
+                    <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                        <div class="mt-checkbox-inline" style="margin-top: -37px">
+                            <div class="pull-left" style="margin-top: 20px">
+                                流程状态：
+                                <select id="ProcessState" name="ProcessState" class="form-control input-inline">
+                                    <option value="0">全部</option>
+                                    <option value="1">已报名</option>
+                                    <option value="2">进行中</option>
+                                    <option value="3">已结束</option>
+                                    <option value="4">已取消</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- END FORM-->
+                    <table id="table-pagination" data-toggle="table" data-url="/OrderProject/AjaxList/"
+                           data-height="526"
+                           data-form-id="defaultForm"
+                           data-show-refresh="true"
+                           data-page-size="10"
+                           data-page-list="[5, 10, 20, 50, 100, 200]"
+                           data-search="true">
+                        <thead>
+                            <tr>
+                                <th data-field="OrderNo">订单号</th>
+                                <th data-field="ProjectName">活动名称</th>
+                                <th data-field="Mobile">手机号</th>
+                                <th data-field="ProcessStateName">流程状态</th>
+                                <th data-field="CreatedTime" data-align="center">下单时间</th>
+                                <th data-formatter="opColumns" data-align="center">操作</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section JavaScript{
+    <script type="text/javascript">
+        var opColumns = function (value, row, index) {
+            var str = '<a href="details/_id_">查看</a>';
+
+
+            return str.replace(/_id_/ig, row.Id);//<a href="edit/_id_">编辑</a> |
+        };
+    </script>
+}

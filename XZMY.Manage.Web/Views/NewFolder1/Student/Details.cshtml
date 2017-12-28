@@ -1,0 +1,422 @@
+﻿@model XZMY.Manage.Model.ViewModel.Members.VmStudent
+@{
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+    ViewBag.Title = "学生管理中心";
+}
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home/index">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="module">规划师管理</span>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="action">学生详细</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+<div class="mt-bootstrap-tables" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet light bordered">
+                @*<div class="portlet-title">
+                    <div class="actions">
+                        <a class="btn btn-default" href="/Planner/ProjectList">
+                            <i class="fa fa-list-ul"></i> 返回列表
+                        </a>
+                    </div>
+                </div>*@
+                <div class="tabbable-line">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            @*<i class="icon-globe font-green-sharp"></i>
+                                <span class="caption-subject font-green-sharp bold uppercase">Iconic</span>*@
+                        </div>
+
+                        @Html.HiddenFor(x => x.DataId)
+                        @Html.HiddenFor(x => x.Name)
+                    </div>
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#dropdown_fontawesome" data-toggle="tab"> 学生信息 </a>
+                    </li>
+                    <li>
+                        <a href="#dropdown_simplelineicons" data-toggle="tab"> 已参加活动</a>
+                    </li>
+                    <li>
+                        <a href="#dropdown_glyphicon" data-toggle="tab"> 已参加课程 </a>
+                    </li>
+                </ul>
+                    <div class="actions row-fluid" style="margin: -40px 12px 14px 10px;text-align: right;">
+                        <a class="btn btn-default" href="/Student/Edit/@Model.DataId">
+                            <i class="fa fa-list-ul"></i> 学生评价
+                        </a>
+                        <a class="btn btn-default" href="/Vip/studentplan/?StudentId=@Model.DataId">
+                            <i class="fa fa-list-ul"></i> 查看规划
+                        </a>
+                        @{ string goUrl = ViewBag.GoUrl as string;
+                            if (string.IsNullOrEmpty(goUrl))
+                            {
+                                <a class="btn btn-default" href="/Student/List">
+                                    <i class="fa fa-list-ul"></i> 返回学生列表
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-default" href="/Planner/CourseList">
+                                    <i class="fa fa-list-ul"></i> 返回列表
+                                </a>
+                            }
+                        }
+                        
+                    </div>
+                    <div class="tab-content">
+                        @*<div class="portlet-body util-btn-margin-bottom-5">   style="margin-top: -78px;"  *@
+                        <div class="tab-pane active" id="dropdown_fontawesome">
+                            <div class="clearfix">
+                                <!-- BEGIN FORM-->
+                                <form id="defaultForm1" class="form-horizontal" method="post" novalidate="novalidate">
+                                    <div class="portlet-body form">
+                                        @*<div class="form-body">*@
+                                            @*<h2 class="margin-bottom-20"> View User Info - Bob Nilson </h2>*@
+                                            <div class="portlet-body form">
+                                                <!-- BEGIN FORM-->
+                                                <form role="form" class="form-horizontal">
+                                                    <div class="form-body">
+                                                        @*<h2 class="margin-bottom-20"> View User Info - Bob Nilson </h2>*@
+                                                        @*<h3 class="form-section">基础信息</h3>*@
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">姓名：</label>
+                                                                    <div class="col-md-9">
+                                                                        <p class="form-control-static"> @Model.Name </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">姓名(拼音)：</label>
+                                                                    <div class="col-md-9">
+                                                                        <p class="form-control-static"> @Model.EnglishName </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                        </div>
+                                                        <!--/row-->
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">性别：</label>
+                                                                    <div class="col-md-9">
+                                                                        <p class="form-control-static"> @Model.GenderName </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">手机：</label>
+                                                                    <div class="col-md-9">
+                                                                        <p class="form-control-static"> @Model.Mobile </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                        </div>
+                                                        <!--/row-->
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">QQ号：</label>
+                                                                    <div class="col-md-9">
+                                                                        <p class="form-control-static"> @Model.QQ </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">Email：</label>
+                                                                    <div class="col-md-9">
+                                                                        <p class="form-control-static"> @Model.Email </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                        </div>
+                                                        @*g规划师信息*@
+                                                        <!--/row-->
+                                                        @if (Model.PlannerId != Guid.Empty)
+                                                        {
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">规划师姓名：</label>
+                                                                    <div class="col-md-9">
+                                                                        <p class="form-control-static"> @Model.modelPlanner.Name.</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">规划师编码：</label>
+                                                                    <div class="col-md-9">
+                                                                        <p class="form-control-static"> @Model.modelPlanner.Code </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                        </div>
+                                                        }
+                                                        <!--/row-->
+                                                        <h3 class="form-section">规划师综合评价</h3>
+
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">综合评价：</label>
+                                                                    <div class="col-md-9">
+                                                                        <p class="form-control-static"> @Model.StudentsEvaluation </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <h3 class="form-section">身份信息</h3>
+
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">身份证号码：</label>
+                                                                    <div class="col-md-9">
+                                                                        <p class="form-control-static"> @Model.IdentityCard </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">护照号码：</label>
+                                                                    <div class="col-md-9">
+                                                                        <p class="form-control-static"> @Model.Passport </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">护照签发日期：</label>
+                                                                    <div class="col-md-9">
+                                                                        <p class="form-control-static"> @Model.PassportDate.ToString("yyyy-MM-dd") </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                        </div>
+                                                        <!--/row-->
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">签发地：</label>
+                                                                    <div class="col-md-9">
+                                                                        <p class="form-control-static"> @Model.PassportPlaceOfIssue </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">兴趣爱好：</label>
+                                                                    <div class="col-md-9">
+                                                                        <p class="form-control-static"> @Model.Hobby </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                        </div>
+
+                                                        <h3 class="form-section">地址信息</h3>
+
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">在读学校名称：</label>
+                                                                    <div class="col-md-9">
+                                                                        <p class="form-control-static"> @Model.SchoolName </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">所在班级：</label>
+                                                                    <div class="col-md-9">
+                                                                        <p class="form-control-static"> @Model.GradeName</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">学校地址：</label>
+                                                                    <div class="col-md-9">
+                                                                        <p class="form-control-static"> @Model.SchoolAddress </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">学校电话：</label>
+                                                                    <div class="col-md-9">
+                                                                        <p class="form-control-static"> @Model.SchoolTelephone</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">班主任姓名：</label>
+                                                                    <div class="col-md-9">
+                                                                        <p class="form-control-static"> @Model.TeacherName </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">班主任电话：</label>
+                                                                    <div class="col-md-9">
+                                                                        <p class="form-control-static"> @Model.TeacherMoblie</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">家庭详细住址：</label>
+                                                                    <div class="col-md-9">
+                                                                        <p class="form-control-static"> @Model.HomeAddress</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">入校时间：</label>
+                                                                    <div class="col-md-9">
+                                                                        <p class="form-control-static"> @Model.InSchoolTime.ToString("yyyy-MM-dd") </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                <!-- END FORM-->
+                                            </div>
+                                        @*</div>*@
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="dropdown_simplelineicons">
+                            <div class="clearfix">
+                                <table id="table-pagination2" data-toggle="table" data-url="/OrderProject/AjaxList/"
+                                       data-height="526"
+                                       data-form-id="defaultForm"
+                                       data-show-refresh="true"
+                                       data-page-size="10"
+                                       data-page-list="[5, 10, 20, 50, 100, 200]"
+                                       data-search="true"
+                                       data-query-params="postQueryParamsProject">
+                                    <thead>
+                                        <tr>
+                                            <th data-field="ProjectName">活动名称</th>
+                                            <th data-field="LocationName">目的地</th>
+                                            <th data-field="BeginDate" data-align="center">活动时间</th>
+                                            <th data-field="EndDate" data-align="center">活动时间</th>
+                                            <th data-field="ProcessStateName" data-align="center">状态</th>
+                                            <th data-formatter="opColumnsProject" data-align="center">操作</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="dropdown_glyphicon">
+                            <div class="clearfix">
+                                <table id="table-pagination3" data-toggle="table" data-url="/OrderCourse/AjaxList/"
+                                       data-height="526"
+                                       data-form-id="defaultForm"
+                                       data-show-refresh="true"
+                                       data-page-size="10"
+                                       data-page-list="[5, 10, 20, 50, 100, 200]"
+                                       data-search="true"
+                                       data-query-params="postQueryParamsCourse">
+                                    <thead>
+                                        <tr>
+                                            <th data-field="CourseName">活动名称</th>
+                                            <th data-field="LocationName">目的地</th>
+                                            <th data-field="BeginDate" data-align="center">活动时间</th>
+                                            <th data-field="EndDate" data-align="center">活动时间</th>
+                                            <th data-field="ProcessStateName" data-align="center">状态</th>
+                                            <th data-formatter="opColumnsCourse" data-align="center">操作</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        @*</div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section JavaScript{
+    <script type="text/javascript">
+        var postQueryParamsProject = function (params) {
+            params.StudentId = $("#Id").val();
+            params.limit = 5;
+            params.liasdfasdfasdfasdmit = 5;
+            //console.log(JSON.stringify(params));
+            // {"limit":10,"offset":0,"order":"asc","your_param1":1,"your_param2":2}
+            return params; // body data
+        };
+        var opColumnsProject = function (value, row, index) {
+            return '<a href="details/_id_">查看</a>'.replace(/_id_/ig, row.Id);
+        };
+        var postQueryParamsCourse = function (params) {
+            params.StudentId = $("#Id").val();
+            params.limit = 5;
+            params.liasdfasdfasdfasdmit = 5;
+            //console.log(JSON.stringify(params));
+            // {"limit":10,"offset":0,"order":"asc","your_param1":1,"your_param2":2}
+            return params; // body data
+        };
+        var opColumnsCourse = function (value, row, index) {
+            return '<a href="details/_id_">查看</a>'.replace(/_id_/ig, row.Id);
+        };
+    </script>
+}

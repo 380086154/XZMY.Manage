@@ -1,0 +1,486 @@
+﻿@using XZMY.Manage.Model.Enum
+@model XZMY.Manage.Model.ViewModel.Order.VmOrderProjectDetails
+@{
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+    ViewBag.Title = "详细";
+}
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home/index">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="module">订单管理</span>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="action">活动订单详细</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+<div class="row" style="margin-top:20px">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet light bordered" id="form_wizard_1">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-reorder"></i>
+                    <span style="font-size: 25px;color: #000">活动信息</span>
+                </div>
+                <div class="actions">
+                 @{ string goUrl = ViewBag.GoUrl as string;
+                     if (string.IsNullOrEmpty(goUrl))
+                     {
+                        <a class="btn btn-default" href="/OrderProject/List">
+                            <i class="fa fa-list-ul"></i> 返回列表
+                        </a>
+                     }
+                     else
+                     {
+                        <a class="btn btn-default" href="/Planner/ProjectList">
+                            <i class="fa fa-list-ul"></i> 返回列表
+                        </a>
+                     }
+                }
+                    
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                    @Html.HiddenFor(x=>x.Id)
+                    <div class="form-body">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">名称：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <span class="form-control-static">@Model.ProjectName</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">编号：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <span class="form-control-static">@Model.ProjectCode</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">开始时间：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <span class="form-control-static">@Model.BeginDate.ToString("yyyy-MM-dd")</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">结束时间：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <span class="form-control-static">@Model.EndDate.ToString("yyyy-MM-dd")</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">订单状态：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <span class="form-control-static">@Model.ProcessStateName</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">预定金：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <span class="form-control-static">@Model.DepositPrice.ToString("N2")</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                         
+                        </div>
+
+@if (Model.EnrollType == EOrderEnrollType.代报名)
+{
+                        <h3 class="form-section">代理商信息</h3>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">代报名类型：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <span class="form-control-static">@Model.AgentType</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        if (Model.AgentType == EOrderAgentType.代理商)
+                        {
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">代理商：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <span class="form-control-static">@Model.AgentName</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">联系人：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <span class="form-control-static">@Model.ContactName</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">地址：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <span class="form-control-static">@Model.Address</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">电话：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <span class="form-control-static">@Model.ContactMobile</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+}
+                    </div>
+
+                    <h3 class="form-section">报名信息（报名表）</h3>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">姓名：</label>
+                                <div class="col-md-9">
+                                    <div class="input-icon right">
+                                        <span class="form-control-static">@Model.Name</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">身份证号码：</label>
+                                <div class="col-md-9">
+                                    <div class="input-icon right">
+                                        <span class="form-control-static">@Model.IdentityCard</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">手机号：</label>
+                                <div class="col-md-9">
+                                    <div class="input-icon right">
+                                        <span class="form-control-static">@Model.Mobile</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">邮箱：</label>
+                                <div class="col-md-9">
+                                    <div class="input-icon right">
+                                        <span class="form-control-static">@Model.Email</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">所在地区：</label>
+                                <div class="col-md-9">
+                                    <div class="input-icon right">
+                                        <span class="form-control-static">@Model.LocationName</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                      
+                    </div>
+
+                    <h3 class="form-section">支付信息</h3>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">是否支付完成：</label>
+                                <div class="col-md-9">
+                                    <div class="input-icon right">
+                                        <span class="form-control-static">@(Model.IsPayCompletion == EOrderIsPayCompletion .否? "否":"是")</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-3"></label>
+                                <div class="col-md-9">
+                                    @if (Model.IsPayCompletion != (EOrderIsPayCompletion)1 && Model.ProcessState != EOrderProcessState.已取消)
+                                    {
+                                        <button type="button" class="btn green" onclick="gotoPay();">添加支付</button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">总金额：</label>
+                                <div class="col-md-9">
+                                    <div class="input-icon right">
+                                        <span class="form-control-static">@Model.TotalPrice.ToString("N2")</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">支付金额：</label>
+                                <div class="col-md-9">
+                                    <div class="input-icon right">
+                                        <span class="form-control-static">@Model.PayPrice.ToString("N2")</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*已支付的数据*@
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="portlet light bordered">
+                                <div class="portlet-body">
+                                    <!-- BEGIN FORM-->
+                                    <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                                        <div class="mt-checkbox-inline" style="margin-top: -37px">
+                                            <div class="pull-left" style="margin-top: 20px">
+                                                @*流程状态：
+                                                <select id="ProcessState" name="ProcessState" class="form-control input-inline">
+                                                    <option value="0">全部</option>
+                                                    <option value="1">已报名</option>
+                                                    <option value="2">进行中</option>
+                                                    <option value="3">已结束</option>
+                                                    <option value="4">已取消</option>
+                                                </select>*@
+                                                <input type="hidden" id="OrderId" name="OrderId" value="@Model.DataId"/>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <!-- END FORM-->
+                                    <table id="table-pagination" data-toggle="table" data-url="/InCome/AjaxList/"
+                                           data-height="526"
+                                           data-form-id="defaultForm"
+                                           data-show-refresh="true"
+                                           data-page-size="10"
+                                           data-page-list="[5, 10, 20, 50, 100, 200]"
+                                           data-search="true">
+                                        <thead>
+                                            <tr>
+                                                <th data-field="SerialNumber">交易流水号</th>
+                                                <th data-field="PayPrice">支付金额</th>
+                                                <th data-field="PayTypeName">支付类型</th>
+                                                <th data-field="PayModeName">支付方式</th>
+                                                <th data-field="PayAccount">支付账号</th>
+                                                <th data-field="PayTime" data-align="center">付款时间</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    @if (@Request.QueryString["Type"].ToInt32(0) == 1)
+                    {
+                        <h3 class="form-section">评论</h3>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">评论：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <script id="editorCommentContent" type="text/plain" style="width:100%;height:300px;">@Html.Raw(Model.CommentContent)</script>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-3 col-md-9">
+                                        <button type="submit" class="btn green" onclick="SaveComment();">保存</button>
+                                        <button type="reset" class="btn default">重置</button>
+                                    </div>
+                                </div>
+                            </div>
+                    }
+                    else
+                    {
+                        <h3 class="form-section">评论</h3>
+                        if (Model.CommentContent.Length > 1)
+                        {
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3"></label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <span class="form-control-static">规划师还没有给这个活动进行评论。</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">评论规划师：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <span class="form-control-static">@Model.CommentPlannerName</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">评论时间：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <span class="form-control-static">@Model.CommentTime.ToString("yyyy-MM-dd")</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">评论：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <span class="form-control-static">@Html.Raw(Model.CommentContent)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+</div>
+
+@section JavaScript{
+<script type="text/javascript" charset="utf-8" src="/Content/Custom/UEditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/Content/Custom/UEditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="/Content/Custom/UEditor/lang/zh-cn/zh-cn.js"></script>
+    <script type="text/javascript">
+        var opColumns = function (value, row, index) {
+            var str = '<a href="details/_id_">查看</a>';
+
+
+            return str.replace(/_id_/ig, row.Id);//<a href="edit/_id_">编辑</a> |
+        };
+    </script>
+<script type="text/javascript">
+    ///点击支付
+    var gotoPay = function () {
+        window.location.href = "/InCome/Edit/?OrderId=" + $("#OrderId").val();
+    }
+    window.onload = function () {
+        var ue = UE.getEditor('editorCommentContent');
+    }
+        //保存按钮
+    var SaveComment = function () {
+      
+            $.ajax({
+                type: 'POST',
+                url: '/OrderProject/AjaxEditComment',
+                data: { Id: $("#Id").val(), CommentContent: UE.getEditor('editorCommentContent').getContent() },
+                dataType: 'JSON',
+                success: function (result) {
+                    if (result.success)
+                        location.replace('/OrderProject/details/?id=' + result.Id + '&type=1');
+                    else {
+                        showToast(3, '系统消息', result.message);//错误信息
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    showToast(3, '系统消息', JSON.stringify(errorThrown));//错误信息
+                },
+                async: false
+            });
+        };
+</script>
+}

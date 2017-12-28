@@ -1,0 +1,1387 @@
+﻿@using XZMY.Manage.Web.Controllers.Program
+@model XZMY.Manage.Model.ViewModel.Courses.VmCourseEdit
+@{
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+    ViewBag.Title = "创建/编辑";
+}
+@section Style{
+    <link href="~/Content/Metronic4.5.6/global/plugins/typeahead/typeahead.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/Metronic4.5.6/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="/Content/Metronic/css/jquery.tagsinput.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/Metronic/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/Metronic/css/bootstrap-modal.css" rel="stylesheet" type="text/css" />
+    <link href="/UploadCode/css/smart-green.css" rel="stylesheet" />
+    <link href="/UploadCode/webuploader/webuploader.css" rel="stylesheet" type="text/css" />
+}
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home/index">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="module">课程中心</span>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="action">编辑课程</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+<div class="row" style="margin-top: 20px">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet light bordered" id="form_wizard_1">
+        <div class="portlet-title">
+            <div class="caption">
+                <span style="font-size: 25px;color: #000">基础信息</span>
+            </div>
+            <div class="actions">
+                @if (Model.DataId != Guid.Empty)
+                {
+                    <a class="btn btn-default" href="/Course/Details/@Model.DataId">
+                        <i class="fa fa-eye"></i> 详细
+                    </a>
+                }
+                <a class="btn btn-default" href="/Course/List">
+                    <i class="fa fa-list-ul"></i> 返回列表
+                </a>
+            </div>
+        </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                    <div class="form-body">
+                        @*<h3 class="form-section">课程模板基础信息</h3>*@
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">课程名称<span class="required" aria-required="true"> * </span></label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.Name, new { @maxlength = "50", @class = "form-control" })
+                                            @Html.HiddenFor(x => x.DataId)
+                                            @Html.HiddenFor(x => x.CourseTemplateId)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">课程编码</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.Code, new { @maxlength = "50", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">宣传图片</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            @*批量上传图片按钮*@
+                                            <div id="btnalbum" style="float: left;" class="upload-box upload-album"></div>
+                                            @*<input type="text" id="firstName" class="form-control" placeholder="Chee Kin">*@
+                                            @Html.HiddenFor(x => x.Pictures)
+                                            <div class="photo-list" style="float: left; width: 100%;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">课程类型</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <select id="dllCourseType" class="form-control" required>
+                                                @*<option value="@(Model.CourseTypeId == Guid.Empty ? "" : Model.CourseTypeId.ToString())">@(string.IsNullOrEmpty(Model.CourseTypeName) ? "请选择" : Model.CourseTypeName)</option>*@
+                                                <option value="">请选择</option>
+                                            </select>
+                                            @Html.HiddenFor(x => x.CourseTypeId)
+                                            @Html.HiddenFor(x => x.CourseTypeName)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">课程地点</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <select id="dllCountry" class="mt-radio form-control input-small">
+                                                <option>@(Model.CoursePlaceName == null ? "请选择" : Model.CoursePlaceName.Split(",").Length >= 1 ? Model.CoursePlaceName.Split(",")[0] : "")</option>
+                                            </select>
+                                            <select id="dllProvince" class="mt-radio form-control input-small">
+                                                <option>@(Model.CoursePlaceName == null ? "请选择" : Model.CoursePlaceName.Split(",").Length >= 2 ? Model.CoursePlaceName.Split(",")[1] : "")</option>
+                                            </select>
+                                            <select id="dllCity" class="mt-radio form-control input-small">
+                                                <option value="@Model.CoursePlaceLocationId">@(Model.CoursePlaceName == null ? "请选择" : Model.CoursePlaceName.Split(",").Length == 3 ? Model.CoursePlaceName.Split(",")[2] : "")</option>
+                                            </select>
+                                            @Html.HiddenFor(x => x.CoursePlaceLocationId)
+                                            @Html.HiddenFor(x => x.CoursePlaceName)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">主办方</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.Sponsor, new { @maxlength = "100", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">推荐指数</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <select id="dllRecommendedIndex" class="form-control">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5" selected="selected">5</option>
+                                            </select>
+                                            @Html.HiddenFor(x => x.RecommendedIndex)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">面向人群</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <select id="dllSuitablePerson" class="form-control" style="display:none;">
+                                                <option value="1">亲子</option>
+                                                <option value="2">小学</option>
+                                                <option value="3">初中</option>
+                                                <option value="4">高中</option>
+                                                <option value="5" selected="selected">成人</option>
+                                            </select>
+                                            <select multiple id="dllFitGrade" name="dllFitGrade" class="form-control">
+                                                <option value="7">小学一年级</option>
+                                                <option value="8">小学二年级</option>
+                                                <option value="9">小学三年级</option>
+                                                <option value="10">小学四年级</option>
+                                                <option value="11">小学五年级</option>
+                                                <option value="12">小学六年级</option>
+                                                <option value="13">初中一年级</option>
+                                                <option value="14">初中二年级</option>
+                                                <option value="15">初中三年级</option>
+                                                <option value="16">高中一年级</option>
+                                                <option value="17">高中二年级</option>
+                                                <option value="18">高中三年级</option>
+                                            </select>
+                                            @Html.HiddenFor(x => x.SuitablePerson)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">包含服务</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <div class="mt-radio-inline">
+                                                <label class="mt-checkbox">
+                                                    <input type="checkbox" name="chkService" id="State1" value="住宿" checked> 住宿
+                                                    <span></span>
+                                                </label>
+                                                <label class="mt-checkbox">
+                                                    <input type="checkbox" name="chkService" id="State2" value="签证"> 签证
+                                                    <span></span>
+                                                </label>
+                                                <label class="mt-checkbox">
+                                                    <input type="checkbox" name="chkService" id="State3" value="保险"> 保险
+                                                    <span></span>
+                                                </label>
+                                                @Html.HiddenFor(x => x.Service)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--2016-9-23新增字段-->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">热点标识</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.HotKey, new { @maxlength = "4", @class = "form-control", @placeholder="例如：热门课程" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">学术指数</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            
+                                            @{ int _LearnUp = 5;
+                                                if (Model != null && Model.DataId != Guid.Empty)
+                                                {
+                                                    _LearnUp = Model.LearnUp;
+                                                    _LearnUp = _LearnUp <= 0 ? 5 : _LearnUp;
+                                                }
+                                            }
+                                            <select id="LearnUp" name="LearnUp" class="form-control">
+                                                <option value="1" @(_LearnUp == 1 ? " selected=\"selected\"" : "")>1</option>
+                                                <option value="2" @(_LearnUp == 2 ? " selected=\"selected\"" : "")>2</option>
+                                                <option value="3" @(_LearnUp == 3 ? " selected=\"selected\"" : "")>3</option>
+                                                <option value="4" @(_LearnUp == 4 ? " selected=\"selected\"" : "")>4</option>
+                                                <option value="5" @(_LearnUp == 5 ? " selected=\"selected\"" : "")>5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">英语指数</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @{ int _EnglishUp = 5;
+                                                if (Model != null && Model.DataId != Guid.Empty)
+                                                {
+                                                    _EnglishUp = Model.EnglishUp;
+                                                    _EnglishUp = _EnglishUp <= 0 ? 5 : _EnglishUp;
+                                                }
+                                             }
+                                            <select id="EnglishUp" name="EnglishUp" class="form-control">
+                                                <option value="1" @(_EnglishUp == 1 ? " selected=\"selected\"": "") >1</option>
+                                                <option value="2" @(_EnglishUp == 2 ? " selected=\"selected\"": "")>2</option>
+                                                <option value="3" @(_EnglishUp == 3 ? " selected=\"selected\"": "")>3</option>
+                                                <option value="4" @(_EnglishUp == 4 ? " selected=\"selected\"": "")>4</option>
+                                                <option value="5" @(_EnglishUp == 5 ? " selected=\"selected\"": "")>5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">能力指数</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @{ int _AbilityUp = 5;
+                                                if (Model != null && Model.DataId != Guid.Empty)
+                                                {
+                                                    _AbilityUp = Model.AbilityUp;
+                                                    _AbilityUp = _AbilityUp <= 0 ? 5 : _AbilityUp;
+                                                }
+                                            }
+                                            <select id="AbilityUp" name="AbilityUp" class="form-control">
+                                                <option value="1" @(_AbilityUp == 1 ? " selected=\"selected\"" : "")>1</option>
+                                                <option value="2" @(_AbilityUp == 2 ? " selected=\"selected\"" : "")>2</option>
+                                                <option value="3" @(_AbilityUp == 3 ? " selected=\"selected\"" : "")>3</option>
+                                                <option value="4" @(_AbilityUp == 4 ? " selected=\"selected\"" : "")>4</option>
+                                                <option value="5" @(_AbilityUp == 5 ? " selected=\"selected\"" : "")>5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End 2016-9-23新增字段-->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">推荐理由</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            @Html.TextBoxFor(x => x.RecommendedReason, new { @maxlength = "1000", @class = "form-control tags " })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">状态</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <div class="mt-radio-inline">
+                                                @if (Model.State == XZMY.Manage.Model.Enum.EState.禁用)
+                                                {
+                                                    <label class="mt-radio mt-radio-outline">
+                                                        <input type="radio" name="State" value="1"> 启用
+                                                        <span></span>
+                                                    </label>
+                                                    <label class="mt-radio mt-radio-outline">
+                                                        <input type="radio" name="State" value="2"  checked="checked"> 禁用
+                                                        <span></span>
+                                                    </label>
+                                                }
+                                                else
+                                                {
+                                                    <label class="mt-radio mt-radio-outline">
+                                                        <input type="radio" name="State" value="1" checked="checked"> 启用
+                                                        <span></span>
+                                                    </label>
+                                                    <label class="mt-radio mt-radio-outline">
+                                                        <input type="radio" name="State" value="2" > 禁用
+                                                        <span></span>
+                                                    </label>
+                                                }
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="form-section">课程时间出发地</h3>
+
+                        
+
+                        <div id="divTimeDepartureCity">
+                            @if (Model.DataId == Guid.Empty)
+                            {
+                                <div class="row item-date">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3">时间1</label>
+                                            <div class="col-md-9">
+                                                <div class="input-icon right">
+                                                    <i class="fa"></i>
+                                                    <div class="input-group input-large date-picker input-daterange" style="width: 120%" data-date="2016-07-19" data-date-format="yyyy-mm-dd">
+                                                        <input type="text" class="form-control"  name="BeginDate" value="" required>
+                                                        <span class="input-group-addon"> 到 </span>
+                                                        <input type="text" class="form-control"  name="EndDate" value="" required>
+                                                    </div>
+                                                    @*<a href="javascript:void(0);" style="display: inline-block;margin:-54px 0 0 323px" class="btn btn-circle btn-icon-only btn-default delete-date">
+                                                        <i class="icon-trash"></i>
+                                                    </a>*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3"></label>
+                                            <div class="col-md-9">
+                                                <div class="input-icon right">
+                                                    <input name="CourseTimeId" type="hidden" value="00000000-0000-0000-0000-000000000000" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
+                        </div>
+                        <input type="hidden" id="hfDateList" name="dateList" value="" />
+
+                        <div class="row-fluid" style="text-align: right">
+                            <a class="btn btn-default add" href="javascript:void(0);">添加</a>
+                            <h1></h1>
+                        </div>
+
+                        <h3 class="form-section">课程价格</h3>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">市场价格</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.MarketPrice, new { @maxlength = "10", @class = "form-control", @onkeyup = "inputFloat(this)" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">课程价格</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.ActualPrice, new { @maxlength = "10", @class = "form-control", @onkeyup = "inputFloat(this)" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">折扣</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.Discount, new { @maxlength = "10", @class = "form-control", @onkeyup = "inputFloat(this)" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">定金</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.DepositPrice, new { @maxlength = "10", @class = "form-control", @onkeyup = "inputFloat(this)" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="form-section">课程分值</h3>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">难度指数</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <select id="dllDifficultyValue" name="dllDifficultyValue" class="form-control">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5" selected="selected">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                                <option value="10">10</option>
+                                            </select>
+                                            @Html.HiddenFor(x => x.DifficultyValue)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="display:none;">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">完成率</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <select id="dllCompletionValue" name="dllCompletionValue" class="form-control">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5" selected="selected">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                                <option value="10">10</option>
+                                            </select>
+                                            @Html.HiddenFor(x => x.CompletionValue)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">性价比</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <select id="dllFeeValue"  name="dllFeeValue" class="form-control">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5" selected="selected">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                                <option value="10">10</option>
+                                            </select>
+                                            @Html.HiddenFor(x => x.FeeValue)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="form-section">成长分值</h3>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">英语加分</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input id="EnglishScore" name="EnglishScore" maxlength="10" class="form-control" value="@(Model.EnglishScore.ToString("#0.00"))" onkeyup="inputFloat(this)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">学科加分</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input id="LearnScore" name="LearnScore" maxlength="10" class="form-control" value="@(Model.LearnScore.ToString("#0.00"))" onkeyup="inputFloat(this)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">素质加分</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            
+                                            <input id="QualityScore" name="QualityScore" maxlength="10" class="form-control" value="@(Model.QualityScore.ToString("#0.00"))"  onkeyup="inputFloat(this)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="form-section">历练项目</h3>
+
+                        <div id="divScoreItems">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3"></label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <div id="divScoreItemNames" class="controls mt-radio-inline" style="width: 100%;">
+                                                    @{
+                                                        ProgramAbilityController bllProgramAbility = new ProgramAbilityController();
+                                                        int iCount = 0;
+                                                        var listProgramAbility = bllProgramAbility.GetList(new XZMY.Manage.Model.ViewModel.Program.VmProgramAbility() { Type = XZMY.Manage.Model.Enum.EProgramType.课程 }, out iCount);
+                                                        String strScoreItemNames = "英语能力";
+                                                        if (iCount > 0)
+                                                        {
+                                                            strScoreItemNames = listProgramAbility[0].Name;
+                                                        }
+                                                        foreach (var m in listProgramAbility)
+                                                        {
+                                                            if (strScoreItemNames == m.Name)
+                                                            {
+                                                                <label class="radio" style="width:100px; float:left;">
+                                                                    <input type="radio" name="ckScoreItemNames" value="@(m.Name) " checked="checked" />
+                                                                    @(m.Name)
+                                                                </label>
+                                                            }
+                                                            else
+                                                            {
+                                                                <label class="radio" style="width:100px; float:left;">
+                                                                    <input type="radio" name="ckScoreItemNames" value="@(m.Name)" />
+                                                                    @(m.Name)
+                                                                </label>
+                                                            }
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="form-section">课程介绍</h3>
+
+                    <div class="tab-pane active" id="tab_4">
+                        <div class="portlet box blue">
+                            <div class="portlet-body form">
+                                <div class="row-fluid">
+                                    <div class="span11 ">
+                                        <div class="control-group">
+                                            @*<label class="control-label" for="RealName">课程介绍<span class="required">*</span></label>*@
+                                            <div class="controls">
+                                                <ul class="nav nav-tabs">
+                                                    <li class="active"><a href="#tab_1_1" data-toggle="tab">项目介绍</a></li>
+                                                    <li><a href="#tab_1_2" data-toggle="tab">行程安排</a></li>
+                                                    <li><a href="#tab_1_3" data-toggle="tab">费用说明</a></li>
+                                                    <li><a href="#tab_1_4" data-toggle="tab">住宿安排</a></li>
+                                                    <li><a href="#tab_1_5" data-toggle="tab">签证说明</a></li>
+                                                    <li><a href="#tab_1_6" data-toggle="tab">行程须知</a></li>
+                                                    <li><a href="#tab_1_7" data-toggle="tab">安全保障</a></li>
+                                                </ul>
+                                                <div class="tab-content">
+                                                    <div class="tab-pane active" id="tab_1_1">
+                                                        <script id="editorCourseDescription" type="text/plain" style="width: 99%; height: 300px;">
+                                                            @Html.Raw(Model.CourseDescription)
+                                                        </script>
+                                                        @Html.HiddenFor(x => x.CourseDescription)
+                                                    </div>
+                                                    <div class="tab-pane" id="tab_1_2">
+                                                        <script id="editorSchedule" type="text/plain" style="width: 99%; height: 300px;">
+                                                            @Html.Raw(Model.Schedule)
+                                                        </script>
+                                                        @Html.HiddenFor(x => x.Schedule)
+                                                    </div>
+                                                    <div class="tab-pane" id="tab_1_3">
+                                                        <script id="editorFee" type="text/plain" style="width: 99%; height: 300px;">
+                                                            @Html.Raw(Model.Fee)
+                                                        </script>
+                                                        @Html.HiddenFor(x => x.Fee)
+                                                    </div>
+                                                    <div class="tab-pane" id="tab_1_4">
+                                                        <script id="editorStay" type="text/plain" style="width: 99%; height: 300px;">
+                                                            @Html.Raw(Model.Stay)
+                                                        </script>
+                                                        @Html.HiddenFor(x => x.Stay)
+                                                    </div>
+                                                    <div class="tab-pane" id="tab_1_5">
+                                                        <script id="editorVisa" type="text/plain" style="width: 99%; height: 300px;">
+                                                            @Html.Raw(Model.Visa)
+                                                        </script>
+                                                        @Html.HiddenFor(x => x.Visa)
+                                                    </div>
+                                                    <div class="tab-pane" id="tab_1_6">
+                                                        <script id="editorStroke" type="text/plain" style="width: 99%; height: 300px;">
+                                                            @Html.Raw(Model.Stroke)
+                                                        </script>
+                                                        @Html.HiddenFor(x => x.Stroke)
+                                                    </div>
+                                                    <div class="tab-pane" id="tab_1_7">
+                                                        <script id="editorSecurity" type="text/plain" style="width: 99%; height: 300px;">
+                                                            @Html.Raw(Model.Security)
+                                                        </script>
+                                                        @Html.HiddenFor(x => x.Security)
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="submit" class="btn green">保存</button>
+                                <button type="reset" class="btn default">重置</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+                <!--课程时间添加模板-->
+                <div id="dateItem" style="display: none">
+
+                    <div class="row item-date">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">时间__INDEX__</label>
+                                <div class="col-md-9">
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <div class="input-group input-large date-picker input-daterange" style="width: 120%" data-date="2016-07-19" data-date-format="yyyy-mm-dd">
+                                            <input type="text" class="form-control"  name="BeginDate" value="__BEGINDATE__" required />
+                                            <span class="input-group-addon"> 到 </span>
+                                            <input type="text" class="form-control"  name="EndDate" value="__ENDDATE__" required />
+                                        </div>
+                                        <a href="javascript:void(0);" style="display: inline-block;margin:-54px 0 0 323px" class="btn btn-circle btn-icon-only btn-default delete-date">
+                                            <i class="icon-trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-3"></label>
+                                <div class="col-md-9">
+                                    <div class="input-icon right">
+                                        <input name="CourseTimeId" type="hidden" value="__COURSETIMEID__" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End课程时间添加模板-->
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+</div>
+@section JavaScript{
+<script src="~/Content/Metronic4.5.6/global/plugins/typeahead/handlebars.min.js" type="text/javascript"></script>
+<script src="~/Content/Metronic4.5.6/global/plugins/typeahead/typeahead.bundle.min.js" type="text/javascript"></script>
+
+
+    <script type="text/javascript" charset="utf-8" src="/Content/Custom/UEditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/Content/Custom/UEditor/ueditor.all.min.js"> </script>
+    <script type="text/javascript" charset="utf-8" src="/Content/Custom/UEditor/lang/zh-cn/zh-cn.js"></script>
+
+<link href="~/Content/Metronic4.5.6/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Content/Metronic4.5.6/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="/Content/Metronic/js/clockface.js"></script>
+    <script type="text/javascript" src="/Content/Metronic/js/daterangepicker.js"></script>
+    <script type="text/javascript" src="/Content/Metronic/js/jquery.tagsinput.min.js"></script>
+    <script type="text/javascript" src="/Content/Metronic/js/jquery.inputmask.bundle.min.js"></script>
+    @*<script src="/Content/Metronic/js/app.js"></script>*@
+    @*<script src="/Content/Metronic/js/form-components.js"></script>*@
+    <script src="/UploadCode/webuploader/webuploader.min.js" type="text/javascript"></script>
+    <script src="/UploadCode/js/uploader.js" type="text/javascript" charset="utf-8"></script>
+    @*图文编辑器*@
+
+    <script type="text/javascript">
+        //保存完成后提交子表
+        function AjaxSave(CourseId) {
+            AjaxSaveCourseTime(CourseId);
+            //AjaxSaveCourseScores(CourseId);
+        }
+        //保存项目课程时间
+        var AjaxSaveCourseTime = function (CourseId) {
+            for (var i = 0; i < $('.txtCityName').length; i++) {
+                var CourseDate = {
+                    Id: $('.CourseTimeId').eq(i).val(),
+                    CourseId: CourseId,
+                    BeginDate: $('.SelectTime1').eq(i).val(),
+                    EndDate: $('.SelectTime2').eq(i).val(),
+                    DepartureCity: $('.txtCityName').eq(i).val()
+                };
+
+                $.ajax({
+                    url: "/CourseDate/AjaxEdit",
+                    data: CourseDate,
+                    type: 'post',
+                    async: false, //默认为true 异步
+                    error: function () { alert('error'); },
+                    success: function (data) { }
+                });
+            }
+
+        };
+        //保存项目课程获得分值
+        function AjaxSaveCourseScores(CourseId) {
+            $('.txtScoreItem').each(function (k, v) {
+                var ScoreModel = {
+                    Id: $(v).attr("ScoresId"),
+                    ScoreItemsId: $(v).attr("ScoreItemsId"),
+                    ScoreItemsName: $(v).attr("ScoreItemsName"),
+                    SourceId: CourseId,
+                    SourceType: "Course",
+                    ScoreValue: $(v).val()
+                };
+                $.ajax({
+                    url: "/Scores/AjaxEdit",
+                    data: ScoreModel,
+                    type: 'post',
+                    async: false, //默认为true 异步
+                    error: function () { alert('error'); },
+                    success: function (data) { }
+                });
+            });
+        }
+
+        function LoadPage() {
+            LoadDllScore();
+            LoadPrice();
+            LoadService();
+            LoadState();//加载状态 显示
+            //加载课程图片
+            ShowImageList();
+            //课程类型下拉列表框
+            BingdllCourseType();
+            //加载地区
+            GetCountry($("#CoursePlaceName").val());
+            LoadUeditor();
+            //加载课程时间选择框
+            LoadDepartureCity();
+            $("#dllFitGrade").val([@(Model.SuitablePerson??"")]);
+            if (!jQuery().tagsInput) {
+                return;
+            }
+            $('#RecommendedReason').tagsInput({
+                width: 'auto'
+            });
+        }
+
+        var LoadUeditor = function () {
+
+        };
+        //页面加载绑定课程分值
+        function LoadDllScore() {
+            //DifficultyValue 难度系数
+            $("#dllDifficultyValue").change(function () {
+                $("#DifficultyValue").val($("#dllDifficultyValue").val());
+            });
+            if ($("#DifficultyValue").val() != "0") {
+                $("#dllDifficultyValue").val($("#DifficultyValue").val());
+            }
+
+            //CompletionValue 完成系数
+            $("#dllCompletionValue").change(function () {
+                $("#CompletionValue").val($("#dllCompletionValue").val());
+            });
+            if ($("#CompletionValue").val() != "0") {
+                $("#dllCompletionValue").val($("#CompletionValue").val());
+            }
+
+            //FeeValue 性价比
+            $("#dllFeeValue").change(function () {
+                $("#FeeValue").val($("#dllFeeValue").val());
+            });
+            if ($("#FeeValue").val() != "0") {
+                $("#dllFeeValue").val($("#FeeValue").val());
+            }
+
+            //RecommendedIndex 推荐指数  1~5
+            $("#dllRecommendedIndex").change(function () {
+                $("#RecommendedIndex").val($("#dllRecommendedIndex").val());
+            });
+            if ($("#RecommendedIndex").val() != "0") {
+                $("#dllRecommendedIndex").val($("#RecommendedIndex").val());
+            }
+
+            //加载分值项目
+            if ($("#Id").val() != "00000000-0000-0000-0000-000000000000") {
+                //修改
+                $.getJSON("/Scores/AjaxList", { SourceId: $("#Id").val() }, function (data) {
+                       $.each(data.rows, function(i, item) {
+                           //ScoresId,ScoreItemsId,ScoreItemName,SourceId,SourceType,Score
+                           InsertDivScoreItems(item["Id"], item["ScoreItemsId"], item["ScoreItemsName"], $("#Id").val(), 'Course', item["ScoreValue"], i);
+                       });
+                   });
+            }
+            else {
+                //新增
+                $.getJSON("/ScoreItems/AjaxList3", { Type: 3 }, function (data) {
+                       $.each(data.rows, function(i, item) {
+                           //ScoresId,ScoreItemsId,ScoreItemName,SourceId,SourceType,Score
+                           InsertDivScoreItems('00000000-0000-0000-0000-000000000000', item["Id"], item["Name"], '00000000-0000-0000-0000-000000000000', 'Course', 0, i);
+                       });
+                   });
+            }
+        }
+
+        var InsertDivScoreItemsNo = 0;
+        var InsertDivScoreItems = function (scoresId, scoreItemsId, scoreItemName, sourceId, sourceType, scoreValue, i) {
+            if (scoreValue == undefined) { scoreValue = 0; }
+            //if (!isNaN(ScoreValue)) { ScoreValue = 0; }
+            InsertDivScoreItemsNo++;
+            var divname = [];
+            //+ '     <div class="row-fluid">    '
+            //+ '          <div class="span6 ">'
+            //+ '              <div class="control-group">'
+            //+ '                  <label class="control-label" for="RealName">' + ScoreItemName + '</label>      '
+            //+ '                  <div class="controls">'
+            //+ '                        <input id="InsertDivScoreItemsNo' + InsertDivScoreItemsNo + '" type="text" value="' + Score + '" ScoreItemsId="' + ScoreItemsId + '" ScoreItemsName="' + ScoreItemName + '" ScoresId="' + ScoresId + '" class="txtScoreItem m-wrap span10" placeholder="Chee Kin">          '
+            //+ '            </div>                                                                                           '
+            //+ '        </div>                                                                                               '
+            //+ '    </div>                                                                                                   '
+            //+ '</div>                                                                                                       '
+
+            //var flag = i % 2 == 0;
+            //console.log(i + ' - ' + flag);
+            //if (flag ) {
+            divname.push('            <div class="row" style="display: none">');
+            //}
+            divname.push('                <div class="col-md-6">');
+            divname.push('                    <div class="form-group">');
+            divname.push('                        <label class="control-label col-md-3" for="InsertDivScoreItemsNo' + InsertDivScoreItemsNo + '">' + scoreItemName + '</label>');
+            divname.push('                        <div class="col-md-9">');
+            divname.push('                            <div class="input-icon right">');
+            divname.push('                                <div class="controls mt-radio-inline" style="width: 100%;">');
+            divname.push('                                     <input id="InsertDivScoreItemsNo' + InsertDivScoreItemsNo + '" name="txtScoreValue" type="text" autocomplete="off" value="' + scoreValue + '"  ScoreItemsId="' + scoreItemsId + '" ScoreItemsName="' + scoreItemName + '" ScoresId="' + scoresId + '" onkeyup="inputFloat(this)" class="txtScoreItem form-control">          ');
+            divname.push('                                </div>');
+            divname.push('                            </div>');
+            divname.push('                        </div>');
+            divname.push('                    </div>');
+            divname.push('                </div>');
+
+            //if (!flag) {
+            divname.push('            </div>');
+            //}
+
+            $(divname.join('')).appendTo($("#divScoreItems"));
+            $("#InsertDivScoreItemsNo" + InsertDivScoreItemsNo).inputmask({ "mask": "9", "repeat": 10, "greedy": false });
+
+            //添加成长项目
+            //var vScoreItemNames = new Array();
+            //vScoreItemNames.push('<label class="mt-checkbox">');
+            //if ($("#ScoreItemNames").val().indexOf(scoreItemName) >= 0) {
+            //    //vScoreItemNames.push('    <input class="ckScoreItemNames" type="checkbox" value="' + ScoreItemName + '" checked="checked"/> ' + ScoreItemName);
+            //    vScoreItemNames.push('       <input type="checkbox" class="ckScoreItemNames" name="ckScoreItemNames" value="' + scoreItemName + '" checked> ' + scoreItemName + '<span></span>');
+            //} else {
+            //    //vScoreItemNames.push('    <input class="ckScoreItemNames" type="checkbox" value="' + ScoreItemName + '" /> ' + ScoreItemName);
+            //    vScoreItemNames.push('       <input type="checkbox" class="ckScoreItemNames" name="ckScoreItemNames" value="' + scoreItemName + '"> ' + scoreItemName + '<span></span>');
+            //}
+            //vScoreItemNames.push('</label>');
+            //$(vScoreItemNames.join('')).appendTo($("#divScoreItemNames"));
+        };
+        //价格
+        function LoadPrice() {
+            $("#MarketPrice").inputmask('decimal', { rightAlignNumerics: false }); //disables the right alignment of the decimal input
+            $("#ActualPrice").inputmask('decimal', { rightAlignNumerics: false }); //disables the right alignment of the decimal input
+            $("#Discount").inputmask('decimal', { rightAlignNumerics: false }); //disables the right alignment of the decimal input
+            $("#DepositPrice").inputmask('decimal', { rightAlignNumerics: false }); //disables the right alignment of the decimal input
+
+            $('#MarketPrice').keyup(function () {
+
+            });
+            $('#ActualPrice').keyup(function () {
+                if ($('#MarketPrice').val() > 0) {
+                    var aDiscount = $('#ActualPrice').val() / $('#MarketPrice').val();
+                    $('#Discount').val(aDiscount.toFixed(2));
+                }
+            });
+            $('#Discount').keyup(function () {
+                if ($('#MarketPrice').val() > 0) {
+                    var aActualPrice = $('#MarketPrice').val() * $('#Discount').val()
+                    $('#ActualPrice').val(aActualPrice.toFixed(2));
+                }
+            });
+
+        }
+        //包含服务
+        function LoadService() {
+            var strService = $("#Service").val();
+            $('.chkService').each(function (k, v) {
+                if (strService.indexOf($(v).val()) >= 0) {
+                    $(v).attr('checked', 'checked');
+                }
+            });
+        }
+        //状态 禁用 启用
+        function LoadState() {
+            var strService = $("#State").val();
+            if ($("#State").val() == 0)
+                $("#State").val(1);
+            $('.chkState').each(function (k, v) {
+                if ($(v).val() == strService) {
+                    $(v).attr('checked', 'checked');
+                }
+            });
+            //加载事件
+            $(".chkState").change(function () {
+                $('.chkState').each(function (k, v) {
+                    if ($(v).attr('checked') == 'checked') {
+                        $("#State").val($(v).val());
+                    }
+                });
+            });
+        }
+        //绑定课程类型
+        function BingdllCourseType() {
+            $.getJSON('/Content/Custom/DataDictionary.ashx', { action: 'GetGetCatagory', Key: 'CourseType' }, function (data) {
+                appendOption(data.CourseType, '#dllCourseType', $("#CourseTypeId").val());
+            });
+        }
+        //绑定地区国家信息
+        function GetCountry(LocationName) {
+            //加载事件
+            $("#dllCountry").change(function () {
+                $("#CoursePlaceLocationId").val($("#dllCountry").val());
+                $("#CoursePlaceName").val($("#dllCountry").find("option:selected").text());
+                GetProvince("");
+                GetCity("");
+            });
+
+            var lName = LocationName.split(',');
+            var CountryName = "";
+            if (lName.length > 0) {
+                CountryName = lName[0];
+            }
+            $.ajaxSettings.async = false;
+            $.getJSON("/Content/Custom/Location.ashx", { action: "GetLocationLevel", Level: 1 },
+                function (data) {
+                    $("#dllCountry").empty();
+                    $.each(data, function(i, item) {
+                        if (item["Name"] != CountryName) {
+                            $("<option></option>").val(item["Id"]).text(item["Name"]).appendTo($("#dllCountry"));
+                        } else {
+                            $("<option selected='selected'></option>").val(item["Id"]).text(item["Name"]).appendTo($("#dllCountry"));
+                        }
+                    });
+
+                    if ($("#dllCountry").val() != null) {
+                        $("#CoursePlaceLocationId").val($("#dllCountry").val());
+                        $("#CoursePlaceName").val($("#dllCountry").find("option:selected").text());
+                        GetProvince(LocationName);
+                    }
+                });
+        }
+        //绑定地区省份信息
+        function GetProvince(locationName) {
+            //加载事件
+            $("#dllProvince").change(function () {
+                $("#CoursePlaceLocationId").val($("#dllProvince").val());
+                $("#CoursePlaceName").val($("#dllCountry").find("option:selected").text() + "," + $("#dllProvince").find("option:selected").text());
+                GetCity("");
+            });
+
+            var lName = locationName.split(',');
+            var ProvinceName = "";
+            if (lName.length > 1) {
+                ProvinceName = lName[1];
+            }
+            if ($("#dllCountry").val() != null) {
+                $.ajaxSettings.async = false;
+                $.getJSON("/Content/Custom/Location.ashx", { action: "GetLocationParentId", ParentId: $("#dllCountry").val() },
+                    function (data) {
+                        $("#dllProvince").empty();
+                        $.each(data, function(i, item) {
+                            if (item["Name"] != ProvinceName) {
+                                $("<option></option>").val(item["Id"]).text(item["Name"]).appendTo($("#dllProvince"));
+                            } else {
+                                $("<option selected='selected'></option>").val(item["Id"]).text(item["Name"]).appendTo($("#dllProvince"));
+                            }
+                        });
+
+                        if ($("#dllProvince").val() != null) {
+                            $("#CoursePlaceLocationId").val($("#dllProvince").val());
+                            $("#CoursePlaceName").val($("#dllCountry").find("option:selected").text() + "," + $("#dllProvince").find("option:selected").text());
+                            GetCity(locationName);
+                        }
+                        else {
+                            $("#dllCity").empty();
+                        }
+                    });
+            }
+        }
+        //绑定地区城市信息
+        function GetCity(locationName) {
+            //加载事件
+            $("#dllCity").change(function () {
+                $("#CoursePlaceLocationId").val($("#dllCity").val());
+                $("#CoursePlaceName").val($("#dllCountry").find("option:selected").text() + "," + $("#dllProvince").find("option:selected").text() + "," + $("#dllCity").find("option:selected").text());
+            });
+
+            var lName = locationName.split(',');
+            var CityName = "";
+            if (lName.length > 2) {
+                CityName = lName[2];
+            }
+            if ($("#dllProvince").val() != null) {
+                $.ajaxSettings.async = false;
+                $.getJSON("/Content/Custom/Location.ashx", { action: "GetLocationParentId", ParentId: $("#dllProvince").val() },
+                    function (data) {
+                        $("#dllCity").empty();
+                        $.each(data, function(i, item) {
+                            if (item["Name"] != CityName) {
+                                $("<option></option>").val(item["Id"]).text(item["Name"]).appendTo($("#dllCity"));
+                            } else {
+                                $("<option selected='selected'></option>").val(item["Id"]).text(item["Name"]).appendTo($("#dllCity"));
+                            }
+                        });
+                        if ($("#dllCity").val() != null) {
+                            $("#CoursePlaceLocationId").val($("#dllCity").val());
+                            $("#CoursePlaceName").val($("#dllCountry").find("option:selected").text() + "," + $("#dllProvince").find("option:selected").text() + "," + $("#dllCity").find("option:selected").text());
+                        }
+                    });
+            }
+            else {
+                $("#dllCity").empty();
+            }
+        }
+        //显示图片
+        function ShowImageList() {
+            if ($("#Pictures").val() != "") {
+                var ImageUrls = $("#Pictures").val().split(",");
+                for (var i = 0; i < ImageUrls.length; i++) {
+                    ShowImageNoUrl(ImageUrls[i]);
+                }
+            }
+        }
+        function LoadDepartureCity() {
+            if ($("#Id").val() != "00000000-0000-0000-0000-000000000000") {
+                $.getJSON("/CourseDate/AjaxList", { CourseId: $("#Id").val() },
+                   function (data) {
+                       $.each(data.rows, function (i, item) {
+                           //课程时主键ID，课程开始时间，课程结束时间，课程出发城市
+                           AddDivDepartureCity(item["Id"].toString(), yyyy_mm_dd(item["BeginDate"]), yyyy_mm_dd(item["EndDate"]), item["DepartureCity"].toString(), i);
+                       });
+                   });
+            }
+        }
+        //添加一个课程时间选择框
+        function AddDivDepartureCity(courseTimeId, selectTime1, selectTime2, cityName, i) {
+
+            var strHtml = ''
+            + ' <div style="float:left;width:100%;">    '
+            + '     <div class="input-append date date-picker" data-date-format="yyyy-mm-dd" data-date-viewmode="years" style="float:left;">        '
+            + '         <input class="m-wrap m-ctrl-medium date-picker SelectTime1" readonly size="16" type="text" value="' + selectTime1 + '" /><span class="add-on"><i class="icon-calendar"></i></span>       '
+            + '    </div>                                                                                                                                                                    '
+            + '     <div class="input-append date date-picker" data-date-format="yyyy-mm-dd" data-date-viewmode="years" style="float:left; padding-left:20px;">        '
+            + '         <input class="m-wrap m-ctrl-medium date-picker SelectTime2" readonly size="16" type="text" value="' + selectTime2 + '" /><span class="add-on"><i class="icon-calendar"></i></span>       '
+            + '    </div>                                                                                                                                                                    '
+            + '     <div style="float:left;width:600px;">        '
+            + '         <input id="tags_1" type="hidden" class="m-wra tags txtCityName" value="' + cityName + '" />                                                         '
+            + '    </div>                                                                                                                                                                    '
+            + '     <input type="button" value="删除" onclick="$(this).parent().remove();" />'
+            + '     <input class="CourseTimeId" type="hidden" value="' + courseTimeId + '" />'
+            + '</div>                                                                                                                                                                        '
+            if (i == 0) {
+                $('#dateItem .delete-date').hide();
+            } else {
+                $('#dateItem .delete-date').show();
+            }
+            strHtml = $('#dateItem').html()
+                .replace(/__INDEX__/ig, i + 1)
+                //.replace(/__ADDDIVDEPARTURECITYID__/ig, AddDivDepartureCityID)
+                .replace(/__CITYNAME__/ig, cityName)
+                .replace(/__COURSETIMEID__/ig, courseTimeId)
+                .replace(/__BEGINDATE__/ig, selectTime1)
+                .replace(/__ENDDATE__/ig, selectTime2);
+
+
+            $(strHtml).appendTo($("#divTimeDepartureCity"));
+            if (jQuery().datepicker) {
+                $('.date-picker').datepicker({
+                    rtl: App.isRTL()
+                });
+            }
+
+            $('.delete-date').unbind().click(function () {
+                $(this).parents('.item-date').remove();
+            });
+        }
+        //页面保存
+        function SavePage() {
+            $("#CourseTypeId").val($("#dllCourseType").val());
+            $("#CourseTypeName").val($("#dllCourseType").find("option:selected").text());
+
+            //SavePagedivScoreItemNames();//保存历练项目主要成长项目名称
+            //保存多张图片
+            seturlimage();
+            SavePageService();
+            SavePageSuitablePerson();
+            setTextArea();
+
+        }
+        ////保存历练项目主要成长项目名称
+        //var SavePagedivScoreItemNames = function () {
+        //    var strNames = new Array();
+        //    $('.ckScoreItemNames').each(function (k, v) {
+        //        if ($(v).attr('checked') == 'checked') {
+        //            if (strNames.join('') == '') {
+        //                strNames.push($(v).val());
+        //            } else {
+        //                strNames.push(',' + $(v).val());
+        //            }
+        //        }
+        //    });
+        //    $("#ScoreItemNames").val(strNames.join(''));
+        //};
+        //保存包含服务
+        function SavePageService() {
+            var strService = [];
+            $('.chkService').each(function (k, v) {
+                if ($(v).attr('checked') == 'checked') {
+                    strService.push($(v).val());
+                }
+            });
+            $('#Service').val(strService.join(''));
+        }
+        //面向人群
+        function SavePageSuitablePerson() {
+            $('#SuitablePerson').val($('#dllSuitablePerson').val());
+        }
+        //保存批量图片入文本框控件中
+        function seturlimage() {
+            var strUrl = '';
+            var strImageUrl = '';
+            for (var i = 0; i < document.getElementsByName("hid_photo_ImageUrl").length; i++) {
+                if (document.getElementsByName("hid_photo_ImageUrl").length == i + 1) {
+                    strImageUrl += document.getElementsByName("hid_photo_ImageUrl")[i].value;
+                } else {
+                    strImageUrl += document.getElementsByName("hid_photo_ImageUrl")[i].value + ',';
+                }
+            }
+            $('#Pictures').val(strImageUrl);
+        }
+
+        $(function () {
+            var form1 = $('#defaultForm');
+            var error1 = $('.alert-error', form1);
+            var success1 = $('.alert-success', form1);
+            //页面加载绑定各种下拉列表框
+            LoadPage();
+            $("#btnalbum").InitUploader({
+                btntext: "批量上传",
+                multiple: true,
+                water: false,
+                thumbnail: false,
+                NoUrl: true,
+                sendurl: "/UploadCode/ajax.ashx",
+            });
+
+            $('.add').click(function () {
+                AddDivDepartureCity('00000000-0000-0000-0000-000000000000', '', '', '', $('#divTimeDepartureCity .row').length);
+            });
+
+            $('.delete-date').click(function () {
+                $(this).parents('.item-date').remove();
+            });
+
+            form1.validate({
+                errorElement: 'span', //default input error message container
+                errorClass: 'help-inline', // default input error message class
+                focusInvalid: false, // do not focus the last invalid input
+                ignore: "",
+                rules: {
+                    Name: { minlength: 1, required: true },
+                    RecommendedReason: { minlength: 1, required: true },
+                    dllCourseType: { required: true },
+                    BeginDate: { required: true },
+                    EndDate: { required: true }
+                },
+
+                //invalidHandler: function (event, validator) { //display error alert on form submit
+                //    success1.hide();
+                //    error1.show();
+                //    App.scrollTo(error1, -200);
+                //},
+
+                errorPlacement: function (error, element) { // render error placement for each input type
+                    var icon = $(element).parent('.input-icon').children('i');
+                    icon.removeClass('fa-check').addClass("fa-warning");
+                    icon.attr("data-original-title", error.text()).tooltip({ 'container': 'body' });
+                },
+
+                highlight: function (element) { // hightlight error inputs
+                    $(element).closest('.form-group').removeClass("has-success").addClass('has-error'); // set error class to the control group
+                },
+
+                unhighlight: function (element) { // revert the change done by hightlight
+
+                },
+
+                success: function (label, element) {
+                    var icon = $(element).parent('.input-icon').children('i');
+                    $(element).closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                    icon.removeClass("fa-warning").addClass("fa-check");
+                },
+
+                submitHandler: function (form) {
+                    SavePage();
+
+                    var data = form1.serializeObject();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Course/AjaxEdit',
+                        data: data,
+                        dataType: 'JSON',
+                        success: function (result) {
+                            AjaxSave(result.Id);
+
+                            if (result.success) {
+
+                                $('.txtScoreItem').each(function(k, v) {
+                                    var scoreModel = {
+                                        Id: $(v).attr("ScoresId"),
+                                        ScoreItemsId: $(v).attr("ScoreItemsId"),
+                                        ScoreItemsName: $(v).attr("ScoreItemsName"),
+                                        SourceId: result.Id,
+                                        SourceType: "Course",
+                                        ScoreValue: $(v).val()
+                                    };
+                                    $.ajax({
+                                        url: "/Scores/AjaxEdit",
+                                        data: scoreModel,
+                                        type: 'post',
+                                        async: false, //默认为true 异步
+                                        error: function() { alert('error'); },
+                                        success: function(data) {}
+                                    });
+                                });
+
+                                location.replace('/Course/Details/' + result.Id);
+                            } else {
+                                showToast(3, '系统消息', result.message);//错误信息
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            showToast(3, '系统消息', JSON.stringify(errorThrown));//错误信息
+                        },
+                        async: false
+                    });
+                }
+            });
+        });
+
+        function ChangeDateFormat(cellval) {
+            return cellval.split('T')[0];
+
+            var date = new Date(parseInt(cellval.replace("/Date(", "").replace(")/", ""), 10));
+            var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+            var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+            return date.getFullYear() + "-" + month + "-" + currentDate;
+        }
+    </script>
+    <script type="text/javascript">
+        window.onload = function () {
+            var ue = UE.getEditor('editorCourseDescription');
+            ue = UE.getEditor('editorSchedule');
+            ue = UE.getEditor('editorFee');
+            ue = UE.getEditor('editorStay');
+            ue = UE.getEditor('editorVisa');
+            ue = UE.getEditor('editorStroke');
+            ue = UE.getEditor('editorSecurity');
+        }
+
+        var setTextArea = function () {
+            $("#CourseDescription").val(UE.getEditor('editorCourseDescription').getContent());
+            $("#Schedule").val(UE.getEditor('editorSchedule').getContent());
+            $("#Fee").val(UE.getEditor('editorFee').getContent());
+            $("#Stay").val(UE.getEditor('editorStay').getContent());
+            $("#Visa").val(UE.getEditor('editorVisa').getContent());
+            $("#Stroke").val(UE.getEditor('editorStroke').getContent());
+            $("#Security").val(UE.getEditor('editorSecurity').getContent());
+        }
+    </script>
+}

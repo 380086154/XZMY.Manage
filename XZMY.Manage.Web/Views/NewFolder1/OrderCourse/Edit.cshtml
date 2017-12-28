@@ -1,0 +1,478 @@
+﻿@model XZMY.Manage.Model.ViewModel.Order.VmOrderProject
+@{
+    ViewBag.Title = "创建/编辑";
+}
+<div id="dashboard">
+    <!-- BEGIN DASHBOARD STATS -->
+    <div class="row-fluid">
+        <div class="span10">
+            <div class="tabbable tabbable-custom boxless">
+
+                @*<ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab_1" data-toggle="tab">2 Columns</a></li>
+                        <li><a class="" href="#tab_2" data-toggle="tab">2 Columns Horizontal</a></li>
+                        <li><a href="#tab_3" data-toggle="tab">2 Columns View Only</a></li>
+                        <li><a class="" href="#tab_4" data-toggle="tab">Row Seperated</a></li>
+                        <li><a class="" href="#tab_5" data-toggle="tab">Bordered</a></li>
+                        <li><a class="" href="#tab_6" data-toggle="tab">Bordered & Row Stripped</a></li>
+                        <li><a class="" href="#tab_7" data-toggle="tab">Bordered & Label Stripped</a></li>
+                    </ul>*@
+
+                <div class="tab-content">
+                    <!-- BEGIN FORM-->
+
+                    <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                        <div class="tab-pane active" id="tab_1">
+
+                            <div class="portlet box blue">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <span style="font-size: 25px;color: #000">活动信息</span>
+                                    </div>
+
+                                    <div class="tools">
+                                        <a href="javascript:void(0);" class="collapse"></a>
+
+                                        @*<a href="#portlet-config" data-toggle="modal" class="config"></a>
+                                            <a href="javascript:;" class="reload"></a>
+                                            <a href="javascript:;" class="remove"></a>*@
+                                    </div>
+                                </div>
+
+                                <div class="portlet-body form">
+
+                                    <!--/row-->
+                                    <div class="row-fluid">
+                                        <div class="span10 ">
+                                            <div class="control-group">
+                                                <label class="control-label">活动名称<span class="required">*</span></label>
+                                                <div class="controls select2-wrapper">
+                                                    <select id="selectProject" name="selectProject" class="span12">
+                                                        <option value="">请选择</option>
+                                                    </select>
+                                                    <input type="hidden" id="hfProjectId" name="ProjectId" />
+                                                    <input type="hidden" id="hfProjectName" name="ProjectName" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row-fluid">
+                                        <div class="span6 ">
+                                            <div class="control-group">
+                                                <label class="control-label">活动编号：</label>
+                                                <div class="controls">
+                                                    <span class="text display-value" id="lblCode"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        @*<div class="span6 ">
+                                                <div class="control-group">
+                                                    <label class="control-label">活动名称：</label>
+                                                    <div class="controls">
+                                                        <span class="text display-value" id="lblName"></span>
+                                                    </div>
+                                                </div>
+                                            </div>*@
+                                    </div>
+
+                                    <div class="row-fluid">
+                                        <div class="span6 ">
+                                            <div class="control-group">
+                                                <label class="control-label">开始时间：</label>
+                                                <div class="controls">
+                                                    <span class="text display-value" id="lblBeginDate"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="span6 ">
+                                            <div class="control-group">
+                                                <label class="control-label">结束时间：</label>
+                                                <div class="controls">
+                                                    <span class="text display-value" id="lblEndDate"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--/row-->
+                                </div>
+                            </div>
+
+                            <div class="portlet box blue">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="icon-reorder"></i>代理商信息
+                                    </div>
+
+                                    <div class="tools">
+                                        <a href="javascript:void(0);" class="collapse"></a>
+                                    </div>
+                                </div>
+
+                                <div class="portlet-body form">
+
+                                    <div class="alert alert-error hide">
+                                        <button class="close" data-dismiss="alert"></button>
+                                        你有一些错误，请检查。
+                                    </div>
+
+                                    <div class="row-fluid">
+
+                                    </div>
+
+                                    <!--/row-->
+
+                                    <div class="row-fluid">
+                                        <div class="span6 ">
+                                            <div class="control-group">
+                                                <label class="control-label">代报名类型</label>
+                                                <div class="controls">
+                                                    <label class="radio">
+                                                        <input type="radio" name="AgentType" value="1" checked="checked" />
+                                                        代理商
+                                                    </label>
+                                                    <label class="radio">
+                                                        <input type="radio" name="AgentType" value="2" />
+                                                        家长
+                                                    </label>
+                                                    <label class="radio">
+                                                        <input type="radio" name="AgentType" value="3" />
+                                                        学生
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="agent_div">
+
+                                        <div class="row-fluid">
+                                            <div class="span6 ">
+                                                <div class="control-group">
+                                                    <label class="control-label">代理商<span class="required">*</span></label>
+                                                    <div class="controls select2-wrapper">
+                                                        <select id="selectAgent" name="selectAgent" class="span10">
+                                                            <option value="">请选择</option>
+                                                        </select>
+                                                        <input type="hidden" id="hfAgentId" name="AgentId" />
+                                                        <input type="hidden" id="hfAgentName" name="AgentName" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="span6 ">
+                                                <div class="control-group">
+                                                    <label class="control-label">联系人：</label>
+                                                    <div class="controls">
+                                                        <span class="text display-value" id="lblCompanyName"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row-fluid">
+                                            <div class="span6 ">
+                                                <div class="control-group">
+                                                    <label class="control-label">地址：</label>
+                                                    <div class="controls">
+                                                        <span class="text display-value" id="lblAddress"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="span6 ">
+                                                <div class="control-group">
+                                                    <label class="control-label">电话：</label>
+                                                    <div class="controls">
+                                                        <span class="text display-value" id="lblMobile"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--/row-->
+                                </div>
+                            </div>
+
+                            <div class="portlet box blue">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="icon-reorder"></i>报名信息（报名表）
+                                    </div>
+
+                                    <div class="tools">
+                                        <a href="javascript:void(0);" class="collapse"></a>
+                                    </div>
+                                </div>
+
+                                <div class="portlet-body form">
+
+                                    <div class="alert alert-error hide">
+                                        <button class="close" data-dismiss="alert"></button>
+                                        你有一些错误，请检查。
+                                    </div>
+
+                                    <div class="row-fluid">
+
+                                    </div>
+
+                                    <!--/row-->
+
+                                    <div class="row-fluid">
+                                        <div class="span6 ">
+                                            <div class="control-group">
+                                                <label class="control-label" for="BankName">姓名<span class="required">*</span></label>
+                                                <div class="controls">
+                                                    @Html.TextBoxFor(x => x.RealName, new {@maxlength = "50", @class = "m-wrap span10"})
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="span6 ">
+                                            <div class="control-group">
+                                                <label class="control-label" for="IdentityCard">身份证号码<span class="required">*</span></label>
+                                                <div class="controls">
+                                                    @Html.TextBoxFor(x => x.IdentityCard, new {@maxlength = "100", @class = "m-wrap span10"})
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row-fluid">
+                                        <div class="span6 ">
+                                            <div class="control-group">
+                                                <label class="control-label" for="Mobile">手机号<span class="required">*</span></label>
+                                                <div class="controls">
+                                                    @Html.TextBoxFor(x => x.Mobile, new {@maxlength = "50", @class = "m-wrap span10"})
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="span6 ">
+                                            <div class="control-group">
+                                                <label class="control-label" for="Email">邮箱<span class="required">*</span></label>
+                                                <div class="controls">
+                                                    @Html.TextBoxFor(x => x.Email, new {@maxlength = "100", @class = "m-wrap span10"})
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row-fluid">
+                                        <div class="span6 ">
+                                            <div class="control-group">
+                                                <label class="control-label" for="LocationId">所在省份<span class="required">*</span></label>
+                                                <div class="controls">
+                                                    <input type="text" maxlength="50" class="m-wrap span10" />
+                                                    @Html.HiddenFor(x => x.LocationId)
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="span6 ">
+                                            <div class="control-group">
+                                                <label class="control-label" for="LocationPathName">所在市<span class="required">*</span></label>
+                                                <div class="controls">
+                                                    @Html.TextBoxFor(x => x.LocationPathName, new {@maxlength = "50", @class = "m-wrap span10"})
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--/row-->
+                                </div>
+                            </div>
+
+                            <div class="portlet box blue">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="icon-reorder"></i>支付信息
+                                    </div>
+
+                                    <div class="tools">
+                                        <a href="javascript:void(0);" class="collapse"></a>
+                                    </div>
+                                </div>
+
+                                <div class="portlet-body form">
+
+                                    <div class="alert alert-error hide">
+                                        <button class="close" data-dismiss="alert"></button>
+                                        你有一些错误，请检查。
+                                    </div>
+
+                                    <div class="row-fluid">
+
+                                    </div>
+
+                                    <!--/row-->
+
+                                    <div class="row-fluid">
+                                        <div class="span6 ">
+                                            <div class="control-group">
+                                                <label class="control-label" for="BankName">支付状态<span class="required">*</span></label>
+                                                <div class="controls">
+                                                    @Html.TextBoxFor(x => x.IsPayCompletion, new { @maxlength = "50", @class = "m-wrap span10" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*<div class="span6 ">
+                                                <div class="control-group">
+                                                    <label class="control-label" for="IdentityCard">支付方式<span class="required">*</span></label>
+                                                    <div class="controls">
+
+                                                    </div>
+                                                </div>
+                                            </div>*@
+                                    </div>
+
+                                    <!--/row-->
+                                </div>
+                            </div>
+                        </div>
+
+                        @*<div class="form-actions">*@
+                        <button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>
+                        <button type="reset" class="btn">重置</button>
+                        @*</div>*@
+                    </form>
+                    <!-- END FORM-->
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END DASHBOARD STATS -->
+<div class="clearfix"></div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        var form1 = $('#defaultForm');
+        var hfId = $('#Id');
+        var error1 = $('.alert-error', form1);
+        var success1 = $('.alert-success', form1);
+        var isRequired = hfId.val() == '00000000-0000-0000-0000-000000000000';
+        var agentData = null, projectData = null;
+
+        //$("input[name='State'][value=]").attr("checked", true);
+        $('input[name="AgentType"]').click(function (v) {
+            if ($(this).val() != 1) $('#agent_div').hide(200);
+            else $('#agent_div').show(200);
+        });
+
+
+        form1.validate({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-inline', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            ignore: "",
+            rules: {
+                LoginName: { required: true, remote: { url: '/UserAccount/AjaxIsExist/@Model.DataId', message: '已存在' } }
+            },
+
+            invalidHandler: function (event, validator) { //display error alert on form submit
+                success1.hide();
+                error1.show();
+                App.scrollTo(error1, -200);
+            },
+
+            highlight: function (element) { // hightlight error inputs
+                $(element).closest('.help-inline').removeClass('ok'); // display OK icon
+                $(element).closest('.control-group').removeClass('success').addClass('error'); // set error class to the control group
+            },
+
+            unhighlight: function (element) { // revert the change dony by hightlight
+                $(element).closest('.control-group').removeClass('error'); // set error class to the control group
+            },
+
+            success: function (label) {
+                label.addClass('valid').addClass('help-inline ok') // mark the current input as valid and display OK icon
+                .closest('.control-group').removeClass('error').addClass('success'); // set success class to the control group
+            },
+
+            submitHandler: function (form) {
+                //success1.show();
+                //error1.hide();
+                //form1.submit();
+
+                var data = form1.serializeObject();
+                $.ajax({
+                    type: 'POST',
+                    url: '/OrderProject/AjaxEdit',
+                    data: data,
+                    dataType: 'JSON',
+                    success: function (result) {
+                        if (result.success)
+                            location.replace('/OrderProject/details/' + result.Id);
+                        else {
+                            showToast(3, '系统消息', result.message);//错误信息
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        showToast(3, '系统消息', JSON.stringify(errorThrown));//错误信息
+                    },
+                    async: false
+                });
+            }
+        });
+
+        var bindDataDictionary = function () {
+            $.getJSON('/Content/Custom/DataDictionary.ashx', { action: 'GetGetCatagory', Key: 'AgentLevel,AgentNature,AgentCategory' }, function (data) {
+                appendOption(data.AgentLevel, '#LevelId');
+                appendOption(data.AgentCategory, '#CategoryId');
+                appendOption(data.AgentNature, '#NatureId');
+            });
+        };
+
+        var bindProject = function () {
+            $('#selectProject').select2({ allowClear: true });
+
+            $.getJSON('/OrderProject/AjaxProjectList/', function (data) {
+                //console.log(JSON.stringify(data));
+                projectData = data.rows;
+                appendOption(projectData, '#selectProject');
+            });
+
+            $('#selectProject').change(function () {
+                var option = $(this);
+                //console.log(option.val());
+
+                $.each(projectData, function (i, item) {
+                    if (item.Id == option.val()) {
+                        $('#lblCode').text(item.Code);
+                        $('#hfProjectId').val(item.Id);
+                        $('#hfProjectName').val(item.Name);
+                    }
+                });
+            });
+        };
+
+        var bindAgent = function () {
+            $('#selectAgent').select2({ allowClear: true });
+
+            $.getJSON('/OrderProject/AjaxAgentList/', function (data) {
+                //console.log(JSON.stringify(data));
+                agentData = data.rows;
+                appendOption(agentData, '#selectAgent');
+            });
+
+            $('#selectAgent').change(function () {
+                var option = $(this);
+                //console.log(option.val());
+
+                $.each(agentData, function (i, item) {
+                    if (item.Id == option.val()) {
+                        $('#hfAgentId').val(item.Id);
+                        $('#hfAgentName').val(item.Name);
+                        $('#lblCompanyName').text(item.Name);
+                    }
+                });
+            });
+        };
+
+        bindDataDictionary();
+        bindAgent();
+        bindProject();
+    });
+</script>

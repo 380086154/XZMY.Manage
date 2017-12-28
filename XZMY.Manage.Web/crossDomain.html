@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script type="text/javascript">
+        var getQueryString = function (name, path) {
+            var reg = new RegExp("[?&]" + name + "=([^&]*)(&?)", "i");
+            var r = path.match(reg);
+            if (r != null) return decodeURI(r[1]);
+            return null;
+        };
+
+        window.onload = function () {
+            //var path = getQueryString('url');
+            var path = window.location.toString().split('?url=')[1];
+            var id = getQueryString('dataTabID', path);
+            var text = getQueryString('dataTabText', path) || 'NewTab';
+            
+            var flag = getQueryString('dataFlag', path);
+            
+            var thisOptions = {};
+            thisOptions.tabID = id || (Math.random() + '').replace('.', '');
+            thisOptions.path = path;
+            thisOptions.title = text;
+            if (flag == 1) {
+                window.parent.parent.RenderNavTab.renderPath(thisOptions);
+            } else {
+                window.parent.parent.RenderNavTab.openTabs(thisOptions);
+            }
+        };
+    </script>
+</head>
+<body>
+</body>
+</html>

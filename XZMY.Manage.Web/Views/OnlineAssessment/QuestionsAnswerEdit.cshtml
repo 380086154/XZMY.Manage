@@ -1,0 +1,363 @@
+﻿@using XZMY.Manage.Web.Controllers.OnlineAssessment
+@using XZMY.Manage.Model.Enum
+@model XZMY.Manage.Model.ViewModel.OnlineAssessment.VmOnlineAssessmentQuestions
+@{
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+    ViewBag.Title = "创建/编辑";
+}
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home/index">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="module">在线评估</span>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="action">问题编辑</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+<div class="row" style="margin-top: 20px">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet light bordered" id="form_wizard_1">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span style="font-size: 25px;color: #000">基础信息</span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-default" href="/OnlineAssessment/QuestionsList">
+                        <i class="fa fa-list-ul"></i> 返回列表
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                    @Html.HiddenFor(x => x.DataId)
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">标题</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.Title </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">试卷</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @{
+                                                OnlineAssessmentController bll = new OnlineAssessmentController();
+                                                <p class="form-control-static"> @bll.GetModelOnlineAssessmentSecurity(Model.OnlineAssessmentSecurityId).Name</p>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">题目类型</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.TypeName </p>
+                                            @Html.HiddenFor(x=>x.Type)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">用时（秒）</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.UseTime </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">状态</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.State.ToString() </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">问题描述</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static">@Html.Raw(Model.Description)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">问题描述</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static">@Html.Raw(Model.Description)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <h3 class="form-section">答案</h3>
+                        <div id="items">
+                            </div>
+                            <div class="row-fluid" style="text-align: right">
+                                <a class="btn btn-default add" href="javascript:void(0);">添加</a>
+
+                                <a class="btn btn-outline dark" data-toggle="modal" href="#responsive"> View Demo </a>
+                                <h1></h1>
+                            </div>
+                        </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="submit" class="btn green">保存</button>
+                                <button type="reset" class="btn default">重置</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*纯文字答案  1*@
+                    <div id="score-content1" class="row" style="display: none">
+                        <div class="row">
+                            <div class="col-md-6" index="__INDEX__">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" for="txtDescription__INDEX__">答案__INDEX__ 描述</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <textarea id="Description__INDEX__"  name="Description__INDEX__">__AnswerDescription__</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="responsive" class="modal fade" tabindex="-1" data-width="760">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">Responsive</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4>Some Input</h4>
+                                    <p>
+                                        <input class="form-control" type="text">
+                                    </p>
+                                    <p>
+                                        <input class="form-control" type="text">
+                                    </p>
+                                    <p>
+                                        <input class="form-control" type="text">
+                                    </p>
+                                    <p>
+                                        <input class="form-control" type="text">
+                                    </p>
+                                    <p>
+                                        <input class="form-control" type="text">
+                                    </p>
+                                    <p>
+                                        <input class="form-control" type="text">
+                                    </p>
+                                    <p>
+                                        <input class="form-control" type="text">
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4>Some More Input</h4>
+                                    <p>
+                                        <input class="form-control" type="text">
+                                    </p>
+                                    <p>
+                                        <input class="form-control" type="text">
+                                    </p>
+                                    <p>
+                                        <input class="form-control" type="text">
+                                    </p>
+                                    <p>
+                                        <input class="form-control" type="text">
+                                    </p>
+                                    <p>
+                                        <input class="form-control" type="text">
+                                    </p>
+                                    <p>
+                                        <input class="form-control" type="text">
+                                    </p>
+                                    <p>
+                                        <input class="form-control" type="text">
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                            <button type="button" class="btn green">Save changes</button>
+                        </div>
+                    </div>
+                    @*纯图片答案  1*@
+                    <div id="score-content1" class="row" style="display: none">
+                        <div class="row">
+                            <div class="col-md-6" index="__INDEX__">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" for="txtDescription__INDEX__">答案__INDEX__ 描述</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <textarea id="Description__INDEX__" name="Description__INDEX__">__AnswerDescription__</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </form>
+            <!-- END FORM-->
+        </div>
+    </div>
+    <!-- END VALIDATION STATES-->
+</div>
+</div>
+@section JavaScript{
+    <script src="/Content/Custom/UEditor/ueditor.config.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/Content/Custom/UEditor/ueditor.all.min.js" type="text/javascript" charset="utf-8"> </script>
+    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+    <script src="/Content/Custom/UEditor/lang/zh-cn/zh-cn.js" type="text/javascript" charset="utf-8"></script>
+
+
+    <script type="text/javascript">
+        var index = 0;
+        ///添加答案项
+        var addAnswerItem = function (Id, Description, Picture, GroupId, GroupName, QuestionType) {
+            index++;
+            var strHtml = "";
+            if (QuestionType == 1) {  //文字单选题
+                strHtml = $('#score-content1').html();
+            }
+            @*"2">@EOnlineAssessmentQuestionType.图片单选题.ToString()</option>
+            <option value="3">@EOnlineAssessmentQuestionType.分组单选题.ToString()<*@
+
+            strHtml.replace(/__INDEX__/ig, index)
+               .replace(/__AnswerPicture__/, Picture)
+               .replace(/__AnswerDescription__/, Description);
+
+
+            $(strHtml).appendTo($("#items"));
+        };
+        $(function () {
+            $('.add').click(function () {
+                addAnswerItem('00000000-0000-0000-0000-000000000000', '', '', '00000000-0000-0000-0000-000000000000', '', $("#Type").val());
+
+            });
+        });
+        jQuery(document).ready(function () {
+            var form1 = $('#defaultForm');
+            var hfId = $('#Id');
+            var error1 = $('.alert-error', form1);
+            var success1 = $('.alert-success', form1);
+            var isRequired = hfId.val() == '00000000-0000-0000-0000-000000000000';
+
+
+
+            form1.validate({
+                errorElement: 'span', //default input error message container
+                errorClass: 'help-block help-block-error', // default input error message class
+                focusInvalid: false, // do not focus the last invalid input
+                ignore: "",
+                rules: {
+                    Title: { minlength: 1, required: true }
+                },
+
+                invalidHandler: function (event, validator) { //display error alert on form submit
+                    success1.hide();
+                    error1.show();
+                    App.scrollTo(error1, -200);
+                },
+
+                errorPlacement: function (error, element) { // render error placement for each input type
+                    var icon = $(element).parent('.input-icon').children('i');
+                    icon.removeClass('fa-check').addClass("fa-warning");
+                    icon.attr("data-original-title", error.text()).tooltip({ 'container': 'body' });
+                },
+
+                highlight: function (element) { // hightlight error inputs
+                    $(element).closest('.form-group').removeClass("has-success").addClass('has-error'); // set error class to the control group
+                },
+
+                unhighlight: function (element) { // revert the change done by hightlight
+
+                },
+
+                success: function (label, element) {
+                    var icon = $(element).parent('.input-icon').children('i');
+                    $(element).closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                    icon.removeClass("fa-warning").addClass("fa-check");
+                },
+                submitHandler: function (form) {
+                    //success1.show();
+                    //error1.hide();
+                    //form1.submit();
+                    var data = form1.serializeObject();
+                    $.ajax({
+                        type: 'POST',
+                        url: '/OnlineAssessment/QuestionsAnswerAjaxEdit',
+                        data: data,
+                        dataType: 'JSON',
+                        success: function (result) {
+                            if (result.success)
+                                location.replace('/OnlineAssessment/QuestionsAnswerEdit/' + result.Id);
+                            else {
+                                showToast(3, '系统消息', result.message);//错误信息
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            showToast(3, '系统消息', JSON.stringify(errorThrown));//错误信息
+                        },
+                        async: false
+                    });
+                }
+            });
+        });
+
+
+
+
+    </script>
+}

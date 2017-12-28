@@ -1,0 +1,93 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+    ViewBag.Title = "列表";
+}
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home/index">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="module">相册管理</span>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="action">相册管理</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+<div class="mt-bootstrap-tables" style="margin-top:20px">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span style="font-size: 25px;color: #000"></span>
+                    </div>
+                    <div class="actions">
+                        @*<a class="btn btn-circle btn-icon-only btn-default" href="javascript:;"><i class="icon-cloud-upload"></i></a>*@
+                        <a class="btn btn-default" href="/Albums/Edit">
+                            <i class="fa fa-plus"></i> 上传
+                        </a>
+                        @*<a class="btn btn-circle btn-icon-only btn-default" href="javascript:;"><i class="icon-wrench"></i></a>
+                            <a class="btn btn-circle btn-icon-only btn-default delete" href="javascript:;"><i class="icon-trash"></i></a>*@
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <!-- END FORM-->
+                    <table id="table-pagination" data-toggle="table" data-url="/Albums/AjaxList/"
+                           data-height="auto"
+                           data-form-id="defaultForm"
+                           data-show-refresh="true"
+                           data-page-size="50"
+                           data-page-list="[50, 100, 200]"
+                           data-search="false"
+                           data-unique-id="Id">
+                        <thead>
+                            <tr>
+                                <th data-formatter="previewColumns" data-align="lift">预览</th>
+                                <th data-field="Title" data-align="lift">标题</th>
+                                <th data-formatter="opColumns" data-align="center">操作</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section JavaScript{
+    <script type="text/javascript">
+        var previewColumns = function (value, row, index) {
+            var path = "@(new MvcHtmlString((string)ViewData["imgpath"]))";
+            path="@(XZMY.Manage.Web.Controllers.Albums.AlbumsController.IMGPATH)"
+            return '<img height="100" width="100" src="' + row.Url + '"/>';
+        };
+        var opColumns = function (value, row, index) {
+            return '<a href="/Albums/Edit/_id_" >编辑</a> | <a href="#" onclick="deletepic(\'_id_\')">删除</a>'.replace(/_id_/ig, row.Id);;
+        };
+        
+        function deletepic(id) {
+            $.ajax({
+                type: 'GET',
+                url: '/Albums/Delete?id=' + id,
+                success: function (result) {
+                    if (result.success) {
+                        $("#table-pagination").bootstrapTable('removeByUniqueId', id);
+                    }
+                    else {
+                        alert("删除失败！" + result.Message);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    //alert(id);
+                    showToast(3, '系统消息', JSON.stringify(errorThrown));//错误信息
+                },
+                async: false
+            });
+        }
+    </script>
+}

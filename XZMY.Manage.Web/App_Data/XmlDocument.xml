@@ -1,0 +1,2898 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>XZMY.Manage.Web</name>
+    </assembly>
+    <members>
+        <member name="F:XZMY.Manage.Web.Content.Code.PlanRecordToWord.form1">
+            <summary>
+            form1 控件。
+            </summary>
+            <remarks>
+            自动生成的字段。
+            若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+            </remarks>
+        </member>
+        <member name="M:XZMY.Manage.Web.Content.Code.PlanRecordWord.ToWord(System.Guid)">
+            <summary>
+            规划导出为WORD
+            </summary>
+            <param name="PlanRecordId"></param>
+        </member>
+        <member name="T:XZMY.Manage.Web.Content.Code.StringHelp">
+            <summary>
+            String 帮助类
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.Content.Code.StringHelp.ReplaceHtmlTag(System.String)">
+            <summary>
+            去除HTML标签
+            </summary>
+            <param name="Html">包含Html字符串</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Content.Code.StringHelp.ReplaceHtml(System.String)">
+            <summary>
+            去除HTML标签
+            </summary>
+            <param name="Html">包含Html字符串</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Content.Code.StringHelp.KillHtml(System.String)">
+            <summary>
+            删除HTML代码
+            </summary>
+            <param name="htmlstring"></param>
+            <returns></returns>
+        </member>
+        <member name="T:XZMY.Manage.Web.Content.Custom.DataDictionary">
+            <summary>
+            DataDictionary 的摘要说明
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.Content.Custom.DataDictionary.GetGetCatagory(System.Web.HttpContext)">
+            <summary>
+            分类获取数据字段
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:XZMY.Manage.Web.Content.Custom.Location">
+            <summary>
+            Location 的摘要说明
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.Content.Custom.Location.GetLocationParentId(System.Web.HttpContext)">
+            <summary>
+            地区上级Id查询数据
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:XZMY.Manage.Web.Content.Custom.School">
+            <summary>
+            School 的摘要说明
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.Content.Custom.School.GetSchoolCategoryLevel(System.Web.HttpContext)">
+            <summary>
+            查询一级
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Content.Custom.School.GetSchoolCategoryParentId(System.Web.HttpContext)">
+            <summary>
+            查询父级Id
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:XZMY.Manage.Web.Content.Custom.SiteSetting">
+            <summary>
+            SiteSetting 的摘要说明
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.Content.Custom.SiteSetting.AddScores(System.Web.HttpContext)">
+            <summary>
+            添加项目分值
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Content.Custom.SiteSetting.AddScoresData(XZMY.Manage.Model.ViewModel.SiteSetting.VmScoresEdit)">
+            <summary>
+            保存积分数据
+            </summary>
+            <param name="modelScores"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Content.Custom.SiteSetting.GetCourseTimeCourseId(System.Web.HttpContext)">
+            <summary>
+            获取活动时间和出发城市
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Content.Custom.SiteSetting.GetProjectTimeProjectId(System.Web.HttpContext)">
+            <summary>
+            获取活动时间和出发城市
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:XZMY.Manage.Web.Controllers.Albums.AlbumsController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Albums.AlbumsController.CheckExt(System.IO.Stream)">
+            <summary>
+            通过文件头信息判断文件类型
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Albums.AlbumsController.GetModel(System.Guid)">
+            <summary>
+            获取对象
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Albums.AlbumsController.CreateEdit(XZMY.Manage.Model.ViewModel.Albums.VmAlbum)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="T:XZMY.Manage.Web.Controllers.Assessment.AssessmentController">
+            <summary>
+            评估中心问题
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Assessment.AssessmentController.AchievementList">
+            <summary>
+            评估成绩单
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Assessment.AssessmentController.GetAnswerAndScore(System.Guid)">
+            <summary>
+            获取答案与分数信息
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Assessment.AssessmentTestPaperController.AjaxList(XZMY.Manage.Model.ViewModel.Assessment.VmAssessment)">
+            <summary>
+            Ajax获取列表
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Assessment.AssessmentTestPaperController.GetModel(System.Guid)">
+            <summary>
+            获取单独对象
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Assessment.AssessmentTestPaperController.CreateEdit(XZMY.Manage.Model.ViewModel.Assessment.VmAssessment)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Assessment.AssessmentTestPaperController.Delete(System.Guid)">
+            <summary>
+            物理删除对象
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="T:XZMY.Manage.Web.Controllers.Auth.RoleController">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="T:XZMY.Manage.Web.Controllers.ControllerBase">
+            <summary>
+            Controller 基类
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.ControllerBase.OnActionExecuting(System.Web.Mvc.ActionExecutingContext)">
+            <summary>
+            
+            </summary>
+            <param name="filterContext"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.ControllerBase.AuthorityCheck">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.ControllerBase.GetAuthAttribute(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="ctrl"></param>
+            <param name="act"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.ControllerBase.GetErrors">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Course.CourseController.GetVmCourse(System.Guid)">
+            <summary>
+            通过ID获取课程对象
+            </summary>
+            <param name="CourseId">课程ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Course.CourseController.Details(System.Nullable{System.Guid})">
+            <summary>
+            详细展示页
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Course.CourseDateController.GetModel(System.Guid)">
+            <summary>
+            获取单独对象
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Course.CourseDateController.CreateEdit(XZMY.Manage.Model.ViewModel.Courses.VmCourseDate)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Course.CourseDateController.Delete(System.Guid)">
+            <summary>
+            物理删除对象
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Course.CourseTemplateController.Edit(System.Nullable{System.Guid})">
+            <summary>
+            创建编辑
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Course.CourseTemplateController.GetVmCourseTemplate(System.Guid)">
+            <summary>
+            获取课程模板信息
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Course.CourseTemplateController.GetCourse(System.Guid)">
+            <summary>
+            通过模板ID获取课程的ID
+            </summary>
+            <param name="CourseTemplateId">课程模板ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Course.CourseTemplateController.GetList(XZMY.Manage.Model.ViewModel.Courses.VmCourseTemplate,System.Int32@)">
+            <summary>
+            获取课程模板列表
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="T:XZMY.Manage.Web.Controllers.Customers.MemberController">
+            <summary>
+            会员
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.MemberController.CreateMember">
+            <summary>
+            创建前台会员账号
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.MemberController.GetMember(System.Guid)">
+            <summary>
+            获取会员基础信息
+            </summary>
+            <param name="MemberId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.MemberController.CreateEdit(XZMY.Manage.Model.ViewModel.Members.VmMember)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.ParentController.GetModel(System.Guid)">
+            <summary>
+            获取单独对象
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.ParentController.CreateEdit(XZMY.Manage.Model.ViewModel.Members.VmParents)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.VipController.StudentList">
+            <summary>
+            VIP学生列表页面
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.VipController.StudentDetails(System.Nullable{System.Guid},System.String)">
+            <summary>
+            学生详细页面
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.VipController.StudentPlan(System.Nullable{System.Guid})">
+            <summary>
+            学生规划查看页面
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.VipController.StudentPlanList(System.Nullable{System.Guid})">
+            <summary>
+            学生规划列表页面
+            </summary>
+            <param name="StudentId">学生ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.VipController.PlannerList">
+            <summary>
+            规划师列表页面
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.VipController.StudentVipApplyList(System.Nullable{System.Guid})">
+            <summary>
+            查看学生VIP申请记录列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.VipController.StudentVipApplyDetails(System.Guid)">
+            <summary>
+            学生申请VIP页面
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.VipController.PlanRecordToWord">
+            <summary>
+            导出规划WORD
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.VipController.AjaxStudentVipApplyList(XZMY.Manage.Model.ViewModel.VmSearchBase,System.Nullable{System.Guid})">
+            <summary>
+            AJAX获取申请学生申请VIP列表
+            </summary>
+            <param name="model"></param>
+            <param name="PlannerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.VipController.AjaxStudentVipApplyEdit(XZMY.Manage.Model.ViewModel.Planners.VmStudentVipApply)">
+            <summary>
+            AJAX  修改学生申请VIP的状态
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.VipController.AjaxPlanRecordList(XZMY.Manage.Model.ViewModel.VmSearchBase,System.Nullable{System.Guid})">
+            <summary>
+            AJAX 规划师查看学生规划的历史规划列表
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.StudentController.GetVmStudent(System.Guid)">
+            <summary>
+            通过ID获取学生信息对象
+            </summary>
+            <param name="StudentId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.StudentController.StudentAddEdit(XZMY.Manage.Model.ViewModel.Members.VmStudent)">
+            <summary>
+            创建或修改学生信息
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.StudentController.List">
+            <summary>
+            规划师 查看学生列表页面
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.StudentController.AjaxList(XZMY.Manage.Model.ViewModel.VmSearchBase,System.Nullable{System.Guid})">
+            <summary>
+            Ajax查看学生列表
+            </summary>
+            <param name="model"></param>
+            <param name="PlannerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.StudentController.Edit(System.Guid)">
+            <summary>
+            学生编辑页面
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.StudentController.AjaxStudentHelpComplete(System.Guid)">
+            <summary>
+            学生Help状态修改正常
+            </summary>
+            <param name="StudentId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.StudentController.EditStudentPlanner(System.Guid)">
+            <summary>
+            给学生重新分配规划师页面
+            </summary>
+            <param name="StudentId">学生ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.StudentController.AjaxEdit(XZMY.Manage.Model.ViewModel.Members.VmStudent)">
+            <summary>
+            ajax 修改学生部分信息
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.StudentController.AjaxEditStudentPlanner(XZMY.Manage.Model.ViewModel.Members.VmStudent)">
+            <summary>
+            AJAX获取学生信息
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.StudentController.StudentApply(System.Guid)">
+            <summary>
+            学生申请集显示页面
+            </summary>
+            <param name="StudentId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.StudentController.GetStudentApply(System.Guid)">
+            <summary>
+            获取学生申请集
+            </summary>
+            <param name="StudentId">学生ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.StudentController.GetStudent(System.Guid)">
+            <summary>
+            获取学生基础信息
+            </summary>
+            <param name="StudentId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.StudentController.GetStudentApply_Intention(System.Guid)">
+            <summary>
+            获取学生留学意向
+            </summary>
+            <param name="StudentId">学生ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.StudentController.CreateEditStudentApplyIntention(XZMY.Manage.Model.ViewModel.Members.VmStudentApply_Intention)">
+            <summary>
+            创建或修改学生留学意向
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.StudentController.GetListStudentApplyIntention(XZMY.Manage.Model.ViewModel.Members.VmStudentApply_Intention,System.Int32@)">
+            <summary>
+            获取列表学生留学意向
+            </summary>
+            <param name="model"></param>
+            <param name="TotalCount"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.StudentController.GetStudentApply_ContactInformation(System.Guid)">
+            <summary>
+            获取学生联系方式
+            </summary>
+            <param name="StudentId">学生ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.StudentController.GetStudentApply_CertificateList(System.Guid)">
+            <summary>
+            获取学生获取证书列表
+            </summary>
+            <param name="StudentId">学生ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.StudentController.GetStudentApply_GuardianList(System.Guid)">
+            <summary>
+            获取 监护人家庭成员列表
+            </summary>
+            <param name="StudentId">学生ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.StudentController.GetStudentApply_InterestList(System.Guid)">
+            <summary>
+            获取 兴趣列表
+            </summary>
+            <param name="StudentId">学生ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.StudentController.GetStudentApply_Project(System.Guid)">
+            <summary>
+            获取 课外活动列表
+            </summary>
+            <param name="StudentId">学生ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.StudentController.GetStudentApply_SchoolInformation(System.Guid)">
+            <summary>
+            获取 课外活动列表
+            </summary>
+            <param name="StudentId">学生ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.StudentController.GetStudentApply_SchoolGrade(System.Guid)">
+            <summary>
+            获取 学校年级列表
+            </summary>
+            <param name="StudentId">学生ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Customers.StudentController.GetStudentApply_SchoolCourse(System.Guid)">
+            <summary>
+            获取 课程列表
+            </summary>
+            <param name="StudentId">学生ID</param>
+            <returns></returns>
+        </member>
+        <member name="T:XZMY.Manage.Web.Controllers.LoginController">
+            <summary>
+            登录
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.LoginController.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineAssessmentController.StudentList">
+            <summary>
+            学生列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineAssessmentController.GetModelOnlineAssessmentTranscript(System.Guid)">
+            <summary>
+            获取单独对象
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineAssessmentController.CreateEditOnlineAssessmentTranscript(XZMY.Manage.Model.ViewModel.OnlineAssessment.VmOnlineAssessmentTranscript)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineAssessmentController.DeleteOnlineAssessmentTranscript(System.Guid)">
+            <summary>
+            物理删除对象
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineAssessmentController.GetModelOnlineAssessmentStudent(System.Guid)">
+            <summary>
+            获取单独对象
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineAssessmentController.CreateEditOnlineAssessmentStudent(XZMY.Manage.Model.ViewModel.OnlineAssessment.VmOnlineAssessmentStudent)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineAssessmentController.DeleteOnlineAssessmentStudent(System.Guid)">
+            <summary>
+            物理删除对象
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineAssessmentController.GetModelOnlineAssessmentSecurity(System.Guid)">
+            <summary>
+            获取单独对象
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineAssessmentController.CreateEditOnlineAssessmentSecurity(XZMY.Manage.Model.ViewModel.OnlineAssessment.VmOnlineAssessmentSecurity)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineAssessmentController.DeleteOnlineAssessmentSecurity(System.Guid)">
+            <summary>
+            物理删除对象
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineAssessmentController.GetModelOnlineAssessmentQuestions(System.Guid)">
+            <summary>
+            获取单独对象
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineAssessmentController.CreateEditOnlineAssessmentQuestions(XZMY.Manage.Model.ViewModel.OnlineAssessment.VmOnlineAssessmentQuestions)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineAssessmentController.DeleteOnlineAssessmentQuestions(System.Guid)">
+            <summary>
+            物理删除对象
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineAssessmentController.GetModelOnlineAssessmentAnswerSheet(System.Guid)">
+            <summary>
+            获取单独对象
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineAssessmentController.CreateEditOnlineAssessmentAnswerSheet(XZMY.Manage.Model.ViewModel.OnlineAssessment.VmOnlineAssessmentAnswerSheet)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineAssessmentController.DeleteOnlineAssessmentAnswerSheet(System.Guid)">
+            <summary>
+            物理删除对象
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineAssessmentController.GetModelOnlineAssessmentAnswersGroup(System.Guid)">
+            <summary>
+            获取单独对象
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineAssessmentController.CreateEditOnlineAssessmentAnswersGroup(XZMY.Manage.Model.ViewModel.OnlineAssessment.VmOnlineAssessmentAnswersGroup)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineAssessmentController.DeleteOnlineAssessmentAnswersGroup(System.Guid)">
+            <summary>
+            物理删除对象
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineAssessmentController.GetModelOnlineAssessmentAnswers(System.Guid)">
+            <summary>
+            获取单独对象
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineAssessmentController.CreateEditOnlineAssessmentAnswers(XZMY.Manage.Model.ViewModel.OnlineAssessment.VmOnlineAssessmentAnswers)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineAssessmentController.DeleteOnlineAssessmentAnswers(System.Guid)">
+            <summary>
+            物理删除对象
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineTranscriptController.Edit(System.Nullable{System.Guid})">
+            <summary>
+            答题卡数据编辑页
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineTranscriptController.List">
+            <summary>
+            答题卡列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineTranscriptController.AnswerList(System.Guid,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id">答题卡ID</param>
+            <param name="index">当前查询第index题</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineTranscriptController.hasStudentLoginName(System.String)">
+            <summary>
+            判断登录名是否存在 (存在即为 true)
+            </summary>
+            <param name="loginName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineTranscriptController.hasStudentLoginName(System.Guid,System.String)">
+            <summary>
+            修改编辑时:判断登录名是否存在 (存在即为 true)
+            </summary>
+            <param name="id"></param>
+            <param name="loginName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineTranscriptController.GetList(System.Int32,XZMY.Manage.Model.Enum.ETranscriptState,System.String,System.String,System.String,System.Int32@)">
+            <summary>
+            学生答题卡查询
+            </summary>
+            <param name="pageIndex"></param>
+            <param name="state">答题卡状态</param>
+            <param name="keyWords">根据学生名或登录名查询</param>
+            <param name="startTime">创建时间段 下限</param>
+            <param name="endTime">创建时间段的 上限</param>
+            <param name="TotalCount"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineTranscriptController.GetQuestionsList(System.Int32,System.Guid,System.Int32@)">
+            <summary>
+            根据试卷ID查询问题集合
+            </summary>
+            <param name="pageIndex"></param>
+            <param name="securityId">试卷Id</param>
+            <param name="rCount"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Order.InComeController.Edit(System.Nullable{System.Guid})">
+            <summary>
+            支付页面编辑和创建
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Order.InComeController.EditInCome(XZMY.Manage.Model.ViewModel.Order.VmInCome)">
+            <summary>
+            添加或修改支付数据
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Order.InComeController.GetModelInCome(System.Guid)">
+            <summary>
+            通过ID获取支付数据
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Order.InComeController.GetListInCome(XZMY.Manage.Model.ViewModel.Order.VmInCome)">
+            <summary>
+            获取支付列表
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="T:XZMY.Manage.Web.Controllers.Planners.AgentController">
+            <summary>
+            代理商
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.AgentController.StudentList">
+            <summary>
+            代理商学生列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.AgentController.GetAgent(System.Guid)">
+            <summary>
+            获取代理商信息
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.AgentController.GetAgentUserId(System.Guid)">
+            <summary>
+            通过UserID获取代理商信息
+            </summary>
+            <param name="UserId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.AgentController.GetAgentContact(System.Guid)">
+            <summary>
+            联系人
+            </summary>
+            <param name="AgentId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanController.PlanStudnetGrade(System.Guid)">
+            <summary>
+            重新规划年级节点
+            </summary>
+            <param name="PlanRecordId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanController.GetPlanningNoteStudnetGrade(XZMY.Manage.Model.Enum.EGrade,XZMY.Manage.Model.Enum.ESchoolType,XZMY.Manage.Model.Enum.EGradeAbroad,System.Int32)">
+            <summary>
+            d
+            </summary>
+            <param name="Grade">当前年级</param>
+            <param name="SchoolType">当前学校类型</param>
+            <param name="GradeAbroad">出国年级</param>
+            <param name="GeneralBudget">总预算费用</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanController.GetTemplateOrderBy(System.Collections.Generic.List{XZMY.Manage.Model.DataModel.Plan.V_ProjectCourseTemplateList},System.String,XZMY.Manage.Model.Enum.ERoute,System.String)">
+            <summary>
+            规划历练模板排序
+            </summary>
+            <param name="listTemplate"></param>
+            <param name="SuitablePersonName"></param>
+            <param name="Route"></param>
+            <param name="ScoreType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanController.PlanStudentPlanProgram(System.Guid)">
+            <summary>
+            重新规划年级节点中的活动课程
+            </summary>
+            <param name="PlanRecordId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanController.GetSmPlanRecord(System.Guid)">
+            <summary>
+            获取规划信息 单表
+            </summary>
+            <param name="PlanRecordId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanController.GetListPlanRecord(XZMY.Manage.Model.ServiceModel.Plan.SmPlanRecord)">
+            <summary>
+            规划列表  学生ID必填
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanController.CreateEditPlanRecord(XZMY.Manage.Model.ServiceModel.Plan.SmPlanRecord)">
+            <summary>
+            创建或修改 PlanRecord 规划单表
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanController.GetModelStudentPlan(System.Guid)">
+            <summary>
+            获取指定规划年级对象
+            </summary>
+            <param name="Id">规划年级ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanController.CreateEditStudentPlan(XZMY.Manage.Model.ServiceModel.Plan.SmStudentPlan)">
+            <summary>
+            创建或修改 规划年级节点
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanController.DelStudentPlan(System.Guid)">
+            <summary>
+            删除规划年级 和年级规划的活动
+            </summary>
+            <param name="PlanRecordId">规划ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanController.GetStudentPlanList(System.Guid)">
+            <summary>
+            通过规划ID获取规划年级列表
+            </summary>
+            <param name="PlanRecordId">规划ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanController.StudentPlanProgramGetList(XZMY.Manage.Model.ServiceModel.Plan.SmStudentPlanProgram)">
+            <summary>
+            获取当前以及规划好的年级活动项
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanController.DelStudentPlanProgram(System.Guid)">
+            <summary>
+            删除指定规划的全部规划活动
+            </summary>
+            <param name="PlanRecordId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanController.CreateEditStudentPlanProgram(XZMY.Manage.Model.ServiceModel.Plan.SmStudentPlanProgram)">
+            <summary>
+            创建或修改 规划年级的活动
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanController.DeleteStudentPlanProgram(System.Guid)">
+            <summary>
+            删除指定规划活动
+            </summary>
+            <param name="StudentPlanProgramId">规划活动ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanController.GetListProjectCourseTemplate(XZMY.Manage.Model.DataModel.Plan.V_ProjectCourseTemplateList)">
+            <summary>
+            获取全部的模板集合
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanController.GetModelStudentPlanBackup(System.Guid)">
+            <summary>
+            获取单独对象
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanController.CreateEditStudentPlanBackup(XZMY.Manage.Model.ViewModel.Plan.VmStudentPlanBackup)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanController.DeleteStudentPlanBackup(System.Guid)">
+            <summary>
+            物理删除对象
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="T:XZMY.Manage.Web.Controllers.Planners.PlannerController">
+            <summary>
+            规划师
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlannerController.Details(System.Nullable{System.Guid})">
+            <summary>
+            规划师查看页面
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlannerController.List">
+            <summary>
+            规划师列表展示页面
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlannerController.ProjectList">
+            <summary>
+            学生活动列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlannerController.CourseList">
+            <summary>
+            学生课程管理
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlannerController.ExtendedRecommendProject(System.Guid,System.Guid)">
+            <summary>
+            推荐活动
+            </summary>
+            <param name="StudentId"></param>
+            <param name="PlannerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlannerController.ExtendedRecommendCourse(System.Guid,System.Guid)">
+            <summary>
+            推荐课程
+            </summary>
+            <param name="StudentId"></param>
+            <param name="PlannerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlannerController.PlannerAddEdit(XZMY.Manage.Model.ViewModel.Planners.VmPlannerEdit)">
+            <summary>
+            规划师创建或编辑
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlannerController.GetPlanner(System.Guid)">
+            <summary>
+            获取规划师对象
+            </summary>
+            <param name="PlannerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanRecordAssessmentAnswersController.GetModel(System.Guid)">
+            <summary>
+            获取单独对象
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanRecordAssessmentAnswersController.CreateEdit(XZMY.Manage.Model.ViewModel.Plan.VmPlanRecord_AssessmentAnswers)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanRecordAssessmentAnswersController.Delete(System.Guid)">
+            <summary>
+            物理删除对象
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanRecordAssessmentController.GetModel(System.Guid)">
+            <summary>
+            获取单独对象
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanRecordAssessmentController.CreateEdit(XZMY.Manage.Model.ViewModel.Plan.VmPlanRecord_Assessment)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanRecordAssessmentController.Delete(System.Guid)">
+            <summary>
+            物理删除对象
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="T:XZMY.Manage.Web.Controllers.Planners.PlanVisitorController">
+            <summary>
+            规划访客记录
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanVisitorController.List">
+            <summary>
+            规划访客记录列表展示页面
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanVisitorController.AjaxList(XZMY.Manage.Model.ViewModel.VmSearchBase)">
+            <summary>
+            规划访客记录列表查询
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Planners.PlanVisitorController.AddEdit(XZMY.Manage.Model.ViewModel.Planners.VmPlanVisitor)">
+            <summary>
+            新增修改规划访客记录
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Program.AgentProjectController.AjaxList(XZMY.Manage.Model.ViewModel.Program.VmAgentProject)">
+            <summary>
+            Ajax获取列表
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Program.AgentProjectController.GetModel(System.Guid)">
+            <summary>
+            获取单独对象
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:XZMY.Manage.Web.Controllers.Program.ProgramAbilityController">
+            <summary>
+            能力值 学术能力 素质能力
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Program.ProgramAbilityController.GetModel(System.Guid)">
+            <summary>
+            获取单独对象
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Program.ProgramAbilityController.CreateEdit(XZMY.Manage.Model.ViewModel.Program.VmProgramAbility)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Program.ProgramAbilityController.Delete(System.Guid)">
+            <summary>
+            物理删除对象
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Program.ProgramOrderController.GetModel(System.Guid)">
+            <summary>
+            获取单独对象
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Program.ProgramOrderController.CreateEdit(XZMY.Manage.Model.ViewModel.Program.VmProgramOrder)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Program.ProgramOrderController.Delete(System.Guid)">
+            <summary>
+            物理删除对象
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Project.OrderController.OrderMoneyList">
+            <summary>
+            账目管理 账目列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Project.OrderController.AjaxOrderMoneyList(XZMY.Manage.Model.ViewModel.VmSearchBase,System.Nullable{System.Int32})">
+            <summary>
+            AJAX获取账目列表
+            </summary>
+            <param name="model"></param>
+            <param name="OrderType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Project.OrderController.InComeAddEdit(XZMY.Manage.Model.ViewModel.Order.VmInCome)">
+            <summary>
+            添加录入支付数据
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Project.OrderController.InComeGetModel(System.Guid)">
+            <summary>
+            获取支付数据
+            </summary>
+            <param name="InComeId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Project.OrderCourseController.Details(System.Nullable{System.Guid},System.Nullable{System.Int32})">
+            <summary>
+            课程订单查看
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Project.OrderCourseController.AjaxEditComment(System.Guid,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Project.OrderCourseController.GetModel(System.Guid)">
+            <summary>
+            获取单独对象
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Project.OrderCourseController.CreateEdit(XZMY.Manage.Model.ViewModel.Order.VmOrderCourse)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Project.OrderCourseController.Delete(System.Guid)">
+            <summary>
+            物理删除对象
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Project.OrderProjectController.AjaxEditComment(System.Guid,System.String)">
+            <summary>
+            活动评论
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Project.OrderProjectController.GetModel(System.Guid)">
+            <summary>
+            获取单独对象
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Project.OrderProjectController.CreateEdit(XZMY.Manage.Model.ViewModel.Order.VmOrderProject)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Project.OrderProjectController.Delete(System.Guid)">
+            <summary>
+            物理删除对象
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Project.ProjectController.AjaxUpdateProjectState(System.Guid,System.Int32)">
+            <summary>
+            修改活动状态
+            </summary>
+            <param name="id"></param>
+            <param name="state"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Project.ProjectController.GetVmProject(System.Guid)">
+            <summary>
+            通过ID获取活动信息对象
+            </summary>
+            <param name="ProjectId">活动ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Project.ProjectController.CreateProgramMessage(XZMY.Manage.Model.DataModel.Planners.ProgramMessage)">
+            <summary>
+            推送活动或课程
+            </summary>
+            <param name="model">实体对象</param>
+            <returns>返回执行SQL受影响的行数</returns>
+        </member>
+        <member name="T:XZMY.Manage.Web.Controllers.Project.TempProjectDateJson">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Project.ProjectDateController.GetModel(System.Guid)">
+            <summary>
+            获取单独对象
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Project.ProjectDateController.CreateEdit(XZMY.Manage.Model.ViewModel.Project.VmProjectDate)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Project.ProjectDateController.Delete(System.Guid)">
+            <summary>
+            物理删除对象
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="T:XZMY.Manage.Web.Controllers.Project.ProjectTemplateController">
+            <summary>
+            活动模版
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Project.ProjectTemplateController.Edit(System.Nullable{System.Guid})">
+            <summary>
+            创建编辑
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Project.ProjectTemplateController.GetVmProjectTemplate(System.Guid)">
+            <summary>
+            获取活动模板信息
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Project.ProjectTemplateController.GetProject(System.Guid)">
+            <summary>
+            通过模板ID获取活动对象
+            </summary>
+            <param name="CourseTemplateId">活动模板ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Project.ProjectTemplateController.GetList(XZMY.Manage.Model.ViewModel.Project.VmProjectTemplate,System.Int32@)">
+            <summary>
+            获取活动模板页面
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="T:XZMY.Manage.Web.Controllers.Question.QuestionController">
+            <summary>
+            问题管理
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.SiteSetting.EnglishScoreDefaultController.CreateEdit(XZMY.Manage.Model.ViewModel.SiteSetting.VmEnglishScoreDefault)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.SiteSetting.EnglishScoreDefaultController.Delete(System.Guid)">
+            <summary>
+            物理删除对象
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.SiteSetting.EnglishScoreDefaultController.CreateDefaultData">
+            <summary>
+            创建默认数据
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.SiteSetting.GradeRankingController.isVilidateName(System.String,System.Nullable{System.Guid})">
+            <summary>
+            验证名称是否存在 true表示存在
+            </summary>
+            <param name="name"></param>
+            <param name="id">在修改时调用</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.SiteSetting.GradeRankingController.CreateEdit(XZMY.Manage.Model.ViewModel.SiteSetting.VmGradeRanking)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.SiteSetting.GradeRankingController.Delete(System.Guid)">
+            <summary>
+            物理删除对象
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.SiteSetting.LearnScoreDefaultController.CreateEdit(XZMY.Manage.Model.ViewModel.SiteSetting.VmLearnScoreDefault)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.SiteSetting.LearnScoreDefaultController.Delete(System.Guid)">
+            <summary>
+            物理删除对象
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.SiteSetting.LearnScoreDefaultController.CreateDefaultData">
+            <summary>
+            创建默认数据
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.SiteSetting.SchoolLevelController.AjaxUpdateSLState(System.Guid,System.Int32)">
+            <summary>
+            修改状态
+            </summary>
+            <param name="id"></param>
+            <param name="state"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.SiteSetting.SchoolLevelController.GetModel(System.Guid)">
+            <summary>
+            获取单独对象
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.SiteSetting.SchoolLevelController.isVilidateName(System.String,System.Nullable{System.Guid})">
+            <summary>
+            验证名称是否存在 true表示存在
+            </summary>
+            <param name="name"></param>
+            <param name="id">在修改时调用</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.SiteSetting.SchoolLevelController.CreateEdit(XZMY.Manage.Model.ViewModel.SiteSetting.VmSchoolLevel)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.SiteSetting.SchoolLevelController.Delete(System.Guid)">
+            <summary>
+            物理删除对象
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.SiteSetting.ScoreItemsController.GetListScoreItems(System.Int32)">
+            <summary>
+            获取分值项目分类列表
+            </summary>
+            <param name="Type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.SiteSetting.ScoreItemsController.ScoreItemsGetModel(System.Guid)">
+            <summary>
+            
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.SiteSetting.ScoresController.CreateEdit(XZMY.Manage.Model.ViewModel.SiteSetting.VmScoresEdit)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.SiteSetting.ScoresController.GetListScores(XZMY.Manage.Model.ViewModel.VmSearchBase,System.String)">
+            <summary>
+            获取分值列表
+            </summary>
+            <param name="model"></param>
+            <param name="SourceType"></param>
+            <returns></returns>
+        </member>
+        <member name="T:XZMY.Manage.Web.Controllers.SiteSetting.SiteADController">
+            <summary>
+            网站广告
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.SiteSetting.StudentTotalScoreController.GetModel(System.Guid)">
+            <summary>
+            获取单独对象
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.SiteSetting.StudentTotalScoreController.CreateEdit(XZMY.Manage.Model.ViewModel.SiteSetting.VmStudentTotalScore)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.SiteSetting.StudentTotalScoreController.Delete(System.Guid)">
+            <summary>
+            物理删除对象
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="T:XZMY.Manage.Web.Controllers.SiteSetting.StudyBudgetController">
+            <summary>
+            留学预算
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.SiteSetting.StudyBudgetController.GetModel(System.Guid)">
+            <summary>
+            获取单独对象
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.SiteSetting.StudyBudgetController.CreateEdit(XZMY.Manage.Model.ViewModel.SiteSetting.VmStudyBudget)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.SiteSetting.StudyBudgetController.Delete(System.Guid)">
+            <summary>
+            物理删除对象
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Sys.currentSchoolTypeController.GetModel(System.Guid)">
+            <summary>
+            获取单独对象
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Sys.currentSchoolTypeController.CreateEdit(XZMY.Manage.Model.ViewModel.School.VmcurrentSchoolType)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Sys.currentSchoolTypeController.Delete(System.Guid)">
+            <summary>
+            物理删除对象
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Sys.DataDictionaryController.CatagoriesList">
+            <summary>
+            数据字典分类
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Sys.DataDictionaryController.DataDictionaryItemList(System.String)">
+            <summary>
+            数据字典页面
+            </summary>
+            <param name="CatagoryKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Sys.DataDictionaryController.AjaxDataDictionaryItemList(XZMY.Manage.Model.ViewModel.VmSearchBase,System.String,System.Nullable{System.Int32})">
+            <summary>
+            AJAX 获取数据字典
+            </summary>
+            <param name="model"></param>
+            <param name="CatagoryKey">数据字典类型KEY</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Sys.DataDictionaryController.DataDictionaryItemEdit(System.String,System.Nullable{System.Guid})">
+            <summary>
+            添加或编辑数据字典 页面
+            </summary>
+            <param name="CatagoryKey"></param>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Sys.DataDictionaryController.DefaultData">
+            <summary>
+            恢复默认数据 初始化数据
+            </summary>
+        </member>
+        <member name="T:XZMY.Manage.Web.Controllers.Sys.LogController">
+            <summary>
+            系统日志
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Sys.LocationController.GetLocation(System.Guid)">
+            <summary>
+            通过ID 获取地区对象信息
+            </summary>
+            <param name="Id">地区ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Sys.LocationController.AjaxDelete(System.Guid)">
+            <summary>
+            删除该地区及以下地区
+            </summary>
+            <param name="Id">地区ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Sys.PlanningNoteController.List">
+            <summary>
+            列表页面
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Sys.PlanningNoteController.GetPlanningNote(System.Guid)">
+            <summary>
+            获取单个年级对象
+            </summary>
+            <param name="PlanningNoteId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Sys.PlanningNoteController.GetPlanningNoteList(System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="Grade">年级名称</param>
+            <param name="SchoolType">学校类型  1普通学校 2重点学校  3国际学校</param>
+            <param name="SchoolPlace">学校地点  国外 国内</param>
+            <returns></returns>
+        </member>
+        <member name="T:XZMY.Manage.Web.Controllers.Sys.SchoolController">
+            <summary>
+            学校中心
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Sys.SchoolController.Edit(System.Nullable{System.Guid})">
+            <summary>
+            创建修改
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Sys.SchoolController.BingCountryDropDownList">
+            <summary>
+            绑定国家下框
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Sys.SchoolController.AjaxList(XZMY.Manage.Model.ViewModel.VmSearchBase)">
+            <summary>
+            加载列表页面内容
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Sys.SchoolController.GetModel(System.Guid)">
+            <summary>
+            获取单独对象
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Sys.SchoolController.CreateEdit(XZMY.Manage.Model.ViewModel.School.VmSchool)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Sys.SchoolController.DeleleSchool(System.Guid)">
+            <summary>
+            物理删除学校数据
+            </summary>
+            <param name="SchoolId"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Sys.SchoolTypeController.AjaxList(XZMY.Manage.Model.ViewModel.School.VmSchoolType)">
+            <summary>
+            Ajax获取列表
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Sys.SchoolTypeController.GetModel(System.Guid)">
+            <summary>
+            获取单独对象
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Sys.SchoolTypeController.CreateEdit(XZMY.Manage.Model.ViewModel.School.VmSchoolType)">
+            <summary>
+            创建修改对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.Sys.SchoolTypeController.Delete(System.Guid)">
+            <summary>
+            物理删除对象
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.AAssessmentController.GetAssessmentQuestions">
+            <summary>
+            获取评估中心问题
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.ADataDictionaryController.GetAll">
+            <summary>
+            获取全部数据字典
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.AMemberController.Register(XZMY.Manage.Model.ServiceModel.Members.SmCreateMember)">
+            <summary>
+            前台用户注册接口
+            </summary>
+            <param name="model">AccName = 登录名(手机或邮箱),Password = 密码,Type = 用户类型(1:学生,2:家长)</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.AOrderController.CreateOrderWeb(XZMY.Manage.Model.ServiceModel.Order.SmOrderWeb)">
+            <summary>
+            前台下订单使用
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.AOrderController.CreateCourseOrder(XZMY.Manage.Model.ServiceModel.Order.SmCourseOrderCreate)">
+            <summary>
+            创建课程订单
+            </summary>
+            <param name="model">创建订单对象</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.AOrderController.CreateProjectOrder(XZMY.Manage.Model.ServiceModel.Order.SmProjectOrderCreate)">
+            <summary>
+            创建活动订单
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.AOrderController.CreateOrderInCome(XZMY.Manage.Model.ServiceModel.Order.SmPayInCome)">
+            <summary>
+            录入支付信息11
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.AOrderController.OrderCancel(XZMY.Manage.Model.Utils.OrderCancelParam)">
+            <summary>
+            取消订单
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="T:XZMY.Manage.Web.Controllers.WebApis.APlanController">
+            <summary>
+            规划接口
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.GetListProjectTemplate">
+            <summary>
+            获取全部活动模板
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.GetListCourseTemplate">
+            <summary>
+            获取全部课程模板
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.GetListPlanningNote">
+            <summary>
+            获取全部年级升学
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.GetListCountry">
+            <summary>
+            获取全部地区表中全部国家数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.GetListStudentPlan(System.Guid)">
+            <summary>
+            
+            </summary>
+            <param name="PlanRecordId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.GetListCourseOrder(System.Guid)">
+            <summary>
+            获取课程订单
+            </summary>
+            <param name="StudentId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.GetListProjectOrder(System.Guid)">
+            <summary>
+            获取活动订单
+            </summary>
+            <param name="StudentId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.GetVmCourse(System.Guid)">
+            <summary>
+            获取课程对象
+            </summary>
+            <param name="CourseId">课程ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.GetVmProject(System.Guid)">
+            <summary>
+            获取活动对象
+            </summary>
+            <param name="ProjectId">活动ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.GetStudentPlanProgramList(XZMY.Manage.Model.Utils.PlanRecordStudentGradeProgramQuery)">
+            <summary>
+            获取规划年级的活动列表
+            </summary>
+            <param name="modelQuery">条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.PlanRecordStudentGradeModel(System.Guid)">
+            <summary>
+            获取规划年级对象
+            </summary>
+            <param name="PlanStudentGradeId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.PlanRecordStudentGradeEdit(XZMY.Manage.Model.ServiceModel.Plan.SmStudentPlan)">
+            <summary>
+            修改规划年级对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.GetPlanRecord(XZMY.Manage.Model.Utils.GetPlanRecordQuery)">
+            <summary>
+            获取指定规划
+            </summary>
+            <param name="id">规划ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.GetTemplate">
+            <summary>
+            获取全部活动课程的模板数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.GetPlanningNote(XZMY.Manage.Model.Utils.PlanQuery)">
+            <summary>
+            获取一个指定完整规划信息
+            </summary>
+            <param name="planQuery"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.GetPlanIntention(XZMY.Manage.Model.Utils.GetPlanRecordQuery)">
+            <summary>
+            留学意向获取数据
+            </summary>
+            <param name="PlanRecordId">规划ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.SetPlanIntention(XZMY.Manage.Model.ServiceModel.Plan.SmPlanIntention)">
+            <summary>
+            留学规划_留学意向 第1步提交数据
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.GetTOEFLScore(System.Decimal)">
+            <summary>
+            通过雅思成绩获取托福成绩
+            </summary>
+            <param name="IElTSBand"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.SetPlanAssessmentAnswerPass(XZMY.Manage.Model.Utils.SetPlanAssessmentAnswerPassQuery)">
+            <summary>
+            留学规划_评估中心提交答案未完成Pass 第2步提交数据
+            </summary>
+            <param name="PlanRecordId">规划ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.SetPlanAssessmentAnswerIds(XZMY.Manage.Model.Utils.SetPlanAssessmentAnswerQuery)">
+            <summary>
+            留学规划_评估中心提交答案完成 第2步提交数据
+            </summary>
+            <param name="PlanRecordId">规划ID</param>
+            <param name="listModel">答案列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.SetPlanAssessmentAnswer(XZMY.Manage.Model.Utils.SetPlanAssessmentAnswerQuery)">
+            <summary>
+            留学规划_评估中心提交答案完成 第2步提交数据
+            </summary>
+            <param name="PlanRecordId">规划ID</param>
+            <param name="listModel">答案列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.SetPlanCreatePlan(XZMY.Manage.Model.Utils.SetPlanCreatePlanQuery)">
+            <summary>
+            留学规划_规划 第3步 初次规划获取规划信息 规划年级和活动和课程
+            </summary>
+            <param name="PlanRecordId">规划ID</param>
+            <param name="Route">路线 学霸路线 = 1, 稳妥路线 = 2, 经济路线 = 3</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.PlanRecordStudentGradeList(XZMY.Manage.Model.Utils.GetPlanRecordQuery)">
+            <summary>
+            留学规划_规划 第3步 获取指定规划的年级列表
+            </summary>
+            <param name="modelQuery">规划ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.PlanRecordStudentGradeProgramList(XZMY.Manage.Model.Utils.PlanRecordStudentGradeProgramQuery)">
+            <summary>
+            留学规划_规划 第3步 获取规划年级的活动列表
+            </summary>
+            <param name="modelQuery">条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.PlanRecordStudentGradeProgramEidt(XZMY.Manage.Model.Utils.PlanRecordStudentGradeProgramEidtQuery)">
+            <summary>
+            留学规划_规划 第3步  修改指定规划年级
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.AddStudentPlanProgram(XZMY.Manage.Model.Utils.AddStudentPlanProgramQuery)">
+            <summary>
+            留学规划_规划 第3步  添加一个规划年级活动
+            </summary>
+            <param name="PlanRecordId"></param>
+            <param name="StudentPlanID"></param>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.DelStudentPlanProgram(XZMY.Manage.Model.Utils.DelStudentPlanProgramQuery)">
+            <summary>
+            留学规划_规划 第3步  删除一个规划年级活动
+            </summary>
+            <param name="StudentPlanProgramId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.GetStudentPlanProgramTemplateList(XZMY.Manage.Model.Utils.ProgramTemplateQuery)">
+            <summary>
+            留学规划_规划 第3步  获取模板列表
+            </summary>
+            <param name="modelQuery"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.Controllers.WebApis.APlanController.PlanVisitorAdd(XZMY.Manage.Model.ViewModel.Planners.VmPlanVisitor)">
+            <summary>
+            新增规划访客记录
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.MvcApplication.Application_Start">
+            <summary>
+            站点启动
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.MvcApplication.Application_End(System.Object,System.EventArgs)">
+            <summary>
+            站点停止
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:XZMY.Manage.Web.Index">
+            <summary>
+            测试页面
+            </summary>
+        </member>
+        <member name="F:XZMY.Manage.Web.Index.form1">
+            <summary>
+            form1 控件。
+            </summary>
+            <remarks>
+            自动生成的字段。
+            若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+            </remarks>
+        </member>
+        <member name="T:XZMY.Manage.Web.Modules.LogModule">
+            <summary>
+            日志
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.Modules.LogModule.Init(System.Web.HttpApplication)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.Modules.LogModule.context_EndRequest(System.Object,System.EventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.plan.Button31_Click(System.Object,System.EventArgs)">
+            <summary>
+            测试留学意向
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.plan.Button32_Click(System.Object,System.EventArgs)">
+            <summary>
+            规划年级
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:XZMY.Manage.Web.plan.Button34_Click(System.Object,System.EventArgs)">
+            <summary>
+            导出WORD
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="F:XZMY.Manage.Web.plan.form1">
+            <summary>
+            form1 控件。
+            </summary>
+            <remarks>
+            自动生成的字段。
+            若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+            </remarks>
+        </member>
+        <member name="F:XZMY.Manage.Web.plan.Button31">
+            <summary>
+            Button31 控件。
+            </summary>
+            <remarks>
+            自动生成的字段。
+            若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+            </remarks>
+        </member>
+        <member name="F:XZMY.Manage.Web.plan.Button32">
+            <summary>
+            Button32 控件。
+            </summary>
+            <remarks>
+            自动生成的字段。
+            若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+            </remarks>
+        </member>
+        <member name="F:XZMY.Manage.Web.plan.Button34">
+            <summary>
+            Button34 控件。
+            </summary>
+            <remarks>
+            自动生成的字段。
+            若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+            </remarks>
+        </member>
+        <member name="F:XZMY.Manage.Web.plan.Button33">
+            <summary>
+            Button33 控件。
+            </summary>
+            <remarks>
+            自动生成的字段。
+            若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+            </remarks>
+        </member>
+        <member name="F:XZMY.Manage.Web.plan.ddlGrade">
+            <summary>
+            ddlGrade 控件。
+            </summary>
+            <remarks>
+            自动生成的字段。
+            若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+            </remarks>
+        </member>
+        <member name="F:XZMY.Manage.Web.plan.ddlSchoolType">
+            <summary>
+            ddlSchoolType 控件。
+            </summary>
+            <remarks>
+            自动生成的字段。
+            若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+            </remarks>
+        </member>
+        <member name="F:XZMY.Manage.Web.plan.txtGeneralBudget">
+            <summary>
+            txtGeneralBudget 控件。
+            </summary>
+            <remarks>
+            自动生成的字段。
+            若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+            </remarks>
+        </member>
+        <member name="F:XZMY.Manage.Web.plan.ddlAbroadGrade">
+            <summary>
+            ddlAbroadGrade 控件。
+            </summary>
+            <remarks>
+            自动生成的字段。
+            若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+            </remarks>
+        </member>
+        <member name="F:XZMY.Manage.Web.plan.txtEnglishScore">
+            <summary>
+            txtEnglishScore 控件。
+            </summary>
+            <remarks>
+            自动生成的字段。
+            若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+            </remarks>
+        </member>
+        <member name="F:XZMY.Manage.Web.plan.txtLearnScore">
+            <summary>
+            txtLearnScore 控件。
+            </summary>
+            <remarks>
+            自动生成的字段。
+            若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+            </remarks>
+        </member>
+        <member name="F:XZMY.Manage.Web.plan.txtQualityScore">
+            <summary>
+            txtQualityScore 控件。
+            </summary>
+            <remarks>
+            自动生成的字段。
+            若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+            </remarks>
+        </member>
+        <member name="F:XZMY.Manage.Web.plan.Button1">
+            <summary>
+            Button1 控件。
+            </summary>
+            <remarks>
+            自动生成的字段。
+            若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+            </remarks>
+        </member>
+        <member name="F:XZMY.Manage.Web.plan.Label2">
+            <summary>
+            Label2 控件。
+            </summary>
+            <remarks>
+            自动生成的字段。
+            若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+            </remarks>
+        </member>
+        <member name="F:XZMY.Manage.Web.plan.Label1">
+            <summary>
+            Label1 控件。
+            </summary>
+            <remarks>
+            自动生成的字段。
+            若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+            </remarks>
+        </member>
+        <member name="F:XZMY.Manage.Web.plan.DropDownList1">
+            <summary>
+            DropDownList1 控件。
+            </summary>
+            <remarks>
+            自动生成的字段。
+            若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+            </remarks>
+        </member>
+        <member name="F:XZMY.Manage.Web.plan.Button2">
+            <summary>
+            Button2 控件。
+            </summary>
+            <remarks>
+            自动生成的字段。
+            若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+            </remarks>
+        </member>
+        <member name="M:XZMY.Manage.Web.TestDataDictionary.AddScoresItems">
+            <summary>
+            添加默认数据
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.TestDataDictionary.AddPlanner">
+            <summary>
+            添加规划师的数据字典
+            </summary>
+        </member>
+        <member name="F:XZMY.Manage.Web.TestDataDictionary.form1">
+            <summary>
+            form1 控件。
+            </summary>
+            <remarks>
+            自动生成的字段。
+            若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+            </remarks>
+        </member>
+        <member name="F:XZMY.Manage.Web.TestDataDictionary.Button1">
+            <summary>
+            Button1 控件。
+            </summary>
+            <remarks>
+            自动生成的字段。
+            若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+            </remarks>
+        </member>
+        <member name="F:XZMY.Manage.Web.TestDataDictionary.btnPlan">
+            <summary>
+            btnPlan 控件。
+            </summary>
+            <remarks>
+            自动生成的字段。
+            若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+            </remarks>
+        </member>
+        <member name="F:XZMY.Manage.Web.TestDataDictionary.Button2">
+            <summary>
+            Button2 控件。
+            </summary>
+            <remarks>
+            自动生成的字段。
+            若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+            </remarks>
+        </member>
+        <member name="T:XZMY.Manage.Web.UploadCode.albumajax">
+            <summary>
+            Summary description for ajax
+            </summary>
+        </member>
+        <member name="T:XZMY.Manage.Web.UploadCode.ajax">
+            <summary>
+            Summary description for ajax
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.UploadCode.Code.Common.Rename(System.String)">
+            <summary>
+            重命名文件
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XZMY.Manage.Web.UploadCode.Code.Common.GetFileExt(System.String)">
+            <summary>
+            获取文件名称
+            </summary>
+        </member>
+        <member name="T:XZMY.Manage.Web.UploadCode.Code.ImageHelper">
+            <summary>
+            图片通用上传类
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Web.UploadCode.Code.ImageHelper.UploadImage(System.Web.HttpPostedFile,System.String,System.Int32,System.Boolean,System.Int32,System.Int32)">
+             <summary>
+             上传图片
+             </summary>
+             <param name="postedFile">文件</param>
+             <param name="uploadPath">上传文件夹路径</param>
+            <param name="maxSize">大小</param>
+             <param name="thumbnail">是否生成缩略图</param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:XZMY.Manage.Web.UploadCode.Code.ImageHelper.UploadImage(System.Web.HttpPostedFile,System.String,System.Int32,WatermarkType,System.String,WatermarkPosition,System.Boolean,System.Int32,System.Int32)" -->
+        <member name="M:XZMY.Manage.Web.UploadCode.Code.ImageHelper.AddImageWaterMarkPic(System.Drawing.Image,System.String,System.String,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            加图片水印
+            </summary>
+            <param name="img">要加水印的原图﻿(System.Drawing)</param>
+            <param name="filename">文件名</param>
+            <param name="watermarkFilename">水印文件名</param>
+            <param name="watermarkStatus">图片水印位置1=左上 2=中上 3=右上 4=左中  5=中中 6=右中 7=左下 8=中下 9=右下</param>
+            <param name="quality">加水印后的质量0~100,数字越大质量越高</param>
+            <param name="watermarkTransparency">水印图片的透明度1~10,数字越小越透明,10为不透明</param>	
+        </member>
+        <member name="M:XZMY.Manage.Web.UploadCode.Code.ImageHelper.AddImageWaterMarkText(System.Drawing.Image,System.String,System.String,System.Int32,System.Int32,System.String,System.Int32)">
+            <summary>
+            增加图片文字水印
+            </summary>
+            <param name="img">要加水印的原图﻿(﻿System.Drawing)</param>
+            <param name="filename">文件名</param>
+            <param name="watermarkText">水印文字</param>
+            <param name="watermarkStatus">图片水印位置1=左上 2=中上 3=右上 4=左中  5=中中 6=右中 7=左下 8=右中 9=右下</param>
+            <param name="quality">加水印后的质量0~100,数字越大质量越高</param>
+            <param name="fontname">水印的字体</param>
+            <param name="fontsize">水印的字号</param>
+        </member>
+        <member name="M:XZMY.Manage.Web.UploadCode.Code.ImageHelper.MakeThumbnail(System.String,System.String,System.Int32,System.Int32,ThumbnailType)">
+            <summary>
+            生成缩略图
+            </summary>
+            <param name="originalImagePath">源图路径（物理路径）</param>
+            <param name="thumbnailPath">缩略图路径（物理路径）</param>
+            <param name="width">缩略图宽度</param>
+            <param name="height">缩略图高度</param>
+            <param name="mode">生成缩略图的方式</param>
+        </member>
+        <member name="T:XZMY.Manage.Web.UploadCode.Code.ResultData.UploadImageInfo">
+            <summary>
+            上传图片
+            </summary>
+        </member>
+        <member name="P:XZMY.Manage.Web.UploadCode.Code.ResultData.UploadImageInfo.status">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="P:XZMY.Manage.Web.UploadCode.Code.ResultData.UploadImageInfo.path">
+            <summary>
+            图片地址
+            </summary>
+        </member>
+        <member name="P:XZMY.Manage.Web.UploadCode.Code.ResultData.UploadImageInfo.thumb">
+            <summary>
+            缩略图地址
+            </summary>
+        </member>
+        <member name="P:XZMY.Manage.Web.UploadCode.Code.ResultData.UploadImageInfo.name">
+            <summary>
+            文件名
+            </summary>
+        </member>
+        <member name="P:XZMY.Manage.Web.UploadCode.Code.ResultData.UploadImageInfo.size">
+            <summary>
+            文件大小
+            </summary>	
+        </member>
+        <member name="P:XZMY.Manage.Web.UploadCode.Code.ResultData.UploadImageInfo.msg">
+            <summary>
+            消息
+            </summary>
+        </member>
+        <member name="P:XZMY.Manage.Web.UploadCode.Code.ResultData.UploadImageInfo.extension">
+            <summary>
+            扩展名
+            </summary>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.ApiDescriptionExtensions.GetFriendlyId(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Generates an URI-friendly ID for the <see cref="T:System.Web.Http.Description.ApiDescription"/>. E.g. "Get-Values-id_name" instead of "GetValues/{id}?name={name}"
+            </summary>
+            <param name="description">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The ID as a string.</returns>
+        </member>
+        <member name="T:UniTech.TeamBridge.Areas.HelpPage.HelpPageConfig">
+            <summary>
+            Use this class to customize the Help Page.
+            For example you can set a custom <see cref="T:System.Web.Http.Description.IDocumentationProvider"/> to supply the documentation
+            or you can provide the samples for the requests/responses.
+            </summary>
+        </member>
+        <member name="T:UniTech.TeamBridge.Areas.HelpPage.Controllers.HelpController">
+            <summary>
+            The controller that will handle requests for the help page.
+            </summary>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.HelpPageConfigurationExtensions.SetDocumentationProvider(System.Web.Http.HttpConfiguration,System.Web.Http.Description.IDocumentationProvider)">
+            <summary>
+            Sets the documentation provider for help page.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="documentationProvider">The documentation provider.</param>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleObjects(System.Web.Http.HttpConfiguration,System.Collections.Generic.IDictionary{System.Type,System.Object})">
+            <summary>
+            Sets the objects that will be used by the formatters to produce sample requests/responses.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sampleObjects">The sample objects.</param>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleRequest(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String)">
+            <summary>
+            Sets the sample request directly for the specified media type and action.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample request.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleRequest(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String,System.String[])">
+            <summary>
+            Sets the sample request directly for the specified media type and action with parameters.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample request.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleResponse(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String)">
+            <summary>
+            Sets the sample request directly for the specified media type of the action.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample response.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleResponse(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String,System.String[])">
+            <summary>
+            Sets the sample response directly for the specified media type of the action with specific parameters.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample response.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleForType(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.Type)">
+            <summary>
+            Sets the sample directly for all actions with the specified type and media type.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="type">The parameter type or return type of an action.</param>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualRequestType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String)">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action. 
+            The help page will use this information to produce more accurate request samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualRequestType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String,System.String[])">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action. 
+            The help page will use this information to produce more accurate request samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualResponseType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String)">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> returned as part of the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action. 
+            The help page will use this information to produce more accurate response samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualResponseType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String,System.String[])">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> returned as part of the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action. 
+            The help page will use this information to produce more accurate response samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.HelpPageConfigurationExtensions.GetHelpPageSampleGenerator(System.Web.Http.HttpConfiguration)">
+            <summary>
+            Gets the help page sample generator.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <returns>The help page sample generator.</returns>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.HelpPageConfigurationExtensions.SetHelpPageSampleGenerator(System.Web.Http.HttpConfiguration,UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleGenerator)">
+            <summary>
+            Sets the help page sample generator.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sampleGenerator">The help page sample generator.</param>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.HelpPageConfigurationExtensions.GetHelpPageApiModel(System.Web.Http.HttpConfiguration,System.String)">
+            <summary>
+            Gets the model that represents an API displayed on the help page. The model is initialized on the first call and cached for subsequent calls.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="apiDescriptionId">The <see cref="T:System.Web.Http.Description.ApiDescription"/> ID.</param>
+            <returns>
+            An <see cref="T:UniTech.TeamBridge.Areas.HelpPage.Models.HelpPageApiModel"/>
+            </returns>
+        </member>
+        <member name="T:UniTech.TeamBridge.Areas.HelpPage.Models.HelpPageApiModel">
+            <summary>
+            The model that represents an API displayed on the help page.
+            </summary>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.Models.HelpPageApiModel.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:UniTech.TeamBridge.Areas.HelpPage.Models.HelpPageApiModel"/> class.
+            </summary>
+        </member>
+        <member name="P:UniTech.TeamBridge.Areas.HelpPage.Models.HelpPageApiModel.ApiDescription">
+            <summary>
+            Gets or sets the <see cref="P:UniTech.TeamBridge.Areas.HelpPage.Models.HelpPageApiModel.ApiDescription"/> that describes the API.
+            </summary>
+        </member>
+        <member name="P:UniTech.TeamBridge.Areas.HelpPage.Models.HelpPageApiModel.SampleRequests">
+            <summary>
+            Gets the sample requests associated with the API.
+            </summary>
+        </member>
+        <member name="P:UniTech.TeamBridge.Areas.HelpPage.Models.HelpPageApiModel.SampleResponses">
+            <summary>
+            Gets the sample responses associated with the API.
+            </summary>
+        </member>
+        <member name="P:UniTech.TeamBridge.Areas.HelpPage.Models.HelpPageApiModel.ErrorMessages">
+            <summary>
+            Gets the error messages associated with this model.
+            </summary>
+        </member>
+        <member name="T:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleGenerator">
+            <summary>
+            This class will generate the samples for the help page.
+            </summary>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleGenerator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleGenerator"/> class.
+            </summary>
+        </member>
+        <member name="P:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleGenerator.ActualHttpMessageTypes">
+            <summary>
+            Gets CLR types that are used as the content of <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/>.
+            </summary>
+        </member>
+        <member name="P:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples">
+            <summary>
+            Gets the objects that are used directly as samples for certain actions.
+            </summary>
+        </member>
+        <member name="P:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects">
+            <summary>
+            Gets the objects that are serialized as samples by the supported formatters.
+            </summary>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleGenerator.GetSampleRequests(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Gets the request body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleGenerator.GetSampleResponses(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Gets the response body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleGenerator.GetSample(System.Web.Http.Description.ApiDescription,UniTech.TeamBridge.Areas.HelpPage.SampleDirection)">
+            <summary>
+            Gets the request or response body samples.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleGenerator.GetActionSample(System.String,System.String,System.Collections.Generic.IEnumerable{System.String},System.Type,System.Net.Http.Formatting.MediaTypeFormatter,System.Net.Http.Headers.MediaTypeHeaderValue,UniTech.TeamBridge.Areas.HelpPage.SampleDirection)">
+            <summary>
+            Search for samples that are provided directly through <see cref="P:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples"/>.
+            </summary>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+            <param name="type">The CLR type.</param>
+            <param name="formatter">The formatter.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
+            <returns>The sample that matches the parameters.</returns>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleGenerator.GetSampleObject(System.Type)">
+            <summary>
+            Gets the sample object that will be serialized by the formatters. 
+            First, it will look at the <see cref="P:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects"/>. If no sample object is found, it will try to create one using <see cref="T:UniTech.TeamBridge.Areas.HelpPage.ObjectGenerator"/>.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>The sample object.</returns>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleGenerator.ResolveType(System.Web.Http.Description.ApiDescription,System.String,System.String,System.Collections.Generic.IEnumerable{System.String},UniTech.TeamBridge.Areas.HelpPage.SampleDirection,System.Collections.ObjectModel.Collection{System.Net.Http.Formatting.MediaTypeFormatter}@)">
+            <summary>
+            Resolves the type of the action parameter or return value when <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/> is used.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or a response.</param>
+            <param name="formatters">The formatters.</param>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleGenerator.WriteSampleObjectUsingFormatter(System.Net.Http.Formatting.MediaTypeFormatter,System.Object,System.Type,System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Writes the sample object using formatter.
+            </summary>
+            <param name="formatter">The formatter.</param>
+            <param name="value">The value.</param>
+            <param name="type">The type.</param>
+            <param name="mediaType">Type of the media.</param>
+            <returns></returns>
+        </member>
+        <member name="T:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleKey">
+            <summary>
+            This is used to identify the place where the sample should be applied.
+            </summary>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue,System.Type)">
+            <summary>
+            Creates a new <see cref="T:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleKey"/> based on media type and CLR type.
+            </summary>
+            <param name="mediaType">The media type.</param>
+            <param name="type">The CLR type.</param>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleKey.#ctor(UniTech.TeamBridge.Areas.HelpPage.SampleDirection,System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a new <see cref="T:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleKey"/> based on <see cref="P:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>, controller name, action name and parameter names.
+            </summary>
+            <param name="sampleDirection">The <see cref="P:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue,UniTech.TeamBridge.Areas.HelpPage.SampleDirection,System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a new <see cref="T:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleKey"/> based on media type, <see cref="P:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>, controller name, action name and parameter names.
+            </summary>
+            <param name="mediaType">The media type.</param>
+            <param name="sampleDirection">The <see cref="P:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="P:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleKey.ControllerName">
+            <summary>
+            Gets the name of the controller.
+            </summary>
+            <value>
+            The name of the controller.
+            </value>
+        </member>
+        <member name="P:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleKey.ActionName">
+            <summary>
+            Gets the name of the action.
+            </summary>
+            <value>
+            The name of the action.
+            </value>
+        </member>
+        <member name="P:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleKey.MediaType">
+            <summary>
+            Gets the media type.
+            </summary>
+            <value>
+            The media type.
+            </value>
+        </member>
+        <member name="P:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleKey.ParameterNames">
+            <summary>
+            Gets the parameter names.
+            </summary>
+        </member>
+        <member name="P:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleKey.SampleDirection">
+            <summary>
+            Gets the <see cref="P:UniTech.TeamBridge.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.
+            </summary>
+        </member>
+        <member name="T:UniTech.TeamBridge.Areas.HelpPage.ImageSample">
+            <summary>
+            This represents an image sample on the help page. There's a display template named ImageSample associated with this class.
+            </summary>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.ImageSample.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:UniTech.TeamBridge.Areas.HelpPage.ImageSample"/> class.
+            </summary>
+            <param name="src">The URL of an image.</param>
+        </member>
+        <member name="T:UniTech.TeamBridge.Areas.HelpPage.InvalidSample">
+            <summary>
+            This represents an invalid sample on the help page. There's a display template named InvalidSample associated with this class.
+            </summary>
+        </member>
+        <member name="T:UniTech.TeamBridge.Areas.HelpPage.ObjectGenerator">
+            <summary>
+            This class will create an object of a given type and populate it with sample data.
+            </summary>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.ObjectGenerator.GenerateObject(System.Type)">
+            <summary>
+            Generates an object for a given type. The type needs to be public, have a public default constructor and settable public properties/fields. Currently it supports the following types:
+            Simple types: <see cref="T:System.Int32"/>, <see cref="T:System.String"/>, <see cref="T:System.Enum"/>, <see cref="T:System.DateTime"/>, <see cref="T:System.Uri"/>, etc.
+            Complex types: POCO types.
+            Nullables: <see cref="T:System.Nullable`1"/>.
+            Arrays: arrays of simple types or complex types.
+            Key value pairs: <see cref="T:System.Collections.Generic.KeyValuePair`2"/>
+            Tuples: <see cref="T:System.Tuple`1"/>, <see cref="T:System.Tuple`2"/>, etc
+            Dictionaries: <see cref="T:System.Collections.Generic.IDictionary`2"/> or anything deriving from <see cref="T:System.Collections.Generic.IDictionary`2"/>.
+            Collections: <see cref="T:System.Collections.Generic.IList`1"/>, <see cref="T:System.Collections.Generic.IEnumerable`1"/>, <see cref="T:System.Collections.Generic.ICollection`1"/>, <see cref="T:System.Collections.IList"/>, <see cref="T:System.Collections.IEnumerable"/>, <see cref="T:System.Collections.ICollection"/> or anything deriving from <see cref="T:System.Collections.Generic.ICollection`1"/> or <see cref="T:System.Collections.IList"/>.
+            Queryables: <see cref="T:System.Linq.IQueryable"/>, <see cref="T:System.Linq.IQueryable`1"/>.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>An object of the given type.</returns>
+        </member>
+        <member name="T:UniTech.TeamBridge.Areas.HelpPage.SampleDirection">
+            <summary>
+            Indicates whether the sample is used for request or response
+            </summary>
+        </member>
+        <member name="T:UniTech.TeamBridge.Areas.HelpPage.TextSample">
+            <summary>
+            This represents a preformatted text sample on the help page. There's a display template named TextSample associated with this class.
+            </summary>
+        </member>
+        <member name="T:UniTech.TeamBridge.Areas.HelpPage.XmlDocumentationProvider">
+            <summary>
+            A custom <see cref="T:System.Web.Http.Description.IDocumentationProvider"/> that reads the API documentation from an XML documentation file.
+            </summary>
+        </member>
+        <member name="M:UniTech.TeamBridge.Areas.HelpPage.XmlDocumentationProvider.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:UniTech.TeamBridge.Areas.HelpPage.XmlDocumentationProvider"/> class.
+            </summary>
+            <param name="documentPath">The physical path to XML document.</param>
+        </member>
+        <member name="T:Config">
+            <summary>
+            Config 的摘要说明
+            </summary>
+        </member>
+        <member name="T:ConfigHandler">
+            <summary>
+            Config 的摘要说明
+            </summary>
+        </member>
+        <member name="T:CrawlerHandler">
+            <summary>
+            Crawler 的摘要说明
+            </summary>
+        </member>
+        <member name="T:Handler">
+            <summary>
+            Handler 的摘要说明
+            </summary>
+        </member>
+        <member name="T:ListFileManager">
+            <summary>
+            FileManager 的摘要说明
+            </summary>
+        </member>
+        <member name="T:NotSupportedHandler">
+            <summary>
+            NotSupportedHandler 的摘要说明
+            </summary>
+        </member>
+        <member name="T:PathFormatter">
+            <summary>
+            PathFormater 的摘要说明
+            </summary>
+        </member>
+        <member name="T:UploadHandler">
+            <summary>
+            UploadHandler 的摘要说明
+            </summary>
+        </member>
+        <member name="P:UploadConfig.PathFormat">
+            <summary>
+            文件命名规则
+            </summary>
+        </member>
+        <member name="P:UploadConfig.UploadFieldName">
+            <summary>
+            上传表单域名称
+            </summary>
+        </member>
+        <member name="P:UploadConfig.SizeLimit">
+            <summary>
+            上传大小限制
+            </summary>
+        </member>
+        <member name="P:UploadConfig.AllowExtensions">
+            <summary>
+            上传允许的文件格式
+            </summary>
+        </member>
+        <member name="P:UploadConfig.Base64">
+            <summary>
+            文件是否以 Base64 的形式上传
+            </summary>
+        </member>
+        <member name="P:UploadConfig.Base64Filename">
+            <summary>
+            Base64 字符串所表示的文件名
+            </summary>
+        </member>
+        <member name="T:ImageCategory">
+            <summary>
+            图片分类
+            </summary>
+        </member>
+        <member name="F:ImageCategory.None">
+            <summary>
+            无
+            </summary>
+        </member>
+        <member name="F:ImageCategory.Banner">
+            <summary>
+            banner
+            </summary>
+        </member>
+        <member name="F:ImageCategory.Article">
+            <summary>
+            新闻
+            </summary>
+        </member>
+        <member name="F:ImageCategory.Product">
+            <summary>
+            商品
+            </summary>
+        </member>
+        <member name="T:ThumbnailType">
+            <summary>
+            生成缩略图类型
+            </summary>
+        </member>
+        <member name="F:ThumbnailType.WidthHeight">
+            <summary>
+            指定高宽缩放(可能变形)
+            </summary>
+        </member>
+        <member name="F:ThumbnailType.Width">
+            <summary>
+            指定宽，高按比例(不变形)
+            </summary>
+        </member>
+        <member name="F:ThumbnailType.Height">
+            <summary>
+            指定高，宽按比例(不变形)
+            </summary>
+        </member>
+        <member name="F:ThumbnailType.WidthHeightCut">
+            <summary>
+            指定高宽裁减(不变形)
+            </summary>
+        </member>
+        <member name="F:ThumbnailType.WidthHeightAuto">
+            <summary>
+            指定高宽范围(不变形)
+            </summary>
+        </member>
+        <member name="T:WatermarkType">
+            <summary>
+            水印类型
+            </summary>
+        </member>
+        <member name="F:WatermarkType.Text">
+            <summary>
+            文字
+            </summary>
+        </member>
+        <member name="F:WatermarkType.Image">
+            <summary>
+            图片
+            </summary>
+        </member>
+        <member name="T:WatermarkPosition">
+            <summary>
+            水印定位
+            </summary>
+        </member>
+        <member name="F:WatermarkPosition.TopLeft">
+            <summary>
+            左上角
+            </summary>
+        </member>
+        <member name="F:WatermarkPosition.TopCenter">
+            <summary>
+            中上
+            </summary>
+        </member>
+        <member name="F:WatermarkPosition.TopRight">
+            <summary>
+            右上角
+            </summary>
+        </member>
+        <member name="F:WatermarkPosition.CenterLeft">
+            <summary>
+            左中
+            </summary>
+        </member>
+        <member name="F:WatermarkPosition.Center">
+            <summary>
+            中心
+            </summary>
+        </member>
+        <member name="F:WatermarkPosition.CenterRigth">
+            <summary>
+            右中
+            </summary>
+        </member>
+        <member name="F:WatermarkPosition.BottomLeft">
+            <summary>
+            左下角
+            </summary>
+        </member>
+        <member name="F:WatermarkPosition.BottomCenter">
+            <summary>
+            中下
+            </summary>
+        </member>
+        <member name="F:WatermarkPosition.BottomRight">
+            <summary>
+            右下角
+            </summary>
+        </member>
+        <member name="T:ResultCode">
+            <summary>
+            返回状态
+            </summary>
+        </member>
+        <member name="F:ResultCode.Fail">
+            <summary>
+            失败0
+            </summary>
+        </member>
+        <member name="F:ResultCode.Success">
+            <summary>
+            成功1
+            </summary>
+        </member>
+    </members>
+</doc>

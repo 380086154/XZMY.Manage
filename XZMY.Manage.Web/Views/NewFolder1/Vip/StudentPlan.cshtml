@@ -1,0 +1,719 @@
+﻿@using System.Web;
+@using Newtonsoft.Json;
+@model XZMY.Manage.Model.ServiceModel.Plan.SmPlanRecord
+@{
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+    ViewBag.Title = "学生规划详细页面";
+}
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home/index">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="/Vip/StudentList">学生管理</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="action">学生规划详细</span>
+        </li>
+    </ul>
+</div>
+
+
+
+<!-- END PAGE BAR -->
+<div class="row" style="margin-top: 20px">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet light bordered" id="form_wizard_1">
+            <div class="portlet-title">
+                <div class="actions">
+                    <a class="btn btn-default" href="/Vip/StudentPlanList/?StudentId=@Model.StudentId">
+                        <i class="fa fa-eye"></i> 查看历史规划
+                    </a>
+                    <a class="btn btn-default" href="/Vip/PlanRecordToWord/?PlanRecordId=@Model.DataId">
+                        <i class="fa fa-eye"></i> 导出为Word
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                    @{
+                        List<String> listSchoolTypeName = new List<String>();
+                        listSchoolTypeName.Add("普通学校");
+                        listSchoolTypeName.Add("重点学校");
+                        listSchoolTypeName.Add("国内国际学校");
+                     }
+                    <div style="display:none;">
+                        Id:@Html.TextBoxFor(x => x.Id)<br />
+                        StudentId:@Html.TextBoxFor(x => x.StudentId)<br />
+                        StudentName:@Html.TextBoxFor(x => x.StudentName)<br />
+                        IsValid:@Html.TextBoxFor(x => x.IsValid)<br />
+                        IsComplete:@Html.TextBoxFor(x => x.IsComplete)<br />
+                    </div>
+                    <div class="form-body">
+                        <h3 class="form-section">规划信息</h3>
+                        @if (Model.DataId == Guid.Empty)
+                        {
+                            //学生还未生成规划
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3"></label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <span class="form-control-static">学生还未生成规划。</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            //学生已生成规划
+                            //两列
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">规划师确认：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <p class="form-control-static"> @Model.IsCompleteName </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">是否有效：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <p class="form-control-static"> @Model.IsValidName </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">规划时间：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.PlanTime.ToString("yyyy-MM-dd") </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">留学预算：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.Fee </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">目标国家：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.TargetCountryName </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">意向学校：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.IntentionalSchoolName </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">规划时年级：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.EducationName </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">出国年级：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.GoAbroadEducationIName </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">学校排名：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.IntentionalSchoolTop </p>
+                                                @*<select id="ddlIntentionalSchoolTop" name="ddlIntentionalSchoolTop" class="mt-radio form-control input-small">
+                                                    <option value="1">前十名大学</option>
+                                                    <option value="2">前二十名大学</option>
+                                                    <option value="3">前五十名大学</option>
+                                                    <option value="4">前一百名大学</option>
+                                                </select>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">移民计划：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.ImmigrationProgramName </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">意向专业：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.major </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">规划路线：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.Route.ToString()</p>
+</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="form-section">成绩单</h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3"></label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                          
+                                                <p>英语成绩: @Html.TextBoxFor(x => x.EnglishScore, new { @maxlength = "50", @class = "form-control" }) </p>
+                                                <p>学科成绩: @Html.TextBoxFor(x => x.LearnScore, new { @maxlength = "50", @class = "form-control" })</p>
+                                                <p>素质成绩: @Html.TextBoxFor(x => x.QualityScore, new { @maxlength = "50", @class = "form-control" })</p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3"></label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <button type="submit" class="btn green" style="display:none;">规划师确认</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="form-section">规划进程</h3>
+                        <div class="portlet light portlet-fit bordered">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="icon-microphone font-green"></i>
+                                    <span class="caption-subject bold font-green uppercase"> 规划进程</span>
+                                    <span class="caption-helper">default option...</span>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="timeline">
+                                    @{
+                                        List<XZMY.Manage.Model.ServiceModel.Plan.SmStudentPlan> listTemp = Model.listStudentPlan;
+                                        List<XZMY.Manage.Model.ServiceModel.Plan.SmStudentPlan> list = listTemp.OrderBy(x => x.Sort).ToList();
+                                    }
+                                    <div id="HtmlGradeProgram" style="display:none;">
+                                        <li id="HtmlGradeProgram__planSort__" class="mt-list-item" >
+                                            <div class="list-icon-container done">
+                                                <i class="icon-check"></i>
+                                            </div>
+                                            <div class="list-datetime"> <span onclick="GradeProgramDelClick(this);" sort="__planSort__">删除</span> </div>
+                                            <div class="list-item-content">
+                                                <h3 class="uppercase">
+                                                    [__programTypeName__] __programName__
+                                                    <input name="planProgramProgramId__planSort__" class="planProgramProgramId__planSort__" value="__programProgramId__" type="hidden" />
+                                                    <input name="planProgramName__planSort__" class="planProgramName__planSort__" value="__programName__" type="hidden" />
+                                                    <input name="planProgramType__planSort__" class="planProgramType__planSort__" value="__programType__" type="hidden" />
+                                                    <input name="planProgramAddEnglishScore__planSort__" class="planProgramAddEnglishScore__planSort__" value="__programAddEnglishScore__" type="hidden" />
+                                                    <input name="planProgramAddLearnScore__planSort__" class="planProgramAddLearnScore__planSort__" value="__programAddLearnScore__" type="hidden" />
+                                                    <input name="planProgramAddQualityScore__planSort__" class="planProgramAddQualityScore__planSort__" value="__programAddQualityScore__" type="hidden" />
+                                                </h3>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    @foreach (var plan in list)
+                                    {
+
+                                    <!-- TIMELINE ITEM -->
+                                    <div id="divPlan_@plan.Sort" class="timeline-item">
+                                       
+                                        <input name="planSort" class="planSort" value="@plan.Sort" type="hidden" />
+                                        <input name="planSchoolPlace" class="planSchoolPlace" value="@plan.SchoolPlace" type="hidden" />
+                                        <input name="planGrade" class="planGrade" value="@plan.Grade" type="hidden" />
+                                        <input name="planPlanningNoteId" class="planPlanningNoteId" value="@plan.PlanningNoteId" type="hidden" />
+                                        <input name="planSchoolType" class="planSchoolType" value="@plan.SchoolType" type="hidden" />
+                                        <input name="planFee" class="planFee" value="@plan.Fee" type="hidden" />
+                                        <input name="planAddEnglishScore" class="planAddEnglishScore" value="@plan.AddEnglishScore" type="hidden" />
+                                        <input name="planAddLearnScore" class="planAddLearnScore" value="@plan.AddLearnScore" type="hidden" />
+                                        <input name="planAddQualityScore" class="planAddQualityScore" value="@plan.AddQualityScore" type="hidden" />
+                                        <input name="planEnglishScore" class="planEnglishScore" value="@plan.EnglishScore" type="hidden" />
+                                        <input name="planLearnScore" class="planLearnScore" value="@plan.LearnScore" type="hidden" />
+                                        <input name="planQualityScore" class="planQualityScore" value="@plan.QualityScore" type="hidden" />
+                                        <input id="JsonlistPlanProgram_@plan.Sort" type="hidden" value="@JsonConvert.SerializeObject(plan.listStudentPlanProgram)" />
+                                        <div class="timeline-badge">
+                                            <span class="caption-subject bold font-green uppercase">@plan.GradeShorthand </span>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <div class="timeline-body-arrow"> </div>
+                                            <div class="timeline-body-head">
+                                                <div class="timeline-body-head-caption">
+                                                    <span href="javascript:;" class="timeline-body-title font-blue-madison">@plan.SchoolPlace</span>
+                                                    <span href="javascript:;" class="timeline-body-title font-blue-madison">@plan.Grade</span>
+                                                    <span href="javascript:;" class="timeline-body-title font-blue-madison">@plan.SchoolType</span>
+                                                    @*<select  name="SchoolType" Sort="@plan.Sort" onchange="SchoolTypeChang(this);" class="mt-radio form-control input-small">
+                                                            @foreach (var m in listSchoolTypeName)
+                                                            {
+                                                                if (plan.SchoolType == m)
+                                                                {
+                                                                    <option value="@m" selected="selected">@m</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@m">@m</option>
+                                                                }
+                                                            }
+                                                        </select>*@
+                                                    
+                                                
+                                            
+                                                    <span id="PlanScore_@plan.Sort" href="javascript:;" style="display:none" class="timeline-body-time font-grey-cascade">需要分值: 英语[@(plan.EnglishScore)],学科[@(plan.LearnScore)],素质[@(plan.QualityScore)]</span>
+                                                    <select id="ddlTemplate_@plan.Sort" name="ddlTemplate" class="mt-radio form-control input-small ddlTemplate" style="display:none;" >
+                                                        @foreach (var mProject in Model.listProjectTemplate)
+                                                        {
+                                                            if (mProject.SuitablePerson == plan.SuitablePersonSort)
+                                                            {
+                                                                <option value="@mProject.Id">@mProject.NameAbstract</option>
+                                                            }
+                                                        }
+                                                        @foreach (var mCourse in Model.listCourseTemplate)
+                                                        {
+                                                            if (mCourse.SuitablePerson == plan.SuitablePersonSort)
+                                                            {
+                                                                <option value="@mCourse.Id">@mCourse.NameAbstract</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                    <button type="button" class="btn green" sort="@plan.Sort" onclick="GradeClick(this);" style="display:none;">确认</button>
+                                                </div>
+                                            </div>
+                                            <div class="timeline-body-content">
+                                                @{
+                                                    List<XZMY.Manage.Model.ServiceModel.Plan.SmStudentPlanProgram> listPlanProgramTemp = plan.listStudentPlanProgram;
+                                                    List<XZMY.Manage.Model.ServiceModel.Plan.SmStudentPlanProgram> listPlanProgram = listPlanProgramTemp.OrderBy(x => x.Type).OrderBy(x => x.Name).ToList();
+                                                }
+                                                <div class="portlet-body">
+                                                    <div class="mt-element-list">
+                                                        <div class="mt-list-container list-simple" style="border-top: 1px solid #e7ecf1;">
+                                                            <ul id="ulGradeProgram_@plan.Sort">
+                                                                @foreach (XZMY.Manage.Model.ServiceModel.Plan.SmStudentPlanProgram modelProgram in listPlanProgram)
+                                                                {
+                                                                    <li id="HtmlGradeProgram@(plan.Sort)" class="mt-list-item">
+                                                                        <div class="list-icon-container done">
+                                                                            <i class="icon-check"></i>
+                                                                        </div>
+                                                                        <div class="list-datetime"> <span onclick="GradeProgramDelClick(this);" sort="@(plan.Sort)" style="display:none;">删除</span> </div>
+                                                                        <div class="list-item-content">
+                                                                            <h3 class="uppercase">
+                                                                                [@(modelProgram.TypeName)] 增加成绩[英语(@(modelProgram.AddEnglishScore)),学科(@(modelProgram.AddLearnScore)),素质(@(modelProgram.AddQualityScore))] @(modelProgram.Name)
+                                                                                <input name="StudentPlanProgramId@(plan.Sort)" class="StudentPlanProgramId@(plan.Sort)" value="@(modelProgram.Id)" type="hidden" />
+                                                                                <input name="planProgramProgramId@(plan.Sort)" class="planProgramProgramId@(plan.Sort)" value="@(modelProgram.ProgramId)" type="hidden" />
+                                                                                <input name="planProgramName@(plan.Sort)" class="planProgramName@(plan.Sort)" value="@(modelProgram.Name)" type="hidden" />
+                                                                                <input name="planProgramType@(plan.Sort)" class="planProgramType@(plan.Sort)" value="@(modelProgram.TypeName)" type="hidden" />
+                                                                                <input name="planProgramAddEnglishScore@(plan.Sort)" class="planProgramAddEnglishScore@(plan.Sort)" value="@(modelProgram.AddEnglishScore)" type="hidden" />
+                                                                                <input name="planProgramAddLearnScore@(plan.Sort)" class="planProgramAddLearnScore@(plan.Sort)" value="@(modelProgram.AddLearnScore)" type="hidden" />
+                                                                                <input name="planProgramAddQualityScore@(plan.Sort)" class="planProgramAddQualityScore@(plan.Sort)" value="@(modelProgram.AddQualityScore)" type="hidden" />
+                                                                            </h3>
+                                                                        </div>
+                                                                    </li>
+                                                                }
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END TIMELINE ITEM -->
+                                    }
+                                    <!-- END TIMELINE ITEM -->
+                                </div>
+                            </div>
+                        </div>
+                                                    }
+                        
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-offset-3 col-md-9">
+                                    <button type="submit" class="btn green" style="display:none;">规划师确认</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+</div>
+<input id="JsonlistSmPlanningNote" type="hidden"  value="@JsonConvert.SerializeObject(Model.listSmPlanningNote)"/>
+<input id="JsonlistStudentPlan" type="hidden" value="@JsonConvert.SerializeObject(Model.listStudentPlan)" />
+<input id="JsonlistProjectTemplate" type="hidden" value="@JsonConvert.SerializeObject(Model.listProjectTemplate)" />
+<input id="JsonlistCourseTemplate" type="hidden" value="@JsonConvert.SerializeObject(Model.listCourseTemplate)" />
+
+@section JavaScript{
+<script type="text/javascript">
+    var SchoolTypeChang = function (obj) {
+        var Sort = $(obj).attr("Sort");
+        var SchoolType = $(obj).val();
+        var JsonPlanningNote = jQuery.parseJSON($("#JsonlistSmPlanningNote").val());
+        $.each(JsonPlanningNote, function (i, item) {
+            if (item["SchoolPlace"].toString() == "国内" && item["Sort"].toString() == Sort.toString() && item["SchoolType"].toString() == SchoolType.toString()) {
+                $("#divPlan_" + Sort).children(".planEnglishScore").val(item["EnglishScore"].toString());
+                $("#divPlan_" + Sort).children(".planLearnScore").val(item["LearnScore"].toString());
+                $("#divPlan_" + Sort).children(".planQualityScore").val(item["QualityScore"].toString());
+            }
+        });
+        //计算需要分值
+        SetPlanScore();
+    };
+
+    ///获取单个年级对象
+    var modelPlanningNote = function (PlanningNoteId) {
+        var model = null;
+        var JsonPlanningNote = jQuery.parseJSON($("#JsonlistSmPlanningNote").val());
+        $.each(JsonPlanningNote, function (i, item) {
+            if (item["Id"].toString() == PlanningNoteId.toString()) {
+                model = item;
+                return model;
+            }
+        });
+        return model;
+    };
+    ///获取单个活动模板对象
+    var modelProjectTemplate = function (Id) {
+        var model = null;
+        var JsonTemplate = jQuery.parseJSON($("#JsonlistProjectTemplate").val());
+        $.each(JsonTemplate, function (i, item) {
+            if (item["Id"].toString() == Id.toString()) {
+                model = item;
+                return model;
+            }
+        });
+        return model;
+    };
+    ///获取单个课程模板对象
+    var modelCourseTemplate = function (Id) {
+        var model = null;
+        var JsonTemplate = jQuery.parseJSON($("#JsonlistCourseTemplate").val());
+        $.each(JsonTemplate, function (i, item) {
+            if (item["Id"].toString() == Id.toString()) {
+                model = item;
+                return model;
+            }
+        });
+        return model;
+    };
+    //年级添加活动课
+    var GradeClick = function (btnobj) {
+        //年级添加活动或课程模板
+        var ddlTemplate = $(btnobj).parent().children(".ddlTemplate");
+        LoadGradeProgram($(btnobj).attr("sort"), $(ddlTemplate).val());
+        $("#" + $(ddlTemplate).attr("id") + " option[value='" + $(ddlTemplate).val() + "']").remove(); //删除Select中Value='3'的Option
+        SetPlanScore();
+    };
+    //加载年级项目活动和课程
+    var LoadGradeProgram = function (sort, ProgramId) {
+        var strHtml = "";
+        var modelTemplate = null;
+        var TypeTemplate = 1;//1活动  2课程
+        modelTemplate = modelProjectTemplate(ProgramId);
+        if (modelTemplate != null) {
+            //活动
+            TypeTemplate = 1;
+            strHtml = $("#HtmlGradeProgram").html()
+                .replace(/__planSort__/ig, sort)
+                .replace(/__programProgramId__/ig, modelTemplate.Id)
+                .replace(/__programName__/ig, "_增加成绩[英语(" + modelTemplate.EnglishScore + "),学科(" + modelTemplate.LearnScore + "),素质(" + modelTemplate.QualityScore + ")]   " + modelTemplate.Name + "")
+                .replace(/__programType__/ig, "1")
+                .replace(/__programTypeName__/ig, "活动")
+                .replace(/__programAddEnglishScore__/ig, modelTemplate.EnglishScore)
+                .replace(/__programAddLearnScore__/ig, modelTemplate.LearnScore)
+                .replace(/__programAddQualityScore__/ig, modelTemplate.QualityScore);
+            $(strHtml).appendTo($("#ulGradeProgram_" + sort))
+        } else {
+            //课程
+            TypeTemplate = 2;
+            modelTemplate = modelCourseTemplate($(ddlTemplate).val());
+            strHtml = $(HtmlGradeProgram).html()
+                .replace(/__planSort__/ig, sort)
+                .replace(/__programProgramId__/ig, modelTemplate.Id)
+                .replace(/__programName__/ig,"_增加成绩[英语(" + modelTemplate.EnglishScore + "),学科(" + modelTemplate.LearnScore + "),素质(" + modelTemplate.QualityScore+ ")]   "+ modelTemplate.Name + "")
+                .replace(/__programType__/ig, 2)
+                .replace(/__programTypeName__/ig, "课程")
+                .replace(/__programAddEnglishScore__/ig, modelTemplate.EnglishScore)
+                .replace(/__programAddLearnScore__/ig, modelTemplate.LearnScore)
+                .replace(/__programAddQualityScore__/ig, modelTemplate.QualityScore);
+            $(strHtml).appendTo($("#ulGradeProgram_" + sort));
+        }
+    };
+    //年级活动课程项目删除按钮事件
+    var GradeProgramDelClick = function (btnDel) {
+        var ProgramId= $(btnDel).parent().parent().find(".planProgramProgramId" + $(btnDel).attr("sort")).val();
+        var ProgramName = $(btnDel).parent().parent().find(".planProgramName" + $(btnDel).attr("sort")).val();
+        var StudentPlanProgramId=$(btnDel).parent().parent().find(".StudentPlanProgramId" + $(btnDel).attr("sort")).val();
+        var data = {
+            StudentPlanProgramId: StudentPlanProgramId
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/api/APlan/DelStudentPlanProgram',
+            data: data,
+            dataType: 'JSON',
+            success: function (result) {
+                if (result.success)
+                {
+                
+                }
+            },
+            async: false
+        });
+
+        $("#ddlTemplate_" + $(btnDel).attr("sort")).prepend("<option value='" + ProgramId + "'>" + ProgramName + "</option>");
+        $(btnDel).parent().parent().remove();
+        //计算需要分值
+        SetPlanScore();
+    };
+    //设置需要分值: 英语[()],学科[()],素质[()]
+    var SetPlanScore = function () {
+        var JsonPlanningNote = jQuery.parseJSON($("#JsonlistSmPlanningNote").val());
+        $.each(JsonPlanningNote, function (i, item) {
+            var Sort = item["Sort"].toString();
+            if ($("#divPlan_" + Sort).length > 0) {
+                var EnglishScore = $("#divPlan_" + Sort).children(".planEnglishScore").val();
+                var LearnScore = $("#divPlan_" + Sort).children(".planLearnScore").val();
+                var QualityScore = $("#divPlan_" + Sort).children(".planQualityScore").val();
+                var ProgramEnglishScore =parseFloat($("#EnglishScore").val());
+                var ProgramLearnScore = parseFloat($("#LearnScore").val());
+                var ProgramQualityScore = parseFloat($("#QualityScore").val());
+                
+                for (var iprogram = 5; iprogram < 30; iprogram++) {
+                    if ($(".planProgramAddEnglishScore" + iprogram)) {
+                        if (iprogram <= Sort) {
+                            $(".planProgramAddEnglishScore" + iprogram).each(function (index, itemprogram) {
+                                ProgramEnglishScore += parseInt($(itemprogram).val()) || 0;
+                            });
+                            $(".planProgramAddLearnScore" + iprogram).each(function (index, itemprogram) {
+                                ProgramLearnScore += parseInt($(itemprogram).val()) || 0;
+                            });
+                            $(".planProgramAddQualityScore" + iprogram).each(function (index, itemprogram) {
+                                ProgramQualityScore += parseInt($(itemprogram).val()) || 0;
+                            });
+                        }
+                    }
+                }
+                var strScore = [];
+                strScore.push("需要分值: ");
+                if(ProgramEnglishScore>=EnglishScore){
+                    strScore.push("英语[" + EnglishScore + "(<span style='color:Green;'><b>" + ProgramEnglishScore + "</b></span>)]");
+                }else{
+                    strScore.push("英语[" + EnglishScore + "(<span style='color:red;'><b>" + ProgramEnglishScore + "</b></span>)]");
+                }
+                if(ProgramLearnScore>=LearnScore){
+                    strScore.push("学科[" + LearnScore + "(<span style='color:Green;'><b>" + ProgramLearnScore + "</b></span>)]");
+                }else{
+                    strScore.push("学科[" + LearnScore + "(<span style='color:red;'><b>" + ProgramLearnScore + "</b></span>)]");
+                }
+                if(ProgramQualityScore>=QualityScore){
+                    strScore.push("素质[" + QualityScore + "(<span style='color:Green;'><b>" + ProgramQualityScore + "</b></span>)]");
+                }else{
+                    strScore.push("素质[" + QualityScore + "(<span style='color:red;'><b>" + ProgramQualityScore + "</b></span>)]");
+                }
+                    
+                $("#PlanScore_" + Sort).html(strScore.join(''));
+            }
+        });
+    };
+    var Pageload = function () {
+        //加载留学目标国家下拉框
+        $("#ddlTargetCountry").val($("#TargetCountryId").val());
+        $("#ddlTargetCountry").change(function () {
+            $("#TargetCountryId").val($("#ddlTargetCountry").val());
+            $("#TargetCountryName").val($("#ddlTargetCountry").find("option:selected").text());
+        });
+        //加载留学目标学校排名下拉框
+        $("#ddlIntentionalSchoolTop").val($("#IntentionalSchoolTop").val());
+        $("#ddlIntentionalSchoolTop").change(function () {
+            $("#IntentionalSchoolTop").val($("#ddlIntentionalSchoolTop").val());
+        });
+        //加载移民计划下拉框
+        $("#ddlImmigrationProgram").val($("#ImmigrationProgram").val());
+        $("#ddlImmigrationProgram").change(function () {
+            $("#ImmigrationProgram").val($("#ddlImmigrationProgram").val());
+        });
+        //出国年级
+        $("#ddlGoAbroadEducation").val($("#ImmigrationProgram").val());
+        $("#ddlGoAbroadEducation").change(function () {
+            $("#GoAbroadEducationId").val($("#ddlGoAbroadEducation").val());
+            $("#GoAbroadEducationIName").val($("#ddlGoAbroadEducation").find("option:selected").text());
+        });
+        //当前就读学校类型
+        $("#ddlSchoolType").change(function () {
+            $("#ddlEducation").empty();
+            var JsonPlanningNote = jQuery.parseJSON($("#JsonlistSmPlanningNote").val());
+
+            $.each(JsonPlanningNote, function (i, item) {
+                if (item["SchoolTypeId"].toString() == $("#ddlSchoolType").val()) {
+                    $("<option></option>").val(item["Id"]).text(item["Grade"]).appendTo($("#ddlEducation"));
+                }
+            });
+        });
+        var JsonPlanningNoteSchoolType = jQuery.parseJSON($("#JsonlistSmPlanningNote").val());
+        $.each(JsonPlanningNoteSchoolType, function (i, item) {
+            if (item["Id"].toString() == $("#EducationId").val()) {
+                $("#ddlSchoolType").val(item["SchoolTypeId"].toString());
+                $("#ddlSchoolType").trigger("change");
+
+            }
+        });
+
+        //加载已经保存的活动或是课程
+        //PageLoadPlanProgram();
+        //计算需要分值
+        SetPlanScore();
+
+
+    };
+    //加载已经保存的活动或是课程
+    var PageLoadPlanProgram = function () {
+        var JsonStudentPlan = jQuery.parseJSON($("#JsonlistStudentPlan").val());
+        var strSort = "";
+        $.each(JsonStudentPlan, function (i, item) {
+            var Sort = item["Sort"].toString();
+            if (strSort.indexOf("_" + Sort + "_") < 0) {
+                if ($("#JsonlistPlanProgram_" + Sort) != null) {
+                    if ($("#JsonlistPlanProgram_" + Sort).val() != "[]") {
+                        var JsonlistPlanProgram = jQuery.parseJSON($("#JsonlistPlanProgram_" + Sort).val());
+                        $.each(JsonlistPlanProgram, function (i, item) {
+                            LoadGradeProgram(Sort, item["ProgramId"].toString());
+                        });
+                        strSort += "_" + Sort + "_";
+                    }
+                }
+            }
+        });
+    };
+    var SavePage = function () {
+
+    };
+    $(function () {
+      
+        var form1 = $('#defaultForm');
+        var error1 = $('.alert-error', form1);
+        var success1 = $('.alert-success', form1);
+
+        form1.validate({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-inline', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            ignore: "",
+            //rules: {
+            //    Name: { minlength: 1, required: true }
+            //},
+            highlight: function (element) { // hightlight error inputs
+                $(element).closest('.help-inline').removeClass('ok'); // display OK icon
+                $(element).closest('.control-group').removeClass('success').addClass('error'); // set error class to the control group
+            },
+            unhighlight: function (element) { // revert the change dony by hightlight
+                $(element).closest('.control-group').removeClass('error'); // set error class to the control group
+            },
+            success: function (label) {
+                label.addClass('valid').addClass('help-inline ok') // mark the current input as valid and display OK icon
+                .closest('.control-group').removeClass('error').addClass('success'); // set success class to the control group
+            },
+            submitHandler: function (form) {
+   
+                var data = form1.serializeObject();
+                $.ajax({
+                    type: 'POST',
+                    url: '/Vip/AjaxStudentPlan',
+                    data: data,
+                    async: false,
+                    dataType: 'JSON',
+                    success: function (result) {
+                        showToast(1, '成功',"")
+                        location.replace('/Vip/StudentPlan/' + result.Id);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        showToast(3, '系统消息', JSON.stringify(errorThrown));//错误信息
+                    },
+                    async: false
+                });
+            }
+        });
+    });
+
+</script>
+    }

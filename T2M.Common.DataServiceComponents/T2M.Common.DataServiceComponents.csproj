@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{775F0834-3632-471D-A4E0-007CBB8A1E7B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>T2M.Common.DataServiceComponents</RootNamespace>
+    <AssemblyName>T2M.Common.DataServiceComponents</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\T2M.Common.DataServiceComponents.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Data\Query\BaseCreateQuery`1.cs" />
+    <Compile Include="Data\Query\BaseDeleteByForeignIdQuery.cs" />
+    <Compile Include="Data\Query\BaseDeleteQuery.cs" />
+    <Compile Include="Data\Query\BaseSetSingleStateQuery.cs" />
+    <Compile Include="Data\Query\BaseUpdateQuery.cs" />
+    <Compile Include="Data\Query\CustomCondition.cs" />
+    <Compile Include="Data\Query\CustomSearch.cs" />
+    <Compile Include="Data\Query\CustomSearchWithPagination.cs" />
+    <Compile Include="Data\Query\GetEntityByForeignId.cs" />
+    <Compile Include="Data\Query\GetEntityByIdList.cs" />
+    <Compile Include="Data\Query\GetEntityById`1.cs" />
+    <Compile Include="Data\Query\GetEntityByMultiColumn.cs" />
+    <Compile Include="Data\Query\GetEntityByMultiForeignId.cs" />
+    <Compile Include="Data\Query\GetEntityBySingleColumn.cs" />
+    <Compile Include="Data\Query\GetEntityCountByForeignId.cs" />
+    <Compile Include="Data\Query\GetEntityCountByMultiForeignId.cs" />
+    <Compile Include="Data\Query\GetEntityList`1.cs" />
+    <Compile Include="Data\Query\GetPagedEntityByForeignId.cs" />
+    <Compile Include="Data\Query\Interface\IBaseCreateQuery.cs" />
+    <Compile Include="Data\Query\Interface\IBaseDeleteQuery.cs" />
+    <Compile Include="Data\Query\Interface\IBaseUpdateQuery.cs" />
+    <Compile Include="Data\Query\Interface\ICustomSearch.cs" />
+    <Compile Include="Data\Query\Interface\IGetEntityByForeignId.cs" />
+    <Compile Include="Data\Query\Interface\IGetEntityByIdList.cs" />
+    <Compile Include="Data\Query\Interface\IGetEntityById`1.cs" />
+    <Compile Include="Data\Query\Interface\IGetEntityByMultiColumn.cs" />
+    <Compile Include="Data\Query\Interface\IGetEntityBySingleColumn.cs" />
+    <Compile Include="Data\Query\Interface\IPaginationQuery`1.cs" />
+    <Compile Include="Data\Query\Interface\IQuery.cs" />
+    <Compile Include="Data\Query\Interface\IQuery`1.cs" />
+    <Compile Include="Data\Query\Interface\IRemoteCallRollbackQuery.cs" />
+    <Compile Include="Data\Query\Interface\ISubQuery.cs" />
+    <Compile Include="Data\Query\Interface\ISubQuery`1.cs" />
+    <Compile Include="Data\Query\Interface\PagedResult`1.cs" />
+    <Compile Include="Data\Query\Interface\SortType.cs" />
+    <Compile Include="Data\Query\PaginationQuery`1.cs" />
+    <Compile Include="Data\Utils\SqlTransactionWrapper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\BaseCreateService.cs" />
+    <Compile Include="Service\BaseDeleteService.cs" />
+    <Compile Include="Service\BaseUpdateService.cs" />
+    <Compile Include="Service\CustomSearchService.cs" />
+    <Compile Include="Service\GetEntityByIdListService.cs" />
+    <Compile Include="Service\GetEntityByIdService`1.cs" />
+    <Compile Include="Service\GetListService.cs" />
+    <Compile Include="Service\IInvokeService.cs" />
+    <Compile Include="Service\IInvokeService`1.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\T2M.Common.Utils\T2M.Common.Utils.csproj">
+      <Project>{FA696F33-700B-4627-BB04-33F895B54D33}</Project>
+      <Name>T2M.Common.Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>COPY /y $(TargetDir)*.dll $(SolutionDir)..\XZMY.Manage\Assembly
+COPY /y $(TargetDir)*.xml $(SolutionDir)..\XZMY.Manage\Assembly
+COPY /y $(TargetDir)*.dll $(SolutionDir)..\XZMY.Manage\XZMY.Manage.Web\bin
+COPY /y $(TargetDir)*.pdb $(SolutionDir)..\XZMY.Manage\XZMY.Manage.Web\bin
+COPY /y $(TargetDir)*.xml $(SolutionDir)..\XZMY.Manage\XZMY.Manage.Web\bin</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

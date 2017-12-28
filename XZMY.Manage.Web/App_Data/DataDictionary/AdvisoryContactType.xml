@@ -1,0 +1,6 @@
+<Data>
+  <Item Id="ef67747d-4a5a-4b89-b413-a269851b75be" Name="手机" EName="Normal" Default="False" Sys="False" State="1" Sort="1" Descr="手机" />
+  <Item Id="bfc43de5-7c0b-4087-897b-b231e2c14735" Name="QQ" EName="Middle" Default="False" Sys="False" State="1" Sort="1" Descr="QQ" />
+  <Item Id="997bb3e7-845e-44b5-aa39-9600d6791e8d" Name="微信" EName="Advanced" Default="False" Sys="False" State="1" Sort="1" Descr="微信" />
+  <Item Id="91bc9e2e-40bd-4a74-b409-0fde223c68f1" Name="邮箱" EName="Advanced" Default="False" Sys="False" State="1" Sort="1" Descr="邮箱" />
+</Data>

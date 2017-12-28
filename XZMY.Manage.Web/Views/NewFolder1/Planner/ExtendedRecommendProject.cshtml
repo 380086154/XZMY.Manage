@@ -1,0 +1,111 @@
+﻿@model XZMY.Manage.Model.ViewModel.Members.VmStudent
+@{
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+    ViewBag.Title = "列表";
+}
+
+@*推荐课程弹窗*@
+@Html.HiddenFor(x=>x.Id)
+@Html.HiddenFor(x=>x.Name)
+@Html.HiddenFor(x=>x.MemberId)
+@Html.HiddenFor(x=>x.PlannerId)
+@if (Request.QueryString["tab"] != null)
+{
+    <input type="hidden" id="tab" name="tab" value="@Request.QueryString["tab"].ToString()" />
+}
+else
+{
+    <input type="hidden" id="tab" name="tab" value="" />
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+    <h4 class="modal-title">推荐活动给 @Model.Name 同学</h4>
+</div>
+<div class="modal-body">
+    <div class="row" style="margin-left:0px;">
+        <div class="portlet-body form">
+            <div class="container">
+                    <table id="table-pagination" data-toggle="table" data-url="/Project/AjaxList/?IsWhere=tru"
+                           data-height="526"
+                           data-form-id="defaultForm"
+                           data-show-refresh="true"
+                           data-page-size="10"
+                           data-page-list="[5, 10, 20, 50, 100, 200]"
+                           data-search="true">
+                        <thead>
+                            <tr>
+                                <th data-checkbox="true"></th>
+                                <th data-field="ProjectName">活动名称</th>
+                                <th data-field="ProjectPlaceName" data-align="lift">区域</th>
+                                <th data-field="SuitablePersonName" data-align="lift">适合人群</th>
+                                <th data-field="BeginDate" data-align="center" data-formatter="yyyy_mm_dd">开始时间</th>
+                                <th data-field="EndDate" data-align="center" data-formatter="yyyy_mm_dd">结束时间</th>
+                                <th data-field="Sponsor" data-align="lift">主办方</th>
+                            </tr>
+                        </thead>
+                    </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    @*<button type="button" class="btn default" data-dismiss="modal">Close</button>*@
+    <button id="btnRecommend" type="button" class="btn blue">立刻推荐</button>
+</div>
+<script type="text/javascript">
+    /*为参加过活动学生列表*/
+    var opColumns = function (value, row, index) {
+        return '<a href="/Student/details/_StudentId_">推荐</a>&nbsp;&nbsp;<a href="/Parent/details/_StudentParentsId_">家长</a>'.replace(/_StudentParentsId_/ig, row.StudentParentsId).replace(/_StudentId_/ig, row.StudentId);
+    };
+   
+    $(function () {
+        var $table = $('#table-pagination'), $button = $('#btnRecommend');
+        $("#btnRecommend").click(function () {
+            $.each($table.bootstrapTable('getAllSelections'), function (i, item) {
+                //item["Id"]
+                var strMessage = '推荐[' + $("#Name").val() + "]  ,活动名称：[" + item["ProjectName"] + "],  活动时间:" + ChangeDateFormat(item["BeginDate"]) + "~" + ChangeDateFormat(item["EndDate"]);
+               
+                //$("<option></option>").val(item["Id"]).text(item["Name"]).appendTo($("#dllProjectType"));
+                var ProgramMessageData = {
+                    MemberId: $("#MemberId").val(),
+                    StudentId: $("#Id").val(),
+                    Message: strMessage,
+                    ProgramId: item["Id"],
+                    ProgramType: 1,
+                    PlannerId: $("#PlannerId").val(),
+                    PlannerName: "",
+                    IsRead: false,
+                    //MessageTime,
+                    MessageType: 1
+                }
+              
+                $.ajax({
+                    type: 'POST',
+                    url: '/ProgramMessage/AjaxProgramMessageEdit',
+                    data: ProgramMessageData,
+                    dataType: 'JSON',
+                    success: function (result) {
+                        if (result.success) {
+                            alert(ProgramMessageData.Message);
+                            if ($("#tab").val().length > 0) {
+                                location.href = "/Planner/ProjectList#" + $("#tab").val();
+                            } else {
+                                location.href = "/Planner/ProjectList";
+                            }
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    },
+                    async: false
+                });
+            })
+        });
+    });
+
+    function ChangeDateFormat(cellval) {
+        var date = new Date(parseInt(cellval.replace("/Date(", "").replace(")/", ""), 10));
+        var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+        var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+        return date.getFullYear() + "-" + month + "-" + currentDate;
+    }
+</script>

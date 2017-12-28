@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <style>
+        table td {
+            min-height: 24px;
+        }
+    </style>
+    <script src="Content/Metronic/js/jquery-1.10.1.min.js"></script>
+    <script>
+        //$(document).ready(function () {
+        //    var nbjson = "";
+        //    //$("#txtData").val("{ \"method\": \"DemoTestList\", \"userName\": \"JSC\", \"pwd\": \"123456\",\"sid\":\"ss\" }");
+        //    $("#txtData").val("{\"token\":\"000\",\"certificate\":\"\",\"ILv\":1,\"paramJson\":\"cUO86VIZaRnz7+kTOUPWWvxJp96WS6HDSZK7kWqL+fBjHWuVI96LdI7OxeJOYS6Rn5UcVYUfg3lD3W+4QYmzUEOuViwrCCzG/b8Mio5qazc=\"}");
+        //    //13962268080
+        //    alert($("#txtData").val());
+        //});
+
+
+
+
+        function dataDecr() {
+            var _data = { token: $.trim($("#txtToken").val()), certificate: $.trim($("#txtCertificate").val()), ILv: $.trim($("#txtILv").val()), paramJson: $.trim($("#txtTaramJson").val()) };
+            $.ajax({
+                url: "/api/SysCommon/GetDecrParamData",
+                type: "post",
+                data: { p: JSON.stringify(_data) },
+            }).done(function (data) {//成功 回调函数
+                $("#txtData").val(data);
+            }).fail(function (erro) {
+                //错误回调函数  执行代码
+                alert("参数包加密失败");
+            });
+
+        }
+
+        function paramJsonDecr() {
+            if ($.trim($("#txtTaramJson").val()) != "") {
+                $.ajax({
+                    url: "/api/SysCommon/GetDecrparamJsonData",
+                    type: "get",
+                    data: { p: $("#txtTaramJson").val() },
+                }).done(function (data) {//成功 回调函数
+                    if (data != null && data != "") {
+                        $("#txtTaramJson").val(data);
+                    }
+                }).fail(function (erro) {
+                    //错误回调函数  执行代码
+                    alert("特有参数加密失败");
+                });
+            }
+        }
+
+        function ApiTest() {
+            //var jsonData = { param: "62XDX6DBOZ0S5YZHYR9cY+8dP2XwWaLSb7jsdpiFfRBD4CY1KBlsu3d1j4sLayuou75jZKE7+4X5alb7NTOQzlMUudG11ovylbHQUkUTWUDNkeNX6FAgTWtre1Pp1wLvLmIzNCL3Y/gd33N/5p+9KdAhH3BbA/uWwMpfguwPP8junHOcHYkJYwTHtWeuyMC8w1Xm2Jxpk+A53dpPlj6Kv69388wrAMHx" };//  JSON.parse($("#txtData").val());
+            if ($("#txtData").val() != "") {
+                var jsonData = JSON.parse($("#txtTaramJson").val());
+
+
+                //GetMore "62XDX6DBOZ0S5YZHYR9cY+8dP2XwWaLSb7jsdpiFfRBD4CY1KBlsu3d1j4sLayuoW4mLSavsRNZX8pgkvfZ42DkaekwA8UbKn5UcmATteUc="
+                $.ajax({
+                    url: $.trim($("#txtInterface").val()),
+                    type: $("#selcHttp").val(),
+                    data: jsonData,
+                }).done(function (data) {//成功 回调函数
+                    //if (data != null && data != "") {
+                    //    $("#DivResult").html(data);
+                    //}
+                    $("#DivResult").html(JSON.stringify(data));
+                }).fail(function (erro) {
+                    //错误回调函数  执行代码
+                    $("#DivResult").html(JSON.stringify(erro));
+                });
+            } else {
+                alert("请加密参数包！"); escape
+            }
+
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <h3>参数包设置</h3>
+        <table>
+            <tr>
+                <td>请求方式:</td>
+                <td>
+                    <select id="selcHttp">
+                        <option value="post">Post</option>
+                        <option value="get">Get</option>
+                    </select>
+                </td>
+
+            </tr>
+            <tr>
+                <td>请求接口:</td>
+                <td><input id="txtInterface" style="width:500px;" type="text" value="/api/Member/Login" /> </td>
+            </tr>
+            <tr>
+                <td>token:</td>
+                <td><input id="txtToken" style="width:500px;" type="text" value="000" /></td>
+            </tr>
+            <tr>
+                <td>身份凭证:</td>
+                <td><input id="txtCertificate" style="width:900px;" type="text" value="" /></td>
+            </tr>
+            <tr>
+                <td>接口等级:</td>
+                <td><input id="txtILv" style="width:500px;" type="text" value="1" /></td>
+            </tr>
+            <tr>
+                <td>特有参数包:</td>
+                <td>
+                    <textarea id="txtTaramJson" style="width:500px;height:45px;" type="text"></textarea>&nbsp;&nbsp;
+                    <input type="button" value="特有参数加密" style="cursor:pointer" onclick="paramJsonDecr()" />
+                </td>
+            </tr>
+
+        </table>
+
+        <h3>参数包加密</h3>
+
+        <table>
+            <!--<tr>
+                <td></td>
+                <td style="height:28px;">
+                    <input type="button" value="获得参数包密文" style="cursor:pointer" onclick="dataDecr()" />
+                </td>
+            </tr>
+            <tr>
+                <td>参数包密文:</td>
+                <td>
+                    <textarea id="txtData" name="txtData" style="width:640px;height:130px;" value="ss">Default</textarea>
+                </td>
+            </tr>-->
+            <tr>
+                <td></td>
+                <td style="height:40px; ">
+                    <input type="button" value="测试接口》》" style="font-weight:bold; color:blue; margin-top:10px; cursor:pointer" onclick="ApiTest()" />
+                </td>
+
+            </tr>
+
+        </table>
+
+
+        <!--<input id="txtData" style="width:500px;" type="text" value="" />-->
+        <br />
+
+        <div id="DivResult">
+
+
+        </div>
+    </div>
+
+</body>
+</html>

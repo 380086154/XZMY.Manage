@@ -1,0 +1,186 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- start: Meta -->
+    <meta charset="utf-8">
+    <title>海岸线登录</title>
+    <meta name="description" content="Bootstrap Metro Dashboard">
+    <meta name="author" content="Dennis Ji">
+    <meta name="keyword" content="Metro, Metro UI, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <!-- end: Meta -->
+    <!-- start: Mobile Specific -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- end: Mobile Specific -->
+    <!-- start: CSS -->
+    <link href="/content/Metronic/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet">
+    <link href="/content/Metronic/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="/content/Metronic/css/style.css" id="base-style"  rel="stylesheet">
+    <link href="/content/Metronic/css/style-responsive.css" id="base-style-responsive"  rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,latin-ext' rel='stylesheet' type='text/css'>
+    <!-- end: CSS -->
+    <!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <link id="ie-style" href="/content/Metronic/css/ie.css" rel="stylesheet">
+    <![endif]-->
+    <!--[if IE 9]>
+        <link id="ie9style" href="/content/Metronic/css/ie9.css" rel="stylesheet">
+    <![endif]-->
+    <!-- start: Favicon -->
+    <link rel="shortcut icon" href="/content/Metronic/image/favicon.ico">
+    <!-- end: Favicon -->
+
+    <style type="text/css">
+        body {
+            background: url(/content/Metronic/image/bg-login.jpg) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid-full">
+        <div class="row-fluid">
+
+            <div class="row-fluid">
+                <div class="login-box">
+                    <div class="icons">
+                        @*<a href="index.html"><i class="halflings-icon home"></i></a>
+                            <a href="#"><i class="halflings-icon cog"></i></a>*@
+                    </div>
+                    <h2>登录到您的帐户</h2>
+                    <form id="defaultForm" class="form-horizontal" action="index.html" method="post">
+                        <fieldset>
+                            <div class="alert alert-error hide">
+                                <button class="close" data-dismiss="alert"></button>
+                                You have some form errors. Please check below.
+                            </div>
+
+                            <div class="input-prepend" title="Username">
+                                <span class="add-on"><i class="halflings-icon user"></i></span>
+                                <input class="input-large span10" name="LoginName" id="LoginName" type="text" placeholder="输入用户名" maxlength="50" />
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="input-prepend" title="Password">
+                                <span class="add-on"><i class="halflings-icon lock"></i></span>
+                                <input class="input-large span10" name="Password" id="Password" type="password" placeholder="输入密码" maxlength="50" />
+                            </div>
+                            <div class="clearfix"></div>
+
+                            <label class="remember" for="remember"><input type="checkbox" id="remember" />记住帐号</label>
+                            <div class="button-login">
+                                <button type="submit" class="btn btn-primary">登录</button>
+                            </div>
+                            <div class="clearfix"></div>
+                        </fieldset>
+                    </form>
+                    <hr>
+                    <h3>忘记密码？</h3>
+                    <p>
+                        没关系， <a href="#">点击这里</a> 获取一个新密码。
+                    </p>
+                </div><!--/span-->
+            </div><!--/row-->
+
+        </div><!--/.fluid-container-->
+
+    </div><!--/fluid-row-->
+    <!-- start: JavaScript-->
+    <script src="/content/Metronic/js/jquery-1.9.1.min.js"></script>
+    <script src="/content/Metronic/js/jquery-migrate-1.0.0.min.js"></script>
+    <script src="/content/Metronic/js/jquery-ui-1.10.0.custom.min.js"></script>
+    <script src="/content/Metronic/js/jquery.ui.touch-punch.js"></script>
+    <script src="/content/Metronic/js/modernizr.js"></script>
+    <script src="/content/Metronic/js/bootstrap.min.js"></script>
+    <script src="/content/Metronic/js/jquery.cookie.js"></script>
+    <script src='/content/Metronic/js/fullcalendar.min.js'></script>
+    <script src="/content/Metronic/js/jquery.dataTables.min.js"></script>
+    <script src="/content/Metronic/js/excanvas.js"></script>
+    <script src="/content/Metronic/js/jquery.flot.js"></script>
+    <script src="/content/Metronic/js/jquery.flot.pie.js"></script>
+    <script src="/content/Metronic/js/jquery.flot.stack.js"></script>
+    <script src="/content/Metronic/js/jquery.flot.resize.min.js"></script>
+    <script src="/content/Metronic/js/jquery.chosen.min.js"></script>
+    <script src="/content/Metronic/js/jquery.uniform.min.js"></script>
+    <script src="/content/Metronic/js/jquery.cleditor.min.js"></script>
+    <script src="/content/Metronic/js/jquery.noty.js"></script>
+    <script src="/content/Metronic/js/jquery.elfinder.min.js"></script>
+    <script src="/content/Metronic/js/jquery.raty.min.js"></script>
+    <script src="/content/Metronic/js/jquery.iphone.toggle.js"></script>
+    <script src="/content/Metronic/js/jquery.uploadify-3.1.min.js"></script>
+    <script src="/content/Metronic/js/jquery.gritter.min.js"></script>
+    <script src="/content/Metronic/js/jquery.imagesloaded.js"></script>
+    <script src="/content/Metronic/js/jquery.masonry.min.js"></script>
+    <script src="/content/Metronic/js/jquery.knob.modified.js"></script>
+    <script src="/content/Metronic/js/jquery.sparkline.min.js"></script>
+    <script src="/content/Metronic/js/counter.js"></script>
+    <script src="/content/Metronic/js/retina.js"></script>
+    <script src="/content/Metronic/js/custom.js"></script>
+    <!-- end: JavaScript-->
+
+    <script type="text/javascript">
+    jQuery(document).ready(function () {
+        var form1 = $('#defaultForm');
+        var error1 = $('.alert-error', form1);
+        var success1 = $('.alert-success', form1);
+
+        form1.validate({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-inline', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            ignore: "",
+            rules: { 
+                Password: { required: true },
+                LoginName: { required: true },
+            },
+
+            //invalidHandler: function (event, validator) { //display error alert on form submit
+            //    success1.hide();
+            //    error1.show();
+            //    App.scrollTo(error1, -200);
+            //},
+
+            highlight: function (element) { // hightlight error inputs
+                $(element).closest('.help-inline').removeClass('ok'); // display OK icon
+                $(element).closest('.control-group').removeClass('success').addClass('error'); // set error class to the control group
+            },
+
+            unhighlight: function (element) { // revert the change dony by hightlight
+                $(element).closest('.control-group').removeClass('error'); // set error class to the control group
+            },
+
+            success: function (label) {
+                label.addClass('valid').addClass('help-inline ok') // mark the current input as valid and display OK icon
+                .closest('.control-group').removeClass('error').addClass('success'); // set success class to the control group
+            },
+
+            submitHandler: function (form) {
+                //success1.show();
+                //error1.hide();
+                //form1.submit();
+
+                var data = form1.serializeObject();
+                $.ajax({
+                    type: 'POST',
+                    url: '/Login/AjaxLogin',
+                    data: data,
+                    dataType: 'JSON',
+                    success: function (result) {
+                        if (result.success)
+                            location.replace('/');
+                        else
+                            alert(result.errors);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(JSON.stringify(errorThrown));
+                    },
+                    async: false
+                });
+            }
+        });
+    });
+    </script>
+</body>
+</html>

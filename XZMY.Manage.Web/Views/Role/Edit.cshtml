@@ -1,0 +1,274 @@
+﻿@model XZMY.Manage.Service.Auth.Models.ViewModel.VmRoleEdit
+@{
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+    ViewBag.Title = "创建/编辑";
+}
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home/index">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="module">系统管理</span>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="action">编辑角色</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+
+
+@*<div id="dashboard">
+        <!-- BEGIN DASHBOARD STATS -->
+        <div class="row-fluid">
+            <div class="span10">
+                <div class="tabbable tabbable-custom boxless">
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_1">
+                            <div class="portlet box blue">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="icon-reorder"></i>角色信息
+                                    </div>
+
+                                    <div class="tools">
+                                        <a href="javascript:void(0);" class="collapse"></a>
+
+                                        <a href="javascript:;" class="reload"></a>
+                                        <a href="javascript:;" class="remove"></a>
+                                    </div>
+                                </div>
+
+                                <div class="portlet-body form">
+
+                                    <!-- BEGIN FORM-->
+
+                                    <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+
+                                        <div class="row-fluid">
+
+                                        </div>
+
+                                        <!--/row-->
+
+                                        <div class="row-fluid">
+                                            <div class="span6 ">
+                                                <div class="control-group">
+                                                    <label class="control-label" for="Name">名称<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        @Html.TextBoxFor(x => x.Name, new { @maxlength = "50", @class = "m-wrap span10" })
+                                                        @Html.HiddenFor(x => x.DataId)
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="span6 ">
+                                                <div class="control-group">
+                                                    <label class="control-label">状态</label>
+                                                    <div class="controls">
+                                                        <label class="radio">
+                                                            <input type="radio" name="State" value="1" checked="checked" />
+                                                            启用
+                                                        </label>
+                                                        <label class="radio">
+                                                            <input type="radio" name="State" value="2" />
+                                                            禁用
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row-fluid">
+                                            <div class="span10 ">
+                                                <div class="control-group">
+                                                    <label class="control-label" for="Description">描述</label>
+                                                    <div class="controls">
+                                                        @Html.TextBoxFor(x => x.Description, new { @maxlength = "500", @class = "m-wrap span10" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                            <div class="span6 ">
+                                                <div class="control-group error">
+
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                        </div>
+
+                                        <!--/row-->
+
+                                        <div class="form-actions">
+                                            <button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>
+                                            <button type="reset" class="btn">重置</button>
+                                        </div>
+
+                                    </form>
+                                    <!-- END FORM-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END DASHBOARD STATS -->
+        <div class="clearfix"></div>
+    </div>*@
+
+
+
+<div class="row" style="margin-top:20px">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet light portlet-fit portlet-form bordered" id="form_wizard_1">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span style="font-size: 25px;color: #000">基础信息</span>
+                </div>
+                <div class="actions">
+                    @*<a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
+                            <i class="icon-cloud-upload"></i>
+                        </a>
+                        <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
+                            <i class="icon-wrench"></i>
+                        </a>*@
+                    @if (Model.DataId != Guid.Empty)
+                    {
+                        <a class="btn btn-default" href="/Role/Details/@Model.DataId">
+                            <i class="fa fa-eye"></i> 详细
+                        </a>
+                    }
+                    <a class="btn btn-default" href="/Role/List">
+                        <i class="fa fa-list-ul"></i> 返回列表
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                    <div class="form-body">
+
+                        <div class="form-group">
+                            <label class="control-label col-md-1" for="Name">名称<span class="required" aria-required="true"> * </span></label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(x => x.Name, new { @maxlength = "50", @class = "form-control" })
+                                @Html.HiddenFor(x => x.DataId)
+                            </div>
+
+                            <label class="control-label col-md-1">状态</label>
+                            <div class="col-md-4">
+                                <div class="mt-radio-inline">
+                                    <label class="mt-radio mt-radio-outline">
+                                        <input type="radio" name="State" id="State1" value="1" checked> 启用
+                                        <span></span>
+                                    </label>
+                                    <label class="mt-radio mt-radio-outline">
+                                        <input type="radio" name="State" id="State2" value="2"> 禁用
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-1" for="Description">描述</label>
+                            <div class="col-md-11">
+                                @Html.TextAreaFor(x => x.Description, new { @maxlength = "500", @rows = "4", @style = "width: 74%", @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="submit" class="btn green">保存</button>
+                                <button type="reset" class="btn default">重置</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+</div>
+
+@section JavaScript{
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            var form1 = $('#defaultForm');
+            var error1 = $('.alert-error', form1);
+            var success1 = $('.alert-success', form1);
+
+            $("input[name='State'][value=@Model.State.GetHashCode()]").attr("checked", true);
+
+            form1.validate({
+                errorElement: 'span', //default input error message container
+                errorClass: 'help-block help-block-error', // default input error message class
+                focusInvalid: false, // do not focus the last invalid input
+                ignore: "",
+                rules: {
+                    Name: { required: true, remote: { url: '/Role/AjaxIsExist/@Model.DataId', message: '已存在' } },
+                },
+
+                invalidHandler: function (event, validator) { //display error alert on form submit
+                    success1.hide();
+                    error1.show();
+                    App.scrollTo(error1, -200);
+                },
+
+                errorPlacement: function (error, element) { // render error placement for each input type
+                    var icon = $(element).parent('.input-icon').children('i');
+                    icon.removeClass('fa-check').addClass("fa-warning");
+                    icon.attr("data-original-title", error.text()).tooltip({ 'container': 'body' });
+                },
+
+                highlight: function (element) { // hightlight error inputs
+                    $(element).closest('.form-group').removeClass("has-success").addClass('has-error'); // set error class to the control group
+                },
+
+                unhighlight: function (element) { // revert the change done by hightlight
+
+                },
+
+                success: function (label, element) {
+                    var icon = $(element).parent('.input-icon').children('i');
+                    $(element).closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                    icon.removeClass("fa-warning").addClass("fa-check");
+                },
+
+                submitHandler: function (form) {
+                    //success1.show();
+                    //error1.hide();
+                    //form1.submit();
+
+                    var data = form1.serializeObject();
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Role/AjaxEdit',
+                        data: data,
+                        dataType: 'JSON',
+                        success: function (result) {
+                            if (result.success)
+                                location.replace('/Role/details/' + result.Id);
+                            else {
+                                showToast(3, '系统消息', result.message);//错误信息
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            showToast(3, '系统消息', JSON.stringify(errorThrown));//错误信息
+                        },
+                        async: false
+                    });
+                }
+            });
+        });
+    </script>
+}

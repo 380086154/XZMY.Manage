@@ -1,0 +1,859 @@
+﻿@model XZMY.Manage.Service.Auth.Models.DataModels.SqlServer.Sys_Role
+@{
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+    ViewBag.Title = "列表";
+}
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home/index">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="module">系统管理</span>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="action">角色赋权</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+<link href="~/Content/Metronic4.5.6/global/plugins/jstree/dist/themes/default/style.min.css" rel="stylesheet" type="text/css" />
+<div class="row" style="margin-top: 20px">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet light bordered" id="form_wizard_1">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span style="font-size: 25px;color: #000">当前操作角色：@ViewBag.Name</span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-default" href="/role/list">
+                        <i class="fa fa-list-ul"></i> 返回
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="portlet light bordered left">
+                            <!-- BEGIN FORM-->
+                            <form id="defaultForm1" class="form-horizontal" method="post" novalidate="novalidate">
+                                <div class="portlet-body">
+                                    <div id="tree" class="tree-demo"> </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <div class="row">
+                                        <div class="col-md-offset-3 col-md-9">
+                                            <button type="button" id="btnSubmitForm1" class="btn green">保存</button>
+                                            @*<button type="button" id="btnRefresh" class="btn default">刷新</button>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- END FORM-->
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="portlet light bordered right">
+                            <!-- BEGIN FORM-->
+                            <form id="defaultForm2" class="form-horizontal" method="post" novalidate="novalidate">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">名称</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" id="txtName" name="Name" value="" autocomplete="off" class="form-control"/>
+                                            <input type="hidden" id="hfId" name="DataId" value=""/>
+                                            <input type="hidden" id="hfType" name="Type" value=""/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @*<div class="form-group">
+                                    <label class="control-label col-md-3">代码</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p id="lblCode" class="form-control-static">  </p>
+                                        </div>
+                                    </div>
+                                </div>*@
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">序号</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" id="txtSort" name="Sort" value="" onkeyup="inputFloat(this)" autocomplete="off" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="display: none">
+                                    <label class="control-label col-md-3">状态</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <div class="mt-radio-inline">
+                                                <label class="mt-radio mt-radio-outline">
+                                                    <input type="radio" name="State" id="State1" value="1" checked> 启用
+                                                    <span></span>
+                                                </label>
+                                                <label class="mt-radio mt-radio-outline">
+                                                    <input type="radio" name="State" id="State2" value="2"> 禁用
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <div class="row">
+                                        <div class="col-md-offset-3 col-md-9">
+                                            <button type="button" id="btnSubmitForm2" class="btn green">保存</button>
+                                            <button type="reset" id="btnResetForm2" class="btn default ">重置</button>
+
+                                            @*<button type="button" id="btnTest" class="btn default">测试</button>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- END FORM-->
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+</div>
+@section JavaScript{
+    <script src="~/Content/Metronic4.5.6/global/plugins/jstree/dist/jstree.min.js" type="text/javascript"></script>
+    <script src="~/Content/Metronic4.5.6/pages/scripts/ui-tree.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+        var fullData;
+        var currentSelectedItem;
+        var idList = [];
+
+        var state1 = $('#State1'), state2 = $('#State2');
+
+        var drawTree = function(data) {
+
+            if (data.length == 0) {
+                $('#tree').html('无角色信息');
+                return;
+            }
+
+            $('#tree').jstree({
+                'plugins': ["wholerow", "checkbox", "contextmenu", "types", "search"],
+                "check_callback": true,
+                'core': {
+                    "themes": {
+                        "responsive": false
+                    },
+                    'data': data
+                },
+                "types": {
+                    "default": {
+                        "icon": "fa fa-folder icon-state-warning icon-lg"
+                    },
+                    "file": {
+                        "icon": "fa fa-file icon-state-warning icon-lg"
+                    },
+                    "state": {
+                        "opened": true
+                    }
+                }
+            }).on('changed.jstree', function(node, data) {
+
+                if (data.node == undefined) return;
+
+                var item = data.node.original;
+                if (item.id == '00000000-0000-0000-0000-000000000000') return;
+
+                currentSelectedItem = data;
+
+                var arr = item.id.split('_');
+                $('#hfId').val(arr[0]);
+                $('#hfType').val(arr[1]);
+                $('#txtName').val(item.text);
+                $('#txtSort').val(item.sort); // + ' - ' + item.type
+
+                //console.log('#State' + item.status)
+                //state1.removeAttr('checked');
+                //state2.removeAttr('checked');
+                //if (item.status == 1) {
+                //    state1.attr('checked', true);
+                //} else {
+                //    state2.attr('checked', true);
+                //}
+            });
+        };
+
+        var loadData = function() {
+
+            $.getJSON('/Role/AjaxAssignmentList/@ViewBag.Id', function(result) {
+                //fullData = eval('(' + result.rows + ')');
+
+                @*var data = {
+                    text: '@ViewBag.Name',
+                    state: { opened: true },
+                    id: '00000000-0000-0000-0000-000000000000',
+                    children: eval('(' + result.rows + ')')
+                };*@
+
+                fullData = eval('(' + result.rows + ')');
+
+                drawTree(fullData);
+            });
+        };
+
+        var submitTreeHandler = function() {
+            var selectedNodes = $('#tree').jstree().get_selected();
+            //.refresh();
+            //.get_selected();
+
+            var moduleList = [], actionList = [];
+            $.each(selectedNodes, function(i, str) {
+                var item = str.split('_');
+
+                if (item[1] == 1) moduleList.push(item[0]);
+                else actionList.push(item[0]);
+            });
+            //console.log('moduleList：' + moduleList.join(''));
+            //console.log('actionList：' + actionList.join(''));
+
+            $.ajax({
+                type: 'POST',
+                url: '/Role/AjaxSaveAssignment',
+                data: { id: '@ViewBag.Id', module: moduleList.join(','), action: actionList.join(',') },
+                dataType: 'JSON',
+                success: function(result) {
+                    if (result.success) {
+                        $('#tree').jstree().refresh();
+                        showToast(0, '系统消息', '操作成功，菜单将在页面刷新后生效'); //成功信息
+                    } else {
+                        showToast(3, '系统消息', result.message); //错误信息
+                    }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    showToast(3, '系统消息', JSON.stringify(errorThrown));//错误信息
+                },
+                async: false
+            });
+        };
+
+        jQuery(document).ready(function() {
+            loadData();
+
+            $('#btnRefresh').click(loadData);
+            $('#btnSubmitForm1').click(submitTreeHandler); //保存
+            $('#btnSubmitForm2').click(function () {
+                var data = $('#defaultForm2').serializeObject();
+                //console.log(data)
+
+                if (data.DataId.length == '' ||data.DataId.length == '00000000-0000-0000-0000-000000000000') {
+                    return;
+                }
+
+                if (data.Name.length == 0) {
+                    showToast(3, '系统消息', '名称不能为空');//错误信息
+                    return;
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: (data.Type == 1 ? '/Module' : '/Action') + '/AjaxEdit',
+                    data: data,
+                    dataType: 'JSON',
+                    success: function (result) {
+                        if (result.success) {
+                            $('#hfId').val('');
+                            $('#btnResetForm2').click();
+                            $('#tree').jstree('set_text', currentSelectedItem.node, data.Name);
+                            showToast(0, '系统消息', '操作成功，菜单顺序将在刷新后生效');//成功信息
+                        } else {
+                            showToast(3, '系统消息', '保存失败，请稍后重试');//错误信息
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        showToast(3, '系统消息', JSON.stringify(errorThrown));//错误信息
+                    },
+                    async: false
+                });
+            }); //保存
+
+            jQuery(document).ready(function() {
+                var form1 = $('#defaultForm2');
+                var error1 = $('.alert-error', form1);
+                var success1 = $('.alert-success', form1);
+
+                form1.validate({
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'help-block help-block-error', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+                    ignore: "",
+                    rules: {
+                        Name: { required: true },
+                        Sort: { required: true }
+                    },
+
+                    invalidHandler: function(event, validator) { //display error alert on form submit
+                        success1.hide();
+                        error1.show();
+                        App.scrollTo(error1, -200);
+                    },
+
+                    errorPlacement: function(error, element) { // render error placement for each input type
+                        var icon = $(element).parent('.input-icon').children('i');
+                        icon.removeClass('fa-check').addClass("fa-warning");
+                        icon.attr("data-original-title", error.text()).tooltip({ 'container': 'body' });
+                    },
+
+                    highlight: function(element) { // hightlight error inputs
+                        $(element).closest('.form-group').removeClass("has-success").addClass('has-error'); // set error class to the control group
+                    },
+
+                    unhighlight: function(element) { // revert the change done by hightlight
+
+                    },
+
+                    success: function(label, element) {
+                        var icon = $(element).parent('.input-icon').children('i');
+                        $(element).closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                        icon.removeClass("fa-warning").addClass("fa-check");
+                    },
+
+                    submitHandler: function(form) {
+
+
+                    }
+                });
+            });
+
+            $('#btnTest').click(function() {
+                //$('#tree').on('select_node.jstree', function(node, data) {
+                //    alert(data);
+                //});
+
+                console.log(currentSelectedItem)
+            });
+        });
+    </script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*@section Css{
+        <link href="~/Content/Metronic/css/metroStyle.css" rel="stylesheet" />
+        @*<link href="~/Content/Metronic/css/zTreeStyle.css" rel="stylesheet"/>*
+        <style type="text/css">
+            html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+                margin: 0;
+                padding: 0;
+                border: 0;
+                outline: 0;
+                font-weight: inherit;
+                font-style: inherit;
+                font-size: 100%;
+                font-family: inherit;
+                vertical-align: baseline;
+            }
+
+            body {
+                color: #2f332a;
+                font: 15px/21px Arial, Helvetica, simsun, sans-serif;
+                background: #f0f6e4 \9;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                color: #2f332a;
+                font-weight: bold;
+                font-family: Helvetica, Arial, sans-serif;
+                padding-bottom: 5px;
+            }
+
+            h1 {
+                font-size: 24px;
+                line-height: 34px;
+                text-align: center;
+            }
+
+            h2 {
+                font-size: 14px;
+                line-height: 24px;
+                padding-top: 5px;
+            }
+
+            h6 {
+                font-weight: normal;
+                font-size: 12px;
+                letter-spacing: 1px;
+                line-height: 24px;
+                text-align: center;
+            }
+
+            a {
+                color: #3C6E31;
+                text-decoration: underline;
+            }
+
+                a:hover {
+                    background-color: #3C6E31;
+                    color: white;
+                }
+
+            input.radio {
+                margin: 0 2px 0 8px;
+            }
+
+                input.radio.first {
+                    margin-left: 0;
+                }
+
+            input.empty {
+                color: lightgray;
+            }
+
+            code {
+                color: #2f332a;
+            }
+
+            .highlight_red {
+                color: #A60000;
+            }
+
+            .highlight_green {
+                color: #A7F43D;
+            }
+
+            li {
+                list-style: circle;
+                font-size: 12px;
+            }
+
+                li.title {
+                    list-style: none;
+                }
+
+            ul.list {
+                margin-left: 17px;
+            }
+
+            div.content_wrap {
+                width: 600px;
+                height: 380px;
+            }
+
+                div.content_wrap div.left {
+                    float: left;
+                    width: 250px;
+                }
+
+                div.content_wrap div.right {
+                    float: right;
+                    width: 340px;
+                }
+
+            div.zTreeDemoBackground {
+                width: 250px;
+                height: 362px;
+                text-align: left;
+            }
+
+            ul.ztree {
+                margin-top: 10px;
+                border: 1px solid #617775;
+                background: #f0f6e4;
+                width: 220px;
+                height: 360px;
+                overflow-y: scroll;
+                overflow-x: auto;
+            }
+
+            ul.log {
+                border: 1px solid #617775;
+                background: #f0f6e4;
+                width: 300px;
+                height: 170px;
+                overflow: hidden;
+            }
+
+                ul.log.small {
+                    height: 45px;
+                }
+
+                ul.log li {
+                    color: #666666;
+                    list-style: none;
+                    padding-left: 10px;
+                }
+
+                    ul.log li.dark {
+                        background-color: #E3E3E3;
+                    }
+
+            /* ruler */
+            div.ruler {
+                height: 20px;
+                width: 220px;
+                background-color: #f0f6e4;
+                border: 1px solid #333;
+                margin-bottom: 5px;
+                cursor: pointer;
+            }
+
+                div.ruler div.cursor {
+                    height: 20px;
+                    width: 30px;
+                    background-color: #3C6E31;
+                    color: white;
+                    text-align: right;
+                    padding-right: 5px;
+                    cursor: pointer;
+                }
+
+            .ztree li span.button.add {
+                margin-left: 2px;
+                margin-right: -1px;
+                background-position: -144px 0;
+                vertical-align: top;
+                *vertical-align: middle;
+            }
+        </style>
+    }
+
+    <div class="row-fluid">
+
+        <div class="span12">
+
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+
+            <div class="portlet box blue">
+
+                @*<div class="portlet-title">
+
+                         <div class="caption"><i class="icon-globe"></i>Show/Hide Columns</div>
+
+                         <div class="actions">
+
+                             <div class="btn-group">
+
+                                 <a class="btn" href="#" data-toggle="dropdown">
+
+                                     Columns
+
+                                     <i class="icon-angle-down"></i>
+
+                                 </a>
+
+                                 <div id="sample_2_column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
+
+                                     <label><input type="checkbox" checked data-column="0">Rendering engine</label>
+
+                                     <label><input type="checkbox" checked data-column="1">Browser</label>
+
+                                     <label><input type="checkbox" checked data-column="2">Platform(s)</label>
+
+                                     <label><input type="checkbox" checked data-column="3">Engine version</label>
+
+                                     <label><input type="checkbox" checked data-column="4">CSS grade</label>
+
+                                 </div>
+
+                             </div>
+
+                         </div>
+
+                    </div>*
+
+                <div class="portlet-body ">
+                    <div class="zTreeDemoBackground left" style="display: inline-block;">
+                        <ul id="treeDemo1" class="ztree" style="width: 350px;height:150%"></ul>
+                    </div>
+                    <div class="right" style="display: inline-block; width: 350px;float:right">
+                        <div class="row-fluid">
+                            <div class="span6 ">
+                                <div class="control-group">
+                                    <label class="control-label">父节点<span class="required">*</span></label>
+                                    <div class="controls select2-wrapper">
+                                        <select id="Parent" class="span10">
+                                            @*<option value="">请选择</option>*
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span6 ">
+                                <div class="control-group">
+                                    <label class="control-label" for="txtName">名称<span class="required">*</span></label>
+                                    <div class="controls">
+                                        <input type="text" maxlength="50" id="txtName" class="m-wrap span10" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="span6 ">
+                                <div class="control-group">
+                                    <label class="control-label" for="txtDescription">备注<span class="required">*</span></label>
+                                    <div class="controls">
+                                        <input type="text" maxlength="50" id="txtDescription" class="m-wrap span10" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="button" id="btnSubmit" class="btn blue"><i class="icon-ok"></i> 保存</button>
+            <button type="reset" class="btn">重置</button>
+            <input type="hidden" id="hidIdList" value="@Html.Raw(ViewBag.IdList)" />
+            <!-- END EXAMPLE TABLE PORTLET-->
+        </div>
+
+    </div>
+    @section Js{
+        <script src="~/Content/Metronic/js/jquery.ztree.core.js"></script>
+        <script src="~/Content/Metronic/js/jquery.ztree.excheck.js"></script>
+        <script src="~/Content/Metronic/js/jquery.ztree.exedit.js"></script>
+        <script type="text/javascript">
+            jQuery(document).ready(function() {
+                <!--
+                var setting = {
+                    check: {
+                        enable: true
+                    },
+                    data: {
+                        simpleData: {
+                            enable: true
+                        }
+                    },
+                    edit: {
+                        enable: true,
+                        editNameSelectAll: true
+                        //,showRemoveBtn: function(treeId, treeNode) {
+                        //    return !treeNode.isFirstNode;
+                        //},
+                        //showRenameBtn:  function(treeId, treeNode) {
+                        //    return !treeNode.isLastNode;
+                        //}
+                    },
+                    view: {
+                        //addHoverDom: addHoverDom,
+                        fontCss: getFont,
+                        nameIsHTML: true
+                    },
+                    callback: {
+                        beforeDrag: function(treeId, treeNodes) {},
+                        beforeEditName: function(treeId, treeNodes) {},
+                        beforeRemove: function(treeId, treeNodes) {},
+                        beforeRename: function(treeId, treeNode, newName, isCancel) {},
+                        onCheck: function(e, treeId, treeNode) {
+                            submitHandler();
+                        },
+                        onClick: function(e, treeId, node) {
+                            console.log("Do what you want to do!" + e + " - " + treeId + ' - ' + JSON.stringify(node));
+                        }
+                        //,onRemove: onRemove
+                        //,onRename: onRename
+                    }
+                };
+
+                var idList = $('#hidIdList').val();
+
+                var zNodes = [
+                    { id: 1, pId: 0, name: "随意勾选 1", open: true },
+                    { id: 11, pId: 1, name: "随意勾选 1-1", open: true },
+                    { id: 111, pId: 11, name: "随意勾选 1-1-1" },
+                    { id: 112, pId: 11, name: "随意勾选 1-1-2" },
+                    { id: 12, pId: 1, name: "随意勾选 1-2", open: true },
+                    { id: 121, pId: 12, name: "随意勾选 1-2-1" },
+                    { id: 122, pId: 12, name: "随意勾选 1-2-2" },
+                    { id: 2, pId: 0, name: "随意勾选 2", checked: true, open: true },
+                    { id: 21, pId: 2, name: "随意勾选 2-1" },
+                    { id: 22, pId: 2, name: "随意勾选 2-2", open: true },
+                    { id: 221, pId: 22, name: "随意勾选 2-2-1", checked: true },
+                    { id: 222, pId: 22, name: "随意勾选 2-2-2" },
+                    { id: 23, pId: 2, name: "随意勾选 2-3" }
+                ];
+
+                var code;
+                var id = '@ViewBag.Id';
+
+                var showCode = function(str) {
+                    if (!code) code = $('#code');
+                    code.empty();
+                    code.append("<li>" + str + "</li>");
+                };
+
+                var setCheck = function(name) {
+                    var zTree = $.fn.zTree.getZTreeObj(name),
+                        type = { "Y": "ps", "N": "ps" };
+                    zTree.setting.check.chkboxType = type;
+                    showCode('setting.check.chkboxType = { "Y" : "' + type.Y + '", "N" : "' + type.N + '" };');
+                };
+
+                function getFont(treeId, node) {
+                    return node.font ? node.font : {};
+                };
+
+                function onRemove(e, treeId, treeNode) {
+                    console.log("[ " + getTime() + " onRemove ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
+                };
+
+                function onRename(e, treeId, treeNode, isCancel) {
+                    console.log((isCancel ? "<span style='color:red'>" : "") + "[ onRename ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name + (isCancel ? "</span>" : ""));
+
+                    var url = '',
+                        data = { Id: id, Name: treeNode.name, type: treeNode.Type };
+
+                    saveEvent(url, data);
+                }
+
+                function saveEvent(url, data) {
+                    $.ajax({
+                        type: 'POST',
+                        url: url,
+                        data: data,
+                        dataType: 'JSON',
+                        success: function(result) {
+                            if (result.success) {
+
+                            } else {
+                                alert('操作失败');
+                                showToast(3, '系统消息', '操作失败');//错误信息
+                            }
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            alert('服务器异常，请稍后重试');
+                        },
+                        async: false
+                    });
+                }
+
+                var contains = function(a, obj) {
+                    for (var i = 0; i < a.length; i++) {
+                        if (a[i] === obj) {
+                            return true;
+                        }
+                    }
+                    return false;
+                };
+
+                var newCount = 1;
+
+                function addHoverDom(treeId, treeNode) {
+                    var sObj = $("#" + treeNode.tId + "_span");
+                    if (treeNode.editNameFlag || $("#addBtn_" + treeNode.tId).length > 0) return;
+                    var addStr = "<span class='button add' id='addBtn_" + treeNode.tId + "' title='add node' onfocus='this.blur();'></span>";
+                    sObj.after(addStr);
+                    var btn = $("#addBtn_" + treeNode.tId);
+                    if (btn)
+                        btn.bind("click", function() {
+                            var zTree = $.fn.zTree.getZTreeObj('treeDemo1');
+                            zTree.addNodes(treeNode, { id: (100 + newCount), pId: treeNode.id, name: "new node" + (newCount++) });
+                            return false;
+                        });
+                };
+
+                var init = function() {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Role/AjaxTreeList',
+                        dataType: 'JSON',
+                        success: function(result) {
+                            if (result.success) {
+                                zNodes = result.rows;
+
+                                var parentList = [];
+                                $.each(zNodes, function(index, item) {
+                                    item.checked = contains(idList, item.id);
+
+                                    if (item.pId == '00000000-0000-0000-0000-000000000000')
+                                        parentList.push({Id:item.id,Name:item.name});
+                                });
+
+                                appendOption(parentList, '#Parent');
+
+                                $.fn.zTree.init($('#treeDemo1'), setting, zNodes);
+                                setCheck('treeDemo1');
+
+                                //$.fn.zTree.init($('#treeDemo2'), setting, nodes2);
+                                //setCheck('treeDemo2');
+                            }
+                        },
+                        error:
+
+                    function(XMLHttpRequest, textStatus, errorThrown) {
+                        showToast(3, '系统消息', JSON.stringify(errorThrown));//错误信息
+                    },
+                        async: false
+                    });
+                };
+
+                var submitHandler = function() {
+                    var zTree = $.fn.zTree.getZTreeObj('treeDemo1');
+                    var nodes = zTree.getCheckedNodes();
+                    //console.log(JSON.stringify(nodes));
+
+                    var moduleList = [], actionList = [];
+                    $.each(nodes, function(index, item) {
+                        if (item.Type == 1) {
+                            moduleList.push(item.id);
+                        } else if (item.Type == 2) {
+                            actionList.push(item.id);
+                        }
+                    });
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Role/AjaxSaveAssignment',
+                        data: { id: id, module: moduleList.join(','), action: actionList.join(',') },
+                        dataType: 'JSON',
+                        success: function(result) {
+                            if (result.success) {
+
+                            } else {
+
+                            }
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            showToast(3, '系统消息', JSON.stringify(errorThrown));//错误信息
+                        },
+                        async: false
+                    });
+                };
+
+                $(document).ready(function() {
+
+                    $('#btnSubmit').click(submitHandler); //保存
+
+                    init(); //加载数据
+                });
+                //-->
+            });
+        </script>
+    }*@

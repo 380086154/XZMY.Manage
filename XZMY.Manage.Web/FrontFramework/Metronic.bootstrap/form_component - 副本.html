@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html><html lang="en">
+<head>
+	<!-- END PAGE LEVEL STYLES -->
+	<link rel="shortcut icon" href="media/image/favicon.ico" />
+</head>
+<body class="page-header-fixed">
+	<div class="page-container row-fluid">
+		<div class="page-content">
+			<div class="container-fluid">
+				<div class="row-fluid">
+					<div class="span12">
+						<div class="portlet box red">
+							<div class="portlet-title">
+								<div class="caption"><i class="icon-reorder"></i>Input Masks</div>
+								<div class="tools">
+									<a href="javascript:;" class="collapse"></a>
+									<a href="javascript:;" class="reload"></a>
+								</div>
+							</div>
+							<div class="portlet-body form">
+								<!-- BEGIN FORM-->
+								<form action="#" class="form-horizontal">
+									<div class="control-group">
+										<label class="control-label">Date 1</label>
+										<div class="controls">
+											<input class="span6 m-wrap" id="mask_date" type="text"  />
+											<span class="help-inline">y/m/d</span>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">Date 2</label>
+										<div class="controls">
+											<input class="span6 m-wrap" id="mask_date1" type="text"  />
+											<span class="help-inline">change the placeholder</span>                                 
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">Date 3</label>
+										<div class="controls">
+											<input class="span6 m-wrap" id="mask_date2" type="text"  />
+											<span class="help-inline">multi-char placeholder</span>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">Phone</label>
+										<div class="controls">
+											<input class="span6 m-wrap" id="mask_phone" type="text"  />
+											<span class="help-inline">(999) 999-9999</span>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">Tax ID</label>
+										<div class="controls">
+											<input class="span6 m-wrap" id="mask_tin" type="text" />
+											<span class="help-inline">99-9999999</span>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">Number</label>
+										<div class="controls">
+											<input class="span6 m-wrap" id="mask_number" type="text" />
+											<span class="help-inline">mask "9" or mask "99" or ... mask "9999999999"</span>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">Currency</label>
+										<div class="controls">
+											<input class="span6 m-wrap" id="mask_currency" type="text" />
+											<span class="help-inline">123456  =>  € ___.__1.234,56</span>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">Currency 2</label>
+										<div class="controls">
+											<input class="span6 m-wrap" id="mask_currency2" type="text" />
+											<span class="help-inline">123456  =>  € ___.__1.234,56(left aligned)</span>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">SSN</label>
+										<div class="controls">
+											<input class="span6 m-wrap" id="mask_ssn" type="text" />
+											<span class="help-inline">999-99-9999. remove the empty mask on blur or when not empty removes the optional trailing part</span>
+										</div>
+									</div>
+								</form>
+								<!-- END FORM-->  
+							</div>
+						</div>
+					</div>
+				</div>     
+			</div>
+		</div>
+	</div>
+	<script src="media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
+	<script src="media/js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+	<script src="media/js/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>      
+	<script src="media/js/bootstrap.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="media/js/bootstrap-datepicker.js"></script>
+	<script type="text/javascript" src="media/js/bootstrap-datetimepicker.js"></script>
+	<script type="text/javascript" src="media/js/clockface.js"></script>
+	<script type="text/javascript" src="media/js/date.js"></script>
+	<script type="text/javascript" src="media/js/daterangepicker.js"></script> 
+	<script type="text/javascript" src="media/js/bootstrap-colorpicker.js"></script>  
+	<script type="text/javascript" src="media/js/bootstrap-timepicker.js"></script>
+	<script type="text/javascript" src="media/js/jquery.inputmask.bundle.min.js"></script>   
+	<script type="text/javascript" src="media/js/jquery.input-ip-address-control-1.0.min.js"></script>
+	<script type="text/javascript" src="media/js/jquery.multi-select.js"></script>   
+	<script src="media/js/bootstrap-modal.js" type="text/javascript" ></script>
+	<script src="media/js/bootstrap-modalmanager.js" type="text/javascript" ></script> 
+	<!-- END PAGE LEVEL PLUGINS -->
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+	<script src="media/js/app.js"></script>
+	<script src="media/js/form-components.js"></script>     
+	<!-- END PAGE LEVEL SCRIPTS -->
+	<script>
+		jQuery(document).ready(function() {       
+		   // initiate layout and plugins
+	
+		   FormComponents.init();
+		});
+	</script>
+	<!-- END JAVASCRIPTS -->   
+<script type="text/javascript">  var _gaq = _gaq || [];  _gaq.push(['_setAccount', 'UA-37564768-1']);  _gaq.push(['_setDomainName', 'keenthemes.com']);  _gaq.push(['_setAllowLinker', true]);  _gaq.push(['_trackPageview']);  (function() {    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);  })();</script></body>
+<!-- END BODY -->
+</html>

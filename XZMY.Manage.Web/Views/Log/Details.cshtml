@@ -1,0 +1,128 @@
+﻿@model XZMY.Manage.Log.Models.LogEntity
+    @{
+        Layout = "~/Views/Shared/_Layout456.cshtml";
+        ViewBag.Title = "详细";
+    }
+    <!-- BEGIN PAGE BAR -->
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <a href="/home/index">主页</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <span id="module">评估中心</span>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <span id="action">问题详细</span>
+            </li>
+        </ul>
+    </div>
+    <!-- END PAGE BAR -->
+    <div class="row" style="margin-top:20px">
+        <div class="col-md-12">
+            <!-- BEGIN VALIDATION STATES-->
+            <div class="portlet light bordered" id="form_wizard_1">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span style="font-size: 25px;color: #000">异常等级：@Model.Level</span>
+                    </div>
+                    <div class="actions">
+                        <a class="btn btn-default get-back">
+                            <i class="fa fa-list-ul"></i> 返回
+                        </a>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <!-- BEGIN FORM-->
+                    <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                        <div class="form-body">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">标题：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <p class="form-control-static"> @Model.Title </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">消息：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <p class="form-control-static"> @Model.Message </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">用户：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <p class="form-control-static"> @Model.UserName </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">IP地址：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <p class="form-control-static"> @Model.IP </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">时间：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <p class="form-control-static"> @Model.CreatedTime.ToString("yyyy-MM-dd HH:mm:ss") </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">异常信息：</label>
+                                        <div class="col-md-9">
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <p class="form-control-static"> @Model.Exception </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- END FORM-->
+                </div>
+            </div>
+            <!-- END VALIDATION STATES-->
+        </div>
+    </div>

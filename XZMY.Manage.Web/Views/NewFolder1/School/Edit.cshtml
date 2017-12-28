@@ -1,0 +1,591 @@
+﻿@model XZMY.Manage.Model.ViewModel.School.VmSchool
+@{
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+    ViewBag.Title = "创建/编辑";
+}
+@section Style{
+    <link rel="stylesheet" type="text/css" href="~/Content/Metronic/css/datepicker.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/Metronic/css/timepicker.css" />
+}
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home/index">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="module">学校中心</span>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="action">编辑学校</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+<div class="row" style="margin-top: 20px">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet light bordered" id="form_wizard_1">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span style="font-size: 25px;color: #000">基础信息</span>
+                </div>
+                <div class="actions">
+                    @if (Model.DataId != Guid.Empty)
+                    {
+                        <a class="btn btn-default" href="/School/Details/@Model.DataId">
+                            <i class="fa fa-eye"></i> 详细
+                        </a>
+                    }
+                    <a class="btn btn-default" href="/School/List">
+                        <i class="fa fa-list-ul"></i> 返回列表
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                    <div class="form-body">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">学校名称</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.Name, new { @maxlength = "50", @class = "form-control" })
+                                            @Html.HiddenFor(x => x.DataId)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">英文名称</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.EnglishName, new { @maxlength = "50", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">学校属性</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <select id="dllSchoolType" name="dllSchoolType" class="mt-radio form-control input-small">
+                                                @{
+                                                    if (Model.listSchoolType != null)
+                                                    {
+                                                        foreach (var m in Model.listSchoolType)
+                                                        {
+                                                            if (m.Id == Model.SchoolTypeId)
+                                                            {
+                                                                <option value="@(m.Id)" selected="selected">@(m.Name)</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@(m.Id)" >@(m.Name)</option>
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3"></label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">性质</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <div class="mt-radio-inline">
+                                                <label class="mt-radio mt-radio-outline">
+                                                    <input type="radio" name="Nature" id="Nature1" value="1" checked> 公立
+                                                    <span></span>
+                                                </label>
+                                                <label class="mt-radio mt-radio-outline">
+                                                    <input type="radio" name="Nature" id="Nature2" value="2"> 私立
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6" style="display:none">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">学校类别</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <div class="mt-radio-inline">
+                                                <select id="dllSchoolCategory1" class="mt-radio form-control input-small">
+                                                    <option>@((Model.SchoolCategoryPathName ?? "").Split(",")[0])</option>
+                                                </select>
+                                                <select id="dllSchoolCategory2" class="mt-radio form-control input-small">
+                                                    <option value="@Model.SchoolCategoryId">@Model.SchoolCategoryName</option>
+                                                </select>
+                                                @Html.HiddenFor(x => x.SchoolCategoryId)
+                                                @Html.HiddenFor(x => x.SchoolCategoryName)
+                                                @Html.HiddenFor(x => x.SchoolCategoryPathName)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">学校排名</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.Ranking, new {@maxlength = "50", @class = "form-control"})
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">课程</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.Courses, new { @maxlength = "50", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">教师人数</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.TeacherCount, new {@maxlength = "30", @class = "form-control"})
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">学生人数</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.StudentCount, new {@maxlength = "30", @class = "form-control"})
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">所在国家</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <div class="mt-radio-inline">
+                                                <select id="dllCountry" class="form-control input-small">
+                                                    <option value="@Model.CountryLocationId">@Model.CountryLocationName</option>
+                                                </select>
+                                                @Html.HiddenFor(x => x.CountryLocationId)
+                                                @Html.HiddenFor(x => x.CountryLocationName)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">所在地区</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <div class="mt-radio-inline">
+                                                <select id="dllProvince" class="mt-radio form-control input-small">
+                                                    <option>@((Model.LocationPathName ?? "").Split(",").Length >= 2 ? Model.LocationPathName ?? "".Split(",")[1] : "")</option>
+                                                </select>
+                                                <select id="dllCity" class="mt-radio form-control input-small">
+                                                    <option>@((Model.LocationPathName ?? "").Split(",").Length == 3 ? Model.LocationPathName ?? "".Split(",")[2] : "")</option>
+                                                </select>
+                                                @Html.HiddenFor(x => x.LocationId)
+                                                @Html.HiddenFor(x => x.LocationPathName)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">学区</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>@Html.TextBoxFor(x => x.SchoolDistrict, new {@maxlength = "50", @class = "form-control"})
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">详细地址</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.Address, new {@maxlength = "6", @class = "form-control"})
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">建校时间</label>
+                                <div class="col-md-9">
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        @if (Model.EstablishDate == DateTime.MinValue)
+                                        {
+                                            <input id="EstablishDate" name="EstablishDate" value="" maxlength="50" class="form-control" />
+                                        }
+                                        else
+                                        {
+                                            @Html.TextBoxFor(x => x.EstablishDate, new { @maxlength = "50", @class = "form-control" })
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">电话</label>
+                                <div class="col-md-9">
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        @Html.TextBoxFor(x => x.Moblie, new {@maxlength = "6", @class = "form-control"})
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">学校描述</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <script id="editorDescription" type="text/plain" style="width:100%;height:300px;">@Html.Raw(Model.Description)</script>
+                                            @Html.HiddenFor(x => x.Description, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="submit" class="btn green">保存</button>
+                                <button type="reset" class="btn default">重置</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+</div>
+@section JavaScript{
+    <script type="text/javascript" charset="utf-8" src="/Content/Custom/UEditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/Content/Custom/UEditor/ueditor.all.min.js"> </script>
+    <script type="text/javascript" charset="utf-8" src="/Content/Custom/UEditor/lang/zh-cn/zh-cn.js"></script>
+    <script type="text/javascript" src="~/Content/Metronic/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="~/Content/Metronic/js/jquery.inputmask.bundle.min.js"></script>
+    <script type="text/javascript" src="~/Content/Metronic/js/form-components.js"></script>
+    <script type="text/javascript" src="~/Content/Metronic/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            BingdllSchoolCategory1();
+            $("#dllSchoolCategory1").change(function () {
+                $("#SchoolCategoryId").val($("#dllSchoolCategory1").val());
+                $("#SchoolCategoryName").val($("#dllSchoolCategory1").find("option:selected").text());
+                $("#SchoolCategoryPathName").val($("#dllSchoolCategory1").find("option:selected").text());
+                BingdllSchoolCategory2();
+            });
+            $("#dllSchoolCategory2").change(function () {
+                $("#SchoolCategoryId").val($("#dllSchoolCategory2").val());
+                $("#SchoolCategoryName").val($("#dllSchoolCategory2").find("option:selected").text());
+                $("#SchoolCategoryPathName").val($("#dllSchoolCategory1").find("option:selected").text() + "," + $("#dllSchoolCategory2").find("option:selected").text());
+            });
+            GetCountry($("#LocationPathName").val());
+            $("#dllCountry").change(function () {
+                $("#CountryLocationId").val($("#dllCountry").val());
+                $("#CountryLocationName").val($("#dllCountry").find("option:selected").text());
+                GetProvince("");
+                GetCity("");
+            });
+            $("#dllProvince").change(function () {
+                $("#LocationId").val($("#dllProvince").val());
+                $("#LocationPathName").val($("#dllCountry").find("option:selected").text() + "," + $("#dllProvince").find("option:selected").text());
+                GetCity("");
+            });
+            $("#dllCity").change(function () {
+                $("#LocationId").val($("#dllCity").val());
+                $("#LocationPathName").val($("#dllCountry").find("option:selected").text() + "," + $("#dllProvince").find("option:selected").text() + "," + $("#dllCity").find("option:selected").text());
+            });
+        });
+        function GetCountry(LocationName) {
+            var lName = LocationName.split(',');
+            var CountryName = "";
+            if (lName.length > 0) {
+                CountryName = lName[0];
+            }
+            $.ajaxSettings.async = false;
+            $.getJSON(
+                "/Content/Custom/Location.ashx",
+                { action: "GetLocationLevel", Level: 1 },
+                function (data) {
+                    $("#dllCountry").empty();
+                    $.each(data, function (i, item) {
+                        if (item["Name"] != CountryName) {
+                            $("<option></option>").val(item["Id"]).text(item["Name"]).appendTo($("#dllCountry"));
+                        } else {
+                            $("<option selected='selected'></option>").val(item["Id"]).text(item["Name"]).appendTo($("#dllCountry"));
+                        }
+                    })
+
+                    if ($("#dllCountry").val() != null) {
+                        $("#CountryLocationId").val($("#dllCountry").val());
+                        $("#CountryLocationName").val($("#dllCountry").find("option:selected").text());
+                        GetProvince(LocationName);
+                    }
+                });
+        }
+        function GetProvince(LocationName) {
+            var lName = LocationName.split(',');
+            var ProvinceName = "";
+            if (lName.length > 1) {
+                ProvinceName = lName[1];
+            }
+            if ($("#dllCountry").val() != null) {
+                $.ajaxSettings.async = false;
+                $.getJSON(
+                    "/Content/Custom/Location.ashx",
+                    { action: "GetLocationParentId", ParentId: $("#dllCountry").val() },
+
+                    function (data) {
+                        $("#dllProvince").empty();
+                        $.each(data, function (i, item) {
+                            if (item["Name"] != ProvinceName) {
+                                $("<option></option>").val(item["Id"]).text(item["Name"]).appendTo($("#dllProvince"));
+                            } else {
+                                $("<option selected='selected'></option>").val(item["Id"]).text(item["Name"]).appendTo($("#dllProvince"));
+                            }
+                        })
+
+                        if ($("#dllProvince").val() != null) {
+                            $("#LocationId").val($("#dllProvince").val());
+                            $("#LocationPathName").val($("#dllCountry").find("option:selected").text() + "," + $("#dllProvince").find("option:selected").text());
+                            GetCity(LocationName);
+                        }
+                        else {
+                            $("#dllCity").empty();
+                        }
+                    });
+            }
+        }
+        function GetCity(LocationName) {
+            var lName = LocationName.split(',');
+            var CityName = "";
+            if (lName.length > 2) {
+                CityName = lName[2];
+            }
+            if ($("#dllProvince").val() != null) {
+                $.ajaxSettings.async = false;
+                $.getJSON(
+                    "/Content/Custom/Location.ashx",
+                    { action: "GetLocationParentId", ParentId: $("#dllProvince").val() },
+                    function (data) {
+                        $("#dllCity").empty();
+                        $.each(data, function (i, item) {
+                            if (item["Name"] != CityName) {
+                                $("<option></option>").val(item["Id"]).text(item["Name"]).appendTo($("#dllCity"));
+                            } else {
+                                $("<option selected='selected'></option>").val(item["Id"]).text(item["Name"]).appendTo($("#dllCity"));
+                            }
+                        })
+                        if ($("#dllCity").val() != null) {
+                            $("#LocationId").val($("#dllCity").val());
+                            $("#LocationPathName").val($("#dllCountry").find("option:selected").text() + "," + $("#dllProvince").find("option:selected").text() + "," + $("#dllCity").find("option:selected").text());
+                        }
+                    });
+            }
+            else {
+                $("#dllCity").empty();
+            }
+        }
+        //学校类别大类型
+        function BingdllSchoolCategory1() {
+            $.getJSON(
+                    "/Content/Custom/School.ashx",
+                    { action: "GetSchoolCategoryLevel", Level: 1 },
+                    function (data) {
+                        $("#dllSchoolCategory1").empty();
+                        $.each(data, function (i, item) {
+                            $("<option></option>").val(item["Id"]).text(item["Name"]).appendTo($("#dllSchoolCategory1"));
+                        })
+                        if ($("#dllSchoolCategory1").val() != null) {
+                            $("#SchoolCategoryId").val($("#dllSchoolCategory1").val());
+                            $("#SchoolCategoryName").val($("#dllSchoolCategory1").find("option:selected").text());
+                            $("#SchoolCategoryPathName").val($("#dllSchoolCategory1").find("option:selected").text());
+                            BingdllSchoolCategory2();
+                        }
+                    });
+        }
+        function BingdllSchoolCategory2() {
+            $.getJSON(
+                    "/Content/Custom/School.ashx",
+                    { action: "GetSchoolCategoryParentId", ParentId: $("#dllSchoolCategory1").val() },
+                    function (data) {
+                        $("#dllSchoolCategory2").empty();
+                        $.each(data, function (i, item) {
+                            $("<option></option>").val(item["Id"]).text(item["Name"]).appendTo($("#dllSchoolCategory2"));
+                        })
+                        if ($("#dllSchoolCategory2").val() != null) {
+                            $("#SchoolCategoryId").val($("#dllSchoolCategory2").val());
+                            $("#SchoolCategoryName").val($("#dllSchoolCategory2").find("option:selected").text());
+                            $("#SchoolCategoryPathName").val($("#dllSchoolCategory1").find("option:selected").text() + "," + $("#dllSchoolCategory2").find("option:selected").text());
+
+                        }
+                    });
+        }
+
+        jQuery(document).ready(function () {
+            var form1 = $('#defaultForm');
+            var error1 = $('.alert-error', form1);
+            var success1 = $('.alert-success', form1);
+
+            form1.validate({
+                errorElement: 'span', //default input error message container
+                errorClass: 'help-block help-block-error', // default input error message class
+                focusInvalid: false, // do not focus the last invalid input
+                ignore: "",
+                rules: {
+                    Name: { minlength: 1, required: true }
+                },
+
+                //invalidHandler: function (event, validator) { //display error alert on form submit
+                //    success1.hide();
+                //    error1.show();
+                //    App.scrollTo(error1, -200);
+                //},
+
+                errorPlacement: function (error, element) { // render error placement for each input type
+                    var icon = $(element).parent('.input-icon').children('i');
+                    icon.removeClass('fa-check').addClass("fa-warning");
+                    icon.attr("data-original-title", error.text()).tooltip({ 'container': 'body' });
+                },
+
+                highlight: function (element) { // hightlight error inputs
+                    $(element).closest('.form-group').removeClass("has-success").addClass('has-error'); // set error class to the control group
+                },
+
+                unhighlight: function (element) { // revert the change done by hightlight
+
+                },
+
+                success: function (label, element) {
+                    var icon = $(element).parent('.input-icon').children('i');
+                    $(element).closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                    icon.removeClass("fa-warning").addClass("fa-check");
+                },
+
+                submitHandler: function (form) {
+
+                    var DATE_FORMAT = /^[0-9]{4}-[0-1]?[0-9]{1}-[0-3]?[0-9]{1}$/;
+                    var dateEstablishDate = $("#EstablishDate").val();
+                    if (!DATE_FORMAT.test(dateEstablishDate)) {
+                        $("#EstablishDate").val("1000-01-01");
+                    }
+                    
+                    setTextArea();
+                    var data = form1.serializeObject();
+                    $.ajax({
+                        type: 'POST',
+                        url: '/School/AjaxEdit',
+                        data: data,
+                        dataType: 'JSON',
+                        success: function (result) {
+                            //redata = result;
+                            //alert(result.success);
+                            if (result.success) {
+                                location.replace('/School/details/' + result.Id);
+                            } else {
+                                alert(result.errors);
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            showToast(3, '系统消息', JSON.stringify(errorThrown));//错误信息
+                            //LigerEP.ShowMsg('error', '网络错误！即将重新登录！');
+                            //window.location.replace("/MCustoms/Login");
+                        },
+                        async: false
+                    });
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        window.onload = function () {
+            var ue = UE.getEditor('editorDescription');
+        }
+
+        var setTextArea = function () {
+            $("#Description").val(UE.getEditor('editorDescription').getContent());
+        }
+    </script>
+}

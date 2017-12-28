@@ -1,0 +1,85 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+    ViewBag.Title = "列表";
+}
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home/index">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="module">规划师管理</span>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="action">规划师列表</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+<div class="mt-bootstrap-tables" style="margin-top:20px">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="icon-social-dribbble font-green hide"></i>
+                        @*<span class="caption-subject font-dark bold uppercase">Table Pagination</span>*@
+                    </div>
+                    <div class="actions">
+                        @*<a class="btn btn-circle btn-icon-only btn-default" href="javascript:;"><i class="icon-cloud-upload"></i></a>*@
+                        <a class="btn btn-default" href="/Planner/Edit/">
+                            <i class="fa fa-plus"></i> 创建
+                        </a>
+                        @*<a class="btn btn-circle btn-icon-only btn-default" href="javascript:;"><i class="icon-wrench"></i></a>
+                            <a class="btn btn-circle btn-icon-only btn-default delete" href="javascript:;"><i class="icon-trash"></i></a>*@
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <!-- BEGIN FORM-->
+                    <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                        <div class="mt-checkbox-inline" style="margin-top: -37px">
+                            <div class="pull-left" style="margin-top: 20px">
+                                状态：
+                                <select class="form-control input-inline" name="State" id="State">
+                                    <option value="0">全部</option>
+                                    <option value="1">启用</option>
+                                    <option value="2">禁用</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- END FORM-->
+                    <table id="table-pagination" data-toggle="table" data-url="/Planner/AjaxList/"
+                           data-height="526"
+                           data-form-id="defaultForm"
+                           data-show-refresh="true"
+                           data-page-size="10"
+                           data-page-list="[5, 10, 20, 50, 100, 200]"
+                           data-search="true">
+                        <thead>
+                            <tr>
+                                <th data-field="Name" data-align="lift">名字</th>
+                                <th data-field="Code" data-align="lift">编码</th>
+                                <th data-field="LevelName" data-align="lift">级别</th>
+                                <th data-field="QualificationsName" data-align="lift">资质</th>
+                                <th data-field="LoginName" data-align="lift">登录名</th>
+                                <th data-field="StateName" data-align="center">状态</th>
+                                <th data-formatter="opColumns" data-align="center">操作</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section JavaScript{
+    <script type="text/javascript">
+        var opColumns = function (value, row, index) {
+            return '<a href="edit?id=_id_">编辑</a> | <a href="details/_id_">查看</a> | <a href="/Vip/StudentVipApplyList/?PlannerId=_id_">申请学生</a>'.replace(/_id_/ig, row.Id);
+        };
+    </script>
+}

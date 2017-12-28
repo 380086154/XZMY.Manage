@@ -1,0 +1,212 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其11 他内容都*必须*跟随其 后！ -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="Scripts/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="Scripts/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" />
+    <link href="Scripts/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+    <link href="Scripts/index.css" rel="stylesheet" />
+
+    <script src="Scripts/jquery-1.10.2.min.js"></script>
+    <script src="Scripts/jquery-ui/jquery-ui.min.js"></script>
+    <script src="Scripts/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+    <script src="Scripts/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="Scripts/index.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Project name</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                <ul class="nav nav-sidebar nav-stacked">
+                    <li class="active" role="presentation"><a href="#" class="menuitem-newtab" tab="tabs" tag="cccenter" title="个人中心" url="center.html">个人中心</a></li>
+                    <li role="presentation" class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">权限管理<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li role="presentation"><a href="#" class="menuitem-newtab" tab="tabs" tag="AAAA22" title="权限1" url="1.html">权限1</a></li>
+                            <li role="presentation"><a href="#" class="menuitem-newtab" tab="tabs" tag="AAAA" title="权限2" url="1.html">权限2</a></li>
+                        </ul>
+                    </li>
+                    <li role="presentation" class="menuitem-newtab" tab="tabs" tag="form" title="表格2" url="form.html"><a href="#">表格</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <div id="tabs" style="height: auto;">
+                    <ul id="tabs-heads">
+                        <li id='tabs-li-tabs-1'><a href="#tabs-tabs-1">首页</a><a href="#" tab="tabs" tag="1" class="btn-closetab">x</a></li>
+                    </ul>
+                    <div style="width:90%; float:left;" id="tabs-tabs-1">
+                        <table class="table" id="mytab">
+                            <tr></tr>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .tb_button {
+            padding: 1px;
+            cursor: pointer;
+            border-right: 1px solid #8b8b8b;
+            border-left: 1px solid #FFF;
+            border-bottom: 1px solid #fff;
+        }
+
+            .tb_button.hover {
+                borer: 2px outset #def;
+                background-color: #f8f8f8 !important;
+            }
+
+        .ws_toolbar {
+            z-index: 100000;
+        }
+
+            .ws_toolbar .ws_tb_btn {
+                cursor: pointer;
+                border: 1px solid #555;
+                padding: 3px;
+            }
+
+        .tb_highlight {
+            background-color: yellow;
+        }
+
+        .tb_hide {
+            visibility: hidden;
+        }
+
+        .ws_toolbar img {
+            padding: 2px;
+            margin: 0px;
+        }
+    </style>
+
+
+    <script type="text/javascript">
+        $(function () {
+            //根据窗口调整表格高度
+            $(window).resize(function () {
+                $('#mytab').bootstrapTable('resetView', {
+                    width: ($(window).width() / 2)
+                })
+            })
+           
+
+
+            $('#mytab').bootstrapTable({
+                //url: "index.php",//数据源
+                dataField: "rows",//服务端返回数据键值 就是说记录放的键值是rows，分页时使用总记录数的键值为total
+                height: tableHeight(),//高度调整
+                search: true,//是否搜索
+                pagination: true,//是否分页
+                pageSize: 20,//单页记录数
+                pageList: [5, 10, 20, 50],//分页步进值
+                sidePagination: "server",//服务端分页
+                contentType: "application/x-www-form-urlencoded",//请求数据内容格式 默认是 application/json 自己根据格式自行服务端处理
+                dataType: "json",//期待返回数据类型
+                method: "post",//请求方式
+                searchAlign: "left",//查询框对齐方式
+                queryParamsType: "limit",//查询参数组织方式
+                queryParams: function getParams(params) {
+                    //params obj
+                    params.other = "otherInfo";
+                    return params;
+                },
+                searchOnEnterKey: false,//回车搜索
+                showRefresh: true,//刷新按钮
+                showColumns: true,//列选择按钮
+                buttonsAlign: "left",//按钮对齐方式
+                toolbar: "#toolbar",//指定工具栏
+                toolbarAlign: "right",//工具栏对齐方式
+                columns: [
+                    {
+                        title: "全选",
+                        field: "select",
+                        checkbox: true,
+                        width: 20,//宽度
+                        align: "center",//水平
+                        valign: "middle"//垂直
+                    },
+                    {
+                        title: "Id",//标题
+                        field: "id",//键名
+                        sortable: true,//是否可排序
+                        order: "desc"//默认排序方式
+                    },
+                    {
+                        field: "name",
+                        title: "NAME",
+                        sortable: true,
+                        titleTooltip: "this is name"
+                    },
+                    {
+                        field: "age",
+                        title: "AGE",
+                        sortable: true,
+                    },
+                    {
+                        field: "info",
+                        title: "INFO[using-formatter]",
+                        formatter: 'infoFormatter',//对本列数据做格式化
+                    }
+                ],
+                onClickRow: function (row, $element) {
+                    //$element是当前tr的jquery对象
+                    $element.css("background-color", "green");
+                },//单击row事件
+                locale: "zh-CN",//中文支持,
+                detailView: false, //是否显示详情折叠
+                detailFormatter: function (index, row, element) {
+                    var html = '';
+                    $.each(row, function (key, val) {
+                        html += "<p>" + key + ":" + val + "</p>"
+                    });
+                    return html;
+                }
+            });
+
+            $("#tabs").tabs();
+        })
+
+        function tableHeight() {
+            return $(window).height() - 50;
+        }
+        /**
+         * 列的格式化函数 在数据从服务端返回装载前进行处理
+         * @param  {[type]} value [description]
+         * @param  {[type]} row   [description]
+         * @param  {[type]} index [description]
+         * @return {[type]}       [description]
+         */
+        function infoFormatter(value, row, index) {
+            return "id:" + row.id + " name:" + row.name + " age:" + row.age;
+        }
+    </script>
+</body>
+</html>

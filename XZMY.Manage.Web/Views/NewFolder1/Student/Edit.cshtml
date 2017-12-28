@@ -1,0 +1,201 @@
+﻿@model XZMY.Manage.Model.ViewModel.Members.VmStudent
+@{
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+    ViewBag.Title = "学生管理中心";
+}
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home/index">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="module">规划师管理</span>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="action">学生详细</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+<div class="mt-bootstrap-tables" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet light bordered">
+                @*<div class="portlet-title">
+                        <div class="actions">
+                            <a class="btn btn-default" href="/Planner/ProjectList">
+                                <i class="fa fa-list-ul"></i> 返回列表
+                            </a>
+                        </div>
+                    </div>*@
+                <div class="tabbable-line">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            @*<i class="icon-globe font-green-sharp"></i>
+                                <span class="caption-subject font-green-sharp bold uppercase">Iconic</span>*@
+                        </div>
+
+                        
+                    </div>
+                    
+                    <div class="actions row-fluid" style="margin: -40px 12px 14px 10px;text-align: right;">
+                        <a class="btn btn-default" href="/Student/Details/@Model.DataId">
+                            <i class="fa fa-list-ul"></i> 查看学生信息
+                        </a>
+                        <a class="btn btn-default" href="/Vip/studentplan/?StudentId=@Model.DataId">
+                            <i class="fa fa-list-ul"></i> 查看规划
+                        </a>
+                        <a class="btn btn-default" href="/Student/List">
+                            <i class="fa fa-list-ul"></i> 返回学生列表
+                        </a>
+                    </div>
+                    <div class="tab-content">
+                        @*<div class="portlet-body util-btn-margin-bottom-5">   style="margin-top: -78px;"  *@
+                        <div class="tab-pane active" id="dropdown_fontawesome">
+                            <div class="clearfix">
+                                <!-- BEGIN FORM-->
+                                <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                                    @Html.HiddenFor(x => x.DataId)
+                                    @Html.HiddenFor(x => x.Name)
+                                    <div class="portlet-body form">
+                                        @*<div class="form-body">*@
+                                        @*<h2 class="margin-bottom-20"> View User Info - Bob Nilson </h2>*@
+                                        <div class="portlet-body form">
+                                            <!-- BEGIN FORM-->
+                                            <form role="form" class="form-horizontal">
+                                                <div class="form-body">
+                                                    @*<h2 class="margin-bottom-20"> View User Info - Bob Nilson </h2>*@
+                                                    @*<h3 class="form-section">基础信息</h3>*@
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">姓名：</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static"> @Model.Name </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">姓名(拼音)：</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static"> @Model.EnglishName </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">学生评价：</label>
+                                                                <div class="col-md-9">
+                                                                    @Html.TextAreaFor(x=>x.StudentsEvaluation, new { @rows = "5", @class = "form-control" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3"></label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static">  </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                    </div>
+                                                  
+                                                </div>
+                                                <div class="form-actions">
+                                                    <div class="row">
+                                                        <div class="col-md-offset-3 col-md-9">
+                                                            <button type="submit" class="btn green">保存</button>
+                                                            <button type="reset" class="btn default">重置</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <!-- END FORM-->
+                                        </div>
+                                        @*</div>*@
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        
+
+                        
+                        @*</div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section JavaScript{
+    <script type="text/javascript">
+     
+        jQuery(document).ready(function () {
+            var form1 = $('#defaultForm');
+            var error1 = $('.alert-error', form1);
+            var success1 = $('.alert-success', form1);
+
+            form1.validate({
+                errorElement: 'span', //default input error message container
+                errorClass: 'help-block help-block-error', // default input error message class
+                focusInvalid: false, // do not focus the last invalid input
+                ignore: "",
+                errorPlacement: function (error, element) { // render error placement for each input type
+                    var icon = $(element).parent('.input-icon').children('i');
+                    icon.removeClass('fa-check').addClass("fa-warning");
+                    icon.attr("data-original-title", error.text()).tooltip({ 'container': 'body' });
+                },
+
+                highlight: function (element) { // hightlight error inputs
+                    $(element).closest('.form-group').removeClass("has-success").addClass('has-error'); // set error class to the control group
+                },
+
+                unhighlight: function (element) { // revert the change done by hightlight
+
+                },
+
+                success: function (label, element) {
+                    var icon = $(element).parent('.input-icon').children('i');
+                    $(element).closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                    icon.removeClass("fa-warning").addClass("fa-check");
+                },
+
+                submitHandler: function (form) {
+                    var data = form1.serializeObject();
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Student/AjaxEdit',
+                        data: data,
+                        dataType: 'JSON',
+                        success: function (result) {
+                            //redata = result;
+                            //alert(result.success);
+                            if (result.success) {
+                                location.replace('/Student/details/' + result.Id);
+                            } else {
+                                
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            showToast(3, '系统消息', JSON.stringify(errorThrown));//错误信息
+                            //LigerEP.ShowMsg('error', '网络错误！即将重新登录！');
+                            //window.location.replace("/MCustoms/Login");
+                        },
+                        async: false
+                    });
+                }
+            });
+        });
+</script>
+}

@@ -1,0 +1,363 @@
+﻿
+@using XZMY.Manage.Web.Controllers.Project
+@model XZMY.Manage.Model.ViewModel.Order.VmInCome
+@{
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+    ViewBag.Title = "创建/编辑";
+}
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home/index">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="module">订单管理</span>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="action">支付信息</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+<div class="row" style="margin-top: 20px">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet light bordered" id="form_wizard_1">
+            <div class="portlet-title">
+                <div class="captin">
+                    <span style="font-size: 25px;color: #000">订单信息</span>
+                </div>
+                <div class="actions">
+                    @if (Model.DataId != Guid.Empty)
+                    {
+                        <a class="btn btn-default" href="/OrderProject/Details/@Model.DataId">
+                            <i class="fa fa-pencil"></i> 详细
+                        </a>
+                    }
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                    @Html.HiddenFor(x => x.DataId)
+                    <div class="form-body">
+                        @{ 
+                            Guid OrderId = Request.QueryString["OrderId"].ToGuid(Guid.Empty);
+                            String OrderNo="";
+                            DateTime OrderTime = DateTime.MinValue;
+                            Decimal OrderTotalPrice = 0M;
+                            Decimal OrderDepositPrice = 0M;
+                            Decimal OrderPayPrice = 0M;
+                            Decimal OrderToPayPrice = 0M;
+                            Int32 Type = 1;
+                            OrderProjectController bllOrderProject = new OrderProjectController();
+                            var modelProject = bllOrderProject.GetModel(OrderId);
+                            if (modelProject.Id != Guid.Empty)
+                            {
+                                OrderNo = modelProject.OrderNo;
+                                OrderTime = modelProject.CreatedTime;
+                                OrderTotalPrice = modelProject.TotalPrice;
+                                OrderDepositPrice = modelProject.DepositPrice;
+                                OrderPayPrice = modelProject.PayPrice;
+                                Type = 1;
+                            }
+                            else {
+                                OrderCourseController bllOrderCourse = new OrderCourseController();
+                                var modelCourse = bllOrderCourse.GetModel(OrderId);
+                                OrderNo = modelCourse.OrderNo;
+                                OrderTime = modelCourse.CreatedTime;
+                                OrderTotalPrice = modelCourse.TotalPrice;
+                                OrderDepositPrice = modelCourse.DepositPrice;
+                                OrderPayPrice = modelCourse.PayPrice;
+                                Type = 2;
+                            }
+                            if (OrderTotalPrice > OrderPayPrice)
+                            {
+                                OrderToPayPrice = OrderTotalPrice - OrderPayPrice;
+                            }
+                        }
+                        <input type="hidden" id="OrderId" name="OrderId" value="@OrderId" />
+                        <input type="hidden" id="Type" name="Type" value="@Type" />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">订单号：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <span class="form-control-static">@OrderNo </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">下单时间：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <span class="form-control-static"> @OrderTime.ToString("yyyy-MM-dd HH:mm:ss")</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">订单金额：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <span class="form-control-static"> @OrderTotalPrice</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">定金：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <span class="form-control-static"> @OrderDepositPrice</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">已支付金额：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <span class="form-control-static"> @OrderPayPrice</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">还需要支付金额：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <span class="form-control-static"> @OrderToPayPrice</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="form-section">支付信息</h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">支付类型：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            
+                                            @if (Model.PayType == XZMY.Manage.Model.Enum.EOrderPayType.线上支付)
+                                            {
+                                                <select id="PayType" name="PayType" class="form-control">
+                                                    <option value="1" selected="selected">线上支付</option>
+                                                    <option value="2">线下支付</option>
+                                                </select>
+                                            }
+                                            else
+                                            {
+                                                <select id="PayType" name="PayType" class="form-control">
+                                                    <option value="1" >线上支付</option>
+                                                    <option value="2" selected="selected">线下支付</option>
+                                                </select>
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">支付方式：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @{
+                                                var listPayMode = XZMY.Manage.Service.Utils.DataDictionary.DataDictionaryManager.GetCatagory("PayMode").Values.ToList();
+                                                    <select id="PayMode" name="PayMode" class="form-control">
+                                                        @foreach (var m in listPayMode)
+                                                        {
+                                                            if (m.Id == Model.PayMode)
+                                                            {
+                                                                <option value="@m.Id" selected="selected">@m.Name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@m.Id">@m.Name</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                            } 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">支付流水号：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.SerialNumber, new { @maxlength = "50", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">支付账号：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.PayAccount, new { @maxlength = "50", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">支付人姓名：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.PayName, new { @maxlength = "50", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">支付金额：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.PayPrice, new {  @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">备注：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.Description, new {  @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3"></label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="submit" class="btn green">保存</button>
+                                <button type="reset" class="btn default">重置</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+</div>
+@section JavaScript{
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            var form1 = $('#defaultForm');
+            var error1 = $('.alert-error', form1);
+            var success1 = $('.alert-success', form1);
+            var agentData = null, projectData = null;
+
+            form1.validate({
+                errorElement: 'span', //default input error message container
+                errorClass: 'help-block help-block-error', // default input error message class
+                focusInvalid: false, // do not focus the last invalid input
+                ignore: "",
+             
+
+                invalidHandler: function (event, validator) { //display error alert on form submit
+                    success1.hide();
+                    error1.show();
+                    App.scrollTo(error1, -200);
+                },
+                errorPlacement: function (error, element) { // render error placement for each input type
+                    var icon = $(element).parent('.input-icon').children('i');
+                    icon.removeClass('fa-check').addClass("fa-warning");
+                    icon.attr("data-original-title", error.text()).tooltip({ 'container': 'body' });
+                },
+                highlight: function (element) { // hightlight error inputs
+                    $(element).closest('.form-group').removeClass("has-success").addClass('has-error'); // set error class to the control group
+                },
+
+                unhighlight: function (element) { // revert the change done by hightlight
+
+                },
+                success: function (label, element) {
+                    var icon = $(element).parent('.input-icon').children('i');
+                    $(element).closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                    icon.removeClass("fa-warning").addClass("fa-check");
+                },
+                submitHandler: function (form) {
+                    var data = form1.serializeObject();
+                    $.ajax({
+                        type: 'POST',
+                        url: '/InCome/AjaxEdit',
+                        data: data,
+                        dataType: 'JSON',
+                        success: function (result) {
+                            if (result.success)
+                            {
+                                if ($("#Type").val() == 1)
+                                {
+                                    location.replace("/OrderProject/details/" + $("#OrderId").val());
+                                }else
+                                {
+                                    location.replace("/OrderCourse/details/"+$("#OrderId").val());
+                                }
+                            }
+                            else {
+                                showToast(3, '系统消息', result.message);//错误信息
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            showToast(3, '系统消息', JSON.stringify(errorThrown));//错误信息
+                        },
+                        async: false
+                    });
+                }
+            });
+        });
+    </script>
+}

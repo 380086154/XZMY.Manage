@@ -1,0 +1,228 @@
+﻿@model XZMY.Manage.Model.ViewModel.OnlineAssessment.VmOnlineAssessmentTranscript
+@{
+    ViewBag.Title = "编辑";
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+}
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home/index">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="module">在线评估</span>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="action">答题卡编辑</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+<div class="row" style="margin-top: 20px">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet light bordered" id="form_wizard_1">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span style="font-size: 25px;color: #000">基础信息</span>
+                </div>
+                <div class="actions">
+                    @if (Model.DataId != Guid.Empty)
+                    {
+                        <a class="btn btn-default" href="/OnlineTranscript/Edit/">
+                            <i class="fa fa-pencil"></i> 创建答题卡
+                        </a>
+                    }
+                    
+                    <a class="btn btn-default" href="/OnlineTranscript/List">
+                        <i class="fa fa-list-ul"></i> 返回列表
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                    <div class="form-body">
+                        @*<h3 class="form-section">活动模板基础信息</h3>*@
+                        @Html.HiddenFor(x=> x.Id)
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">答题账号</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.LoginName, new { @maxlength = "50", @class = "form-control" })
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">学生真实姓名</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.TextBoxFor(x => x.Name, new { @maxlength = "50", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">登录密码</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            @Html.PasswordFor(x => x.Password, new { @maxlength = "6", @minlength = "4", @class = "form-control", @placeholder = "4-6位的数字密码；为空时默认密码为：123456；修改密码时，则不修改密码" })
+                                            
+                                            @*@Html.HiddenFor(x => x.DataId)*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">选择试卷</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <select id="OnlineAssessmentSecurityId" name="OnlineAssessmentSecurityId" class="form-control">
+                                                <option value="">--请选择--</option>
+                                                @{
+                                                    XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineAssessmentController bll = new XZMY.Manage.Web.Controllers.OnlineAssessment.OnlineAssessmentController();
+                                                    int t = 0;
+                                                    var list = bll.GetListOnlineAssessmentSecurity(new XZMY.Manage.Model.ViewModel.OnlineAssessment.VmOnlineAssessmentSecurity() { State = XZMY.Manage.Model.Enum.EState.启用 }, out t);
+                                                    foreach (var m in list)
+                                                    {
+                                                        if (Model.OnlineAssessmentSecurityId == m.Id)
+                                                        {
+                                                            <option selected="selected" value="@m.Id">@m.Name</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@m.Id">@m.Name</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                            @*@Html.HiddenFor(x => x.ProjectTypeId)
+                                            @Html.HiddenFor(x => x.ProjectTypeName)*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                        </div>
+
+                        
+
+                        
+                        
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="submit" class="btn green">保存</button>
+                                <button type="reset" class="btn default">重置</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+</div>
+@section JavaScript{
+    <script>
+        
+
+        jQuery(document).ready(function () {
+            var form1 = $('#defaultForm');
+            var error1 = $('.alert-error', form1);
+            var success1 = $('.alert-success', form1);
+            //只能输入数字代码
+            $.validator.addMethod("numberCode", function (value, element) {
+                var length = value.length;
+                var mobile = /^\d*$/;
+                return this.optional(element)
+                        ||   mobile.test(value);
+            }, "请输入数字");
+            form1.validate({
+                errorElement: 'span',
+                errorClass: 'help-block help-block-error', // default input error message class
+                focusInvalid: false, // do not focus the last invalid input
+                ignore: "",
+                rules: {
+                    LoginName: { minlength: 1, required: true },
+                    Name: { minlength: 1, required: true },
+                    Password: { minlength: 4, maxlength: 6, numberCode: true },
+                    OnlineAssessmentSecurityId: { required: true }
+                },
+
+
+
+                errorPlacement: function (error, element) { // render error placement for each input type
+                    var icon = $(element).parent('.input-icon').children('i');
+                    icon.removeClass('fa-check').addClass("fa-warning");
+                    icon.attr("data-original-title", error.text()).tooltip({ 'container': 'body' });
+                },
+
+                highlight: function (element) { // hightlight error inputs
+                    $(element).closest('.form-group').removeClass("has-success").addClass('has-error'); // set error class to the control group
+                },
+
+                unhighlight: function (element) { // revert the change done by hightlight
+
+                },
+
+                success: function (label, element) {
+                    var icon = $(element).parent('.input-icon').children('i');
+                    $(element).closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                    icon.removeClass("fa-warning").addClass("fa-check");
+                },
+
+                submitHandler: function (form) {
+
+                    var data = form1.serializeObject();
+                    console.log(JSON.stringify(data));
+                    
+                    $.ajax({
+                        type: 'POST',
+                        url: '/OnlineTranscript/AjaxEdit',
+                        data: data,
+                        dataType: 'JSON',
+                        success: function (result) {
+                            //redata = result;
+                            if (result.success)
+                                location.replace('/OnlineTranscript/List/');
+                            else {
+                                showToast(3, '系统消息', result.message);//错误信息
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            showToast(3, '系统消息', JSON.stringify(errorThrown));//错误信息
+                            //LigerEP.ShowMsg('error', '网络错误！即将重新登录！');
+                            //window.location.replace("/MCustoms/Login");
+                        },
+                        async: false
+                    });
+                }
+            });
+        });
+</script>
+}

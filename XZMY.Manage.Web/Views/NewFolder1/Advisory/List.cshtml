@@ -1,0 +1,155 @@
+﻿@*@{
+        ViewBag.Title = "列表";
+    }
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="portlet box">
+                <div class="portlet-body ">
+                    <div class="container">
+                        <div class="span3">
+                            <div class="control-group" style="line-height: 34px;">
+                                <span style="float:left">状态：</span>
+                                <div class="controls select2-wrapper">
+                                    <select id="State" name="State" class="span6">
+                                        <option value="0">全部</option>
+                                        <option value="1">启用</option>
+                                        <option value="2">禁用</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <table data-toggle="table"
+                               data-toolbar="#post"
+                               data-url="/Advisory/AjaxList/"
+                               data-form-id="defaultForm"
+                               data-show-refresh="true"
+                               data-search="true"
+                               data-page-size="10"
+                               data-page-list="[5, 10, 20, 50, 100, 200]"
+                               data-height="526"
+                               @*data-columns="400"
+                               data-method="post"
+                               data-query-params="postQueryParams">
+                            <thead>
+                                <tr>
+                                    @*<th data-checkbox="false"></th>
+                                    <th data-field="Title">标题</th>
+                                    <th data-field="TypeName">类型</th>
+                                    <th data-field="Name">咨询人</th>
+                                    <th data-field="ContactTypeName">联系方式</th>
+                                    <th data-field="ContactNumber">联系号码</th>
+                                    @*<th data-field="State">状态</th>
+                                    <th data-formatter="opColumns" data-align="center">操作</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+
+        </div>
+
+    </div>
+    <script type="text/javascript">
+        var postQueryParams = function (params) {
+            //params.pageSize = 5; // add param1
+            //params.pageIndex = 1; // add param2
+            params.State = $('#State').val();
+            params.limit = 5;
+            //console.log(JSON.stringify(params));
+            // {"limit":10,"offset":0,"order":"asc","your_param1":1,"your_param2":2}
+            return params; // body data
+        };
+
+        var opColumns = function (value, row, index) {
+            return '<a href="details/_id_">查看</a>'.replace(/_id_/ig, row.Id);
+        };
+
+        $('#State').change(function () { $('.btn-default').click(); });
+    </script>*@
+
+
+@{
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+    ViewBag.Title = "列表";
+}
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home/index">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="module">咨询管理</span>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="action">咨询列表</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+<div class="mt-bootstrap-tables" style="margin-top:20px">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span style="font-size: 25px;color: #000"></span>
+                    </div>
+                    <div class="actions">
+                        @*<a class="btn btn-circle btn-icon-only btn-default" href="javascript:;"><i class="icon-cloud-upload"></i></a>*@
+                        <a class="btn btn-default" href="/Advisory/Edit/">
+                            <i class="fa fa-plus"></i> 创建
+                        </a>
+                        @*<a class="btn btn-circle btn-icon-only btn-default" href="javascript:;"><i class="icon-wrench"></i></a>
+                            <a class="btn btn-circle btn-icon-only btn-default delete" href="javascript:;"><i class="icon-trash"></i></a>*@
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <!-- BEGIN FORM-->
+                    <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                        <div class="mt-checkbox-inline" style="margin-top: -37px">
+                            @*<div class="pull-left" style="margin-top: 20px">
+                                状态：<select class="form-control input-inline" name="State" id="State">
+                                    <option value="0">全部</option>
+                                    <option value="1">启用</option>
+                                    <option value="2">禁用</option>
+                                </select>
+                            </div>*@
+                        </div>
+                    </form>
+                    <!-- END FORM-->
+                    <table id="table-pagination" data-toggle="table" data-url="/Advisory/AjaxList/"
+                           data-height="526"
+                           data-form-id="defaultForm"
+                           data-show-refresh="true"
+                           data-page-size="10"
+                           data-page-list="[5, 10, 20, 50, 100, 200]"
+                           data-search="true">
+                        <thead>
+                            <tr>
+                                <th data-field="Title" data-align="lift">标题</th>
+                                <th data-field="TypeName" data-align="center">类型</th>
+                                <th data-field="Name" data-align="lift">咨询人</th>
+                                <th data-field="ContactTypeName" data-align="lift">联系方式</th>
+                                <th data-field="ContactNumber" data-align="lift">联系号码</th>
+                                <th data-formatter="opColumns" data-align="center">操作</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section JavaScript{
+    <script type="text/javascript">
+        var opColumns = function (value, row, index) {
+            return '<a href="edit/_id_">编辑</a> | <a href="details/_id_">查看</a>'.replace(/_id_/ig, row.Id);
+        };
+    </script>
+}

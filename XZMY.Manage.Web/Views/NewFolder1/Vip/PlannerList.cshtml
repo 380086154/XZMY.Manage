@@ -1,0 +1,140 @@
+﻿@{
+    ViewBag.Title = "列表";
+}
+<div class="row-fluid">
+    <div class="span12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box">
+            <div class="portlet-title">
+                <div class="caption"><i class="icon-globe"></i>Show/Hide Columns</div>
+                <div class="actions">
+                    <div class="btn-group">
+                        <a class="btn" href="#" data-toggle="dropdown">
+                            Columns
+
+                            <i class="icon-angle-down"></i>
+                        </a>
+                        <div id="sample_2_column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
+                            <label><input type="checkbox" checked data-column="0">Rendering engine</label>
+                            <label><input type="checkbox" checked data-column="1">Browser</label>
+                            <label><input type="checkbox" checked data-column="2">Platform(s)</label>
+                            <label><input type="checkbox" checked data-column="3">Engine version</label>
+                            <label><input type="checkbox" checked data-column="4">CSS grade</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portlet-body ">
+                <div class="container">
+                    <table data-toggle="table"
+                           data-toolbar="#post"
+                           data-url="/Vip/AjaxPlannerList/"
+                           data-form-id="defaultForm"
+                           data-page-size="10"
+                           data-page-list="[5, 10, 20, 50, 100, 200]"
+                           data-search="true"
+                           data-height="526"
+                           data-method="post">
+                        <thead>
+                            <tr>
+                                @*<th data-checkbox="false"></th>*@
+                                <th data-field="Name">姓名</th>
+                                <th data-field="Mobile">性别</th>
+                                <th data-field="Grade">级别</th>
+                                <th data-field="LocationPathName">资质</th>
+                                <th data-field="AverageScore">状态</th>
+                                <th data-formatter="opColumns" data-align="center">操作</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+    <div class="modal fade" id="ajax" tabindex="-1" role="basic" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">家长信息</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="portlet-body form">
+                        <div class="row-fluid">
+                            <div class="span6 ">
+                                <div class="control-group">
+                                    <label class="control-label">姓名<span class="required">*</span></label>
+                                    <div class="controls" id="parentName">
+                                        ---
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="span6 ">
+                                <div class="control-group">
+                                    <label class="control-label">电话<span class="required">*</span></label>
+                                    <div class="controls" id="parentMobile">
+                                        ---
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span6 ">
+                                <div class="control-group">
+                                    <label class="control-label">单位<span class="required">*</span></label>
+                                    <div class="controls" id="parentUnit">
+                                        ---
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="span6 ">
+                                <div class="control-group">
+                                    <label class="control-label">职务<span class="required">*</span></label>
+                                    <div class="controls" id="parentPosition">
+                                        ---
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var opColumns = function (value, row, index) {
+        return '<a onclick="parent(_pid_)" data-target="#ajax" data-toggle="modal">家长</a> | <a href="#">安排任务</a> |<a href="details/_id_">管理主页</a>'.replace(/_id_/ig, row.Id).replace(/_pid_/ig, "'" + row.ParentsId + "'");
+    };
+    function parent(id) {
+        $.ajax({
+            type: 'GET',
+            url: '/Student/AjaxParent?id=' + id,
+            //data: data,
+            //dataType: 'JSON',
+            success: function (result) {
+                if (result.success) {
+                    $("#parentName").text(result.result.Name);
+                    $("#parentMobile").text(result.result.WorkPhone);
+                    $("#parentUnit").text(result.result.CompanyName);
+                    $("#parentPosition").text(result.result.Position);
+                }
+                else
+                    alert(result.errors);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                showToast(3, '系统消息', JSON.stringify(errorThrown));//错误信息
+            },
+            async: false
+        });
+    }
+</script>

@@ -1,0 +1,287 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9D03AB55-D804-446E-8878-EA279891E9BB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>XZMY.Manage.Model</RootNamespace>
+    <AssemblyName>XZMY.Manage.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <DocumentationFile>bin\Debug\XZMY.Manage.Model.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\Assembly\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="T2M.Common.Utils">
+      <HintPath>..\Assembly\T2M.Common.Utils.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApiResult.cs" />
+    <Compile Include="DataModel\HyxxDto.cs" />
+    <Compile Include="DataModel\NewFolder1\Advisories\Advisory.cs" />
+    <Compile Include="DataModel\NewFolder1\Agent\Agent.cs" />
+    <Compile Include="DataModel\NewFolder1\Agent\AgentContact.cs" />
+    <Compile Include="DataModel\NewFolder1\Agent\V_AgentUserAgentContact.cs" />
+    <Compile Include="DataModel\NewFolder1\Albums\Album.cs" />
+    <Compile Include="DataModel\Assessment\Assessment.cs" />
+    <Compile Include="DataModel\Assessment\AssessmentAnswer.cs" />
+    <Compile Include="DataModel\Assessment\AssessmentQuestion.cs" />
+    <Compile Include="DataModel\NewFolder1\Courses\Course.cs" />
+    <Compile Include="DataModel\NewFolder1\Courses\CourseDate.cs" />
+    <Compile Include="DataModel\NewFolder1\Courses\CourseDepartureCity.cs" />
+    <Compile Include="DataModel\NewFolder1\Courses\CourseGrowthValue.cs" />
+    <Compile Include="DataModel\NewFolder1\Courses\CourseRecommendedReason.cs" />
+    <Compile Include="DataModel\NewFolder1\Courses\CourseTemplate.cs" />
+    <Compile Include="DataModel\NewFolder1\Funding\MemberFund.cs" />
+    <Compile Include="DataModel\Location\Location.cs" />
+    <Compile Include="DataModel\NewFolder1\Members\Member.cs" />
+    <Compile Include="DataModel\NewFolder1\Members\MemberLoginLog.cs" />
+    <Compile Include="DataModel\NewFolder1\Members\Parent.cs" />
+    <Compile Include="DataModel\NewFolder1\Members\R_StudentParent.cs" />
+    <Compile Include="DataModel\NewFolder1\Members\Student.cs" />
+    <Compile Include="DataModel\NewFolder1\Members\StudentApply_Certificate.cs" />
+    <Compile Include="DataModel\NewFolder1\Members\StudentApply_ContactInformation.cs" />
+    <Compile Include="DataModel\NewFolder1\Members\StudentApply_Guardian.cs" />
+    <Compile Include="DataModel\NewFolder1\Members\StudentApply_Intention.cs" />
+    <Compile Include="DataModel\NewFolder1\Members\StudentApply_Interest.cs" />
+    <Compile Include="DataModel\NewFolder1\Members\StudentApply_Project.cs" />
+    <Compile Include="DataModel\NewFolder1\Members\StudentApply_SchoolCourse.cs" />
+    <Compile Include="DataModel\NewFolder1\Members\StudentApply_SchoolGrade.cs" />
+    <Compile Include="DataModel\NewFolder1\Members\StudentApply_SchoolInformation.cs" />
+    <Compile Include="DataModel\NewFolder1\Members\V_VipStudent.cs" />
+    <Compile Include="DataModel\NewFolder1\Members\V_StudentMember.cs" />
+    <Compile Include="DataModel\OnlineAssessment\OnlineAssessmentAnswers.cs" />
+    <Compile Include="DataModel\OnlineAssessment\OnlineAssessmentAnswersGroup.cs" />
+    <Compile Include="DataModel\OnlineAssessment\OnlineAssessmentAnswerSheet.cs" />
+    <Compile Include="DataModel\OnlineAssessment\OnlineAssessmentQuestions.cs" />
+    <Compile Include="DataModel\OnlineAssessment\OnlineAssessmentSecurity.cs" />
+    <Compile Include="DataModel\OnlineAssessment\OnlineAssessmentStudent.cs" />
+    <Compile Include="DataModel\OnlineAssessment\OnlineAssessmentTranscript.cs" />
+    <Compile Include="DataModel\NewFolder1\Order\Income.cs" />
+    <Compile Include="DataModel\NewFolder1\Order\OrderProject.cs" />
+    <Compile Include="DataModel\NewFolder1\Order\OrderCourse.cs" />
+    <Compile Include="DataModel\NewFolder1\Order\V_OrderCourseList.cs" />
+    <Compile Include="DataModel\NewFolder1\Order\V_OrderProjectList.cs" />
+    <Compile Include="DataModel\NewFolder1\Order\V_ProjectList.cs" />
+    <Compile Include="DataModel\NewFolder1\Planners\Planner.cs" />
+    <Compile Include="DataModel\NewFolder1\Planners\PlannerAnswerTemplate.cs" />
+    <Compile Include="DataModel\NewFolder1\Planners\PlanVisitor.cs" />
+    <Compile Include="DataModel\NewFolder1\Planners\ProblemPlanner.cs" />
+    <Compile Include="DataModel\NewFolder1\Planners\ProgramMessage.cs" />
+    <Compile Include="DataModel\NewFolder1\Planners\StudentVipApply.cs" />
+    <Compile Include="DataModel\NewFolder1\Planners\V_PlannerList.cs" />
+    <Compile Include="DataModel\NewFolder1\Planners\V_PlannerStudentList.cs" />
+    <Compile Include="DataModel\NewFolder1\Plan\PlanningNote.cs" />
+    <Compile Include="DataModel\NewFolder1\Plan\PlanRecord.cs" />
+    <Compile Include="DataModel\NewFolder1\Plan\PlanRecord_Assessment.cs" />
+    <Compile Include="DataModel\NewFolder1\Plan\PlanRecord_AssessmentAnswers.cs" />
+    <Compile Include="DataModel\NewFolder1\Plan\StudentPlan.cs" />
+    <Compile Include="DataModel\NewFolder1\Plan\StudentPlanBackup.cs" />
+    <Compile Include="DataModel\NewFolder1\Plan\StudentPlanProgram.cs" />
+    <Compile Include="DataModel\NewFolder1\Plan\V_ProjectCourseTemplateList.cs" />
+    <Compile Include="DataModel\NewFolder1\Program\AgentProject.cs" />
+    <Compile Include="DataModel\NewFolder1\Program\ProgramAbility.cs" />
+    <Compile Include="DataModel\NewFolder1\Program\ProgramOrder.cs" />
+    <Compile Include="DataModel\NewFolder1\Project\Project.cs" />
+    <Compile Include="DataModel\NewFolder1\Project\ProjectDate.cs" />
+    <Compile Include="DataModel\NewFolder1\Project\ProjectDepartureCity.cs" />
+    <Compile Include="DataModel\NewFolder1\Project\ProjectGrowthValue.cs" />
+    <Compile Include="DataModel\NewFolder1\Project\ProjectRecommendedReason.cs" />
+    <Compile Include="DataModel\NewFolder1\Project\ProjectTemplate.cs" />
+    <Compile Include="DataModel\NewFolder1\School\currentSchoolType.cs" />
+    <Compile Include="DataModel\NewFolder1\School\School.cs" />
+    <Compile Include="DataModel\NewFolder1\School\SchoolCategory.cs" />
+    <Compile Include="DataModel\NewFolder1\School\SchoolType.cs" />
+    <Compile Include="DataModel\SiteSetting\EnglishScoreDefault.cs" />
+    <Compile Include="DataModel\SiteSetting\GradeRanking.cs" />
+    <Compile Include="DataModel\SiteSetting\LearnScoreDefault.cs" />
+    <Compile Include="DataModel\SiteSetting\SchoolLevel.cs" />
+    <Compile Include="DataModel\SiteSetting\ScoreItems.cs" />
+    <Compile Include="DataModel\SiteSetting\Scores.cs" />
+    <Compile Include="DataModel\SiteSetting\SiteAD.cs" />
+    <Compile Include="DataModel\SiteSetting\StudentTotalScore.cs" />
+    <Compile Include="DataModel\SiteSetting\StudyBudget.cs" />
+    <Compile Include="DataModel\User\UserRole.cs" />
+    <Compile Include="DataModel\XfxxDto.cs" />
+    <Compile Include="Enum\EGradeRanking.cs" />
+    <Compile Include="Enum\EMessageType.cs" />
+    <Compile Include="Enum\EOnlineAssessmentQuestionType.cs" />
+    <Compile Include="Enum\EOrderPayType.cs" />
+    <Compile Include="Enum\EProgramType.cs" />
+    <Compile Include="Enum\ERoute.cs" />
+    <Compile Include="Enum\ESchoolTop.cs" />
+    <Compile Include="Enum\ETranscriptState.cs" />
+    <Compile Include="IStandardResult.cs" />
+    <Compile Include="ServiceModel\Assessment\SmAssessment.cs" />
+    <Compile Include="ServiceModel\Assessment\SmAssessmentAnswer.cs" />
+    <Compile Include="ServiceModel\NewFolder1\Order\SmOrderWeb.cs" />
+    <Compile Include="Enum\EGrade.cs" />
+    <Compile Include="Enum\EGradeAbroad.cs" />
+    <Compile Include="Enum\ELearningState.cs" />
+    <Compile Include="Enum\EOrderIsPayCompletion.cs" />
+    <Compile Include="Enum\EOrderAgentType.cs" />
+    <Compile Include="Enum\EOrderEnrollType.cs" />
+    <Compile Include="Enum\EOrderProcessState.cs" />
+    <Compile Include="Enum\ESchoolType.cs" />
+    <Compile Include="Enum\EState.cs" />
+    <Compile Include="Enum\EGender.cs" />
+    <Compile Include="Enum\ESuitablePerson.cs" />
+    <Compile Include="Enum\EVisible.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DataModel\User\UserAccount.cs" />
+    <Compile Include="DataModel\User\UserLoginLog.cs" />
+    <Compile Include="ServiceModel\NewFolder1\Albums\SmAlbum.cs" />
+    <Compile Include="ServiceModel\IServiceModel.cs" />
+    <Compile Include="ServiceModel\NewFolder1\Members\SmCreateMember.cs" />
+    <Compile Include="ServiceModel\NewFolder1\Order\SmAddOrderIncome.cs" />
+    <Compile Include="ServiceModel\NewFolder1\Order\SmPayInCome.cs" />
+    <Compile Include="ServiceModel\NewFolder1\Order\SmProjectOrderCreate.cs" />
+    <Compile Include="ServiceModel\NewFolder1\Order\SmCourseOrderCreate.cs" />
+    <Compile Include="ServiceModel\NewFolder1\Plan\SmPlanIntention.cs" />
+    <Compile Include="ServiceModel\NewFolder1\Plan\SmPlanningNote.cs" />
+    <Compile Include="ServiceModel\NewFolder1\Plan\SmPlanRecord.cs" />
+    <Compile Include="ServiceModel\NewFolder1\Plan\SmStudentPlan.cs" />
+    <Compile Include="ServiceModel\NewFolder1\Plan\SmStudentPlanProgram.cs" />
+    <Compile Include="ServiceModel\NewFolder1\Plan\SmWebStudentPlan.cs" />
+    <Compile Include="StandardResult.cs" />
+    <Compile Include="Utils\OrderCancelParam.cs" />
+    <Compile Include="Utils\PlanQuery.cs" />
+    <Compile Include="Utils\StringHelper.cs" />
+    <Compile Include="Utils\ViewBase.cs" />
+    <Compile Include="ViewModel\Customer\VmPayment.cs" />
+    <Compile Include="ViewModel\NewFolder1\Advisories\VmAdvisory.cs" />
+    <Compile Include="ViewModel\NewFolder1\Agent\VmAgentEdit.cs" />
+    <Compile Include="ViewModel\NewFolder1\Agent\VmAgent.cs" />
+    <Compile Include="ViewModel\NewFolder1\Agent\VmAgentContact.cs" />
+    <Compile Include="ViewModel\NewFolder1\Albums\VmAlbum.cs" />
+    <Compile Include="ViewModel\Assessment\VmAssessment.cs" />
+    <Compile Include="ViewModel\Assessment\VmAssessmentAnswer.cs" />
+    <Compile Include="ViewModel\Assessment\VmAssessmentEdit.cs" />
+    <Compile Include="ViewModel\Assessment\VmAssessmentQuestion.cs" />
+    <Compile Include="ViewModel\Assessment\VmScore.cs" />
+    <Compile Include="ViewModel\NewFolder1\Courses\VmCourseDateEdit.cs" />
+    <Compile Include="ViewModel\NewFolder1\Courses\VmCourseDepartureCity.cs" />
+    <Compile Include="ViewModel\NewFolder1\Courses\VmCourseEdit.cs" />
+    <Compile Include="ViewModel\NewFolder1\Courses\VmCourseGrowthValue.cs" />
+    <Compile Include="ViewModel\NewFolder1\Courses\VmCourseRecommendedReason.cs" />
+    <Compile Include="ViewModel\NewFolder1\Courses\VmCourseTemplate.cs" />
+    <Compile Include="ViewModel\NewFolder1\Funding\VmMemberFund.cs" />
+    <Compile Include="ViewModel\IActionViewModel.cs" />
+    <Compile Include="ViewModel\Location\VmLocationEdit.cs" />
+    <Compile Include="ViewModel\Location\VmLocation.cs" />
+    <Compile Include="ViewModel\NewFolder1\Members\VmStudentApply.cs" />
+    <Compile Include="ViewModel\NewFolder1\Members\VmStudentApply_ContactInformation.cs" />
+    <Compile Include="ViewModel\NewFolder1\Members\VmMember.cs" />
+    <Compile Include="ViewModel\NewFolder1\Members\VmParents.cs" />
+    <Compile Include="ViewModel\NewFolder1\Members\VmStudentApply_Certificate.cs" />
+    <Compile Include="ViewModel\NewFolder1\Members\VmStudentApply_Guardian.cs" />
+    <Compile Include="ViewModel\NewFolder1\Members\VmStudentApply_Intention.cs" />
+    <Compile Include="ViewModel\NewFolder1\Members\VmStudentApply_Interest.cs" />
+    <Compile Include="ViewModel\NewFolder1\Members\VmStudentApply_Project.cs" />
+    <Compile Include="ViewModel\NewFolder1\Members\VmStudentApply_SchoolCourse.cs" />
+    <Compile Include="ViewModel\NewFolder1\Members\VmStudentApply_SchoolGrade.cs" />
+    <Compile Include="ViewModel\NewFolder1\Members\VmStudentApply_SchoolInformation.cs" />
+    <Compile Include="ViewModel\OnlineAssessment\VmOnlineAssessmentAnswers.cs" />
+    <Compile Include="ViewModel\OnlineAssessment\VmOnlineAssessmentAnswersGroup.cs" />
+    <Compile Include="ViewModel\OnlineAssessment\VmOnlineAssessmentAnswerSheet.cs" />
+    <Compile Include="ViewModel\OnlineAssessment\VmOnlineAssessmentQuestions.cs" />
+    <Compile Include="ViewModel\OnlineAssessment\VmOnlineAssessmentSecurity.cs" />
+    <Compile Include="ViewModel\OnlineAssessment\VmOnlineAssessmentStudent.cs" />
+    <Compile Include="ViewModel\OnlineAssessment\VmOnlineAssessmentTranscript.cs" />
+    <Compile Include="ViewModel\NewFolder1\Order\VmInCome.cs" />
+    <Compile Include="ViewModel\NewFolder1\Order\VmOrderCourse.cs" />
+    <Compile Include="ViewModel\NewFolder1\Order\VmOrderCourseDetails.cs" />
+    <Compile Include="ViewModel\NewFolder1\Order\VmOrderProjectDetails.cs" />
+    <Compile Include="ViewModel\NewFolder1\Order\VmOrderProject.cs" />
+    <Compile Include="ViewModel\NewFolder1\Planners\PlanTemplate.cs" />
+    <Compile Include="ViewModel\NewFolder1\Planners\VmPlannerEdit.cs" />
+    <Compile Include="ViewModel\NewFolder1\Members\VmStudent.cs" />
+    <Compile Include="ViewModel\NewFolder1\Planners\VmPlanner.cs" />
+    <Compile Include="ViewModel\NewFolder1\Planners\VmPlannerAnswerTemplate.cs" />
+    <Compile Include="ViewModel\NewFolder1\Planners\VmPlannerList.cs" />
+    <Compile Include="ViewModel\NewFolder1\Planners\VmPlanVisitor.cs" />
+    <Compile Include="ViewModel\NewFolder1\Planners\VmProblemPlannerEdit.cs" />
+    <Compile Include="ViewModel\NewFolder1\Planners\VmProgramMessage.cs" />
+    <Compile Include="ViewModel\NewFolder1\Planners\VmStudentVipApply.cs" />
+    <Compile Include="ViewModel\NewFolder1\Plan\VmPlanningNote.cs" />
+    <Compile Include="ViewModel\NewFolder1\Plan\VmPlanRecord_Assessment.cs" />
+    <Compile Include="ViewModel\NewFolder1\Plan\VmPlanRecord_AssessmentAnswers.cs" />
+    <Compile Include="ViewModel\NewFolder1\Plan\VmStudentPlanBackup.cs" />
+    <Compile Include="ViewModel\NewFolder1\Program\VmAgentProject.cs" />
+    <Compile Include="ViewModel\NewFolder1\Program\VmProgramAbility.cs" />
+    <Compile Include="ViewModel\NewFolder1\Program\VmProgramOrder.cs" />
+    <Compile Include="ViewModel\NewFolder1\Project\VmProjectDateEdit.cs" />
+    <Compile Include="ViewModel\NewFolder1\Project\VmProjectDepartureCity.cs" />
+    <Compile Include="ViewModel\NewFolder1\Project\VmProjectEdit.cs" />
+    <Compile Include="ViewModel\NewFolder1\Project\VmProjectGrowthValue.cs" />
+    <Compile Include="ViewModel\NewFolder1\Project\VmProjectRecommendedReason.cs" />
+    <Compile Include="ViewModel\NewFolder1\Project\VmProjectTemplate.cs" />
+    <Compile Include="ViewModel\NewFolder1\Question\VmAnswerQuestion.cs" />
+    <Compile Include="ViewModel\NewFolder1\School\VmcurrentSchoolType.cs" />
+    <Compile Include="ViewModel\NewFolder1\School\VmSchool.cs" />
+    <Compile Include="ViewModel\NewFolder1\School\VmSchoolCategory.cs" />
+    <Compile Include="ViewModel\NewFolder1\School\VmSchoolType.cs" />
+    <Compile Include="ViewModel\SiteSetting\VmDataDictionaryItem.cs" />
+    <Compile Include="ViewModel\SiteSetting\VmEnglishScoreDefault.cs" />
+    <Compile Include="ViewModel\SiteSetting\VmGradeRanking.cs" />
+    <Compile Include="ViewModel\SiteSetting\VmLearnScoreDefault.cs" />
+    <Compile Include="ViewModel\SiteSetting\VmSchoolLevel.cs" />
+    <Compile Include="ViewModel\SiteSetting\VmScoresEdit.cs" />
+    <Compile Include="ViewModel\SiteSetting\VmScoreItemsEdit.cs" />
+    <Compile Include="ViewModel\SiteSetting\VmSiteADEdit.cs" />
+    <Compile Include="ViewModel\SiteSetting\VmStudentTotalScore.cs" />
+    <Compile Include="ViewModel\SiteSetting\VmStudyBudget.cs" />
+    <Compile Include="ViewModel\User\VmLogin.cs" />
+    <Compile Include="ViewModel\User\VmUserAccountEdit.cs" />
+    <Compile Include="ViewModel\User\VmUserRole.cs" />
+    <Compile Include="ViewModel\VmGetListBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModel\NewFolder1\Auth\" />
+    <Folder Include="ViewModel\NewFolder1\OrderCourse\" />
+    <Folder Include="ViewModel\NewFolder1\OrderProject\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

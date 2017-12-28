@@ -1,0 +1,276 @@
+﻿@using XZMY.Manage.Model.Enum
+@model XZMY.Manage.Model.DataModel.Advisories.Advisory
+@{
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+    ViewBag.Title = "详细";
+}
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home/index">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="module">咨询管理</span>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="action">咨询详细</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+<div class="row" style="margin-top:20px">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet light bordered" id="form_wizard_1">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span style="font-size: 25px;color: #000">咨询描述</span>
+                </div>
+                <div class="actions">
+                    @if (Model.DataId != Guid.Empty)
+                    {
+                        <a class="btn btn-default" href="/Advisory/Edit/@Model.DataId">
+                            <i class="fa fa-pencil"></i> 编辑
+                        </a>
+                    }
+                    <a class="btn btn-default" href="/Advisory/List">
+                        <i class="fa fa-list-ul"></i> 返回列表
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">标题：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.Title </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">类型：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.TypeName </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">描述：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.Description </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="form-section">资讯人信息</h3>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">咨询人：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.Name </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">联系方式：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.ContactTypeName </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">联系号码：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.ContactNumber </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                @*<button type="submit" class="btn green">保存</button>
+                                <button type="reset" class="btn default">重置</button>*@
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+@*<div id="dashboard">
+    <!-- BEGIN DASHBOARD STATS -->
+    <div class="row-fluid">
+        <div class="span10">
+            <div class="tabbable tabbable-custom boxless">
+
+                <div class="tab-content">
+                    <!-- BEGIN FORM-->
+                    <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                        <div class="tab-pane active" id="tab_1">
+
+                            <div class="portlet box blue">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="icon-reorder"></i>基础信息
+                                    </div>
+
+                                    <div class="tools">
+                                        <a href="javascript:void(0);" class="collapse"></a>
+                                    </div>
+                                </div>
+
+                                <div class="portlet-body form">
+                                    <!--/row-->
+
+                                    <div class="row-fluid">
+                                        <div class="span6 ">
+                                            <div class="control-group">
+                                                <label class="control-label">标题：</label>
+                                                <div class="controls">
+                                                    <span class="text display-value">@Model.Title</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="span6 ">
+                                            <div class="control-group">
+                                                <label class="control-label">类型：</label>
+                                                <div class="controls">
+                                                    <span class="text display-value">@Model.TypeName</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row-fluid">
+                                        <div class="span10 ">
+                                            <div class="control-group">
+                                                <label class="control-label">描述：</label>
+                                                <div class="controls">
+                                                    <span class="text display-value">@Model.Description</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--/row-->
+                                </div>
+                            </div>
+
+                            <div class="portlet box blue">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="icon-reorder"></i>资讯人信息
+                                    </div>
+
+                                    <div class="tools">
+                                        <a href="javascript:void(0);" class="collapse"></a>
+                                    </div>
+                                </div>
+
+                                <div class="portlet-body form">
+
+                                    <!--/row-->
+
+                                    <div class="row-fluid">
+                                        <div class="span6 ">
+                                            <div class="control-group">
+                                                <label class="control-label">咨询人：</label>
+                                                <div class="controls">
+                                                    <span class="text display-value">@Model.Name</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="span6 ">
+                                            <div class="control-group">
+                                                <label class="control-label">联系方式：</label>
+                                                <div class="controls">
+                                                    <span class="text display-value">@Model.ContactTypeName</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row-fluid">
+                                        <div class="span6 ">
+                                            <div class="control-group">
+                                                <label class="control-label">联系号码：</label>
+                                                <div class="controls">
+                                                    <span class="text display-value">@Model.ContactNumber</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--/row-->
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- END FORM-->
+</div>
+            </div>
+        </div>
+    </div>
+    <!-- END DASHBOARD STATS -->
+    <div class="clearfix"></div>
+</div>*@

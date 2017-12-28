@@ -1,0 +1,183 @@
+﻿@model XZMY.Manage.Service.Auth.Models.DataModels.SqlServer.Sys_Role
+@{
+    Layout = "~/Views/Shared/_Layout456.cshtml";
+    ViewBag.Title = "详细";
+}
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home/index">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="module">系统管理</span>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <span id="action">角色详细</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+@*<div id="dashboard">
+    <!-- BEGIN DASHBOARD STATS -->
+    <div class="row-fluid">
+        <div class="span10">
+            <div class="tabbable tabbable-custom boxless">
+
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1">
+                        <div class="portlet box blue">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="icon-reorder"></i>角色信息
+                                </div>
+
+                                <div class="tools">
+                                    <a href="javascript:void(0);" class="collapse"></a>
+
+                                </div>
+                            </div>
+
+                            <div class="portlet-body form">
+
+                                <!-- BEGIN FORM-->
+
+                                <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                                    @*<h3 class="form-section">角色信息</h3>
+
+                                    <div class="alert alert-error hide">
+                                        <button class="close" data-dismiss="alert"></button>
+                                        You have some form errors. Please check below.
+                                    </div>
+
+                                    <div class="alert alert-success hide">
+                                        <button class="close" data-dismiss="alert"></button>
+                                        Your form validation is successful!
+                                    </div>
+
+                                    <div class="row-fluid">
+
+                                    </div>
+
+                                    <!--/row-->
+
+                                    <div class="row-fluid">
+                                        <div class="span6 ">
+                                            <div class="control-group">
+                                                <label class="control-label">名称：</label>
+                                                <div class="controls">
+                                                    <span class="text display-value">@Model.Name</span>
+                                                    @Html.HiddenFor(x => x.DataId)
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="span6 ">
+                                            <div class="control-group">
+                                                <label class="control-label">状态：</label>
+                                                <div class="controls">
+                                                    <span class="text display-value">@Model.State</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row-fluid">
+                                        <div class="span10 ">
+                                            <div class="control-group">
+                                                <label class="control-label">描述：</label>
+                                                <div class="controls">
+                                                    <span class="text display-value">@Model.Description</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--/span-->
+                                        <div class="span6 ">
+                                            <div class="control-group error">
+
+                                            </div>
+                                        </div>
+                                        <!--/span-->
+                                    </div>
+
+                                    <!--/row-->
+
+                                </form>
+                                <!-- END FORM-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END DASHBOARD STATS -->
+    <div class="clearfix"></div>
+</div>*@
+
+
+
+
+<div class="row" style="margin-top:20px">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet light portlet-fit portlet-form bordered" id="form_wizard_1">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span style="font-size: 25px;color: #000">基础信息</span>
+                </div>
+                <div class="actions">
+                    @if(Model.DataId != Guid.Empty) {
+                        <a class="btn btn-default" href="/Role/Edit/@Model.DataId">
+                            <i class="fa fa-pencil"></i> 编辑
+                        </a>
+                    }
+                    <a class="btn btn-default" href="/role/list">
+                        <i class="fa fa-list-ul"></i> 返回列表
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
+                    <div class="form-body">
+                        @*<h3 class="form-section">详细信息</h3>*@
+
+                        <div class="form-group">
+                            <label class="control-label col-md-1" for="Name">名称：</label>
+                            <div class="col-md-4">
+                                @Html.HiddenFor(x => x.DataId)
+                                <p class="form-control-static"> @Model.Name </p>
+                            </div>
+
+                            <label class="control-label col-md-1">状态：</label>
+                            <div class="col-md-4">
+                                <p class="form-control-static"> @Model.State </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-1" for="Description">描述：</label>
+                            <div class="col-md-11">
+                                <p class="form-control-static"> @Model.Description </p>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="submit" class="btn green">保存</button>
+                                <button type="reset" class="btn default">重置</button>
+                            </div>
+                        </div>
+                    </div>*@
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+</div>

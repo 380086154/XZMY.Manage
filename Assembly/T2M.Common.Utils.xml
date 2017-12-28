@@ -1,0 +1,1154 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>T2M.Common.Utils</name>
+    </assembly>
+    <members>
+        <member name="T:T2M.Common.Utils.ADONET.SQLServer.MappingQuery`1">
+            <summary>
+            Provide a OOP based methods for Transact-SQL statement creation.
+            </summary>
+            <typeparam name="T">The type of business model.</typeparam>
+        </member>
+        <member name="F:T2M.Common.Utils.ADONET.SQLServer.MappingQuery`1.TableNameCache">
+            <summary>
+            表名缓存
+            </summary>
+        </member>
+        <member name="F:T2M.Common.Utils.ADONET.SQLServer.MappingQuery`1.MappedPropertyCollection">
+            <summary>
+            Collection of mapped properties. To avoid conflict, 
+            we use BOTH business model instance type and query class instance type to locate property mapping expression and value.
+            </summary>
+        </member>
+        <member name="F:T2M.Common.Utils.ADONET.SQLServer.MappingQuery`1.MappedPropertyNameCollection">
+            <summary>
+            Collection of mapped properties name.
+            </summary>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.MappingQuery`1.#ctor">
+            <summary>
+            Initialize a new instance of the 
+            <see>
+                <cref>MappingQuery</cref>
+            </see>
+            class.
+            </summary>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.MappingQuery`1.BuildMapping">
+            <summary>
+            Build mappings for query that represent a specific business scenario.
+            </summary>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.MappingQuery`1.Id(System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <summary>
+            Map a property as database primary key.
+            </summary>
+            <param name="mappingExpression">Mapping expression of property.</param>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.MappingQuery`1.Map(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},T2M.Common.Utils.ADONET.SQLServer.MappedFieldAssignmentOption,System.Object)">
+            <summary>
+            Map a property as database field.
+            </summary>
+            <param name="mappingExpression">The mapping expression of property.</param>
+            <param name="option">The option indicates how the value of mapped property is to be assigned.</param>
+            <param name="val">The value of the mapped property.</param>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.MappingQuery`1.MapAll">
+            <summary>
+            Map all properties.
+            </summary>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.MappingQuery`1.GetMappedProperties">
+            <summary>
+            Get name collection of mapped collection.
+            </summary>
+            <returns>Property name collection.</returns>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.MappingQuery`1.GetParamterPlaceholders">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.MappingQuery`1.GetMappedPropertyValues(`0)">
+            <summary>
+            Get value collection of mapped collection.
+            </summary>
+            <param name="model">A instance of business model whose properties are to be mapped.</param>
+            <returns>A read only value collection.</returns>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.MappingQuery`1.GetModelParameters(`0)">
+            <summary>
+            获取模型中对应参数的数据
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.MappingQuery`1.GetSqlDbType(System.Object)">
+            <summary>
+            获取数据类型
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.MappingQuery`1.GetUpdateStringTemplate">
+            <summary>
+            获取更新 SQL 列
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.MappingQuery`1.IsMappedQuery">
+            <summary>
+            Check whether the business model is mapped.
+            </summary>
+            <returns>A boolean value indicates whether the business model is mapped.</returns>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.MappingQuery`1.CreateMappingExpression(System.Reflection.PropertyInfo)">
+            <summary>
+            Create property mapping expression automatically.
+            </summary>
+            <param name="property">A <see cref="T:System.Reflection.PropertyInfo"/> object for mapping.</param>
+            <returns>A lambda expression which represents property mapping.</returns>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.MappingQuery`1.GetDatabaseValue(System.Object)">
+            <summary>
+            Convert property value for database, e.g. enum(Except System.ValueType), reference type.
+            </summary>
+            <param name="val">The value of property.</param>
+            <returns>SQL Server-specific value.</returns>
+        </member>
+        <member name="P:T2M.Common.Utils.ADONET.SQLServer.MappingQuery`1.TableName">
+            <summary>
+            当实体名称与数据库表名一致时作为表名使用，若不一致时外部单独处理。
+            </summary>
+        </member>
+        <member name="P:T2M.Common.Utils.ADONET.SQLServer.MappingQuery`1.EntityType">
+            <summary>
+            Instance type of business model whose properties are to be mapped.
+            </summary>
+        </member>
+        <member name="P:T2M.Common.Utils.ADONET.SQLServer.MappingQuery`1.QueryType">
+            <summary>
+            Instance type of query build class.
+            </summary>
+        </member>
+        <member name="T:T2M.Common.Utils.ADONET.SQLServer.MappingQuery`1.ExpressionComparer">
+            <summary>
+            Defines methods to support the comparison of objects for equality.
+            </summary>
+        </member>
+        <member name="T:T2M.Common.Utils.ADONET.SQLServer.MappedFieldAssignmentOption">
+            <summary>
+            Represent the strategy of the way that get value from mapped property. 
+            </summary>
+        </member>
+        <member name="F:T2M.Common.Utils.ADONET.SQLServer.MappedFieldAssignmentOption.Runtime">
+            <summary>
+            A value of the mapped property, which is assigned at runtime.
+            </summary>
+        </member>
+        <member name="F:T2M.Common.Utils.ADONET.SQLServer.MappedFieldAssignmentOption.DefaultValue">
+            <summary>
+            Default value of the mapped property type.
+            </summary>
+        </member>
+        <member name="T:T2M.Common.Utils.ADONET.SQLServer.ModelBuilder">
+            <summary>
+            实体转换
+            </summary>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.ModelBuilder.ToModel``1(System.Data.DataRow)">
+            <summary>
+            Build a business model instance from <see cref="T:System.Data.DataRow"/>.
+            </summary>
+            <typeparam name="T">The type of business model</typeparam>
+            <param name="row">Represents a row of data that read from database</param>
+            <returns>Instance of business model</returns>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.ModelBuilder.ToModel``1(System.Data.SqlClient.SqlDataReader)">
+            <summary>
+            Build a model instance from <see cref="T:System.Data.SqlClient.SqlDataReader"/>.
+            </summary>
+            <typeparam name="T">The type of business model</typeparam>
+            <param name="reader">Represents rows of data that read from database</param>
+            <returns>Instance of business model</returns>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.ModelBuilder.GetPropertyInfos(System.Type)">
+            <summary>
+            实体属性缓存
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="T:T2M.Common.Utils.ADONET.SQLServer.QueryTemplate">
+            <summary>
+            SQL Server 基础语句模版
+            </summary>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.QueryTemplate.DateRange(System.Tuple{System.Nullable{System.DateTime},System.Nullable{System.DateTime}},System.String)">
+            <summary>
+            时间区间查询 SQL 条件拼接
+            </summary>
+            <param name="dateTuple">时间区间</param>
+            <param name="columnName">列名</param>
+            <returns></returns>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.QueryTemplate.Join(System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            SQL 拼接专用
+            </summary>
+            <param name="list"></param>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="T:T2M.Common.Utils.ADONET.SQLServer.SqlServerHelper">
+            <summary>
+            Provides sets of methods for Microsoft SQL Server access.
+            </summary>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.SqlServerHelper.ExecuteNonQuery(System.String,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Executes a Transact-SQL statement by using specific database connection and return number of affected rows.
+            </summary>
+            <param name="connString">A string that used to open a SQL Server database.</param>
+            <param name="cmdType">A value indicate how the <see cref="!:CommandText"/> property is to be interpreted.</param>
+            <param name="cmdText">The text of the query or name of stored procedure.</param>
+            <param name="sqlParams">The parameters of T-SQL statement or stored procedure.</param>
+            <returns>The number of rows affected</returns>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.SqlServerHelper.ExecuteNonQuery(System.Data.SqlClient.SqlConnection,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Executes a Transact-SQL statement by using specific database connection and return number of affected rows.
+            </summary>
+            <param name="conn">A <see cref="!:SqlConection"/> that represents the connection to a instance of SQL Server.</param>
+            <param name="cmdType">A value indicate how the <see cref="!:CommandText"/> property is to be interpreted.</param>
+            <param name="cmdText">The text of the query or name of stored procedure.</param>
+            <param name="sqlParams">The parameters of T-SQL statement or stored procedure.</param>
+            <returns>The number of rows affected</returns>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.SqlServerHelper.ExecuteNonQuery(System.Data.IDbTransaction,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Executes a Transact-SQL statement by using specific database connection and return number of affected rows.
+            </summary>
+            <param name="trans">The <see cref="T:System.Data.SqlClient.SqlTransaction"/> in which the <see cref="T:System.Data.SqlClient.SqlCommand"/> Executes.</param>
+            <param name="cmdType">A value indicate how the <see cref="!:CommandText"/> property is to be interpreted.</param>
+            <param name="cmdText">The text of the query or name of stored procedure.</param>
+            <param name="sqlParams">The parameters of T-SQL statement or stored procedure.</param>
+            <returns>The number of rows affected</returns>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.SqlServerHelper.ExecuteReader(System.String,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Execute a Transact-SQL statement by using specific database connection and return a result set. this result set is reading forward-only.
+            </summary>
+            <param name="connString">A string that used to open a SQL Server database.</param>
+            <param name="cmdType">A value indicate how the <see cref="!:CommandText"/> property is to be interpreted.</param>
+            <param name="cmdText">The text of the query or name of stored procedure.</param>
+            <param name="sqlParams">The parameters of T-SQL statement or stored procedure.</param>
+            <returns>A reading forward-only result set.</returns>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.SqlServerHelper.ExecuteReader(System.Data.SqlClient.SqlConnection,System.Data.CommandType,System.String,System.Boolean,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Execute a Transact-SQL statement by using specific database connection and return a result set. this result set is reading forward-only.
+            </summary>
+            <param name="conn">A <see cref="!:SqlConection"/> that represents th connection to a instance of SQL Server.</param>
+            <param name="cmdType">A value indicate how the <see cref="!:CommandText"/> property is to be interpreted.</param>
+            <param name="cmdText">The text of the query or name of stored procedure.</param>
+            <param name="sqlParams">The parameters of T-SQL statement or stored procedure.</param>
+            <returns>A reading forward-only result set.</returns>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.SqlServerHelper.ExecuteScalar(System.String,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Execute a Transact-SQL statement and return first column of the first row in the result set returned by the query. Additional columns and rows are ignored.
+            </summary>
+            <param name="connString">A string that used to open a SQL Server database.</param>
+            <param name="cmdType">A value indicate how the <see cref="!:CommandText"/> property is to be interpreted.</param>
+            <param name="cmdText">The text of the query or name of stored procedure.</param>
+            <param name="sqlParams">The parameters of T-SQL statement or stored procedure.</param>
+            <returns>The first column of the first row in the result set, or a null reference.</returns>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.SqlServerHelper.ExecuteScalar(System.Data.SqlClient.SqlConnection,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Execute a Transact-SQL statement and return first column of the first row in the result set returned by the query. Additional columns and rows are ignored.
+            </summary>
+            <param name="conn">A <see cref="!:SqlConection"/> that represents the connection to a instance of SQL Server.</param>
+            <param name="cmdType">A value indicate how the <see cref="!:CommandText"/> property is to be interpreted.</param>
+            <param name="cmdText">The text of the query or name of stored procedure.</param>
+            <param name="sqlParams">The parameters of T-SQL statement or stored procedure.</param>
+            <returns>The first column of the first row in the result set, or a null reference.</returns>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.SqlServerHelper.ExecuteScalar(System.Data.SqlClient.SqlTransaction,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Execute a Transact-SQL statement and return first column of the first row in the result set returned by the query. Additional columns and rows are ignored.
+            </summary>
+            <param name="trans">The <see cref="T:System.Data.SqlClient.SqlTransaction"/> in which the <see cref="T:System.Data.SqlClient.SqlCommand"/> Executes.</param>
+            <param name="cmdType">A value indicate how the <see cref="!:CommandText"/> property is to be interpreted.</param>
+            <param name="cmdText">The text of the query or name of stored procedure.</param>
+            <param name="sqlParams">The parameters of T-SQL statement or stored procedure.</param>
+            <returns>The first column of the first row in the result set, or a null reference.</returns>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.SqlServerHelper.BuildInLikeParameter(System.String,System.Data.SqlDbType,System.Object)">
+            <summary>
+            Build a input parameter for a <see cref="T:System.Data.SqlClient.SqlCommand"/>.
+            </summary>
+            <param name="paramterName">The name of the parameter.</param>
+            <param name="dbType">Specifies SQL Server specific data type.</param>
+            <param name="val">The value of the parameter.</param>
+            <returns>a input parameter for a <see cref="T:System.Data.SqlClient.SqlCommand"/></returns>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.SqlServerHelper.BuildInParameter(System.String,System.Data.SqlDbType,System.Object)">
+            <summary>
+            Build a input parameter for a <see cref="T:System.Data.SqlClient.SqlCommand"/>.
+            </summary>
+            <param name="paramterName">The name of the parameter.</param>
+            <param name="dbType">Specifies SQL Server specific data type.</param>
+            <param name="val">The value of the parameter.</param>
+            <returns>a input parameter for a <see cref="T:System.Data.SqlClient.SqlCommand"/></returns>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.SqlServerHelper.BuildOutParameter(System.String,System.Data.SqlDbType,System.Object,System.Boolean)">
+            <summary>
+            Build a output/return parameter for a <see cref="T:System.Data.SqlClient.SqlCommand"/>.
+            </summary>
+            <param name="paramterName">The name of the parameter.</param>
+            <param name="dbType">Specifies SQL Server specific data type.</param>
+            <param name="val">The value of the parameter.</param>
+            <param name="isReturnVal">the type of parameter. true, return value, false, output.</param>
+            <returns>a input parameter for a <see cref="T:System.Data.SqlClient.SqlCommand"/></returns>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.SqlServerHelper.BuildCommand(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlCommand,System.Data.CommandType,System.String,System.Collections.Generic.IList{System.Data.SqlClient.SqlParameter})">
+            <summary>
+            Build a <see cref="T:System.Data.SqlClient.SqlCommand"/> object for query execution.
+            </summary>
+            <param name="conn">A <see cref="!:SqlConection"/> that represents the connection to a instance of SQL Server.</param>
+            <param name="cmd">A Transact-SQL statement or stored procedure to execute against a SQL Server database.</param>
+            <param name="cmdType">A value indicates how the <see cref="!:CommandText"/> property is to be interpreted.</param>
+            <param name="cmdText">The text of the query or name of stored procedure.</param>
+            <param name="sqlParams">The parameters of T-SQL statement or stored procedure.</param>
+        </member>
+        <member name="M:T2M.Common.Utils.ADONET.SQLServer.SqlServerHelper.BuildCommand(System.Data.IDbConnection,System.Data.SqlClient.SqlCommand,System.Data.IDbTransaction,System.Data.CommandType,System.String,System.Collections.Generic.IList{System.Data.SqlClient.SqlParameter})">
+            <summary>
+            Build a <see cref="T:System.Data.SqlClient.SqlCommand"/> object for query execution.
+            </summary>
+            <param name="conn">A <see cref="!:SqlConection"/> that represents the connection to a instance of SQL Server.</param>
+            <param name="cmd">A Transact-SQL statement or stored procedure to execute against a SQL Server database.</param>
+            <param name="trans">The <see cref="T:System.Data.SqlClient.SqlTransaction"/> in which the <see cref="T:System.Data.SqlClient.SqlCommand"/> Executes.</param>
+            <param name="cmdType">A value indicate how the <see cref="!:CommandText"/> property is to be interpreted.</param>
+            <param name="cmdText">The text of the query or name of stored procedure.</param>
+            <param name="sqlParams">The parameters of T-SQL statement or stored procedure.</param>
+        </member>
+        <member name="T:System.CollectionUtils">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:System.CollectionUtils.Join``1(System.Collections.Generic.IEnumerable{System.Collections.Generic.IList{``0}})">
+            <summary>
+            
+            </summary>
+            <param name="arrays"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:System.CollectionUtils.Join``1(System.Collections.Generic.IList{``0}[])">
+            <summary>
+            
+            </summary>
+            <param name="arrays"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:System.CollectionUtils.ValidSortAsc``1(System.Collections.Generic.IList{``0})">
+            <summary>
+            验证列表中的元素是否为升序排序，元素类型必须实现IComparable接口
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="list"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.CollectionUtils.ValidSortAsc``2(System.Collections.Generic.IList{``0},System.Func{``0,``1})">
+            <summary>
+            验证列表中的元素是否按指定属性为升序排序，元素中的指定属性必须实现IComparable接口
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TC"></typeparam>
+            <param name="list"></param>
+            <param name="func"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.CollectionUtils.ValidSortDesc``1(System.Collections.Generic.IList{``0})">
+            <summary>
+            验证列表中的元素是否为升序排序，元素类型必须实现IComparable接口
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="list"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.CollectionUtils.ValidSortDesc``2(System.Collections.Generic.IList{``0},System.Func{``0,``1})">
+            <summary>
+            验证列表中的元素是否按指定属性为降序排序，元素中的指定属性必须实现IComparable接口
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TC"></typeparam>
+            <param name="list"></param>
+            <param name="func"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.CollectionUtils.Foreach``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0})">
+            <summary>
+            对集合中的所有元素依次执行操作
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="list"></param>
+            <param name="action"></param>
+        </member>
+        <member name="M:System.CollectionUtils.Foreach``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0}[])">
+            <summary>
+            对集合中的所有元素依次执行操作
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="list"></param>
+            <param name="actions"></param>
+        </member>
+        <member name="M:System.CollectionUtils.MoveNext``1(System.Collections.Generic.IList{``0},``0)">
+            <summary>
+            获取集合中基于给定对象的下一个对象，若不存在给定对象或给定对象位于集合尾部则返回null
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="list">集合</param>
+            <param name="current">当前对象</param>
+            <returns>集合中基于给定对象的下一个对象，若不存在给定对象或给定对象位于集合尾部则返回null</returns>
+        </member>
+        <member name="M:System.CollectionUtils.MoveNext``1(System.Collections.Generic.IEnumerable{``0},``0)">
+            <summary>
+            获取集合中基于给定对象的下一个对象，若不存在给定对象或给定对象位于集合尾部则返回null
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="list">集合</param>
+            <param name="current">当前对象</param>
+            <returns>集合中基于给定对象的下一个对象，若不存在给定对象或给定对象位于集合尾部则返回null</returns>
+        </member>
+        <member name="M:System.CollectionUtils.AddRange``2(System.Collections.Generic.IDictionary{``0,``1},System.Collections.Generic.IDictionary{``0,``1})">
+            <summary>
+            把一个键值对集合中的数据批量添加到另一个集合中
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TV"></typeparam>
+            <param name="source"></param>
+            <param name="other"></param>
+        </member>
+        <member name="M:System.CollectionUtils.AddRange``2(System.Collections.Generic.IDictionary{``0,``1},System.Collections.Generic.IList{``0},System.Collections.Generic.IList{``1})">
+            <summary>
+            
+            </summary>
+            <param name="source"></param>
+            <param name="keys"></param>
+            <param name="values"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TV"></typeparam>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:System.CollectionUtils.FindKey``2(System.Collections.Generic.IDictionary{``0,``1},``1)">
+            <summary>
+            在键值对集合中根据值尝试查找键
+            </summary>
+            <typeparam name="TK"></typeparam>
+            <typeparam name="TV"></typeparam>
+            <param name="source"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.CollectionUtils.Shuffle``1(System.Collections.Generic.IList{``0})">
+            <summary>
+            把有序列表中的元素顺序随机重新排列
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="source"></param>
+        </member>
+        <member name="M:System.CollectionUtils.AddRange``1(System.Collections.Generic.ICollection{``0},System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            批量添加元素
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="source"></param>
+            <param name="list"></param>
+        </member>
+        <member name="M:System.CollectionUtils.RemoveRange``1(System.Collections.Generic.IList{``0},System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            批量删除元素
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="source"></param>
+            <param name="itemsToRemove"></param>
+        </member>
+        <member name="M:System.CollectionUtils.RemoveFirst``1(System.Collections.Generic.ICollection{``0},System.Func{``0,System.Boolean})">
+            <summary>
+            移除列表中第一个满足条件的元素，并返回它，如果列表中不存在满足条件的元素，则返回null
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="source"></param>
+            <param name="conf"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.CollectionUtils.RemoveAll``1(System.Collections.Generic.IList{``0},System.Func{``0,System.Boolean})">
+            <summary>
+            批量删除元素
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="source"></param>
+            <param name="conf"></param>
+        </member>
+        <member name="M:System.CollectionUtils.Sum``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
+            <summary>
+            将集合中的指定属性相加，返回计算结果，指定属性必须支持加号操作符并且返回同一类型，否则将抛出异常。
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="source"></param>
+            <param name="func"></param>
+            <returns>计算结果</returns>
+            <exception cref="T:System.MissingMethodException">传入参数类型不支持加号操作符</exception>
+            <exception cref="T:System.InvalidCastException">传入参数类型相加后不返回同一类型</exception>
+            <exception cref="T:System.OverflowException">计算结果超过范围</exception>
+        </member>
+        <member name="M:System.CollectionUtils.Distinct``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
+            <summary>
+            
+            </summary>
+            <param name="list"></param>
+            <param name="func"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TAction"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:System.CollectionUtils.Distinct``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Object}[])">
+            <summary>
+            
+            </summary>
+            <param name="list"></param>
+            <param name="func"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:System.CollectionUtils.AllEquals``1(System.Collections.Generic.IList{``0},System.Collections.Generic.IList{``0})">
+            <summary>
+            
+            </summary>
+            <param name="source"></param>
+            <param name="list"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="T:System.CollectionUtils.ShuffleComparer`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:System.ConvertUtils">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:System.ConvertUtils.As``1(System.Object)">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.ConvertUtils.IsIn``1(``0,System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="obj"></param>
+            <param name="collection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.ConvertUtils.IsImplemented(System.Type,System.Type)">
+            <summary>
+            判断该类型是否实现了指定接口
+            </summary>
+            <param name="type"></param>
+            <param name="tinterface"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.ConvertUtils.DeepClone``1(``0)">
+            <summary>
+            创建对象的深度克隆，对象类型必须标记为可序列化
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.ConvertUtils.ConvertToEnum``1(System.String)">
+            <summary>
+            尝试把字符串转换成枚举形式
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="str"> </param>
+            <returns></returns>
+        </member>
+        <member name="M:System.ConvertUtils.ToGuid(System.String)">
+            <summary>
+            将 String 转换为 Guid
+            <para>注：如转换失败则返回null</para> 
+            </summary>
+            <param name="str"></param> 
+            <returns></returns>
+        </member>
+        <member name="M:System.ConvertUtils.ToGuid(System.String,System.Guid)">
+            <summary>
+            将 String 转换为 Guid，可设默认返回值
+            <para>注：如转换失败则返回用户传入值 defaultValue</para> 
+            </summary>
+            <param name="str"></param>
+            <param name="defaultValue">为null时的默认返回值</param>
+            <returns></returns>
+        </member>
+        <member name="M:System.ConvertUtils.ToInt32(System.String)">
+            <summary>
+            将 String 转换为 Int32
+            <para>注：如转换失败则返回null</para> 
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.ConvertUtils.ToInt32(System.String,System.Int32)">
+            <summary>
+            将 String 转换为 Int32，可设默认返回值
+            <para>注：如转换失败则返回用户传入值 defaultValue</para> 
+            </summary>
+            <param name="str"></param>
+            <param name="defaultValue">为null时的默认返回值</param>
+            <returns></returns>
+        </member>
+        <member name="M:System.ConvertUtils.ToDecimal(System.String)">
+            <summary>
+            将 String 转换为 Decimal
+            <para>注：如转换失败则返回null</para> 
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.ConvertUtils.ToDecimal(System.String,System.Decimal)">
+            <summary>
+            将 String 转换为 Decimal，可设默认返回值
+            <para>注：如转换失败则返回用户传入值 defaultValue</para> 
+            </summary>
+            <param name="str"></param>
+            <param name="defaultValue">为null时的默认返回值</param>
+            <returns></returns>
+        </member>
+        <member name="M:System.ConvertUtils.ToFloat(System.String)">
+            <summary>
+            将 String 转换为 Float
+            <para>注：如转换失败则返回null</para> 
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.ConvertUtils.ToFloat(System.String,System.Single)">
+            <summary>
+            将 String 转换为 Float，可设默认返回值
+            <para>注：如转换失败则返回用户传入值 defaultValue</para> 
+            </summary>
+            <param name="str"></param>
+            <param name="defaultValue">为null时的默认返回值</param>
+            <returns></returns>
+        </member>
+        <member name="M:System.ConvertUtils.ToDouble(System.String)">
+            <summary>
+            将 String 转换为 Double
+            <para>注：如转换失败则返回null</para> 
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.ConvertUtils.ToDouble(System.String,System.Double)">
+            <summary>
+            将 String 转换为 Double，可设默认返回值
+            <para>注：如转换失败则返回用户传入值 defaultValue</para> 
+            </summary>
+            <param name="str"></param>
+            <param name="defaultValue">为null时的默认返回值</param>
+            <returns></returns>
+        </member>
+        <member name="M:System.ConvertUtils.ToDateTime(System.String)">
+            <summary>
+            将 String 转换为 DateTime
+            <para>注：如转换失败则返回 null</para> 
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.ConvertUtils.ToDateTime(System.String,System.DateTime)">
+            <summary>
+            将 String 转换为 DateTime，可设默认返回值
+            <para>注：如转换失败则返回用户传入值 defaultValue</para> 
+            </summary>
+            <param name="str"></param>
+            <param name="defaultValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.ConvertUtils.ToStringFormat(System.DateTime,System.String)">
+            <summary>
+            将 DateTime 转换为指定格式的字符串
+            </summary>
+            <param name="date">日期</param>
+            <param name="format">格式，默认为：yyyy-MM-dd</param>
+            <returns></returns>
+        </member>
+        <member name="M:System.ConvertUtils.ToStringFormat(System.String,System.String)">
+            <summary>
+            将 String 转换为指定格式的字符串
+            </summary>
+            <param name="date">日期</param>
+            <param name="format">格式，默认为：yyyy-MM-dd</param>
+            <returns></returns>
+        </member>
+        <member name="M:System.ConvertUtils.ToBoolean(System.String)">
+            <summary>
+            将 String 转换为 Boolean
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.ConvertUtils.ToJsonSerializer``1(``0)">
+            <summary>
+            序列化到JSON
+            </summary>
+        </member>
+        <member name="M:System.ConvertUtils.ToObject``1(System.String)">
+            <summary>
+            反序列化到实体 注：根据传入的参数如是实体，则返回实体。
+            </summary>
+        </member>
+        <member name="M:System.ConvertUtils.ConvertTo``1(System.Object)">
+            <summary>
+            
+            </summary>
+            <typeparam name="TOut"></typeparam>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.ConvertUtils.ConvertTo(System.Object,System.Type,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="model"></param>
+            <param name="targetType"></param>
+            <param name="deeprank"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.ConvertUtils.ConvertTo``2(``0)">
+            <summary>
+            两个相似实体赋值
+            </summary>
+            <typeparam name="S">源实体</typeparam>
+            <typeparam name="T">赋值实体</typeparam>
+            <param name="source">源实体值</param>
+            <returns></returns>
+        </member>
+        <member name="M:System.ConvertUtils.GetDefaultValue(System.Type)">
+            <summary>
+            获取类型的默认值，等同于default(type)的返回值
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Li.Utils.Extension.GlobalUtils">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Li.Utils.Extension.GlobalUtils.Chain``1(``0,System.Action{``0})">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <param name="action"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="T:System.PredicateUtils">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:System.PredicateUtils.True``1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:System.PredicateUtils.False``1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:System.PredicateUtils.Or``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary>
+            按或合并条件
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="expr1"></param>
+            <param name="expr2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.PredicateUtils.And``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary>
+            按与合并条件
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="expr1"></param>
+            <param name="expr2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.RegexUtils.ContainsNumber(System.String)">
+            <summary>
+            判断字符串中是否含有数字
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.RegexUtils.IsEmail(System.String)">
+            <summary>
+            判断是否符合EMail格式
+            </summary>
+            <param name="inputEmail"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.RegexUtils.IsHtmlUrl(System.String)">
+            <summary>
+            判断是否符合Html地址格式
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.RegexUtils.IsCHZN(System.String)">
+            <summary>
+            判断是否是中文字符串
+            </summary>
+            <param name="inputData"></param>
+            <returns></returns>
+        </member>
+        <member name="T:System.StringUtils">
+            <summary>
+            字符串进行处理
+            </summary>
+        </member>
+        <member name="M:System.StringUtils.Escape(System.String)">
+            <summary>
+            对String字符串进行编码，防止信息中包含破坏JSON格式的字符。同时使 HTML、JavaScript、Style 等等以“&lt;”开始的标签失效
+            <para>实现方法与 JavaScript 中的 escape 相似</para> 
+            <para>注：前台HTML页面中无需解码即可正常显示</para> 
+            </summary>
+            <returns>String</returns>
+        </member>
+        <member name="M:System.StringUtils.SubString(System.String,System.String,System.String)">
+            <summary>
+            截取两个指定字符串之间的内容，若没有查找到符合条件的内容则返回String.Empty
+            </summary>
+            <param name="str"></param>
+            <param name="starttagstr">前置字符串</param>
+            <param name="endtagstr">后缀字符串</param>
+            <returns></returns>
+        </member>
+        <member name="M:System.StringUtils.GetThumbnail(System.String,System.Int32)">
+            <summary>
+            截取指定长度的字符串，常用于在列表中显示标题
+            </summary>
+            <param name="source"></param>
+            <param name="length">长度</param>
+            <returns></returns>
+        </member>
+        <member name="M:System.StringUtils.TrimLineCharacter(System.String)">
+            <summary>
+            去除字符串中的换行符
+            </summary>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.StringUtils.Split(System.String,System.String)">
+            <summary>
+            分割字符串
+            </summary>
+            <param name="source"></param>
+            <param name="str">分割标识</param>
+            <returns></returns>
+        </member>
+        <member name="M:System.StringUtils.Split(System.String,System.Int32)">
+            <summary>
+            把字符串分割为指定长度的子字符串
+            </summary>
+            <param name="source"></param>
+            <param name="sublength">子字符串长度</param>
+            <returns></returns>
+        </member>
+        <member name="M:System.StringUtils.GetPyChar(System.String)">
+            <summary>
+            获取汉字的拼音首字母
+            </summary>
+            <param name="s"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.StringUtils.GetRandomString(System.Collections.Generic.IEnumerable{System.Char},System.Int32)">
+            <summary>
+            获取以元字符集为随机集合生成的随机字符串
+            </summary>
+            <param name="source"></param>
+            <param name="length"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.StringUtils.GetRandomString(System.Int32,System.StringUtils.CharacterCollection[])">
+            <summary>
+            获取随机生成的字符串
+            </summary>
+            <param name="length">长度</param>
+            <param name="characters">使用的字符</param>
+            <returns></returns>
+        </member>
+        <member name="M:System.StringUtils.Flip(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.StringUtils.ToMd5(System.String)">
+            <summary>
+            将字符串用MD5加密
+            <para>实现方式为：System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(string password, string passwordFormat)</para>
+            </summary>
+            <param name="str">需要转换为MD5的字符串</param>
+            <returns>String</returns>
+        </member>
+        <member name="M:System.StringUtils.EncryptBySimpleDES(System.String)">
+            <summary>
+            把字符串用默认的密钥加密
+            </summary>
+            <param name="str"></param>
+            <param name="Key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.StringUtils.EncryptBySimpleDES(System.String,System.String)">
+            <summary>
+            把字符串用指定的密钥加密
+            </summary>
+            <param name="str"></param>
+            <param name="Key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.StringUtils.DecryptBySimpleDES(System.String)">
+            <summary>
+            把字符串用默认的密钥解密
+            </summary>
+            <param name="DecryptStr"></param>
+            <param name="Key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.StringUtils.DecryptBySimpleDES(System.String,System.Boolean)">
+            <summary>
+            把字符串用默认的密钥解密
+            </summary>
+            <param name="DecryptStr"></param>
+            <param name="Key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.StringUtils.DecryptBySimpleDES(System.String,System.String)">
+            <summary>
+            把字符串用指定的密钥解密
+            </summary>
+            <param name="DecryptStr"></param>
+            <param name="Key"></param>
+            <returns></returns>
+        </member>
+        <member name="T:T2M.Common.Utils.Helper.DateTimePlus">
+            <summary>
+            储存常用日期数值的工具类
+            </summary>
+        </member>
+        <member name="M:T2M.Common.Utils.Helper.DateTimePlus.GetMinDateTime">
+            <summary>
+            获取SQL数据库允许的最小时间值，用于将没有对时间属性赋值的数据库模型实例持久化到数据库
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:T2M.Common.Utils.Helper.DateTimePlus.GetMaxDateTime">
+            <summary>
+            获取SQL数据库允许的最大时间值，用于将没有对时间属性赋值的数据库模型实例持久化到数据库
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:T2M.Common.Utils.Helper.JsonPlus">
+            <summary>
+            提供对象到Json序列化和反序列化功能的工具类。
+            </summary>
+        </member>
+        <member name="M:T2M.Common.Utils.Helper.JsonPlus.JsonSerializer``1(``0)">
+            <summary>
+            JSON序列化
+            </summary>
+        </member>
+        <member name="M:T2M.Common.Utils.Helper.JsonPlus.JsonDeserialize``1(System.String)">
+            <summary>
+            JSON反序列化
+            </summary>
+        </member>
+        <member name="M:T2M.Common.Utils.Helper.JsonPlus.ConvertJsonDateToDateString(System.Text.RegularExpressions.Match)">
+            <summary>
+            将Json序列化的时间由/Date(1294499956278+0800)转为字符串
+            </summary>
+        </member>
+        <member name="M:T2M.Common.Utils.Helper.JsonPlus.ConvertDateStringToJsonDate(System.Text.RegularExpressions.Match)">
+            <summary>
+            将时间字符串转为Json时间
+            </summary>
+        </member>
+        <member name="T:T2M.Common.Utils.Helper.RandomPlus">
+            <summary>
+            表示了线程安全的虚拟随机数生成器。
+            </summary>
+        </member>
+        <member name="M:T2M.Common.Utils.Helper.RandomPlus.Next(System.Boolean)">
+            <summary>
+            生成范围0到Int32.MaxValue的随机数字。
+            </summary>
+            <param name="enableRNGCrypto">是否使用加密随机数生成器<see cref="T:System.Security.Cryptography.RNGCryptoServiceProvider"/>生成随机数。</param>
+            <returns>范围0到整形最大值的随机数。</returns>
+        </member>
+        <member name="M:T2M.Common.Utils.Helper.RandomPlus.Next(System.Int32,System.Boolean)">
+            <summary>
+            生成范围0到Int32.MaxValue的随机数字。
+            </summary>
+            <param name="maxValue">随机数范围的最大值。</param>
+            <param name="enableRNGCrypto">是否使用加密随机数生成器<see cref="T:System.Security.Cryptography.RNGCryptoServiceProvider"/>生成随机数。</param>
+            <returns>范围0到指定最大值的随机数。</returns>
+        </member>
+        <member name="M:T2M.Common.Utils.Helper.RandomPlus.Next(System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            是否使用加密随机数生成器（RNG）生成随机数字。
+            </summary>
+            <param name="minValue">随机数范围的最小值。</param>
+            <param name="maxValue">随机数范围的最大值。</param>
+            <param name="enableRNGCrypto">是否使用加密随机数生成器<see cref="T:System.Security.Cryptography.RNGCryptoServiceProvider"/>生成随机数。</param>
+            <returns>指定范围的随机数，该范围不得超过整形类型的有效范围。</returns>
+        </member>
+        <member name="T:T2M.Common.Utils.Helper.RegexPlus">
+            <summary>
+            提供对字符串进行正则表达式验证的常用扩展方法
+            </summary>
+        </member>
+        <member name="M:T2M.Common.Utils.Helper.RegexPlus.ContainsNumber(System.String)">
+            <summary>
+            判断待验证内容是否包含数字。
+            </summary>
+            <param name="input">待验证的内容。</param>
+            <returns>true，待验证内容包含数字。false，不包含。</returns>
+        </member>
+        <member name="M:T2M.Common.Utils.Helper.RegexPlus.IsChineseCharacter(System.String)">
+            <summary>
+            判断待验证内容是否包含中文信息。
+            </summary>
+            <param name="input">待验证的内容。</param>
+            <returns>true，待验证内容包含中文信息。false，不包含。</returns>
+        </member>
+        <member name="M:T2M.Common.Utils.Helper.RegexPlus.IsEmail(System.String)">
+            <summary>
+            判断待验证内容是否包含电子邮件信息。
+            </summary>
+            <param name="input">待验证的内容。</param>
+            <returns>true，待验证内容包含电子邮件信息。false，不包含。</returns>
+        </member>
+        <!-- 对于成员“M:T2M.Common.Utils.Helper.RegexPlus.IsUri(System.String)”忽略有格式错误的 XML 注释 -->
+        <member name="T:T2M.CoastLine.Utils.Model.Attributes.DBTableAttribute">
+            <summary>
+            标记一个表名
+            </summary>
+        </member>
+        <member name="M:T2M.CoastLine.Utils.Model.Attributes.DBTableAttribute.#ctor(System.String)">
+            <summary>
+            设置数据库表名
+            </summary>
+            <param name="tableName">Name of the Table</param>
+        </member>
+        <member name="T:T2M.Common.Utils.Models.EntityBase">
+            <summary>
+            创建者，修改者基础信息
+            </summary>
+        </member>
+        <member name="T:T2M.Common.Utils.Models.IEntity`1">
+            <summary>
+            代表了构建业务实体模型的基类。
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:T2M.Common.Utils.Models.IEntity`1.DataId">
+            <summary>
+            获取或设置唯一标识事件的Id。
+            </summary>
+        </member>
+        <member name="P:T2M.Common.Utils.Models.IEntity`1.CreatedTime">
+            <summary>
+            获取或设置事件创建时间。
+            </summary>
+        </member>
+        <member name="T:T2M.Common.Utils.Models.IActorInfomationReader">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:T2M.Common.Utils.Models.IActorInfomationReader.CreatedTime">
+            <summary>
+            获取或设置事件创建时间。
+            </summary>
+        </member>
+        <member name="M:T2M.Common.Utils.Models.EntityBase.#ctor">
+            <summary>
+            构建<see cref="T:T2M.Common.Utils.Models.EntityBase"/>类的一个实例化对象。
+            </summary>
+        </member>
+        <member name="M:T2M.Common.Utils.Models.EntityBase.SetActorInfomation(T2M.Common.Utils.Models.ActorInfomationSynchronizer)">
+            <summary>
+            设置基础字段信息
+            </summary>
+            <param name="entity">基础字段信息</param>
+        </member>
+        <member name="M:T2M.Common.Utils.Models.EntityBase.SetModifier(T2M.Common.Utils.Models.ActorInfomationSynchronizer)">
+            <summary>
+            设置基础字段信息
+            </summary>
+            <param name="entity">基础字段信息</param>
+        </member>
+        <member name="P:T2M.Common.Utils.Models.EntityBase.DataId">
+            <summary>
+            获取或设置唯一标识的Id。
+            </summary>
+        </member>
+        <member name="P:T2M.Common.Utils.Models.EntityBase.CreatedTime">
+            <summary>
+            获取或设置用户帐户创建时间。
+            </summary>
+        </member>
+        <member name="T:T2M.Common.Utils.Models.TimeRange">
+            <summary>
+            时间区间
+            </summary>
+        </member>
+        <member name="P:T2M.Common.Utils.Models.TimeRange.StartTime">
+            <summary>
+            开始时间
+            </summary>
+        </member>
+        <member name="P:T2M.Common.Utils.Models.TimeRange.EndTime">
+            <summary>
+            结束时间
+            </summary>
+        </member>
+    </members>
+</doc>
