@@ -45,7 +45,7 @@ namespace XZMY.Manage.WindowsService.Service
 
             var sb = new StringBuilder();
             sb.Append("UPDATE [hyxx] SET");
-            sb.AppendFormat("hyje = {0},", dr["je"]);
+            sb.AppendFormat("hyje = {0},", dr["je"]);//累计消费金额
             //卡内金额 - 打折后金额 = 剩余金额
             sb.AppendFormat("knje = {0}", hyxxDataRow["knje"].ToString().ToDecimal(0) - dr["dzhje"].ToString().ToDecimal(0));
 
