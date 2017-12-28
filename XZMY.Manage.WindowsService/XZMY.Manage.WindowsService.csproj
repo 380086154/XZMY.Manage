@@ -48,6 +48,7 @@
     <Compile Include="Service\HyxxService.cs" />
     <Compile Include="Service\XfxxService.cs" />
     <Compile Include="Utility\AccessHelper.cs" />
+    <Compile Include="Utility\ConvertUtility.cs" />
     <Compile Include="Utility\FileComparer.cs" />
     <Compile Include="Utility\FileUtility.cs" />
     <Compile Include="Log.cs" />

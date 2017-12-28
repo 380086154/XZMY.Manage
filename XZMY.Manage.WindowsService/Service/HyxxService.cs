@@ -31,11 +31,28 @@ namespace XZMY.Manage.WindowsService.Service
             return db.GetDataTable(sql, "Hyxx", EProviderName.SqlClient);
         }
 
+        /// <summary>
+        /// 根据 xfxx 信息更新 Hyxx 
+        /// </summary>
+        /// <param name="dr"></param>
+        /// <param name="hykh"></param>
         public void UpdateByHykh(DataRow dr, string hykh)
         {
-            var hyxx = GetByHykh(hykh);//获取会员信息
+            var hyxxDataTable = GetByHykh(hykh);//获取会员信息
 
-            var sql = string.Format("");
+            if (hyxxDataTable.Rows.Count == 0) return;
+            var hyxxDataRow = hyxxDataTable.Rows[0];
+
+            var sb = new StringBuilder();
+            sb.Append("UPDATE [hyxx] SET");
+            sb.AppendFormat("hyje = {0},", dr["je"]);
+            //卡内金额 - 打折后金额 = 剩余金额
+            sb.AppendFormat("knje = {0}", hyxxDataRow["knje"].ToString().ToDecimal(0) - dr["dzhje"].ToString().ToDecimal(0));
+
+            sb.AppendFormat("WHERE hykh = '{0}'", hykh);
+            sb.AppendFormat("AND BranchNameDataId = '{0}'", BranchNameDataId);
+
+            db.ExecuteNonQuery(sb.ToString(), EProviderName.SqlClient);
         }
     }
 }

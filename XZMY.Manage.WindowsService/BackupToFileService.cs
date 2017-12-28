@@ -266,6 +266,7 @@ namespace XZMY.Manage.WindowsService
             Log.Add("execute OnChanged event ChangeType = " + BranchNameDataId);
 
             var paymentCountDataTable = new DataTable();
+            //必须是 xfxx 在前面，在同步时会根据消费信息查询会员信息，为避免数据异常，所以待 xfxx 同步完成后再同步 hyxx
             var dataTatbles = new string[] { "xfxx", "hyxx" };
 
             var sql = "SELECT COUNT(0) FROM {0} ";
@@ -301,8 +302,8 @@ namespace XZMY.Manage.WindowsService
 
                     foreach (DataRow dr in dt.Rows)
                     {
-                        var hykh = dr["hykh"].ToString();
-  
+                        var hykh = dr["hykh"].ToString().Trim();
+
                         dr["DataId"] = Guid.NewGuid();
                         dr["BranchNameDataId"] = BranchNameDataId;
                         dr["CreatedTime"] = DateTime.Now;
@@ -314,11 +315,8 @@ namespace XZMY.Manage.WindowsService
                                 break;
                             case "xfxx"://消费信息
 
-                                //获取历史记录
-                                 
-
-                                //根据消费记录找到客户信息
-
+                                //根据 xfxx 更新 hyxx （主要是 金额 信息）
+                                hyxxService.UpdateByHykh(dr, hykh);
                                 break;
                             default:
                                 break;
