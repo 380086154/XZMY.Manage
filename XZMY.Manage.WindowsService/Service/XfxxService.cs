@@ -13,6 +13,7 @@ namespace XZMY.Manage.WindowsService.Service
     public class XfxxService
     {
         public DatabaseHelper db = null;
+        public Guid BranchNameDataId = Guid.Empty;
 
         public XfxxService(DatabaseHelper databaseHelper)
         {

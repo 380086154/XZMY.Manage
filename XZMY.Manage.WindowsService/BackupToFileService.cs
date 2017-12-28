@@ -259,8 +259,10 @@ namespace XZMY.Manage.WindowsService
             var xfxxService = new XfxxService(db);
             var hyxxService = new HyxxService(db);
 
-
             BranchNameDataId = branchNameService.GetBranchNameIdByValue(hostName);//获取分店Id
+            xfxxService.BranchNameDataId = BranchNameDataId;
+            hyxxService.BranchNameDataId = BranchNameDataId;
+
             Log.Add("execute OnChanged event ChangeType = " + BranchNameDataId);
 
             var paymentCountDataTable = new DataTable();
@@ -300,7 +302,7 @@ namespace XZMY.Manage.WindowsService
                     foreach (DataRow dr in dt.Rows)
                     {
                         var hykh = dr["hykh"].ToString();
-
+  
                         dr["DataId"] = Guid.NewGuid();
                         dr["BranchNameDataId"] = BranchNameDataId;
                         dr["CreatedTime"] = DateTime.Now;
@@ -313,7 +315,7 @@ namespace XZMY.Manage.WindowsService
                             case "xfxx"://消费信息
 
                                 //获取历史记录
-
+                                 
 
                                 //根据消费记录找到客户信息
 

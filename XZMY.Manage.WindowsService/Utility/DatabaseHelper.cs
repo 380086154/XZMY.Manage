@@ -162,7 +162,13 @@ namespace XZMY.Manage.WindowsService
 
     public enum EProviderName
     {
+        /// <summary>
+        /// 远程 SQL Server 数据库
+        /// </summary>
         SqlClient = 1,
+        /// <summary>
+        /// 本地 Access 数据库
+        /// </summary>
         OleDB = 2,
         SQLite = 3,
     }
