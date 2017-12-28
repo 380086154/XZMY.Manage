@@ -47,5 +47,18 @@ namespace XZMY.Manage.WindowsService.Service
             var sql = string.Format("SELECT COUNT(0),hykh FROM [xfxx] where hykh IN({0}) GROUP BY hykh", str);
             return db.GetDataTable(sql, "xfxx", EProviderName.SqlClient);
         }
+
+        /// <summary>
+        /// 查询消费次数
+        /// </summary>
+        /// <param name="hykh"></param>
+        /// <returns></returns>
+        public int GetPaymentCountByHykh(string hykh)
+        {
+            var sql = string.Format("SELECT COUNT(0),hykh FROM [xfxx] where hykh = '{0}' GROUP BY hykh", hykh);
+            var table = db.GetDataTable(sql, "xfxx", EProviderName.OleDB);
+
+            return table.Rows[0][0].ToString().ToInt32(0);
+        }
     }
 }

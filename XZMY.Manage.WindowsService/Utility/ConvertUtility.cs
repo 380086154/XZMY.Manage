@@ -39,5 +39,37 @@ namespace System
         }
 
         #endregion
+
+        #region ToInt32
+
+        /// <summary>
+        /// 将 String 转换为 Int32
+        /// <para>注：如转换失败则返回null</para> 
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static Int32? ToInt32(this String str)
+        {
+            if (String.IsNullOrEmpty(str)) return null;
+            Int32 obj;
+            if (Int32.TryParse(str.Trim(), out obj))
+                return obj;
+            return null;
+        }
+
+        /// <summary>
+        /// 将 String 转换为 Int32，可设默认返回值
+        /// <para>注：如转换失败则返回用户传入值 defaultValue</para> 
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="defaultValue">为null时的默认返回值</param>
+        /// <returns></returns>
+        public static Int32 ToInt32(this String str, Int32 defaultValue)
+        {
+            var res = str.ToInt32();
+            return res == null ? defaultValue : res.Value;
+        }
+
+        #endregion
     }
 }

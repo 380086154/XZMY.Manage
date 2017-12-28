@@ -67,8 +67,6 @@ namespace XZMY.Manage.WindowsService
                 DirectoryInfo di = new DirectoryInfo(databakPath);
                 FileComparer fc = new FileComparer();
 
-                WatcherStart(databakPath, "*.mdb", true, false);
-
                 //Thread.Sleep(1000 * 10);//
                 try
                 {
@@ -88,7 +86,7 @@ namespace XZMY.Manage.WindowsService
 
                         var remaining = fileList.Length - sendList.Count(x => x.TypeName == Type.正常);//剩余未发送文件数
 
-                        sendTime = remaining > 9 ? 1 : 60;//当未备份文件总数超过10个时，每1分钟发送一个备份，尽快处理了
+                        sendTime = remaining > 9 ? 1 : 60;//当未备份文件总数超过10个文件，每1分钟发送一个备份，尽快处理了
 
                         if (remaining > 3)//打包发送
                         {
@@ -267,13 +265,36 @@ namespace XZMY.Manage.WindowsService
 
             var paymentCountDataTable = new DataTable();
             //必须是 xfxx 在前面，在同步时会根据消费信息查询会员信息，为避免数据异常，所以待 xfxx 同步完成后再同步 hyxx
-            var dataTatbles = new string[] { "xfxx", "hyxx" };
+            var dataTatbles = new string[] { "xfxx", "hyczk", "rz", "hyxx" };
 
             var sql = "SELECT COUNT(0) FROM {0} ";
 
             for (int i = 0; i < dataTatbles.Length; i++)
             {
                 var tableName = dataTatbles[i];
+
+                #region 排序设置，为了获取最新的数据
+
+                var orderSql = "";
+                switch (tableName)
+                {
+                    case "xfxx":
+                        orderSql = " ORDER BY xfrq desc";
+                        break;
+                    case "hyczk":
+                        orderSql = " ORDER BY khrq desc";
+                        break;
+                    case "rz":
+                        orderSql = " ORDER BY sj desc";
+                        break;
+                    case "hyxx":
+                        //orderSql = " ORDER BY sj desc";
+                        break;
+                    default:
+                        break;
+                }
+
+                #endregion
 
                 //开始数据备份
                 var serverCount = db.ExecuteScalar(string.Format(sql + "WHERE [BranchNameDataId] = '" + BranchNameDataId + "'", tableName), EProviderName.SqlClient);//                
@@ -288,7 +309,7 @@ namespace XZMY.Manage.WindowsService
                 }
                 else//新增
                 {
-                    var dt = db.GetDataTable(string.Format("SELECT TOP {0} * FROM " + tableName, localCount - serverCount), tableName, EProviderName.OleDB);//
+                    var dt = db.GetDataTable(string.Format("SELECT TOP {0} * FROM " + tableName, localCount - serverCount) + orderSql, tableName, EProviderName.OleDB);//
 
                     dt.Columns.Add("DataId", System.Type.GetType("System.Guid"));
                     dt.Columns.Add("BranchNameDataId", System.Type.GetType("System.Guid"));
@@ -302,7 +323,11 @@ namespace XZMY.Manage.WindowsService
 
                     foreach (DataRow dr in dt.Rows)
                     {
-                        var hykh = dr["hykh"].ToString().Trim();
+                        var hykh = "";
+                        if (dr.Table.Columns.Contains("hykh"))
+                        {
+                            hykh = dr["hykh"].ToString().Trim();
+                        }
 
                         dr["DataId"] = Guid.NewGuid();
                         dr["BranchNameDataId"] = BranchNameDataId;
