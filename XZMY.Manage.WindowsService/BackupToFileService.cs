@@ -302,12 +302,8 @@ namespace XZMY.Manage.WindowsService
 
                 Log.Add("execute WriteDataToServer event ================================== localCount - serverCount = " + (localCount - serverCount));
 
-
-                if (localCount - serverCount == 0)//更新
-                {
-
-                }
-                else//新增
+                var reuslt = localCount - serverCount;
+                if (reuslt > 0)//新增
                 {
                     var dt = db.GetDataTable(string.Format("SELECT TOP {0} * FROM " + tableName, localCount - serverCount) + orderSql, tableName, EProviderName.OleDB);//
 
@@ -350,6 +346,10 @@ namespace XZMY.Manage.WindowsService
                     }
 
                     db.SqlBulkCopyByDataTable(dt, tableName, EProviderName.SqlClient);
+                }
+                else if (reuslt < 0) //删除
+                {
+
                 }
             }
 
