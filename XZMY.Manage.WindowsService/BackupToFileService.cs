@@ -335,9 +335,29 @@ namespace XZMY.Manage.WindowsService
                                 dr["Count"] = xfxxService.GetPaymentCount(paymentCountDataTable, hykh);//获取并赋值消费次数
                                 break;
                             case "xfxx"://消费信息
-
                                 //根据 xfxx 更新 hyxx （主要是 金额 信息）
-                                hyxxService.UpdateByHykh(dr, hykh);
+                                hyxxService.UpdateDigitByHykh(hykh);
+                                break;
+                            case "rz"://日志信息
+                                var rznr = dr["rznr"].ToString();//日志内容
+
+                                if (rznr.Contains("修改会员"))
+                                {//操作员：admin，修改会员：蒋小鹿路信息
+                                    var hyxm = rznr.Split("修改会员")[1].Replace("：", "").Replace("信息", "");//截取会员名称
+                                    hykh = hyxxService.GetHykhByHyxm(hyxm);
+                                    hyxxService.UpdateInfoByHyxm(hykh);
+                                }
+                                else if (rznr.Contains("删除会员") && rznr.Contains("的消费记录"))
+                                {//操作员：admin，删除会员蒋冬梅                 的消费记录，消费金额为：18元
+                                    var hyxm = rznr.Split("删除会员")[1].Replace("：", "").Split("的消费记录")[0].Trim();
+                                    hykh = hyxxService.GetHykhByHyxm(hyxm);
+                                    if (hykh.Length > 0)
+                                    {
+                                        xfxxService.DeleteByHykh(hykh);//删除指定消费数据
+                                        hyxxService.UpdateDigitByHykh(hykh);//更新金额相关信息
+                                    }
+                                }
+
                                 break;
                             default:
                                 break;
@@ -349,7 +369,7 @@ namespace XZMY.Manage.WindowsService
                 }
                 else if (reuslt < 0) //删除
                 {
-
+                    //删除消费信息已在同步 rz 表时处理
                 }
             }
 

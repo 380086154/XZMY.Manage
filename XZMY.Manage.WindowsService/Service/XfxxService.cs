@@ -44,7 +44,7 @@ namespace XZMY.Manage.WindowsService.Service
         /// <returns></returns>
         public DataTable GetPaymentCountDataTable(string str)
         {
-            var sql = string.Format("SELECT COUNT(0),hykh FROM [xfxx] where hykh IN({0}) GROUP BY hykh", str);
+            var sql = string.Format("SELECT COUNT(0),hykh FROM [xfxx] WHERE hykh IN({0}) GROUP BY hykh", str);
             return db.GetDataTable(sql, "xfxx", EProviderName.SqlClient);
         }
 
@@ -55,10 +55,20 @@ namespace XZMY.Manage.WindowsService.Service
         /// <returns></returns>
         public int GetPaymentCountByHykh(string hykh)
         {
-            var sql = string.Format("SELECT COUNT(0),hykh FROM [xfxx] where hykh = '{0}' GROUP BY hykh", hykh);
+            var sql = string.Format("SELECT COUNT(0),hykh FROM [xfxx] WHERE hykh = '{0}' GROUP BY hykh", hykh);
             var table = db.GetDataTable(sql, "xfxx", EProviderName.OleDB);
 
             return table.Rows[0][0].ToString().ToInt32(0);
+        }
+
+        /// <summary>
+        /// 删除消费信息
+        /// </summary>
+        /// <param name="hykh"></param>
+        public void DeleteByHykh(string hykh)
+        {
+            var sql = string.Format("DELETE FROM [xfxx] WHERE hykh = '{0}' AND BranchNameDataId = '{1}'", hykh, BranchNameDataId);
+            db.ExecuteNonQuery(sql, EProviderName.SqlClient);
         }
     }
 }

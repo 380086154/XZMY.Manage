@@ -44,6 +44,27 @@ namespace XZMY.Manage.WindowsService
         }
 
         /// <summary>
+        /// 执行sql语句
+        /// </summary>
+        /// <param name="sqlCommand"></param>
+        /// <param name="providerName"></param>
+        /// <param name="sqlParams"></param>
+        /// <returns></returns>
+        public int ExecuteNonQuery(string sqlCommand, EProviderName providerName, params SqlParameter[] sqlParams)
+        {
+            int result = 0;
+            using (DbConnection connection = GetConnection(providerName))
+            {
+                DbCommand command = GetCommand(sqlCommand, CommandType.Text, connection, sqlParams);
+
+                connection.Open();
+                result = command.ExecuteNonQuery();
+                command.Parameters.Clear();
+                return result;
+            }
+        }
+
+        /// <summary>
         /// 执行有返回值的sql语句
         /// </summary>
         /// <param name="cmdText"></param>
@@ -143,12 +164,18 @@ namespace XZMY.Manage.WindowsService
         /// <param name="commandText"></param>
         /// <param name="commandType"></param>
         /// <param name="connection"></param>
+        /// <param name="sqlParams"></param>
         /// <returns></returns>
-        private DbCommand GetCommand(string commandText, CommandType commandType, DbConnection connection)
+        private DbCommand GetCommand(string commandText, CommandType commandType, DbConnection connection, IList<SqlParameter> sqlParams = null)
         {
             DbCommand command = connection.CreateCommand();
             command.CommandText = commandText;
             command.CommandType = commandType;
+            if (sqlParams != null && sqlParams.Count > 0)
+            {
+                foreach (SqlParameter param in sqlParams)
+                    command.Parameters.Add(param);
+            }
             return command;
         }
 

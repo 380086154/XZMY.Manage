@@ -29,8 +29,7 @@ namespace XZMY.Manage.WindowsService
             //    if (file.FullName.Contains(".xml")) continue;
             //    fileUtility.DeleteFile(file.FullName);//删除文件
             //}
-
-
+            
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
