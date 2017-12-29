@@ -22,6 +22,9 @@ namespace XZMY.Manage.WindowsService
         private string dataPath = string.Empty;
         private string databakPath = string.Empty;
         private DatabaseHelper db;
+        private BranchNameService branchNameService = null;
+        private XfxxService xfxxService = null;
+        private HyxxService hyxxService = null;
         private Guid BranchNameDataId = Guid.Empty;//分店Id
 
         private IList<string> excludeList = new List<string> { "log.txt", "backuplog.xml" };
@@ -253,9 +256,9 @@ namespace XZMY.Manage.WindowsService
             //先从服务器中获取总数，然后再从本地获取总数，两相对比计算差值，以这样的方式获取需要备份的行数
 
             db = new DatabaseHelper(path);
-            var branchNameService = new BranchNameService(db);
-            var xfxxService = new XfxxService(db);
-            var hyxxService = new HyxxService(db);
+            branchNameService = new BranchNameService(db);
+            xfxxService = new XfxxService(db);
+            hyxxService = new HyxxService(db);
 
             BranchNameDataId = branchNameService.GetBranchNameIdByValue(hostName);//获取分店Id
             xfxxService.BranchNameDataId = BranchNameDataId;
@@ -263,118 +266,136 @@ namespace XZMY.Manage.WindowsService
 
             Log.Add("execute OnChanged event ChangeType = " + BranchNameDataId);
 
-            var paymentCountDataTable = new DataTable();
+
             //必须是 xfxx 在前面，在同步时会根据消费信息查询会员信息，为避免数据异常，所以待 xfxx 同步完成后再同步 hyxx
             var dataTatbles = new string[] { "xfxx", "hyczk", "rz", "hyxx" };
-
-            var sql = "SELECT COUNT(0) FROM {0} ";
+            var needSyncHykh = new List<string>();
 
             for (int i = 0; i < dataTatbles.Length; i++)
             {
                 var tableName = dataTatbles[i];
 
-                #region 排序设置，为了获取最新的数据
+                var hykhList = Execute(tableName); //执行数据同步
 
-                var orderSql = "";
-                switch (tableName)
-                {
-                    case "xfxx":
-                        orderSql = " ORDER BY xfrq desc";
-                        break;
-                    case "hyczk":
-                        orderSql = " ORDER BY khrq desc";
-                        break;
-                    case "rz":
-                        orderSql = " ORDER BY sj desc";
-                        break;
-                    case "hyxx":
-                        //orderSql = " ORDER BY sj desc";
-                        break;
-                    default:
-                        break;
-                }
-
-                #endregion
-
-                //开始数据备份
-                var serverCount = db.ExecuteScalar(string.Format(sql + "WHERE [BranchNameDataId] = '" + BranchNameDataId + "'", tableName), EProviderName.SqlClient);//                
-                var localCount = db.ExecuteScalar(string.Format(sql, tableName), EProviderName.OleDB);//
-
-                Log.Add("execute WriteDataToServer event ================================== localCount - serverCount = " + (localCount - serverCount));
-
-                var reuslt = localCount - serverCount;
-                if (reuslt > 0)//新增
-                {
-                    var dt = db.GetDataTable(string.Format("SELECT TOP {0} * FROM " + tableName, localCount - serverCount) + orderSql, tableName, EProviderName.OleDB);//
-
-                    dt.Columns.Add("DataId", System.Type.GetType("System.Guid"));
-                    dt.Columns.Add("BranchNameDataId", System.Type.GetType("System.Guid"));
-                    dt.Columns.Add("CreatedTime", System.Type.GetType("System.DateTime"));
-
-                    if (tableName == "hyxx")//更新消费次数
-                    {
-                        dt.Columns.Add("Count", System.Type.GetType("System.Int32"));
-                        paymentCountDataTable = xfxxService.GetPaymentCountDataTable(string.Join(",", dt.Rows.OfType<DataRow>().Select(x => x["hykh"])));
-                    }
-
-                    foreach (DataRow dr in dt.Rows)
-                    {
-                        var hykh = "";
-                        if (dr.Table.Columns.Contains("hykh"))
-                        {
-                            hykh = dr["hykh"].ToString().Trim();
-                        }
-
-                        dr["DataId"] = Guid.NewGuid();
-                        dr["BranchNameDataId"] = BranchNameDataId;
-                        dr["CreatedTime"] = DateTime.Now;
-
-                        switch (tableName)
-                        {
-                            case "hyxx"://会员信息
-                                dr["Count"] = xfxxService.GetPaymentCount(paymentCountDataTable, hykh);//获取并赋值消费次数
-                                break;
-                            case "xfxx"://消费信息
-                                //根据 xfxx 更新 hyxx （主要是 金额 信息）
-                                hyxxService.UpdateDigitByHykh(hykh);
-                                break;
-                            case "rz"://日志信息
-                                var rznr = dr["rznr"].ToString();//日志内容
-
-                                if (rznr.Contains("修改会员"))
-                                {//操作员：admin，修改会员：蒋小鹿路信息
-                                    var hyxm = rznr.Split("修改会员")[1].Replace("：", "").Replace("信息", "");//截取会员名称
-                                    hykh = hyxxService.GetHykhByHyxm(hyxm);
-                                    hyxxService.UpdateInfoByHyxm(hykh);
-                                }
-                                else if (rznr.Contains("删除会员") && rznr.Contains("的消费记录"))
-                                {//操作员：admin，删除会员蒋冬梅                 的消费记录，消费金额为：18元
-                                    var hyxm = rznr.Split("删除会员")[1].Replace("：", "").Split("的消费记录")[0].Trim();
-                                    hykh = hyxxService.GetHykhByHyxm(hyxm);
-                                    if (hykh.Length > 0)
-                                    {
-                                        xfxxService.DeleteByHykh(hykh);//删除指定消费数据
-                                        hyxxService.UpdateDigitByHykh(hykh);//更新金额相关信息
-                                    }
-                                }
-
-                                break;
-                            default:
-                                break;
-                        }
-
-                    }
-
-                    db.SqlBulkCopyByDataTable(dt, tableName, EProviderName.SqlClient);
-                }
-                else if (reuslt < 0) //删除
-                {
-                    //删除消费信息已在同步 rz 表时处理
-                }
+                needSyncHykh.AddRange(hykhList);
             }
 
+            //单独同步因为删除消费记录不完整的消费信息
+            xfxxService.SyncDataByHykhList(needSyncHykh, BranchNameDataId);
         }
 
+        //执行数据同步
+        private List<string> Execute(string tableName)
+        {
+            var sql = "SELECT COUNT(0) FROM {0} ";
+            var hykhList = new List<string>();//需要再次同步的 消费信息 会员卡号
+            var paymentCountDataTable = new DataTable();
+
+            #region 排序设置，为了获取最新的数据
+
+            var orderSql = "";
+            switch (tableName)
+            {
+                case "xfxx":
+                    orderSql = " ORDER BY xfrq desc";
+                    break;
+                case "hyczk":
+                    orderSql = " ORDER BY khrq desc";
+                    break;
+                case "rz":
+                    orderSql = " ORDER BY sj desc";
+                    break;
+                case "hyxx":
+                    //orderSql = " ORDER BY sj desc";
+                    break;
+                default:
+                    break;
+            }
+
+            #endregion
+
+            //开始数据备份
+            var serverCount = db.ExecuteScalar(string.Format(sql + "WHERE [BranchNameDataId] = '" + BranchNameDataId + "'", tableName), EProviderName.SqlClient);//                
+            var localCount = db.ExecuteScalar(string.Format(sql, tableName), EProviderName.OleDB);//
+
+            Log.Add("execute WriteDataToServer event ================================== localCount - serverCount = " + (localCount - serverCount));
+
+            var reuslt = localCount - serverCount;
+            if (reuslt > 0)//新增
+            {
+                var dt = db.GetDataTable(string.Format("SELECT TOP {0} * FROM " + tableName, localCount - serverCount) + orderSql, tableName, EProviderName.OleDB);//
+
+                dt.Columns.Add("DataId", System.Type.GetType("System.Guid"));
+                dt.Columns.Add("BranchNameDataId", System.Type.GetType("System.Guid"));
+                dt.Columns.Add("CreatedTime", System.Type.GetType("System.DateTime"));
+
+                if (tableName == "hyxx")//更新消费次数
+                {
+                    dt.Columns.Add("Count", System.Type.GetType("System.Int32"));
+                    paymentCountDataTable = xfxxService.GetPaymentCountDataTable(string.Join(",", dt.Rows.OfType<DataRow>().Select(x => x["hykh"])));
+                }
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    var hykh = "";
+                    if (dr.Table.Columns.Contains("hykh"))
+                    {
+                        hykh = dr["hykh"].ToString().Trim();
+                    }
+
+                    dr["DataId"] = Guid.NewGuid();
+                    dr["BranchNameDataId"] = BranchNameDataId;
+                    dr["CreatedTime"] = DateTime.Now;
+
+                    switch (tableName)
+                    {
+                        case "hyxx"://会员信息
+                            dr["Count"] = xfxxService.GetPaymentCount(paymentCountDataTable, hykh);//获取并赋值消费次数
+                            break;
+                        case "xfxx"://消费信息
+                                    //根据 xfxx 更新 hyxx （主要是 金额 信息）
+                            hyxxService.UpdateDigitByHykh(hykh);
+                            break;
+                        case "rz"://日志信息
+                            var rznr = dr["rznr"].ToString();//日志内容
+
+                            if (rznr.Contains("修改会员"))
+                            {//操作员：admin，修改会员：蒋小鹿路信息
+                                var hyxm = rznr.Split("修改会员")[1].Replace("：", "").Replace("信息", "");//截取会员名称
+                                hykh = hyxxService.GetHykhByHyxm(hyxm);
+                                hyxxService.UpdateInfoByHyxm(hykh);
+                            }
+                            else if (rznr.Contains("删除会员") && rznr.Contains("的消费记录"))
+                            {//操作员：admin，删除会员蒋冬梅                 的消费记录，消费金额为：18元
+                                var hyxm = rznr.Split("删除会员")[1].Replace("：", "").Split("的消费记录")[0].Trim();
+                                hykh = hyxxService.GetHykhByHyxm(hyxm);
+                                if (hykh.Length > 0)
+                                {
+                                    xfxxService.DeleteByHykh(hykh);//删除指定消费数据
+                                    hyxxService.UpdateDigitByHykh(hykh);//更新金额相关信息
+
+                                    if (!hykhList.Contains(hykh))
+                                    {
+                                        hykhList.Add(hykh);//记录需要同步的会员卡号
+                                    }
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                db.SqlBulkCopyByDataTable(dt, tableName, EProviderName.SqlClient);
+            }
+            else if (reuslt < 0) //删除
+            {
+                //删除消费信息已在同步 rz 表时处理
+            }
+
+            return hykhList;
+        }
+        
         #endregion
 
         #endregion

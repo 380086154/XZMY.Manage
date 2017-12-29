@@ -37,16 +37,7 @@ namespace XZMY.Manage.WindowsService.Service
             return result;
         }
 
-        /// <summary>
-        /// 查询消费次数
-        /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        public DataTable GetPaymentCountDataTable(string str)
-        {
-            var sql = string.Format("SELECT COUNT(0),hykh FROM [xfxx] WHERE hykh IN({0}) GROUP BY hykh", str);
-            return db.GetDataTable(sql, "xfxx", EProviderName.SqlClient);
-        }
+        #region Local
 
         /// <summary>
         /// 查询消费次数
@@ -62,6 +53,32 @@ namespace XZMY.Manage.WindowsService.Service
         }
 
         /// <summary>
+        /// 根据会员卡号集合获取消费信息
+        /// </summary>
+        /// <param name="hykh">会员卡号</param>
+        /// <returns></returns>
+        public DataTable GetPaymentByHykhList(string hykh)
+        {
+            var sql = string.Format("SELECT * FROM [xfxx] WHERE hykh IN ({0})", hykh);
+            return db.GetDataTable(sql, "xfxx", EProviderName.OleDB);
+        }
+
+        #endregion
+
+        #region Server
+
+        /// <summary>
+        /// 查询消费次数
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public DataTable GetPaymentCountDataTable(string str)
+        {
+            var sql = string.Format("SELECT COUNT(0),hykh FROM [xfxx] WHERE hykh IN({0}) GROUP BY hykh", str);
+            return db.GetDataTable(sql, "xfxx", EProviderName.SqlClient);
+        }
+
+        /// <summary>
         /// 删除消费信息
         /// </summary>
         /// <param name="hykh"></param>
@@ -70,5 +87,33 @@ namespace XZMY.Manage.WindowsService.Service
             var sql = string.Format("DELETE FROM [xfxx] WHERE hykh = '{0}' AND BranchNameDataId = '{1}'", hykh, BranchNameDataId);
             db.ExecuteNonQuery(sql, EProviderName.SqlClient);
         }
+
+        /// <summary>
+        /// 根据会员卡号集合同步消费信息
+        /// </summary>
+        /// <param name="list"></param>
+        /// /// <param name="branchNameDataId"></param>
+        public void SyncDataByHykhList(List<string> list, Guid branchNameDataId)
+        {
+            if (list == null || list.Count == 0) return;
+
+            var hykhList = string.Join(",", list.Select(x => string.Format("'{0}'", x)));
+            var dataTables = GetPaymentByHykhList(hykhList);
+
+            dataTables.Columns.Add("DataId", System.Type.GetType("System.Guid"));
+            dataTables.Columns.Add("BranchNameDataId", System.Type.GetType("System.Guid"));
+            dataTables.Columns.Add("CreatedTime", System.Type.GetType("System.DateTime"));
+
+            foreach (DataRow dr in dataTables.Rows)
+            {
+                dr["DataId"] = Guid.NewGuid();
+                dr["BranchNameDataId"] = branchNameDataId;
+                dr["CreatedTime"] = DateTime.Now;
+            }
+
+            db.SqlBulkCopyByDataTable(dataTables, "Xfxx", EProviderName.SqlClient);
+        }
+
+        #endregion
     }
 }

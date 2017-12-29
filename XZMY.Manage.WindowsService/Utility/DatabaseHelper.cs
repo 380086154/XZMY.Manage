@@ -197,6 +197,9 @@ namespace XZMY.Manage.WindowsService
         /// 本地 Access 数据库
         /// </summary>
         OleDB = 2,
+        /// <summary>
+        /// 本地 SQLite 数据库
+        /// </summary>
         SQLite = 3,
     }
 }
