@@ -1341,10 +1341,10 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             //alert(v);   alert(url);
 
             if (localhostPath.length === 0){
-                localhostPath =   getLocalhost();
+                localhostPath = getLocalhost();
             }
 
-            location.href = url;
+            location.href = localhostPath + '/' + url;
         };
 
         jQuery(document).ready(function () {

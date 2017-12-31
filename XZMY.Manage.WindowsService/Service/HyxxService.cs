@@ -46,13 +46,39 @@ namespace XZMY.Manage.WindowsService.Service
         }
 
         /// <summary>
+        /// 判断服务器中是否有数据
+        /// </summary>
+        /// <param name="hykh">会员卡号</param>
+        /// <returns></returns>
+        public bool IsDataOnServerByHykh(string hykh)
+        {
+            var sql = string.Format("SELECT COUNT(0) FROM [Hyxx] WHERE hykh = '{0}' AND BranchNameDataId = '{1}' ", hykh, BranchNameDataId);
+            var result = db.ExecuteScalar(sql, EProviderName.SqlClient);
+
+            return result > 0;
+        }
+
+        /// <summary>
+        /// 根据表名获取服务器中是否有数据
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <returns></returns>
+        public bool IsDataOnServer()
+        {
+            var sql = string.Format("SELECT COUNT(0) FROM [Hyxx] WHERE BranchNameDataId = '{0}' ", BranchNameDataId);
+            var result = db.ExecuteScalar(sql, EProviderName.SqlClient);
+
+            return result > 0;
+        }
+
+        /// <summary>
         /// 根据会员姓名获取本地会员信息
         /// </summary>
         /// <param name="hyxm"></param>
         /// <returns></returns>
         public DataTable GetByHyxm(string hyxm)
         {
-            var sql = string.Format("SELECT * FROM [Hyxx] WHERE hyxm = '{0}' ", hyxm);
+            var sql = string.Format("SELECT * FROM [Hyxx] WHERE hyxm = '{0}'", hyxm);
             return db.GetDataTable(sql, "Hyxx", EProviderName.OleDB);
         }
 
@@ -62,8 +88,9 @@ namespace XZMY.Manage.WindowsService.Service
         /// <param name="hykh"></param>
         public void UpdateDigitByHykh(string hykh)
         {
-            var hyxxDataTable = GetByHykh(hykh);//获取会员信息
+            if (!IsDataOnServerByHykh(hykh)) return;//首先判断服务器数据库中是否有数据
 
+            var hyxxDataTable = GetByHykh(hykh);//获取本地会员信息
             if (hyxxDataTable.Rows.Count == 0) return;
 
             var hyxxDataRow = hyxxDataTable.Rows[0];

@@ -29,6 +29,11 @@ namespace XZMY.Manage.WindowsService
             //    if (file.FullName.Contains(".xml")) continue;
             //    fileUtility.DeleteFile(file.FullName);//删除文件
             //}
+
+            //BackupToFileService b2fs = new BackupToFileService();
+            //var path = b2fs.CopyDataToBackup();
+            //b2fs.WriteDataToServer(path);
+            //return;
             
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]

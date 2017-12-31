@@ -157,8 +157,7 @@ namespace XZMY.Manage.WindowsService
                 {
                     Log.Add(ex.Message + "\r\n" + ex.StackTrace);
                 }
-            })
-            { IsBackground = true };
+            }) { IsBackground = true };
             thread.Start();
         }
 
@@ -232,7 +231,7 @@ namespace XZMY.Manage.WindowsService
         #region 数据备份
 
         //复制数据文件到备份目录，防止影响美萍运行
-        private string CopyDataToBackup()
+        public string CopyDataToBackup()
         {
             var files = Directory.GetFiles(dataPath, "*.mdb");
             var fileFullName = databakPath + string.Format("mphygl{0}.mdb", DateTime.Now.ToString("-yyyy-MM-dd-HHmmss"));
@@ -245,13 +244,13 @@ namespace XZMY.Manage.WindowsService
             }
             catch (Exception)
             {
-
+                throw;
             }
             return fileFullName;
         }
 
         //将数据写入服务器
-        private void WriteDataToServer(string path)
+        public void WriteDataToServer(string path)
         {
             //先从服务器中获取总数，然后再从本地获取总数，两相对比计算差值，以这样的方式获取需要备份的行数
 
@@ -290,6 +289,7 @@ namespace XZMY.Manage.WindowsService
             var sql = "SELECT COUNT(0) FROM {0} ";
             var hykhList = new List<string>();//需要再次同步的 消费信息 会员卡号
             var paymentCountDataTable = new DataTable();
+            var isDataOnServer = hyxxService.IsDataOnServer();
 
             #region 排序设置，为了获取最新的数据
 
@@ -353,10 +353,13 @@ namespace XZMY.Manage.WindowsService
                             dr["Count"] = xfxxService.GetPaymentCount(paymentCountDataTable, hykh);//获取并赋值消费次数
                             break;
                         case "xfxx"://消费信息
-                                    //根据 xfxx 更新 hyxx （主要是 金额 信息）
+                            if (!isDataOnServer) continue;
+                            //根据 xfxx 更新 hyxx （主要是 金额 信息）
                             hyxxService.UpdateDigitByHykh(hykh);
                             break;
                         case "rz"://日志信息
+                            if (!isDataOnServer) continue;
+
                             var rznr = dr["rznr"].ToString();//日志内容
 
                             if (rznr.Contains("修改会员"))
@@ -395,7 +398,7 @@ namespace XZMY.Manage.WindowsService
 
             return hykhList;
         }
-        
+
         #endregion
 
         #endregion
