@@ -45,24 +45,23 @@ namespace XZMY.Manage.Web.Controllers
             {
                 PageIndex = model.PageIndex,
                 PageSize = model.PageSize,
-                CustomConditions = new List<CustomCondition<HyxxDto>>(),
-                SortMember = new Expression<Func<HyxxDto, object>>[] { x => x.csrq }
-            };
-
-            if (string.IsNullOrWhiteSpace(model.Keyword))
-            {
-                service.CustomConditions.Add(new CustomConditionPlus<HyxxDto>
+                CustomConditions = new List<CustomCondition<HyxxDto>>
                 {
-                    Value = model.Keyword ?? string.Empty,
-                    Operation = SqlOperation.Like,
-                    Member = new Expression<Func<HyxxDto, object>>[] {
-                            x => x.yddh,
-                            x =>x.hyxm,
-                            x =>x.xmjm,
-                            x =>x.hykh,
-                        }
-                });
-            }
+                    new CustomConditionPlus<HyxxDto>
+                    {
+                        Value = model.Keyword ?? string.Empty,
+                        Operation = SqlOperation.Like,
+                        Member = new Expression<Func<HyxxDto, object>>[] {
+                        x => x.yddh,
+                        x => x.hyxm,
+                        x => x.xmjm,
+                        x => x.hykh,
+                    }
+                }
+                },
+                SortMember = new Expression<Func<HyxxDto, object>>[] { x => x.jrrq },
+                SortType = T2M.Common.DataServiceComponents.Data.Query.Interface.SortType.Desc
+            };
 
             var result = service.Invoke();
 
@@ -80,15 +79,29 @@ namespace XZMY.Manage.Web.Controllers
                 {
                     new CustomConditionPlus<XfxxDto>
                     {
-                        Value = model.Id ?? ViewBag.Id,
-                        Operation = SqlOperation.Equals,
+                        Value = model.Keyword ?? string.Empty,
+                        Operation = SqlOperation.Like,
                         Member = new Expression<Func<XfxxDto, object>>[] {
-                            x =>x.hykh,
+                            x => x.czy,
+                            x => x.hykh,
+                            x => x.bz,
                         }
                     }
                 },
                 SortMember = new Expression<Func<XfxxDto, object>>[] { x => x.xfrq }
             };
+
+            if (!string.IsNullOrWhiteSpace(model.Id))
+            {
+                service.CustomConditions.Add(new CustomConditionPlus<XfxxDto>
+                {
+                    Value = model.Id ?? ViewBag.Id,
+                    Operation = SqlOperation.Equals,
+                    Member = new Expression<Func<XfxxDto, object>>[] {
+                        x =>x.hykh,
+                    }
+                });
+            }
 
             var result = service.Invoke();
 
