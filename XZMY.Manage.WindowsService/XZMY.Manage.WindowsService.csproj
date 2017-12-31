@@ -26,7 +26,7 @@
     <DocumentationFile>bin\Debug\BackupToEmail.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -44,7 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\LogEntity.cs" />
     <Compile Include="Service\BranchNameService.cs" />
+    <Compile Include="Service\LogService.cs" />
     <Compile Include="Service\HyxxService.cs" />
     <Compile Include="Service\XfxxService.cs" />
     <Compile Include="Utility\AccessHelper.cs" />
@@ -71,7 +73,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\DatabaseHelper.cs" />
     <Compile Include="Utility\StringUtils.cs" />
-    <Compile Include="Utility\XmlUtility.cs" />
+    <Compile Include="Utility\XmlUtility.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ProjectInstaller.resx">
