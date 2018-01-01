@@ -263,6 +263,16 @@ namespace XZMY.Manage.WindowsService
 
             //db = new DatabaseHelper(path);
             db.ConnectionString_Access = path;
+
+#if DEBUG
+            if (BranchNameDataId == Guid.Empty)
+            {
+                logService = new LogService(db, Ipv4, BranchNameDataId, hostName);
+                branchNameService = new BranchNameService(db);
+                BranchNameDataId = branchNameService.GetBranchNameIdByValue(hostName);//获取分店Id
+            }
+#endif
+
             xfxxService = new XfxxService(db, BranchNameDataId);
             hyxxService = new HyxxService(db, BranchNameDataId);
 
@@ -321,8 +331,8 @@ namespace XZMY.Manage.WindowsService
             var localCount = db.ExecuteScalar(string.Format(sql, tableName), EProviderName.OleDB);//
 
             Log.Add("execute WriteDataToServer event ================================== localCount - serverCount = " + (localCount - serverCount));
-            logService.Add(string.Format("数据备[{0}]表", tableName),
-                string.Format("localCount({0}) - serverCount({1}) = {2}", localCount, serverCount, localCount - serverCount), 
+            logService.Add(string.Format("备份[{0}]表", tableName),
+                string.Format("localCount({0}) - serverCount({1}) = {2}", localCount, serverCount, localCount - serverCount),
                 "", LogLevel.Normal);
 
             var reuslt = localCount - serverCount;
@@ -432,7 +442,7 @@ namespace XZMY.Manage.WindowsService
 
                 //msg.Attachments.Add(GetAttachment(xmlUtility.LogFileName));
 
-                msg.From = new MailAddress(emailFromAddress, "小钟美甲纹绣", System.Text.Encoding.UTF8);
+                msg.From = new MailAddress(emailFromAddress, "小钟美业", System.Text.Encoding.UTF8);
                 /* 上面3个参数分别是发件人地址（可以随便写），发件人姓名，编码*/
                 msg.Subject = "[Backup]" + attachment.Name;//邮件标题
                 msg.SubjectEncoding = System.Text.Encoding.UTF8;//邮件标题编码

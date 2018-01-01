@@ -64,7 +64,7 @@
                                 <th data-field="Title">标题</th>
                                 <th data-field="Message">消息</th>
                                 @*<th data-field="Exception">异常信息</th>*@
-                                <th data-field="Level">等级</th>
+                                <th data-formatter="showLevel" data-field="Level">等级</th>
                                 <th data-field="UserName">用户</th>
                                 <th data-field="CreatedTime">时间</th>
                                 <th data-formatter="opColumns" data-align="center">操作</th>
@@ -79,6 +79,10 @@
 <script type="text/javascript">
     var opColumns = function (value, row, index) {
         return '<a onclick="deletelog(this)" href="javascript:void(0)" id="_id_">删除</a> | <a href="details/_id_">查看</a>'.replace(/_id_/ig, row.DataId);//
+    };
+
+    var showLevel = function (value, row, index) {
+        return ['未定义等级', '调试记录', '普通记录', '警告记录', '错误记录', '致命错误', '未定义等级'][value];
     };
 
     function deletelog(obj) {
