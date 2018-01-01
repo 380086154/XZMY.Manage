@@ -37,7 +37,9 @@ namespace XZMY.Manage.WindowsService.Service
             var sql = string.Format("SELECT hykh FROM [Hyxx] WHERE hyxm = '{0}' ", hyxm);
             var table = db.GetDataTable(sql, "Hyxx", EProviderName.OleDB);
 
-            return table.Rows[0][0].ToString().Trim();
+            return table.Rows.Count == 0
+                ? string.Empty
+                : table.Rows[0][0].ToString().Trim();
         }
 
         /// <summary>
