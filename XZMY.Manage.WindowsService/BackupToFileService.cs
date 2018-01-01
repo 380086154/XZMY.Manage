@@ -25,6 +25,7 @@ namespace XZMY.Manage.WindowsService
         private BranchNameService branchNameService = null;
         private XfxxService xfxxService = null;
         private HyxxService hyxxService = null;
+        private LogService logService = null;
         private Guid BranchNameDataId = Guid.Empty;//分店Id
 
         private IList<string> excludeList = new List<string> { "log.txt", "backuplog.xml" };
@@ -50,12 +51,12 @@ namespace XZMY.Manage.WindowsService
 
             dataPath = PathUtility.dataPath;
             databakPath = PathUtility.databakPath;
+            db = new DatabaseHelper(dataPath + "mphygl.mdb");
 
             //读取已发送列表
             xmlUtility = new XmlUtility(databakPath);
             fileUtility = new FileUtility();
             sendList = xmlUtility.GetAll();
-
         }
 
         protected override void OnStart(string[] args)
@@ -63,12 +64,15 @@ namespace XZMY.Manage.WindowsService
             var thread = new Thread(() =>
             {
                 hardwareUtility = new HardwareUtility();
-
                 Ipv4 = hardwareUtility.IpAddress;
                 hostName = hardwareUtility.ComputerName;
                 version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
                 DirectoryInfo di = new DirectoryInfo(databakPath);
                 FileComparer fc = new FileComparer();
+
+                branchNameService = new BranchNameService(db);
+                BranchNameDataId = branchNameService.GetBranchNameIdByValue(hostName);//获取分店Id
+                logService = new LogService(db, Ipv4, BranchNameDataId, hostName);
 
                 //Thread.Sleep(1000 * 10);//
                 try
@@ -156,6 +160,8 @@ namespace XZMY.Manage.WindowsService
                 catch (Exception ex)
                 {
                     Log.Add(ex.Message + "\r\n" + ex.StackTrace);
+
+                    logService.Add("数据备份异常", ex.Message, ex.StackTrace, LogLevel.Error);
                 }
             }) { IsBackground = true };
             thread.Start();
@@ -218,6 +224,7 @@ namespace XZMY.Manage.WindowsService
                 {
                     Log.Add(ex.Message);
                     Log.Add(ex.StackTrace);
+                    logService.Add("数据备份异常", ex.Message, ex.StackTrace, LogLevel.Error);
                 }
                 finally
                 {
@@ -254,17 +261,12 @@ namespace XZMY.Manage.WindowsService
         {
             //先从服务器中获取总数，然后再从本地获取总数，两相对比计算差值，以这样的方式获取需要备份的行数
 
-            db = new DatabaseHelper(path);
-            branchNameService = new BranchNameService(db);
-            xfxxService = new XfxxService(db);
-            hyxxService = new HyxxService(db);
-
-            BranchNameDataId = branchNameService.GetBranchNameIdByValue(hostName);//获取分店Id
-            xfxxService.BranchNameDataId = BranchNameDataId;
-            hyxxService.BranchNameDataId = BranchNameDataId;
+            //db = new DatabaseHelper(path);
+            db.ConnectionString_Access = path;
+            xfxxService = new XfxxService(db, BranchNameDataId);
+            hyxxService = new HyxxService(db, BranchNameDataId);
 
             Log.Add("execute OnChanged event ChangeType = " + BranchNameDataId);
-
 
             //必须是 xfxx 在前面，在同步时会根据消费信息查询会员信息，为避免数据异常，所以待 xfxx 同步完成后再同步 hyxx
             var dataTatbles = new string[] { "xfxx", "hyczk", "rz", "hyxx" };
@@ -286,7 +288,7 @@ namespace XZMY.Manage.WindowsService
         //执行数据同步
         private List<string> Execute(string tableName)
         {
-            var sql = "SELECT COUNT(0) FROM {0} ";
+            var sql = "SELECT COUNT(0) FROM [{0}] ";
             var hykhList = new List<string>();//需要再次同步的 消费信息 会员卡号
             var paymentCountDataTable = new DataTable();
             var isDataOnServer = hyxxService.IsDataOnServer();
@@ -319,6 +321,9 @@ namespace XZMY.Manage.WindowsService
             var localCount = db.ExecuteScalar(string.Format(sql, tableName), EProviderName.OleDB);//
 
             Log.Add("execute WriteDataToServer event ================================== localCount - serverCount = " + (localCount - serverCount));
+            logService.Add(string.Format("数据备[{0}]表", tableName),
+                string.Format("localCount({0}) - serverCount({1}) = {2}", localCount, serverCount, localCount - serverCount), 
+                "", LogLevel.Normal);
 
             var reuslt = localCount - serverCount;
             if (reuslt > 0)//新增

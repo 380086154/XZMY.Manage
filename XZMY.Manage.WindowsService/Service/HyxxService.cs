@@ -21,6 +21,12 @@ namespace XZMY.Manage.WindowsService.Service
             db = databaseHelper;
         }
 
+        public HyxxService(DatabaseHelper databaseHelper, Guid branchNameDataId)
+        {
+            db = databaseHelper;
+            BranchNameDataId = branchNameDataId;
+        }
+
         /// <summary>
         /// 根据会员姓名 获取会员卡号
         /// </summary>

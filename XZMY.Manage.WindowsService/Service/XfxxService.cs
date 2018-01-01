@@ -20,6 +20,12 @@ namespace XZMY.Manage.WindowsService.Service
             db = databaseHelper;
         }
 
+        public XfxxService(DatabaseHelper databaseHelper,Guid branchNameDataId)
+        {
+            db = databaseHelper;
+            BranchNameDataId = branchNameDataId;
+        }
+
         /// <summary>
         /// 获取消费次数
         /// </summary>

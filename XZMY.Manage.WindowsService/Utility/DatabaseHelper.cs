@@ -12,16 +12,29 @@ namespace XZMY.Manage.WindowsService
     /// </summary>
     public class DatabaseHelper
     {
-        #region Consts
+        #region Fileds
+
+        private string formatString = "PRovider=Microsoft.Jet.OLEDB.4.0;Data Source={0};Jet OLEDB:Database PassWord=mp61";
 
         public const string connectionString_SqlServer = "Data Source=qds118399686.my3w.com;Initial Catalog = qds118399686_db; Persist Security Info=True;User ID = qds118399686; Password=E17680A936674932B358;MultipleActiveResultSets=true";
-        public readonly string connectionString_Access;
+
+        private string connectionString_Access = string.Empty;
+        /// <summary>
+        /// Access 数据库地址
+        /// </summary>
+        public string ConnectionString_Access
+        {
+            get { return connectionString_Access; }
+            set { connectionString_Access = string.Format(formatString, value); }
+        }
 
         #endregion
 
+        public DatabaseHelper() { }
+
         public DatabaseHelper(string path)
         {
-            connectionString_Access = string.Format("PRovider=Microsoft.Jet.OLEDB.4.0;Data Source={0};Jet OLEDB:Database PassWord=mp61", path);
+            connectionString_Access = string.Format(formatString, path);
         }
 
         /// <summary>

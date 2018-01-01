@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace XZMY.Manage.WindowsService
 {
+    /// <summary>
+    /// 日志
+    /// </summary>
     public class LogEntity
     {
         public LogEntity()
