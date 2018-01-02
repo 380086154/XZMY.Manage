@@ -16,8 +16,8 @@ namespace XZMY.Manage.WindowsService
 
         private string formatString = "PRovider=Microsoft.Jet.OLEDB.4.0;Data Source={0};Jet OLEDB:Database PassWord=mp61";
 
-        //public string connectionString_SqlServer = "Data Source=qds118399686.my3w.com;Initial Catalog = qds118399686_db; Persist Security Info=True;User ID = qds118399686; Password=E17680A936674932B358;MultipleActiveResultSets=true";
-        public string connectionString_SqlServer = "Server=101.37.25.133;Initial Catalog=qds118399686_debug;User ID=CollegeSa;Password=Aa123456;MultipleActiveResultSets=True;";
+        public const string connectionString_SqlServer = "Data Source=qds118399686.my3w.com;Initial Catalog = qds118399686_db; Persist Security Info=True;User ID = qds118399686; Password=E17680A936674932B358;MultipleActiveResultSets=true";
+        //public const string connectionString_SqlServer = "Server=101.37.25.133;Initial Catalog=qds118399686_debug;User ID=CollegeSa;Password=Aa123456;MultipleActiveResultSets=True;";
 
         private string connectionString_Access = string.Empty;
         /// <summary>
@@ -31,12 +31,7 @@ namespace XZMY.Manage.WindowsService
 
         #endregion
 
-        public DatabaseHelper()
-        {
-#if DEBUG
-            connectionString_SqlServer = "Server=101.37.25.133;Initial Catalog=qds118399686_debug;User ID=CollegeSa;Password=Aa123456;MultipleActiveResultSets=True;";
-#endif
-        }
+        public DatabaseHelper() { }
 
         public DatabaseHelper(string path)
         {

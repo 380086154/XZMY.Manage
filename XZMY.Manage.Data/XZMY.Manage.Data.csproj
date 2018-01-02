@@ -52,11 +52,11 @@
     <Compile Include="Query\Assessment\ISearchSourceIdList.cs" />
     <Compile Include="Query\Module\IModifyActionOnModuleModified.cs" />
     <Compile Include="Query\Project\ICreateProject.cs" />
+    <Compile Include="Query\Sys\ISearchLog.cs" />
     <Compile Include="Query\User\ISearchUser.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Query\Member\" />
-    <Folder Include="Query\Sys\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\XZMY.Manage.Model\XZMY.Manage.Model.csproj">

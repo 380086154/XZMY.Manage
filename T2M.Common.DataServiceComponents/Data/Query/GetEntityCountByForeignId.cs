@@ -11,12 +11,9 @@ namespace T2M.Common.DataServiceComponents.Data.Impl.Query
 {
     public class GetEntityCountByForeignId<T> : IGetEntityCountByForeignId<T> where T : class, IDataModel
     {
-
-
         public GetEntityCountByForeignId() { }
         public GetEntityCountByForeignId(string tableName) { TableName = tableName; }
-
-
+        
 
         private String _tableName = string.Empty;
         public virtual String TableName
@@ -46,8 +43,7 @@ namespace T2M.Common.DataServiceComponents.Data.Impl.Query
 
 
             using (var conn = new SqlConnection(SqlServerHelper.CONNECTION_STRING))
-            {
-                
+            {                
                 var c =
                     (int)SqlServerHelper.ExecuteScalar(conn, CommandType.Text, sqlStatement, sqlParameter);
                 return c;

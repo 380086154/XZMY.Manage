@@ -33,5 +33,9 @@ namespace T2M.Common.DataServiceComponents.Data.Query
         Like = 6,
         StartWith = 7,
         EndWith = 8,
+        /// <summary>
+        /// 时间区间
+        /// </summary>
+        DateRange = 9,
     }
 }

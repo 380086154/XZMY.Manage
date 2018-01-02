@@ -206,13 +206,14 @@ namespace XZMY.Manage.WindowsService
         /// <param name="e"></param>
         private void OnChanged(object sender, FileSystemEventArgs e)
         {
+            if (!canExecute)
+                return;
+            canExecute = false;
+
             Log.Add("execute OnChanged event ChangeType = " + e.ChangeType);
 
             timer = new Timer((t) =>
             {
-                if (!canExecute)
-                    return;
-                canExecute = false;
                 var path = string.Empty;
 
                 try

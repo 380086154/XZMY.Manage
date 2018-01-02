@@ -34,12 +34,10 @@ namespace T2M.Common.DataServiceComponents.Data.Impl.Query
 
 
             using (var conn = new SqlConnection(SqlServerHelper.CONNECTION_STRING))
-            {
-                var c =
-                    (int)SqlServerHelper.ExecuteScalar(conn, CommandType.Text, countsql, sqlParameter);
+            { 
+                var c = (int)SqlServerHelper.ExecuteScalar(conn, CommandType.Text, countsql, sqlParameter);
 
-                using (
-                    var reader = SqlServerHelper.ExecuteReader(conn, CommandType.Text,
+                using (var reader = SqlServerHelper.ExecuteReader(conn, CommandType.Text,
                         sqlStatement, sqlParameter))
                 {
                     var res = InitPagedResult(c);
@@ -52,7 +50,6 @@ namespace T2M.Common.DataServiceComponents.Data.Impl.Query
                 }
             }
         }
-
 
         /// <summary>
         /// Ìõ¼þÆ´½Ó
@@ -75,7 +72,7 @@ namespace T2M.Common.DataServiceComponents.Data.Impl.Query
                 }));
         }
 
-        private string GetOperation(SqlOperation m, int index)
+        private string GetOperation(SqlOperation m, int index, )
         {
             if (m == SqlOperation.Equals) return "=@value" + index;
             if (m == SqlOperation.Greater) return ">@value" + index;
@@ -96,10 +93,9 @@ namespace T2M.Common.DataServiceComponents.Data.Impl.Query
         private SqlParameter[] BuildParameters()
         {
             return CustomConditions.Select((m, index) =>
-                SqlServerHelper.BuildInParameter("@value" + index, GetParameterValue(m.Value,m.Operation))
+                SqlServerHelper.BuildInParameter("@value" + index, GetParameterValue(m.Value, m.Operation))
                 ).ToArray();
         }
-
 
         private object GetParameterValue(object value, SqlOperation m)
         {
@@ -109,6 +105,5 @@ namespace T2M.Common.DataServiceComponents.Data.Impl.Query
             if (m == SqlOperation.EndWith) return value + "%";
             return value;
         }
-
     }
 }

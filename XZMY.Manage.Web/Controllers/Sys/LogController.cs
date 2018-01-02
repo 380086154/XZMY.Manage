@@ -14,6 +14,7 @@ using XZMY.Manage.Service.Auth.Attributes;
 using XZMY.Manage.Service.Handlers;
 using T2M.Common.DataServiceComponents.Data.Query;
 using T2M.Common.DataServiceComponents.Service;
+using XZMY.Manage.Model.ViewModel.Sys;
 
 namespace XZMY.Manage.Web.Controllers.Sys
 {
@@ -43,27 +44,8 @@ namespace XZMY.Manage.Web.Controllers.Sys
         }
 
         //列表 Ajax 获取数据
-        public ActionResult AjaxList(VmSearchBase model)
+        public ActionResult AjaxList(VmLog model)
         {
-            //var service = new CustomSearchService<LogEntity>
-            //{
-            //    CustomConditions = new List<CustomCondition<LogEntity>>
-            //    {
-            //        new CustomConditionPlus<LogEntity>
-            //        {
-            //            Value = model.Keyword ?? string.Empty,
-            //            Operation = SqlOperation.Like,
-            //            Member = new Expression<Func<LogEntity, object>>[] { x => x.Title,x=>x.Message }
-            //        }
-            //    }
-            //};
-
-            //var result = service.Invoke();
-
-            //return Json(new { success = true, rows = result, errors = GetErrors() }, JsonRequestBehavior.AllowGet);
-
-
-
             var service = new CustomSearchWithPaginationService<LogEntity>
             {
                 PageIndex = model.PageIndex,
@@ -74,11 +56,21 @@ namespace XZMY.Manage.Web.Controllers.Sys
                     {
                         Value = model.Keyword ?? string.Empty,
                         Operation = SqlOperation.Like,
-                        Member = new Expression<Func<LogEntity, object>>[] { x => x.Title,x=>x.Message }
+                        Member = new Expression<Func<LogEntity, object>>[] { x => x.Title,x=>x.Message, x=>x.UserName }
                     }
                 },
                 SortMember = new Expression<Func<LogEntity, object>>[] { x => x.CreatedTime }
             };
+
+            if (model.Level > 0)
+            {
+                service.CustomConditions.Add(new CustomConditionPlus<LogEntity>
+                {
+                    Value = model.Level,
+                    Operation = SqlOperation.Equals,
+                    Member = new Expression<Func<LogEntity, object>>[] { x => x.Level }
+                });
+            }
 
             var result = service.Invoke();
 

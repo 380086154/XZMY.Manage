@@ -24,22 +24,22 @@
         <div class="col-md-12">
             <div class="portlet light bordered">
                 @*<div class="portlet-title">
-                    <div class="caption">
-                        <span style="font-size: 25px;color: #000"></span>
-                    </div>
-                    <div class="actions">
-                        <a class="btn btn-default" href="/CourseTemplate/Edit">
-                            <i class="fa fa-plus"></i> 创建
-                        </a>
-                    </div>
-                </div>*@
+                        <div class="caption">
+                            <span style="font-size: 25px;color: #000"></span>
+                        </div>
+                        <div class="actions">
+                            <a class="btn btn-default" href="/CourseTemplate/Edit">
+                                <i class="fa fa-plus"></i> 创建
+                            </a>
+                        </div>
+                    </div>*@
                 <div class="portlet-body">
                     <!-- BEGIN FORM-->
                     <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
                         <div class="mt-checkbox-inline" style="margin-top: -37px">
-                            <div class="pull-left" style="margin-top: 20px">
+                            <div class="pull-left" style="margin-top: 18px">
                                 状态：
-                                <select class="form-control input-inline" name="State" id="State">
+                                <select class="form-control input-inline" name="Level" id="Level">
                                     <option value="0">全部</option>
                                     <option value="1">调试记录</option>
                                     <option value="2">普通记录</option>
@@ -47,7 +47,20 @@
                                     <option value="4">错误记录</option>
                                     <option value="5">致命错误</option>
                                     <option value="6">未定义等级</option>
-                                </select>
+                                </select>&nbsp;
+                            </div>
+
+                            <div class="row pull-left" style="margin-top: 18px">
+                                <div class="col-md-12 col-sm-12">
+                                    <div style="display: inline-flex;">
+                                        <label class="control-label">时间范围：</label>
+                                        <div class="input-group input-large date-picker input-daterange" style="width: 120%;" data-date="2016-07-19" data-date-format="yyyy-mm-dd">
+                                            <input type="text" class="form-control" name="CreatedTimeRange" value="" required>
+                                            <span class="input-group-addon"> 到 </span>
+                                            <input type="text" class="form-control" name="CreatedTimeRange" value="" required>
+                                        </div>&nbsp;
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -82,7 +95,7 @@
     };
 
     var showLevel = function (value, row, index) {
-        return ['未定义等级', '调试记录', '普通记录', '警告记录', '错误记录', '致命错误', '未定义等级'][value];
+        return ['未定义等级', '调试记录', '普通记录', '警告记录', '<span style="color:red">错误记录</span>', '致命错误', '未定义等级'][value];
     };
 
     function deletelog(obj) {
