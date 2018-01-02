@@ -38,6 +38,10 @@ namespace XZMY.Manage.WindowsService.Service
             BranchNameDataId = branchNameDataId;
         }
 
+        /// <summary>
+        /// 保存日志
+        /// </summary>
+        /// <param name="entity"></param>
         public void Add(LogEntity entity)
         {
             var sql = @"INSERT INTO [SYS_LOG]
@@ -58,6 +62,13 @@ namespace XZMY.Manage.WindowsService.Service
             db.ExecuteNonQuery(sql, EProviderName.SqlClient, sp);
         }
 
+        /// <summary>
+        /// 保存日志
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="message"></param>
+        /// <param name="exception"></param>
+        /// <param name="level"></param>
         public void Add(string title, string message, string exception, LogLevel level)
         {
             Add(new LogEntity
@@ -70,63 +81,6 @@ namespace XZMY.Manage.WindowsService.Service
                 UserId = UserId,
                 UserName = UserName
             });
-        }
-
-        /// <summary>
-        /// 根据 hykh 更新 Hyxx 会员信息
-        /// </summary>
-        /// <param name="hykh">会员卡号</param>
-        public void UpdateInfoByHyxm(string hykh)
-        {
-            var hyxxDataTable = new DataTable();//获取会员信息
-
-            if (hyxxDataTable.Rows.Count == 0) return;
-
-            var hyxxDataRow = hyxxDataTable.Rows[0];
-            var xfxxService = new XfxxService(db);
-
-            var sql = @"UPDATE [hyxx] SET 
-                hyxm = @hyxm,
-                 klx = @klx,
-               klxmc = @klxmc,
-                 kmc = @kmc,
-                hyjf = @hyjf,
-                zxzt = @zxzt,
-                  xb = @xb,
-                csrq = @csrq,
-                dwzy = @dwzy,
-                yddh = @yddh,
-                gddh = @gddh,
-                dzyj = @dzyj,
-                zjlx = @zjlx,
-                zjhm = @zjhm,
-                lxdz = @lxdz,
-                qtxx = @qtxx
- WHERE hykh = @hykh AND BranchNameDataId = @BranchNameDataId
-";
-            var sp = new SqlParameter[] {
-                new SqlParameter("@hyxm", hyxxDataRow["hyxm"]),//姓名
-                new SqlParameter("@klx", hyxxDataRow["klx"]),//卡类型
-                new SqlParameter("@klxmc", hyxxDataRow["klxmc"]),//卡类型名称
-                new SqlParameter("@kmc", hyxxDataRow["kmc"]),//折扣（卡名称）
-                new SqlParameter("@hyjf", hyxxDataRow["hyjf"]),//积分
-                new SqlParameter("@zxzt", hyxxDataRow["zxzt"]),//当前状态
-                new SqlParameter("@xb", hyxxDataRow["xb"]),//性别
-                new SqlParameter("@csrq", hyxxDataRow["csrq"]),//出生日期
-                new SqlParameter("@dwzy", hyxxDataRow["dwzy"]),//职业
-                new SqlParameter("@yddh", hyxxDataRow["yddh"]),//移动电话
-                new SqlParameter("@gddh", hyxxDataRow["gddh"]),//固定电话
-                new SqlParameter("@dzyj", hyxxDataRow["dzyj"]),//电子邮件
-                new SqlParameter("@zjlx", hyxxDataRow["zjlx"]),//证件类型
-                new SqlParameter("@zjhm", hyxxDataRow["zjhm"]),//证件号码
-                new SqlParameter("@lxdz", hyxxDataRow["lxdz"]),//联系地址
-                new SqlParameter("@qtxx", hyxxDataRow["qtxx"]),//其他信息
-
-                new SqlParameter("@hykh", hykh),//会员卡号
-                new SqlParameter("@BranchNameDataId", BranchNameDataId),//其他信息
-            };
-
-            db.ExecuteNonQuery(sql, EProviderName.SqlClient, sp);
         }
     }
 }
