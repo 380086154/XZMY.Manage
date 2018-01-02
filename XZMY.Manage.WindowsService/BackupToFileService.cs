@@ -347,7 +347,8 @@ namespace XZMY.Manage.WindowsService
                 if (tableName == "hyxx")//更新消费次数
                 {
                     dt.Columns.Add("Count", System.Type.GetType("System.Int32"));
-                    paymentCountDataTable = xfxxService.GetPaymentCountDataTable(string.Join(",", dt.Rows.OfType<DataRow>().Select(x => x["hykh"])));
+                    var hykhs = string.Join(",", dt.Rows.OfType<DataRow>().Select(x => string.Format("'{0}'", x["hykh"])));
+                    paymentCountDataTable = xfxxService.GetPaymentCountDataTable(hykhs);
                 }
 
                 foreach (DataRow dr in dt.Rows)
