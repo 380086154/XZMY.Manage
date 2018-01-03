@@ -19,9 +19,6 @@ namespace XZMY.Manage.Web.Controllers
     /// </summary>
     public class LoginController : ControllerBase
     {
-        //开发者ID(AppID) - wxdfadf3e2ae2aeb01
-        const string Token = "E17680A936674932B358";
-
         /// <summary>
         /// 
         /// </summary>
@@ -33,31 +30,9 @@ namespace XZMY.Manage.Web.Controllers
         //登录页
         public ActionResult Index()
         {
-            var echoStr = (Request.QueryString["echoStr"] ?? "").ToString();
-
-            if (CheckSignature() && !string.IsNullOrEmpty(echoStr))
-            {
-                Response.Write(echoStr);
-                Response.End();
-            }
-
             return View();
         }
-
-        //验证签名
-        private bool CheckSignature()
-        {
-            string signature = (Request.QueryString["signature"] ?? "").ToString();
-            string timestamp = (Request.QueryString["timestamp"] ?? "").ToString();
-            string nonce = (Request.QueryString["nonce"] ?? "").ToString();
-            string[] ArrTmp = { Token, timestamp, nonce };
-            Array.Sort(ArrTmp);
-            string tmpStr = string.Join("", ArrTmp);
-            tmpStr = FormsAuthentication.HashPasswordForStoringInConfigFile(tmpStr, "SHA1").ToLower();
-
-            return tmpStr == signature;
-        }
-
+        
         //登录
         public ActionResult AjaxLogin(VmLogin model)
         {

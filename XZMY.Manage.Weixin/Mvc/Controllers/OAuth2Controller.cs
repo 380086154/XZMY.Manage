@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
+using XZMY.Manage.Weixin.Service.Implemented;
 
 namespace XZMY.Manage.Weixin.Mvc.Controllers
 {
@@ -116,7 +119,7 @@ namespace XZMY.Manage.Weixin.Mvc.Controllers
         /// <returns></returns>
         public ActionResult CallBack(string code, string state, string returnUrl)
         {
-            LogFactory.GetLogger().Info("微信=>已经进入CallBack回调函数=>state=" + state);
+            //LogFactory.GetLogger().Info("微信=>已经进入CallBack回调函数=>state=" + state);
             //本地回调跳转的Url,一般跳转到我们自己的前端网页地址
             var wxCallbackRedirectUrl = Configs.Instance.GetValue("College.WxCallbackRedirectUrl");
             //微网站警告页面 默认提示语：非企业内部成员，访问被拒绝！

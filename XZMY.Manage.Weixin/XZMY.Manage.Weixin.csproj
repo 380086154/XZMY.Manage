@@ -48,6 +48,7 @@
     <Compile Include="Apis\WxBaseApi.cs" />
     <Compile Include="Apis\WxOauthApi.cs" />
     <Compile Include="Apis\WxPayApi.cs" />
+    <Compile Include="Configuration\WxPayConfig.cs" />
     <Compile Include="Models\WxAccessTokenResult.cs" />
     <Compile Include="Models\WxAuthUserResult.cs" />
     <Compile Include="Models\WxBaseAccessTokenResult.cs" />
@@ -85,6 +86,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Wx\csharp\Readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\T2M.Common.Utils\T2M.Common.Utils.csproj">
+      <Project>{fa696f33-700b-4627-bb04-33f895b54d33}</Project>
+      <Name>T2M.Common.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

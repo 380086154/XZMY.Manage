@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XZMY.Manage.Weixin.Configuration;
+using XZMY.Manage.Weixin.DataModel;
+using XZMY.Manage.Weixin.Models;
 
 namespace XZMY.Manage.Weixin.Apis
 {

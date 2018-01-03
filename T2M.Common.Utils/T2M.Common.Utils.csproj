@@ -59,6 +59,7 @@
     <Compile Include="Extension\CollectionUtils.cs" />
     <Compile Include="Extension\ConvertUtils.cs" />
     <Compile Include="Extension\GlobalUtils.cs" />
+    <Compile Include="Extension\Json.cs" />
     <Compile Include="Extension\PredicateUtils.cs" />
     <Compile Include="Extension\RegexUtils.cs" />
     <Compile Include="Extension\StringUtils.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Helper\JsonPlus.cs" />
     <Compile Include="Helper\RandomPlus.cs" />
     <Compile Include="Helper\RegexPlus.cs" />
+    <Compile Include="Helper\WebHelper.cs" />
     <Compile Include="Models\Attributes\DBTableAttribute.cs" />
     <Compile Include="Models\CompareResult.cs" />
     <Compile Include="Models\EntityBase.cs" />
