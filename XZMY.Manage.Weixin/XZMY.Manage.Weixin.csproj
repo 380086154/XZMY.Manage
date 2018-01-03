@@ -32,6 +32,11 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Assembly\System.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -39,16 +44,47 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Apis\JSAPI.cs" />
+    <Compile Include="Apis\WxBaseApi.cs" />
+    <Compile Include="Apis\WxOauthApi.cs" />
+    <Compile Include="Apis\WxPayApi.cs" />
+    <Compile Include="Models\WxAccessTokenResult.cs" />
+    <Compile Include="Models\WxAuthUserResult.cs" />
+    <Compile Include="Models\WxBaseAccessTokenResult.cs" />
+    <Compile Include="Models\WxBaseResult.cs" />
+    <Compile Include="Models\WxMessage\JsTicketResult.cs" />
+    <Compile Include="Models\WxMessage\QyImageMsg.cs" />
+    <Compile Include="Models\WxMessage\QyMessageResult.cs" />
+    <Compile Include="Models\WxMessage\QyMsgBase.cs" />
+    <Compile Include="Models\WxMessage\QyNewsMsg.cs" />
+    <Compile Include="Models\WxMessage\QyTextCardMsg.cs" />
+    <Compile Include="Models\WxMessage\QyTextMsg.cs" />
+    <Compile Include="Models\WxQyUserinfo.cs" />
+    <Compile Include="Models\WxQyUserinfoResult.cs" />
+    <Compile Include="Models\WxQyUserOpenIdResult.cs" />
+    <Compile Include="Mvc\Controllers\OAuth2Controller.cs" />
+    <Compile Include="Mvc\WeiXinAreaRegistration.cs" />
+    <Compile Include="Service\Event\WxMemberAuthorizeEvent.cs" />
+    <Compile Include="Service\HttpService.cs" />
+    <Compile Include="Service\Implemented\WxCorporationApiService.cs" />
+    <Compile Include="Service\IWxMessageApiService.cs" />
+    <Compile Include="Tools\Class1.cs" />
     <Compile Include="Configuration\WxAppConfig.cs" />
     <Compile Include="DataModel\WxAccessTokenResult.cs" />
     <Compile Include="DataModel\WxBaseResult.cs" />
     <Compile Include="DataModel\WxUser.cs" />
     <Compile Include="DataModel\WxUserLogon.cs" />
     <Compile Include="Enums\GenderType.cs" />
-    <Compile Include="Lib\Notify.cs" />
-    <Compile Include="Lib\WxPayData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Wx\csharp\Cryptography.cs" />
+    <Compile Include="Wx\csharp\Sample.cs" />
+    <Compile Include="Wx\csharp\WXBizMsgCrypt.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Lib\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Wx\csharp\Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

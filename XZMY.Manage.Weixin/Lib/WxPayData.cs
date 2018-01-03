@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace XZMY.Manage.Weixin.Lib
 {
@@ -70,7 +71,7 @@ namespace XZMY.Manage.Weixin.Lib
             if (0 == m_values.Count)
             {
                 LogFactory.GetLogger().Error("ERR: 微信支付=>WxPayData数据为空! ");
-                throw new KnownException("WxPayData数据为空!");
+                //throw new KnownException("WxPayData数据为空!");
             }
 
             string xml = "<xml>";
@@ -80,7 +81,7 @@ namespace XZMY.Manage.Weixin.Lib
                 if (pair.Value == null)
                 {
                     //LogFactory.GetLogger().Error("ERR: 微信支付=>ToXml=>WxPayData内部含有值为null的字段!");
-                    throw new KnownException("WxPayData内部含有值为null的字段!");
+                    //throw new KnownException("WxPayData内部含有值为null的字段!");
                 }
 
                 if (pair.Value.GetType() == typeof(int))
@@ -94,7 +95,7 @@ namespace XZMY.Manage.Weixin.Lib
                 else//除了string和int类型不能含有其他数据类型
                 {
                     //LogFactory.GetLogger().Error("ERR: 微信支付=>ToXmlWxPayData字段数据类型错误!");
-                    throw new KnownException("WxPayData字段数据类型错误!");
+                    //throw new KnownException("WxPayData字段数据类型错误!");
                 }
             }
             xml += "</xml>";
@@ -112,7 +113,7 @@ namespace XZMY.Manage.Weixin.Lib
             if (string.IsNullOrEmpty(xml))
             {
                 //LogFactory.GetLogger().Error("ERR: 微信支付=>FromXml=>将空的xml串转换为WxPayData不合法");
-                throw new KnownException("将空的xml串转换为WxPayData不合法!");
+                //throw new KnownException("将空的xml串转换为WxPayData不合法!");
             }
 
             XmlDocument xmlDoc = new XmlDocument();
@@ -134,10 +135,11 @@ namespace XZMY.Manage.Weixin.Lib
                 }
                 CheckSign();//验证签名,不通过会抛异常
             }
-            catch (KnownException ex)
-            {
-                throw new KnownException(ex.Message);
-            }
+            catch(Exception ex) { }
+            //catch (KnownException ex)
+            //{
+            //    throw new KnownException(ex.Message);
+            //}
 
             return m_values;
         }
@@ -154,7 +156,7 @@ namespace XZMY.Manage.Weixin.Lib
                 if (pair.Value == null)
                 {
                     //LogFactory.GetLogger().Error("ERR: 微信支付=>ToUrl=>WxPayData内部含有值为null的字段!");
-                    throw new KnownException("WxPayData内部含有值为null的字段!");
+                    //throw new KnownException("WxPayData内部含有值为null的字段!");
                 }
 
                 if (pair.Key != "sign" && pair.Value.ToString() != "")
@@ -189,7 +191,7 @@ namespace XZMY.Manage.Weixin.Lib
                 if (pair.Value == null)
                 {
                     //LogFactory.GetLogger().Error("ERR: 微信支付=>ToPrintStr=>WxPayData内部含有值为null的字段!");
-                    throw new KnownException("WxPayData内部含有值为null的字段!");
+                    //throw new KnownException("WxPayData内部含有值为null的字段!");
                 }
 
                 str += string.Format("{0}={1}<br>", pair.Key, pair.Value.ToString());
@@ -232,13 +234,13 @@ namespace XZMY.Manage.Weixin.Lib
             if (!IsSet("sign"))
             {
                 //LogFactory.GetLogger().Error("ERR: 微信支付=>CheckSign=>WxPayData签名存在但不合法");
-                throw new KnownException("WxPayData签名存在但不合法");
+                //throw new KnownException("WxPayData签名存在但不合法");
             }
             //如果设置了签名但是签名为空，则抛异常
             else if (GetValue("sign") == null || GetValue("sign").ToString() == "")
             {
                 //LogFactory.GetLogger().Error("ERR: 微信支付=>CheckSign=>WxPayData签名存在但不合法");
-                throw new KnownException("WxPayData签名存在但不合法");
+                //throw new KnownException("WxPayData签名存在但不合法");
             }
 
             //获取接收到的签名
@@ -253,7 +255,7 @@ namespace XZMY.Manage.Weixin.Lib
             }
 
             //LogFactory.GetLogger().Error("ERR: 微信支付=>CheckSign=>WxPayData签名验证错误");
-            throw new KnownException("WxPayData签名验证错误");
+            //throw new KnownException("WxPayData签名验证错误");
         }
 
         /**
