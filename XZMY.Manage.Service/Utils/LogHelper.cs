@@ -57,8 +57,6 @@ namespace XZMY.Manage.Service.Utils
                 UserId = LoggedUserManager.GetCurrentUserAccount().AccountId.ToString(),
                 UserName = LoggedUserManager.GetCurrentUserAccount().Name,
                 Exception = ex.FormatMessage()
-
-
             };
             log.SetActorInfomation(LoggedUserManager.GetCurrentUserAccount().GetActorInfomationSynchronizer());
 

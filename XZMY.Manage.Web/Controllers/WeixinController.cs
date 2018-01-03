@@ -10,6 +10,7 @@ using XZMY.Manage.Service.Handlers.Weixin;
 using T2M.Common.DataServiceComponents.Data.Query;
 using T2M.Common.DataServiceComponents.Service;
 using XZMY.Manage.Model.DataModel;
+using XZMY.Manage.Log.Models;
 using System.Web.Security;
 using System.Xml;
 using XZMY.Manage.Web.Controllers.Apis.Tools;
@@ -29,21 +30,27 @@ namespace XZMY.Manage.Web.Controllers
 
         public void ProcessRequest()
         {
-            var stream = Request.InputStream;
-            var byteArray = new byte[stream.Length];
-            stream.Read(byteArray, 0, (int)stream.Length);
-            var postXmlstr = System.Text.Encoding.UTF8.GetString(byteArray);
-
-            if (string.IsNullOrWhiteSpace(postXmlstr))
+            try
             {
-                Valid();
-                return;
+                var stream = Request.InputStream;
+                var byteArray = new byte[stream.Length];
+                stream.Read(byteArray, 0, (int)stream.Length);
+                var postXmlstr = System.Text.Encoding.UTF8.GetString(byteArray);
+
+                if (string.IsNullOrWhiteSpace(postXmlstr))
+                {
+                    Valid();
+                    return;
+                }
+
+                var doc = new XmlDocument();
+                doc.LoadXml(postXmlstr);
+                ResponseMessage(doc);
             }
-
-            var doc = new XmlDocument();
-            doc.LoadXml(postXmlstr);
-
-            ResponseMessage(doc);
+            catch (Exception ex)
+            {
+                LogHelper.LogException("ProcessRequest 异常", ex.StackTrace, LogLevel.Error, ex);
+            }
         }
 
         //无返回值
@@ -59,11 +66,13 @@ namespace XZMY.Manage.Web.Controllers
 
         public void ResponseMessage(XmlDocument doc)
         {
-            var result = "";
+            var content = "";
             var type = WeixinXml.GetFromXml(doc, "MsgType");
 
             switch (type)
             {
+                case "event"://
+                    break;
                 case "subscribe"://订阅
                     break;
                 case "unsubscribe"://取消订阅
@@ -74,12 +83,24 @@ namespace XZMY.Manage.Web.Controllers
                     var text = WeixinXml.GetFromXml(doc, "Content");
                     if (text == "查余额" || text == "余额")
                     {
-                        result = WeixinXml.CreateTextMessage(doc, "余额查询中");
+                        content = "余额查询中";
+                    }
+                    else if (text == "时间" || text == "几点了")
+                    {
+                        content = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                    }
+                    else if (text == "作者")
+                    {
+                        content = "Xiaoping.Liu";
                     }
                     break;
                 default:
                     break;
             }
+            var result = WeixinXml.CreateTextMessage(doc, content);
+            LogHelper.Log("ProcessRequest 日志：" + type, result, LogLevel.Debug);
+            Response.Write(result);
+            Response.Flush();
         }
 
         private bool CheckSignature()
