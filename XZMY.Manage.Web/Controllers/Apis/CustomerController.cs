@@ -65,5 +65,12 @@ namespace XZMY.Manage.Web.Controllers.Apis
         {
             return Success("DateTime", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
         }
+
+         [HttpGet]
+        public ApiResult GetIntTime()
+        {
+            DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1));
+            return Success("DateTime", (int)(DateTime.Now - startTime).TotalSeconds);
+        }
     }
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>CPechkin</id>
+    <version>0.0.09.12</version>
+    <title>CPechkin For .Net20+</title>
+    <authors>Chen Peng</authors>
+    <owners>Chen Peng</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>本插件是在Pechkin的基础上，基于.NET2.0开发，剔除Common.Loging依赖，支持多个网页生成一个PDF功能。底层DLL是x86的，所以适用插件的项目必须是x86编译。否则会出现无法加载dll问题。
+
+多网页生成PDF简单实例：
+SynchronizedPechkin sc = new SynchronizedPechkin(new GlobalConfig().SetMargins(new Margins(100, 100, 100, 100)));
+IList&lt;Uri&gt; uris = new List&lt;Uri&gt;
+            {
+                new Uri(@"http://www.baidu.com"),
+                new Uri(@"c://1.html")
+            };
+            byte[] buf = sc.Convert(uris);
+
+string fn = Path.GetTempFileName() + ".pdf";
+
+                FileStream fs = new FileStream(fn, FileMode.Create);
+                fs.Write(buf, 0, buf.Length);
+                fs.Close();</description>
+    <summary>CPechkin For .Net20+</summary>
+    <releaseNotes>QQ：574852099</releaseNotes>
+    <copyright>Copyright 2015 Chen Peng</copyright>
+    <language>zh-CN</language>
+    <tags>Html PDF Wrapper Converter Webkit .NET20 C# Pechkin CPechkin</tags>
+  </metadata>
+</package>
