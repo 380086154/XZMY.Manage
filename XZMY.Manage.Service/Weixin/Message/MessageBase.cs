@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.IO;
 
-namespace XZMY.Manage.Web.Controllers.Apis.Message
+namespace XZMY.Manage.Service.Weixin.Message
 {
     /// <summary>
     /// 接受/发送消息帮助类

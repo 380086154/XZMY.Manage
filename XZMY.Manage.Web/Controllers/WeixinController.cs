@@ -10,10 +10,11 @@ using XZMY.Manage.Service.Handlers.Weixin;
 using T2M.Common.DataServiceComponents.Data.Query;
 using T2M.Common.DataServiceComponents.Service;
 using XZMY.Manage.Model.DataModel;
-using XZMY.Manage.Log.Models;
 using System.Web.Security;
 using System.Xml;
-using XZMY.Manage.Web.Controllers.Apis.Tools;
+using XZMY.Manage.Service.Weixin.Tools;
+using XZMY.Manage.Service.Weixin;
+using XZMY.Manage.Log.Models;
 
 namespace XZMY.Manage.Web.Controllers
 {
@@ -22,10 +23,9 @@ namespace XZMY.Manage.Web.Controllers
     /// </summary>
     public class WeixinController : Controller
     {
-        //微信号 - fuck-you-too
-        //发送方帐号 - oYVeUwOSNj7wCFrvZMPbW8SBA-Y8
         //开发者ID(AppID) - wxdfadf3e2ae2aeb01
-        //EncodingAESKey - kHYlTj3tNzB2hprUeUf5bd6K8MMJfEa1wztACFyQJAr
+        //令牌(Token) - E17680A936674932B358
+        //消息加解密密钥(EncodingAESKey) - kHYlTj3tNzB2hprUeUf5bd6K8MMJfEa1wztACFyQJAr
         const string Token = "E17680A936674932B358";
 
         public void ProcessRequest()
@@ -45,11 +45,12 @@ namespace XZMY.Manage.Web.Controllers
 
                 var doc = new XmlDocument();
                 doc.LoadXml(postXmlstr);
+
                 ResponseMessage(doc);
             }
             catch (Exception ex)
             {
-                LogHelper.LogException("ProcessRequest 异常", ex.StackTrace, LogLevel.Error, ex);
+                LogHelper.LogException("WeixinController 异常", ex.Message, LogLevel.Debug, ex);
             }
         }
 
@@ -68,6 +69,7 @@ namespace XZMY.Manage.Web.Controllers
         {
             var content = "";
             var type = WeixinXml.GetFromXml(doc, "MsgType");
+            var text = WeixinXml.GetFromXml(doc, "Content");
 
             switch (type)
             {
@@ -80,29 +82,24 @@ namespace XZMY.Manage.Web.Controllers
                 case "CLICK":
                     break;
                 case "text":
-                    var text = WeixinXml.GetFromXml(doc, "Content");
-                    if (text == "查余额" || text == "余额")
-                    {
-                        content = "余额查询中";
-                    }
-                    else if (text == "时间" || text == "几点了")
-                    {
-                        content = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                    }
-                    else if (text == "作者")
-                    {
-                        content = "Xiaoping.Liu";
-                    }
+                    content = AutoReplyMessageService.Reply(doc);
                     break;
                 default:
                     break;
             }
-            var result = WeixinXml.CreateTextMessage(doc, content);
-            LogHelper.Log("ProcessRequest 日志：" + type, result, LogLevel.Debug);
-            Response.Write(result);
-            Response.Flush();
+
+            LogHelper.Log("WeixinController 日志：" + type, "说：“" + text + "”  Reply：" + content, LogLevel.Debug);
+
+            if (!string.IsNullOrWhiteSpace(content))
+            {
+                var result = WeixinXml.CreateTextMessage(doc, content);
+                Response.Write(result);
+                Response.Flush();
+            }
+            else Valid();
         }
 
+        //验证签名
         private bool CheckSignature()
         {
             string signature = (Request.QueryString["signature"] ?? "").ToString();
