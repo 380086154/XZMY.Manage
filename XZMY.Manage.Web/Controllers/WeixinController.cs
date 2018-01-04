@@ -11,6 +11,10 @@ using T2M.Common.DataServiceComponents.Data.Query;
 using T2M.Common.DataServiceComponents.Service;
 using XZMY.Manage.Model.DataModel;
 using System.Web.Security;
+using System.Xml;
+using XZMY.Manage.Service.Weixin.Tools;
+using XZMY.Manage.Service.Weixin;
+using XZMY.Manage.Log.Models;
 
 namespace XZMY.Manage.Web.Controllers
 {
@@ -22,37 +26,75 @@ namespace XZMY.Manage.Web.Controllers
         //开发者ID(AppID) - wxdfadf3e2ae2aeb01
         const string Token = "E17680A936674932B358";
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public WeixinController()
+        public void ProcessRequest()
         {
-            LoggedUserManager.Loginout();
+            try
+            {
+                var stream = Request.InputStream;
+                var byteArray = new byte[stream.Length];
+                stream.Read(byteArray, 0, (int)stream.Length);
+                var postXmlstr = System.Text.Encoding.UTF8.GetString(byteArray);
+
+                if (string.IsNullOrWhiteSpace(postXmlstr))
+                {
+                    Valid();
+                    return;
+                }
+
+                var doc = new XmlDocument();
+                doc.LoadXml(postXmlstr);
+
+                ResponseMessage(doc);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.LogException("WeixinController 异常", ex.Message, LogLevel.Debug, ex);
+
+            }
+        }
+        //无返回值
+        public void Valid()
+        {
+            var echostr = (Request["echoStr"] ?? "").ToString();
+            if (CheckSignature() && !string.IsNullOrWhiteSpace(echostr))
+            {
+                Response.Write(echostr);
+                Response.Flush();//推送...不然微信平台无法验证 Token
+            }
         }
 
-        //登录页
-        public ActionResult Index()
+        public void ResponseMessage(XmlDocument doc)
         {
-            var echoStr = (Request.QueryString["echoStr"] ?? "").ToString();
+            var content = "";
+            var type = WeixinXml.GetFromXml(doc, "MsgType");
+            var text = WeixinXml.GetFromXml(doc, "Content");
 
-            if (CheckSignature() && !string.IsNullOrEmpty(echoStr))
+            switch (type)
             {
-                Response.Write(echoStr);
-                Response.End();
+                case "event"://
+                    break;
+                case "subscribe"://订阅
+                    break;
+                case "unsubscribe"://取消订阅
+                    break;
+                case "CLICK":
+                    break;
+                case "text":
+                    content = AutoReplyMessageService.Reply(doc);
+                    break;
+                default:
+                    break;
             }
 
-            var weixin = new WeixinHandler(Request);
+            LogHelper.Log("WeixinController 日志：" + type, "说：“" + text + "”  Reply：" + content, LogLevel.Debug);
 
-            Response.Write("测试信息：" + echoStr);
-            Response.End();
-
-            //string responseMsg = weixin.Response();
-            //context.Response.Clear();
-            //context.Response.Charset = "UTF-8";
-            //context.Response.Write(responseMsg);
-            //context.Response.End();
-
-            return View();
+            if (!string.IsNullOrWhiteSpace(content))
+            {
+                var result = WeixinXml.CreateTextMessage(doc, content);
+                Response.Write(result);
+                Response.Flush();
+            }
+            else Valid();
         }
 
         //验证签名

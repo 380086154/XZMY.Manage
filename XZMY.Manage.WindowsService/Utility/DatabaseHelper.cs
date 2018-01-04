@@ -136,6 +136,7 @@ namespace XZMY.Manage.WindowsService
                 sbc.BatchSize = 20000;
                 sbc.DestinationTableName = tableName;
 
+                //缓存计划
                 //if (columnMappings.ContainsKey(tableName))
                 //    sbc.ColumnMappings.Add(columnMappings[tableName]);
                 //else

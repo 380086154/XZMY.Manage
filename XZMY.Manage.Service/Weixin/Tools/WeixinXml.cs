@@ -5,7 +5,7 @@ using System.Text;
 using System.Web;
 using System.Xml;
 
-namespace XZMY.Manage.Web.Controllers.Apis.Tools
+namespace XZMY.Manage.Service.Weixin.Tools
 {
     public static class WeixinXml
     {
@@ -29,6 +29,12 @@ namespace XZMY.Manage.Web.Controllers.Apis.Tools
             return (int)(dt - startTime).TotalSeconds;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="xmlDoc"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public static string GetFromXml(XmlDocument xmlDoc, string name)
         {
             var node = xmlDoc.SelectSingleNode("xml/" + name);
