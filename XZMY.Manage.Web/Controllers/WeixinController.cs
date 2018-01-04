@@ -24,6 +24,8 @@ namespace XZMY.Manage.Web.Controllers
     public class WeixinController : Controller
     {
         //开发者ID(AppID) - wxdfadf3e2ae2aeb01
+        //令牌(Token) - E17680A936674932B358
+        //消息加解密密钥(EncodingAESKey) - kHYlTj3tNzB2hprUeUf5bd6K8MMJfEa1wztACFyQJAr
         const string Token = "E17680A936674932B358";
 
         public void ProcessRequest()
@@ -49,9 +51,9 @@ namespace XZMY.Manage.Web.Controllers
             catch (Exception ex)
             {
                 LogHelper.LogException("WeixinController 异常", ex.Message, LogLevel.Debug, ex);
-
             }
         }
+
         //无返回值
         public void Valid()
         {
