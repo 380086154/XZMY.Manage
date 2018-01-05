@@ -9,6 +9,12 @@ namespace XZMY.Manage.Service.Weixin.Tools
 {
     public static class WeixinXml
     {
+        /// <summary>
+        /// 返回消息 Xml
+        /// </summary>
+        /// <param name="xml"></param>
+        /// <param name="content"></param>
+        /// <returns></returns>
         public static string CreateTextMessage(XmlDocument xml, string content)
         {
             var sb = new StringBuilder();

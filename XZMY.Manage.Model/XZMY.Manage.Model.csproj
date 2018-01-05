@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiResult.cs" />
+    <Compile Include="DataModel\zkkDto.cs" />
     <Compile Include="DataModel\HyxxDto.cs" />
     <Compile Include="DataModel\NewFolder1\Advisories\Advisory.cs" />
     <Compile Include="DataModel\NewFolder1\Agent\Agent.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="DataModel\SiteSetting\StudentTotalScore.cs" />
     <Compile Include="DataModel\SiteSetting\StudyBudget.cs" />
     <Compile Include="DataModel\User\UserRole.cs" />
+    <Compile Include="DataModel\CzkDto.cs" />
     <Compile Include="DataModel\XfxxDto.cs" />
     <Compile Include="Enum\EGradeRanking.cs" />
     <Compile Include="Enum\EMessageType.cs" />

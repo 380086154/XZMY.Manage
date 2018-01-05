@@ -32,7 +32,7 @@ namespace XZMY.Manage.Web.Controllers
         {
             return View();
         }
-        
+
         //登录
         public ActionResult AjaxLogin(VmLogin model)
         {
@@ -45,7 +45,9 @@ namespace XZMY.Manage.Web.Controllers
             var service = new CustomSearchService<UserAccount>();
             service.CustomConditions = new List<CustomCondition<UserAccount>>
             {
-                new CustomConditionPlus<UserAccount> { Operation = SqlOperation.Equals,Value = model.LoginName.Trim(),
+                new CustomConditionPlus<UserAccount> {
+                    Value = model.LoginName.Trim(),
+                    Operation = SqlOperation.Equals,
                     Member = new System.Linq.Expressions.Expression<Func<UserAccount, object>>[] {
                         m=>m.LoginName,m=>m.Mobile
                     }

@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using XZMY.Manage.Log.Models;
+using XZMY.Manage.Service.Customer;
+using XZMY.Manage.Service.Utils;
 using XZMY.Manage.Service.Weixin.Tools;
 
 namespace XZMY.Manage.Service.Weixin
@@ -20,8 +23,24 @@ namespace XZMY.Manage.Service.Weixin
         /// <returns></returns>
         public static string Reply(XmlDocument doc)
         {
-            var content = "";
-            var text = WeixinXml.GetFromXml(doc, "Content");
+            var content = "";//返回内容
+
+            var text = WeixinXml.GetFromXml(doc, "Content").Trim();
+
+            LogHelper.Log("查询余额 text：", text, LogLevel.Debug);
+
+            //查询余额
+            if ((text.Length == 11 && text.ToInt64(0) > 0) ||
+                (text.Length == 13 && text.Substring(0, 2).ToUpper() == "YE"))
+            {
+                var phoneNumber = text.Length == 13
+                                ? text.Substring(2, 11)
+                                : text;
+                LogHelper.Log("查询余额 日志：", phoneNumber, LogLevel.Debug);
+
+                var hyxxService = new HyxxService();
+                return hyxxService.GetDetailsByYddh(phoneNumber);
+            }
 
             switch (text)
             {

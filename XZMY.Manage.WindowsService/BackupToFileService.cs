@@ -280,7 +280,7 @@ namespace XZMY.Manage.WindowsService
             Log.Add("execute OnChanged event ChangeType = " + BranchNameDataId);
 
             //必须是 xfxx 在前面，在同步时会根据消费信息查询会员信息，为避免数据异常，所以待 xfxx 同步完成后再同步 hyxx
-            var dataTatbles = new string[] { "xfxx", "hyczk", "rz", "hyxx" };
+            var dataTatbles = new string[] { "xfxx", "hyczk", "rz","zkk", "czk", "hyxx" };
             var needSyncHykh = new List<string>();
 
             for (int i = 0; i < dataTatbles.Length; i++)

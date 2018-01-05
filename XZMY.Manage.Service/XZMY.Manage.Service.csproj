@@ -110,6 +110,9 @@
     <Compile Include="Auth\Models\ViewModel\VmModuleEdit.cs" />
     <Compile Include="Auth\Models\ViewModel\VmRoleEdit.cs" />
     <Compile Include="CurrentUserAccountModel.cs" />
+    <Compile Include="Customer\ZkkService.cs" />
+    <Compile Include="Customer\CzkService.cs" />
+    <Compile Include="Customer\HyxxService.cs" />
     <Compile Include="Handlers\Action\ActionCreateHandler.cs" />
     <Compile Include="Handlers\Action\ActionBaseModifyHandler.cs" />
     <Compile Include="Handlers\Action\ActionModifyHandler.cs" />
@@ -160,7 +163,6 @@
     <Compile Include="Weixin\Tools\WeixinXml.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Customer\" />
     <Folder Include="Handlers\NewFolder1\Planner\" />
     <Folder Include="Handlers\Sys\" />
   </ItemGroup>

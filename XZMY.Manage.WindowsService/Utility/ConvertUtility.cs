@@ -71,5 +71,37 @@ namespace System
         }
 
         #endregion
+
+        #region ToInt64
+
+        /// <summary>
+        /// 将 String 转换为 Int64
+        /// <para>注：如转换失败则返回null</para> 
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static Int64? ToInt64(this String str)
+        {
+            if (String.IsNullOrEmpty(str)) return null;
+            Int64 obj;
+            if (Int64.TryParse(str.Trim(), out obj))
+                return obj;
+            return null;
+        }
+
+        /// <summary>
+        /// 将 String 转换为 Int64，可设默认返回值
+        /// <para>注：如转换失败则返回用户传入值 defaultValue</para> 
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="defaultValue">为null时的默认返回值</param>
+        /// <returns></returns>
+        public static Int64 ToInt64(this String str, Int64 defaultValue)
+        {
+            var res = str.ToInt64();
+            return res == null ? defaultValue : res.Value;
+        }
+
+        #endregion
     }
 }

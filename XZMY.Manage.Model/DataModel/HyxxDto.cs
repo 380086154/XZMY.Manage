@@ -52,6 +52,9 @@ namespace XZMY.Manage.Model.DataModel
         public string lxdz { get; set; }
         public string qtxx { get; set; }
         public bool klx { get; set; }
+        /// <summary>
+        /// 卡类型名称
+        /// </summary>
         public string klxmc { get; set; }
         /// <summary>
         /// 会员级别
