@@ -47,7 +47,7 @@ namespace XZMY.Manage.Service.Customer
 
             if (result.Results.Count == 0)
             {
-                return "没有查询到会员卡信息";
+                return "没有查询到会员卡信息。如果已办理会员卡，请致电 18523038870 更新电话。";
             }
 
             var sb = new StringBuilder();
@@ -57,12 +57,6 @@ namespace XZMY.Manage.Service.Customer
 
             foreach (var item in result.Results)
             {
-                //var zkkDto = zkkService.GetById(item.id.ToString());//充值卡类型
-
-                //LogHelper.Log("查询余额 日志：", (zkkDto == null).ToString() +" id =  "+ item.id, LogLevel.Debug);
-
-                //if (zkkDto == null) continue;
-
                 sb.AppendFormat("\r\n{0} {1} 剩余 {2} 元", item.kmc, item.klxmc, item.knje.ToString("F2"));
             }
 

@@ -34,7 +34,7 @@ namespace T2M.Common.DataServiceComponents.Data.Impl.Query
 
 
             using (var conn = new SqlConnection(SqlServerHelper.CONNECTION_STRING))
-            { 
+            {
                 var c = (int)SqlServerHelper.ExecuteScalar(conn, CommandType.Text, countsql, sqlParameter);
 
                 using (var reader = SqlServerHelper.ExecuteReader(conn, CommandType.Text,
@@ -72,7 +72,7 @@ namespace T2M.Common.DataServiceComponents.Data.Impl.Query
                 }));
         }
 
-        private string GetOperation(SqlOperation m, int index, )
+        private string GetOperation(SqlOperation m, int index)
         {
             if (m == SqlOperation.Equals) return "=@value" + index;
             if (m == SqlOperation.Greater) return ">@value" + index;

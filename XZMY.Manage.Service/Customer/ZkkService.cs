@@ -42,8 +42,6 @@ namespace XZMY.Manage.Service.Customer
                 };
 
                 var result = service.Invoke();
-
-                LogHelper.Log("查询余额 日志：", result.Count.ToString(), LogLevel.Debug);
                 return result.FirstOrDefault();
             }
             catch (Exception ex)

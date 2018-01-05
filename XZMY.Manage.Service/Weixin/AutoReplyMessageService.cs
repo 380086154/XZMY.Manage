@@ -42,8 +42,14 @@ namespace XZMY.Manage.Service.Weixin
                 return hyxxService.GetDetailsByYddh(phoneNumber);
             }
 
-            switch (text)
+            switch (text.ToLower())
             {
+                case "？":
+                case "?":
+                case "help":
+                case "帮助":
+                    content = "系统功能\r\n1.回复手机号查询余额;";
+                    break;
                 case "谁":
                 case "是谁":
                 case "你是谁":
@@ -58,7 +64,10 @@ namespace XZMY.Manage.Service.Weixin
                 case "几点了":
                     content = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                     break;
+                case "营业额":
                 case "今日营业额":
+
+                    //break;
                 case "本周营业额":
                 case "本月营业额":
                 case "当月营业额":
@@ -66,7 +75,7 @@ namespace XZMY.Manage.Service.Weixin
                 case "去年年营业额":
                 case "累计营业额":
                 case "猜数字":
-                    content = "功能开发中。。。";
+                    content = "功能研发中。。。";
                     break;
                 case "作者":
                     content = "Xiaoping.Liu";
