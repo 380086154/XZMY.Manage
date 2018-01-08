@@ -48,7 +48,8 @@ namespace XZMY.Manage.Service.Weixin
                 case "?":
                 case "help":
                 case "帮助":
-                    content = "系统功能\r\n1.回复手机号查询余额;";
+                case "功能":
+                    content = "功能清单\r\n1.回复手机号查询余额;";
                     break;
                 case "谁":
                 case "是谁":
@@ -58,7 +59,7 @@ namespace XZMY.Manage.Service.Weixin
                     break;
                 case "余额":
                 case "查余额":
-                    content = "余额查询中";
+                    content = "告诉我您的手机号，我帮您查一查。";
                     break;
                 case "时间":
                 case "几点了":

@@ -57,6 +57,12 @@ namespace XZMY.Manage.Web
 
             #endregion
 
+            #region 定期检查 Access_Token
+
+
+
+            #endregion
+
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

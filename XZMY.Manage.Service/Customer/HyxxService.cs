@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using T2M.Common.DataServiceComponents.Data.Query;
+using T2M.Common.DataServiceComponents.Data.Query.Interface;
 using T2M.Common.DataServiceComponents.Service;
 using XZMY.Manage.Log.Models;
 using XZMY.Manage.Model.DataModel;
@@ -18,11 +19,11 @@ namespace XZMY.Manage.Service.Customer
     public class HyxxService
     {
         /// <summary>
-        /// 根据会员电话返回 余额 信息
+        /// 根据会员电话查询 会员信息
         /// </summary>
         /// <param name="yddh"></param>
         /// <returns></returns>
-        public string GetDetailsByYddh(string yddh)
+        public PagedResult<HyxxDto> GetByYddh(string yddh)
         {
             var service = new CustomSearchWithPaginationService<HyxxDto>
             {
@@ -43,11 +44,20 @@ namespace XZMY.Manage.Service.Customer
                 SortType = T2M.Common.DataServiceComponents.Data.Query.Interface.SortType.Desc
             };
 
-            var result = service.Invoke();
+            return service.Invoke();
+        }
 
+        /// <summary>
+        /// 根据会员电话返回 余额 信息
+        /// </summary>
+        /// <param name="yddh"></param>
+        /// <returns></returns>
+        public string GetDetailsByYddh(string yddh)
+        {
+            var result = GetByYddh(yddh);
             if (result.Results.Count == 0)
             {
-                return "没有查询到会员卡信息。如果已办理会员卡，请致电 18523038870 更新电话。";
+                return "没有查询到会员卡信息。\r\n如果已办理会员卡，请致电 18523038870 / 13609423790 更新信息。";
             }
 
             var sb = new StringBuilder();
@@ -57,7 +67,13 @@ namespace XZMY.Manage.Service.Customer
 
             foreach (var item in result.Results)
             {
-                sb.AppendFormat("\r\n{0} {1} 剩余 {2} 元", item.kmc, item.klxmc, item.knje.ToString("F2"));
+                var isCzk = item.klxmc.Contains("储值卡");//是否充值卡
+                var unit = isCzk ? "元" : "次";
+
+                sb.AppendFormat("\r\n{0}", item.kmc);
+                sb.AppendFormat(" {0} 剩余", item.klxmc);
+                sb.AppendFormat(" {0} ", item.knje.ToString("F" + (isCzk ? 2 : 0)));
+                sb.Append(unit);
             }
 
             return sb.ToString();
