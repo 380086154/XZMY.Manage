@@ -4,6 +4,9 @@ using System.Runtime.Serialization;
 
 namespace XZMY.Manage.Service.Utils.DataDictionary
 {
+    /// <summary>
+    /// 数据字典
+    /// </summary>
     [Serializable]
     [DataContract]
     public class DataDictionaryItem
@@ -33,7 +36,6 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
         /// </summary>
         [DataMember]
         public Boolean IsSystem { get; set; }
-
 
         /// <summary>
         /// 排序
@@ -69,4 +71,3 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
         public String Descr { get; set; }
     }
 }
-

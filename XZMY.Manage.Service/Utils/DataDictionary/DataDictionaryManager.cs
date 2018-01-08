@@ -12,18 +12,18 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
     /// </summary>
     public class DataDictionaryManager
     {
-        private static readonly String XmlDirectoryPath;
+        private static readonly string XmlDirectoryPath;
         private static readonly Dictionary<String, Dictionary<Guid, DataDictionaryItem>> DataCache;
 
         static DataDictionaryManager()
         {
             #region 初始化数据字典
+
             DataCache = new Dictionary<string, Dictionary<Guid, DataDictionaryItem>>();
             XmlDirectoryPath = AppDomain.CurrentDomain.BaseDirectory + "/App_Data/DataDictionary";
             if (!Directory.Exists(XmlDirectoryPath))
                 Directory.CreateDirectory(XmlDirectoryPath);
-
-
+            
             var xmlpaths = Directory.GetFiles(XmlDirectoryPath, "*.xml");
             foreach (var file in xmlpaths)
             {//读取所有分类
@@ -33,6 +33,7 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
                 }
                 catch { continue; }
             }
+            
             #endregion
         }
 
@@ -42,7 +43,7 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
         /// 从文件中读取数据
         /// </summary>
         /// <param name="filepath"></param>
-        private static void LoadDataFromFile(String filepath)
+        private static void LoadDataFromFile(string filepath)
         {
             FileInfo fi = new FileInfo(filepath);
 
@@ -75,7 +76,7 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
         /// 把数据保存回文件
         /// </summary>
         /// <param name="catagory"></param>
-        private static void SaveDataToFile(String catagory)
+        private static void SaveDataToFile(string catagory)
         {
             if (!DataCache.ContainsKey(catagory))
                 return;
@@ -114,19 +115,18 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
             if (!(Guid.TryParse(id, out gid)))
                 return null;
 
-            String name = node.Attributes["Name"].InnerText;
-            String ename = node.Attributes["EName"].InnerText;
-            String isdefaultstr = node.Attributes["Default"].InnerText;
-            String issysstr = node.Attributes["Sys"].InnerText;
-            String sort = node.Attributes["Sort"].InnerText;
-            String state = node.Attributes["State"].InnerText;
-            String descr = node.Attributes["Descr"].InnerText;
-            Boolean isdefault = false;
-            Boolean issys = false;
+            var name = node.Attributes["Name"].InnerText;
+            var ename = node.Attributes["EName"].InnerText;
+            var isdefaultstr = node.Attributes["Default"].InnerText;
+            var issysstr = node.Attributes["Sys"].InnerText;
+            var sort = node.Attributes["Sort"].InnerText;
+            var state = node.Attributes["State"].InnerText;
+            var descr = node.Attributes["Descr"].InnerText;
+            var isdefault = false;
+            var issys = false;
             Boolean.TryParse(isdefaultstr, out isdefault);
             Boolean.TryParse(issysstr, out issys);
-
-
+            
             var data = new DataDictionaryItem()
             {
                 DataId = gid,
@@ -148,7 +148,7 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
         /// 分类列表
         /// </summary>
         /// <returns></returns>
-        public static List<String> GetCatagories()
+        public static List<string> GetCatagories()
         {
             return DataCache.Keys.ToList();
         }
@@ -172,7 +172,7 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static Dictionary<Guid, DataDictionaryItem> GetCatagory(String key)
+        public static Dictionary<Guid, DataDictionaryItem> GetCatagory(string key)
         {
             return !DataCache.ContainsKey(key) ? null
                 : DataCache[key].Values.ToDictionary(m => m.DataId);
@@ -193,7 +193,7 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static Boolean ContainsCatagory(String key)
+        public static Boolean ContainsCatagory(string key)
         {
             return DataCache.ContainsKey(key);
         }
@@ -204,7 +204,7 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
         /// <param name="key">数据字典称</param>
         /// <param name="gid">数据字典项Id</param>
         /// <returns></returns>
-        public static DataDictionaryItem GetDataById(String key, Guid gid)
+        public static DataDictionaryItem GetDataById(string key, Guid gid)
         {
             return !DataCache.ContainsKey(key) ? null
                 : DataCache[key].Values.FirstOrDefault(m => m.DataId == gid);
@@ -228,7 +228,7 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
         /// <param name="key"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static List<DataDictionaryItem> GetDataByName(String key, String name)
+        public static List<DataDictionaryItem> GetDataByName(string key, string name)
         {
             return GetDataByName(key, name, false);
         }
@@ -240,7 +240,7 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
         /// <param name="name"></param>
         /// <param name="fuzzysearch"></param>
         /// <returns></returns>
-        public static List<DataDictionaryItem> GetDataByName(String key, String name, Boolean fuzzysearch)
+        public static List<DataDictionaryItem> GetDataByName(string key, string name, bool fuzzysearch)
         {
             if (!fuzzysearch)
                 return !DataCache.ContainsKey(key) ? new List<DataDictionaryItem>()
@@ -255,7 +255,7 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
         /// <param name="key"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        private static List<DataDictionaryItem> GetDataByFuzzySearchName(String key, String name)
+        private static List<DataDictionaryItem> GetDataByFuzzySearchName(string key, string name)
         {
             return !DataCache.ContainsKey(key) ? new List<DataDictionaryItem>()
                 : DataCache[key].Values.Where(m => m.Name.Contains(name)).ToList();
@@ -267,7 +267,7 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
         /// <param name="catagory">数据字典类型名称</param>
         /// <param name="data">数据字典项</param>
         /// <returns></returns>
-        public static Boolean SaveOrUpdateData(String catagory, DataDictionaryItem data)
+        public static Boolean SaveOrUpdateData(string catagory, DataDictionaryItem data)
         {
             SaveOrUpdateData(catagory, new DataDictionaryItem[] { data });
 
@@ -280,7 +280,7 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
         /// <param name="catagoryName">数据字典类型名称</param>
         /// <param name="datalist">数据字典项集合</param>
         /// <returns></returns>
-        public static Boolean SaveOrUpdateData(String catagoryName, IEnumerable<DataDictionaryItem> datalist)
+        public static Boolean SaveOrUpdateData(string catagoryName, IEnumerable<DataDictionaryItem> datalist)
         {
             if (!DataCache.ContainsKey(catagoryName))
                 AddCatagory(catagoryName);
@@ -299,7 +299,7 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
         /// </summary>
         /// <param name="catagoryName">数据字典称</param>
         /// <param name="data">数据字典项</param>
-        public static void RemoveData(String catagoryName, DataDictionaryItem data)
+        public static void RemoveData(string catagoryName, DataDictionaryItem data)
         {
             RemoveData(catagoryName, new DataDictionaryItem[] { data });
         }
@@ -325,7 +325,7 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
         /// 新增【数据字典】
         /// </summary>
         /// <param name="catagoryName">数据字典数据字典称</param>
-        public static void AddCatagory(String catagoryName)
+        public static void AddCatagory(string catagoryName)
         {
             if (DataCache.ContainsKey(catagoryName))
                 return;
@@ -352,7 +352,7 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static IList<DataDictionaryItem> SearchByName(String name)
+        public static IList<DataDictionaryItem> SearchByName(string name)
         {
             var result = new List<DataDictionaryItem>();
             DataCache.Foreach(kv => result.AddRange(kv.Value.Where(v => v.Value.Name.Contains(name)).Select(v => v.Value)));
@@ -373,9 +373,8 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
 
             return result;
         }
-
-
-        private static Boolean ValidFuzzySearch(DataDictionaryItem item, String name)
+        
+        private static Boolean ValidFuzzySearch(DataDictionaryItem item, string name)
         {
             return item.Name.Contains(name) ||
                 item.EName.Contains(name);

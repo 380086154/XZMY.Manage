@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using XZMY.Manage.Service.Utils.DataDictionary;
+using XZMY.Manage.Service.Weixin;
 using XZMY.Manage.Web.App_Start;
 
 namespace XZMY.Manage.Web
@@ -59,7 +60,7 @@ namespace XZMY.Manage.Web
 
             #region 定期检查 Access_Token
 
-
+            AccessTokenService.Watch();
 
             #endregion
 

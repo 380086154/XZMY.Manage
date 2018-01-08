@@ -157,6 +157,7 @@
     <Compile Include="Utils\StudentPlanExporter.cs" />
     <Compile Include="WebApiHandlers\Members\MemberCreateHandler.cs" />
     <Compile Include="WebApiHandlers\Order\IncomeCreateHandler.cs" />
+    <Compile Include="Weixin\AccessTokenService.cs" />
     <Compile Include="Weixin\AutoReplyMessageService.cs" />
     <Compile Include="Weixin\Message\MessageBase.cs" />
     <Compile Include="Weixin\Tools\TuringRobot.cs" />

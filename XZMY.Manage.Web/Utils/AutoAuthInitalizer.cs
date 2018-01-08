@@ -16,7 +16,6 @@ namespace XZMY.Manage.Web.Utils
     {
         public static void CreateActionData()
         {
-
             var ass = Assembly.GetExecutingAssembly();
             var ctrls = ass.GetTypes().Where(m => m.IsSubclassOf(typeof(ControllerBase)));
             var attrs = new List<AutoCreateAuthActionAttribute>();

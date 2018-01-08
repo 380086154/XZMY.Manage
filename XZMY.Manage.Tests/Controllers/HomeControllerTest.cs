@@ -20,7 +20,7 @@ namespace XZMY.Manage.Tests.Controllers
     public class HomeControllerTest
     {
         /// <summary>
-        /// 生成
+        /// 生成Action
         /// </summary>
         [TestMethod]
         public void T1()

@@ -27,14 +27,11 @@ namespace XZMY.Manage.Service.WebApiHandlers.Order
             {
                 var datamodel = Model.CreateNewDataModel();
                 datamodel.SetActorInfomation(LoggedUserManager.GetCurrentUserAccount().GetActorInfomationSynchronizer());
-
-
-
+                
                 using (var wrapper = new SqlTransactionWrapper())
                 {
                     try
                     {
-
                         if (Model.OrderType == OrderType.Course)
                         {
                             var service = new GetEntityByIdService<OrderCourse>(Model.OrderId);
@@ -55,8 +52,6 @@ namespace XZMY.Manage.Service.WebApiHandlers.Order
 
                             var mservice = new BaseUpdateService<OrderCourse>(order);
                             mservice.Invoke(wrapper.Transaction);
-
-
                         }
                         else if (Model.OrderType == OrderType.Project)
                         {
@@ -76,9 +71,6 @@ namespace XZMY.Manage.Service.WebApiHandlers.Order
                         }
                         var acreateservice = new BaseCreateService<InCome>(datamodel);
                         acreateservice.Invoke(wrapper.Transaction);
-
-
-
                     }
                     catch
                     {
