@@ -328,9 +328,31 @@ namespace System
         /// <param name="date">日期</param>
         /// <param name="format">格式，默认为：yyyy-MM-dd</param>
         /// <returns></returns>
-        public static string ToStringFormat(this String date, string format = "yyyy-MM-dd")
+        public static string ToStringFormat(this string date, string format = "yyyy-MM-dd")
         {
             return date.ToDateTime(DateTimePlus.GetMinDateTime()).ToString(format);
+        }
+
+        /// <summary>
+        /// 将 DataTime 转为 int
+        /// </summary>
+        /// <param name="date">日期</param>
+        /// <returns></returns>
+        public static int ToInt(this DateTime date)
+        {
+            var dateTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
+            return (int)(date - dateTime).TotalSeconds;
+        }
+
+        /// <summary>
+        /// 将 int 转给 DateTime
+        /// </summary>
+        /// <param name="totalSeconds">时间戳</param>
+        /// <returns></returns>
+        public static DateTime ToDateTime(this int seconds)
+        {
+            var date = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));            
+            return date.AddSeconds(seconds);
         }
 
         #endregion

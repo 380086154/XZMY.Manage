@@ -29,9 +29,14 @@ namespace XZMY.Manage.Service.Weixin.Tools
             return sb.ToString();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <returns></returns>
         public static int DateTime2Int(DateTime dt)
         {
-            DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1));
+            DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
             return (int)(dt - startTime).TotalSeconds;
         }
 
@@ -48,7 +53,7 @@ namespace XZMY.Manage.Service.Weixin.Tools
             {
                 return node.ChildNodes[0].Value;
             }
-            return "";
+            return string.Empty;
         }
     }
 }

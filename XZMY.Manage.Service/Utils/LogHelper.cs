@@ -19,6 +19,16 @@ namespace XZMY.Manage.Service.Utils
         /// </summary>
         /// <param name="title"></param>
         /// <param name="message"></param>
+        public static void Log(string title, string message)
+        {
+            Log(title, message, LogLevel.Debug);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="message"></param>
         /// <param name="level"></param>
         public static void Log(string title, string message, LogLevel level)
         {
@@ -36,6 +46,17 @@ namespace XZMY.Manage.Service.Utils
 
             var logger = new SqlServerLogger();
             logger.AddLog(log);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="message"></param>
+        /// <param name="ex"></param>
+        public static void LogException(string title, string message, Exception ex)
+        {
+            LogException(title, message, LogLevel.Error, ex);
         }
 
         /// <summary>

@@ -160,6 +160,7 @@
     <Compile Include="Weixin\AccessTokenService.cs" />
     <Compile Include="Weixin\AutoReplyMessageService.cs" />
     <Compile Include="Weixin\Message\MessageBase.cs" />
+    <Compile Include="Weixin\Tools\HttpRequestUtil.cs" />
     <Compile Include="Weixin\Tools\TuringRobot.cs" />
     <Compile Include="Weixin\Tools\WeixinXml.cs" />
   </ItemGroup>

@@ -287,8 +287,9 @@
     <Compile Include="Content\Custom\UEditor\net\App_Code\PathFormater.cs" />
     <Compile Include="Content\Custom\UEditor\net\App_Code\UploadHandler.cs" />
     <Compile Include="Controllers\Apis\GuessNumberController.cs" />
+    <Compile Include="Controllers\Apis\WeixinController.cs" />
     <Compile Include="Controllers\WeixinController.cs" />
-    <Compile Include="Controllers\Member\HyxxController.cs" />
+    <Compile Include="Controllers\Customer\HyxxController.cs" />
     <Compile Include="Controllers\NewFolder1\Albums\AlbumsController.cs" />
     <Compile Include="Controllers\Apis\ApiControllerBase.cs" />
     <Compile Include="Controllers\Apis\CustomerController.cs" />
@@ -6907,6 +6908,9 @@
       <Project>{24d5761f-f4f4-4984-a787-e819fb2764d1}</Project>
       <Name>XZMY.Manage.Service</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

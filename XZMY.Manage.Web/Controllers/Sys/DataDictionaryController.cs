@@ -9,6 +9,7 @@ using XZMY.Manage.Model.ViewModel.Program;
 using XZMY.Manage.Model.ViewModel.SiteSetting;
 using XZMY.Manage.Service.Auth.Attributes;
 using XZMY.Manage.Service.Utils.DataDictionary;
+using XZMY.Manage.Service.Weixin;
 using XZMY.Manage.Web.Controllers.Program;
 using XZMY.Manage.Web.Controllers.SiteSetting;
 
@@ -19,8 +20,15 @@ namespace XZMY.Manage.Web.Controllers.Sys
         [AutoCreateAuthAction(Name = "系统参数配置", Code = "SystemList", ModuleCode = "SYSTEM", Url = "/DataDictionary/Index", Visible = true)]
         public ActionResult Index()
         {
+            ViewData["AccessToken"] = AccessTokenService.GetAccessToken();
             return View();
         }
+
+        public ActionResult List()
+        {
+            return View();
+        }
+
         /// <summary>
         /// 数据字典分类
         /// </summary>
@@ -36,7 +44,7 @@ namespace XZMY.Manage.Web.Controllers.Sys
         /// <returns></returns>
         public ActionResult DataDictionaryItemList(String CatagoryKey)
         {
-            
+
             return View();
         }
         /// <summary>
@@ -45,7 +53,7 @@ namespace XZMY.Manage.Web.Controllers.Sys
         /// <param name="model"></param>
         /// <param name="CatagoryKey">数据字典类型KEY</param>
         /// <returns></returns>
-        public ActionResult AjaxDataDictionaryItemList(VmSearchBase model,String CatagoryKey,Int32? State)
+        public ActionResult AjaxDataDictionaryItemList(VmSearchBase model, String CatagoryKey, Int32? State)
         {
             int iState = 1;
             if (State.HasValue)
@@ -53,7 +61,7 @@ namespace XZMY.Manage.Web.Controllers.Sys
                 iState = State.Value;
             }
             List<DataDictionaryItem> listItem = new List<DataDictionaryItem>();
-            var listCatagory = DataDictionaryManager.GetCatagories(m => m.Key== CatagoryKey);
+            var listCatagory = DataDictionaryManager.GetCatagories(m => m.Key == CatagoryKey);
             Dictionary<string, List<DataDictionaryItem>> list = new Dictionary<string, List<DataDictionaryItem>>();
             foreach (var file in listCatagory)
             {
@@ -82,6 +90,7 @@ namespace XZMY.Manage.Web.Controllers.Sys
             }
             return View(model);
         }
+
         public ActionResult AjaxDataDictionaryItem(DataDictionaryItem model)
         {
             String CatagoryKey = "";
@@ -109,11 +118,13 @@ namespace XZMY.Manage.Web.Controllers.Sys
                 return Json(new { success = b, Id = model.DataId, errors = GetErrors() });
             }
         }
+
         public ActionResult DefaultDataPage()
         {
             DefaultData();
             return Redirect("/DataDictionary/Index/");
         }
+
         /// <summary>
         /// 恢复默认数据 初始化数据
         /// </summary>

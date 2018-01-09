@@ -12,6 +12,9 @@ using System.Web;
 
 namespace T2M.Common.Utils.Helper
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class WebHelper
     {
         #region ResolveUrl(解析相对Url)

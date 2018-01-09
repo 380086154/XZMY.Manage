@@ -88,7 +88,6 @@ namespace XZMY.Manage.Web.Controllers
         //退出
         public ActionResult AjaxLoginout()
         {
-
             return View();
         }
     }

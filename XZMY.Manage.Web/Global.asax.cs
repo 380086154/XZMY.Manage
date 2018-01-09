@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using XZMY.Manage.Service.Utils;
 using XZMY.Manage.Service.Utils.DataDictionary;
 using XZMY.Manage.Service.Weixin;
 using XZMY.Manage.Web.App_Start;
@@ -58,11 +59,7 @@ namespace XZMY.Manage.Web
 
             #endregion
 
-            #region 定期检查 Access_Token
-
-            AccessTokenService.Watch();
-
-            #endregion
+            AccessTokenService.Watch();//定期检查 Access_Token
 
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
@@ -95,16 +92,16 @@ namespace XZMY.Manage.Web
 
                 if (DateTime.Now.Hour == 4)
                 {
-                    //Log4NetPlus.Info("每日自动站点回收", "Application_End");
+                    LogHelper.Log("Application_End", "每日自动站点回收" + url);
                 }
                 else
                 {
-                    //Log4NetPlus.Info("非计划内的站点回收" + url, "Application_End");
+                    LogHelper.Log("Application_End", "非计划内的站点回收" + url);
                 }
             }
             catch (Exception ex)
             {
-                //Log4NetPlus.Error(ex, "站点回收时逻辑异常", "Application_End");
+                LogHelper.LogException("Application_End", "站点回收时逻辑异常", ex);
             }
         }
     }
