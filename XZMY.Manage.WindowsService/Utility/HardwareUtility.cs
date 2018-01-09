@@ -132,7 +132,7 @@ namespace XZMY.Manage.WindowsService.Utility
                 var ipArray = new string[ipCollection.Count];
                 ipCollection.CopyTo(ipArray, 0);
 
-                return string.Join("", ipArray);//返回字IPv4符串
+                return string.Join(",", ipArray);//返回字IPv4符串
             }
             catch
             {

@@ -8,6 +8,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using T2M.Common.DataServiceComponents.Service;
+using T2M.Common.Utils.Helper;
+using XZMY.Manage.Service.Utils;
 using XZMY.Manage.Service.Utils.DataDictionary;
 using XZMY.Manage.Service.Weixin.Tools;
 
@@ -71,6 +73,19 @@ namespace XZMY.Manage.Service.Weixin
             }
 
             return TokenExpired() ? GetNewAccessToken() : AccessToken.Split('#')[0];
+        }
+
+        /// <summary>
+        /// 获取 access_token 过期时间
+        /// </summary>
+        /// <returns></returns>
+        public static DateTime GetAccessTokenExpired()
+        {
+            if (!string.IsNullOrWhiteSpace(AccessToken))
+            {
+                return AccessToken.Split("#")[1].ToDateTime().Value;
+            }
+            return DateTimePlus.GetMinDateTime();
         }
 
         #region Private method
@@ -146,6 +161,8 @@ namespace XZMY.Manage.Service.Weixin
 
             var date = DateTime.Now.AddSeconds(HttpRequestUtil.GetJsonValue(str, "expires_in").ToInt32(0) - 200);
             AccessToken = token + "#" + date;
+
+            LogHelper.Log(AccessToken, "获取新 access_token：" + date);
 
             return token;
         }
