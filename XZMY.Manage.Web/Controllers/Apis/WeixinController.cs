@@ -14,13 +14,23 @@ namespace XZMY.Manage.Web.Controllers.Apis
     public class WeixinController : ApiControllerBase
     {
         /// <summary>
-        /// 获取服务器当前时间
+        /// 获取 access_token
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         public ApiResult GetAccessToken()
         {
             return Success("AccessToken", AccessTokenService.GetAccessToken());
+        }
+
+        /// <summary>
+        /// 获取 access_token 过期时间
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ApiResult GetAccessTokenExpired()
+        {
+            return Success("Expired", AccessTokenService.GetAccessTokenExpired());
         }
     }
 }

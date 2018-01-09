@@ -67,8 +67,7 @@ namespace XZMY.Manage.Service.Weixin
                 if (request != null && !request.Url.Host.Contains("xzmy.site"))
                 {
                     var url = "http://www.xzmy.site/api/Weixin/GetAccessToken";
-                    var str = HttpRequestUtil.RequestUrl(url, "GET");
-                    return HttpRequestUtil.GetJsonValue(str, "Value");
+                    return GetServerAccessTokenInfo(current, url);
                 }
             }
 
@@ -81,6 +80,18 @@ namespace XZMY.Manage.Service.Weixin
         /// <returns></returns>
         public static DateTime GetAccessTokenExpired()
         {
+            var current = HttpContext.Current;
+            if (current != null)
+            {//如果是在本地调试，则尝试获取远程服务器中的 access_token
+                var request = current.Request;
+                if (request != null && !request.Url.Host.Contains("xzmy.site"))
+                {
+                    var url = "http://www.xzmy.site/api/Weixin/GetAccessTokenExpired";
+                    var date = GetServerAccessTokenInfo(current, url).ToDateTime();
+                    return date.HasValue ? date.Value : DateTimePlus.GetMinDateTime();
+                }
+            }
+            
             if (!string.IsNullOrWhiteSpace(AccessToken))
             {
                 return AccessToken.Split("#")[1].ToDateTime().Value;
@@ -165,6 +176,16 @@ namespace XZMY.Manage.Service.Weixin
             LogHelper.Log(AccessToken, "获取新 access_token：" + date);
 
             return token;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private static string GetServerAccessTokenInfo(HttpContext current, string url)
+        {
+            var str = HttpRequestUtil.RequestUrl(url, "GET");
+            return HttpRequestUtil.GetJsonValue(str, "Value");
         }
 
         #endregion
