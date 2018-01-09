@@ -1,7 +1,6 @@
 ﻿using System;
 using XZMY.Manage.Model.Enum;
 using XZMY.Manage.Model.ServiceModel.Plan;
-using XZMY.Manage.Web.Controllers.Planners;
 
 namespace XZMY.Manage.Web
 {

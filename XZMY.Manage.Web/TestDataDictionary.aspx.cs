@@ -5,8 +5,6 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using XZMY.Manage.Model.ServiceModel.Plan;
-using XZMY.Manage.Web.Controllers.Planners;
-using XZMY.Manage.Web.Controllers.SiteSetting;
 
 namespace XZMY.Manage.Web
 {
@@ -557,8 +555,7 @@ namespace XZMY.Manage.Web
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            PlanController bllPlan = new PlanController();
-            bllPlan.PlanStudnetGrade(Guid.Parse("92D69319-C014-4EBA-8784-02F56B5CD790"));
+            
         }
     }
 }
