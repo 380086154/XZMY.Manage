@@ -27,7 +27,7 @@ namespace XZMY.Manage.Web.Controllers.Question
             return View();
         }
 
-        [AutoCreateAuthAction(Name = "问题管理", Code = "QuestionList", ModuleCode = "PLANNER", Url = "/Question/List", Visible = true)]
+        //[AutoCreateAuthAction(Name = "问题管理", Code = "QuestionList", ModuleCode = "PLANNER", Url = "/Question/List", Visible = true)]
         public ActionResult List()
         {
             return View();

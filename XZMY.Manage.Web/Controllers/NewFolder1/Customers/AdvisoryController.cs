@@ -18,7 +18,7 @@ namespace XZMY.Manage.Web.Controllers.Customers
     public class AdvisoryController : ControllerBase
     {
         //列表
-        [AutoCreateAuthAction(Name = "咨询列表", Code = "AdvisoryList", ModuleCode = "ADVISORY", Url = "/Advisory/List", Visible = true, Remark = "")]
+        //[AutoCreateAuthAction(Name = "咨询列表", Code = "AdvisoryList", ModuleCode = "ADVISORY", Url = "/Advisory/List", Visible = true, Remark = "")]
         public ActionResult List()
         {
             return View();
@@ -26,7 +26,7 @@ namespace XZMY.Manage.Web.Controllers.Customers
 
         //创建/编辑
         [HttpGet]
-        [AutoCreateAuthAction(Name = "创建咨询", Code = "AdvisoryEdit", ModuleCode = "ADVISORY", Url = "/Advisory/Edit", Visible = true, Remark = "")]
+        //[AutoCreateAuthAction(Name = "创建咨询", Code = "AdvisoryEdit", ModuleCode = "ADVISORY", Url = "/Advisory/Edit", Visible = true, Remark = "")]
         public ActionResult Edit(Guid? id)
         {
             var entity = new Advisory();

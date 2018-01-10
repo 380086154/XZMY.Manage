@@ -19,6 +19,11 @@ namespace XZMY.Manage.Service.Customer
     public class HyxxService
     {
         /// <summary>
+        /// 控制手机号先后顺序，避免所有用户集中拨打同一个号码
+        /// </summary>
+        public bool PhoneControl = false;
+
+        /// <summary>
         /// 根据会员电话查询 会员信息
         /// </summary>
         /// <param name="yddh"></param>
@@ -57,7 +62,9 @@ namespace XZMY.Manage.Service.Customer
             var result = GetByYddh(yddh);
             if (result.Results.Count == 0)
             {
-                return "没有查询到会员卡信息。\r\n如果已办理会员卡，请致电 18523038870 / 13609423790 更新信息。";
+                var r = new Random();
+                var phone = string.Format(PhoneControl ? "{0} / {1}" : "{1} / {0}", "13609423790", "18523038870");
+                return "没有查询到会员卡信息。\r\n如果已办理会员卡，请致电 " + phone + "更新信息。";
             }
 
             var sb = new StringBuilder();
@@ -68,12 +75,11 @@ namespace XZMY.Manage.Service.Customer
             foreach (var item in result.Results)
             {
                 var isCzk = item.klxmc.Contains("储值卡");//是否充值卡
-                var unit = isCzk ? "元" : "次";
 
                 sb.AppendFormat("\r\n{0}", item.kmc);
                 sb.AppendFormat(" {0} 剩余", item.klxmc);
                 sb.AppendFormat(" {0} ", item.knje.ToString("F" + (isCzk ? 2 : 0)));
-                sb.Append(unit);
+                sb.Append(isCzk ? "元" : "次");
             }
 
             return sb.ToString();

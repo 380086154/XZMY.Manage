@@ -84,7 +84,7 @@ namespace XZMY.Manage.Web.Controllers.OnlineAssessment
         #endregion
 
         #region Security
-        [AutoCreateAuthAction(Name = "试卷列表", Code = "OnlineAssessmentSecurityList", ModuleCode = "OnlineAssessment", Url = "/OnlineAssessment/SecurityList", Visible = true)]
+        //[AutoCreateAuthAction(Name = "试卷列表", Code = "OnlineAssessmentSecurityList", ModuleCode = "OnlineAssessment", Url = "/OnlineAssessment/SecurityList", Visible = true)]
         public ActionResult SecurityList()
         {
             return View();

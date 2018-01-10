@@ -24,7 +24,7 @@ namespace XZMY.Manage.Web.Controllers.OnlineAssessment
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [AutoCreateAuthAction(Name = "编辑答题卡", Code = "OnlineTranscriptEdit", ModuleCode = "OnlineAssessment", Url = "/OnlineTranscript/Edit", Visible = true)]
+        //[AutoCreateAuthAction(Name = "编辑答题卡", Code = "OnlineTranscriptEdit", ModuleCode = "OnlineAssessment", Url = "/OnlineTranscript/Edit", Visible = true)]
         public ActionResult Edit(Guid? id)
         {
             var entity = new OnlineAssessmentTranscript();
@@ -42,7 +42,7 @@ namespace XZMY.Manage.Web.Controllers.OnlineAssessment
         /// 答题卡列表
         /// </summary>
         /// <returns></returns>
-        [AutoCreateAuthAction(Name = "答题卡列表", Code = "OnlineTranscriptList", ModuleCode = "OnlineAssessment", Url = "/OnlineTranscript/List", Visible = true)]
+        //[AutoCreateAuthAction(Name = "答题卡列表", Code = "OnlineTranscriptList", ModuleCode = "OnlineAssessment", Url = "/OnlineTranscript/List", Visible = true)]
         public ActionResult List()
         {
             return View();
@@ -54,7 +54,7 @@ namespace XZMY.Manage.Web.Controllers.OnlineAssessment
         /// <param name="id">答题卡ID</param>
         /// <param name="index">当前查询第index题</param>
         /// <returns></returns>
-        [AutoCreateAuthAction(Name = "答案查看列表", Code = "OnlineTranscriptAnswerList", ModuleCode = "OnlineAssessment", Url = "/OnlineTranscript/AnswerList", Visible = true)]
+        //[AutoCreateAuthAction(Name = "答案查看列表", Code = "OnlineTranscriptAnswerList", ModuleCode = "OnlineAssessment", Url = "/OnlineTranscript/AnswerList", Visible = true)]
         public ActionResult AnswerList(Guid id, int index)
         {
             index = index <= 0 ? 1 : index;

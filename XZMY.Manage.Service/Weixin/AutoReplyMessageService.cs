@@ -16,6 +16,8 @@ namespace XZMY.Manage.Service.Weixin
     /// </summary>
     public class AutoReplyMessageService
     {
+        private static HyxxService hyxxService = new HyxxService();
+
         /// <summary>
         /// 回复
         /// </summary>
@@ -38,7 +40,7 @@ namespace XZMY.Manage.Service.Weixin
                                 : text;
                 LogHelper.Log("查询余额 日志：", phoneNumber, LogLevel.Debug);
 
-                var hyxxService = new HyxxService();
+                hyxxService.PhoneControl = !hyxxService.PhoneControl;
                 return hyxxService.GetDetailsByYddh(phoneNumber);
             }
 
@@ -76,7 +78,7 @@ namespace XZMY.Manage.Service.Weixin
                 case "去年年营业额":
                 case "累计营业额":
                 case "猜数字":
-                    content = "功能研发中。。。";
+                    content = "功能准备中。。。";
                     break;
                 case "作者":
                     content = "Xiaoping.Liu";

@@ -25,13 +25,13 @@ namespace XZMY.Manage.Web.Controllers.Assessment
     /// </summary>
     public class AssessmentController : ControllerBase
     {
-        [AutoCreateAuthAction(Name = "题库管理", Code = "AssessmentList", ModuleCode = "EVALUATION", Url = "/Assessment/List", Visible = true, Remark = "")]
+        //[AutoCreateAuthAction(Name = "题库管理", Code = "AssessmentList", ModuleCode = "EVALUATION", Url = "/Assessment/List", Visible = true, Remark = "")]
         public ActionResult List()
         {
             return View();
         }
 
-        [AutoCreateAuthAction(Name = "回收站", Code = "AssessmentRecycledList", ModuleCode = "EVALUATION", Url = "/Assessment/RecycledList", Visible = true, Remark = "")]
+        //[AutoCreateAuthAction(Name = "回收站", Code = "AssessmentRecycledList", ModuleCode = "EVALUATION", Url = "/Assessment/RecycledList", Visible = true, Remark = "")]
         public ActionResult RecycledList()
         {
             return View();
@@ -40,7 +40,7 @@ namespace XZMY.Manage.Web.Controllers.Assessment
         /// 评估成绩单
         /// </summary>
         /// <returns></returns>
-        [AutoCreateAuthAction(Name = "评估成绩单", Code = "AssessmentAchievementList", ModuleCode = "EVALUATION", Url = "/Assessment/AchievementList", Visible = true, Remark = "")]
+        //[AutoCreateAuthAction(Name = "评估成绩单", Code = "AssessmentAchievementList", ModuleCode = "EVALUATION", Url = "/Assessment/AchievementList", Visible = true, Remark = "")]
         public ActionResult AchievementList()
         {
             return View();

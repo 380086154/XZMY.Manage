@@ -46,7 +46,7 @@ namespace XZMY.Manage.Web.Controllers.Sys
         }
         #endregion
         //列表
-        [AutoCreateAuthAction(Name = "地区管理", Code = "LocationList", ModuleCode = "SYSTEM", Url = "/Location/List", Visible = true, Remark = "")]
+        //[AutoCreateAuthAction(Name = "地区管理", Code = "LocationList", ModuleCode = "SYSTEM", Url = "/Location/List", Visible = true, Remark = "")]
         public ActionResult List(Guid? id)
         {
             var service = new CustomSearchService<Location>

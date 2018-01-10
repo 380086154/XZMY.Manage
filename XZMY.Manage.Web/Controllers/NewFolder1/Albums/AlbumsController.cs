@@ -19,7 +19,7 @@ namespace XZMY.Manage.Web.Controllers.Albums
     /// </summary>
     public class AlbumsController : ControllerBase
     {
-        [AutoCreateAuthAction(Name = "图片列表", Code = "ImageUploadList", ModuleCode = "SYSTEM", Url = "/Albums/List", Visible = true, Remark = "")]
+        //[AutoCreateAuthAction(Name = "图片列表", Code = "ImageUploadList", ModuleCode = "SYSTEM", Url = "/Albums/List", Visible = true, Remark = "")]
         public ActionResult List()
         {
             ViewData["imgpath"] = IMGPATH.Replace("\\", "/");
@@ -49,7 +49,7 @@ namespace XZMY.Manage.Web.Controllers.Albums
         }
         #endregion
         // GET: Album
-        [AutoCreateAuthAction(Name = "上传图片", Code = "ImageUpload", ModuleCode = "SYSTEM", Url = "/Albums/Upload", Visible = true, Remark = "")]
+        //[AutoCreateAuthAction(Name = "上传图片", Code = "ImageUpload", ModuleCode = "SYSTEM", Url = "/Albums/Upload", Visible = true, Remark = "")]
         public ActionResult Upload()
         {
             return View();

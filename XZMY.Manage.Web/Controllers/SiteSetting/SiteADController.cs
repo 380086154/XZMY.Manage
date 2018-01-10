@@ -22,7 +22,7 @@ namespace XZMY.Manage.Web.Controllers.SiteSetting
     /// </summary>
     public class SiteADController : ControllerBase
     {
-        [AutoCreateAuthAction(Name = "广告列表", Code = "SiteADList", ModuleCode = "AD", Url = "/SiteAD/List", Visible = true)]
+        //[AutoCreateAuthAction(Name = "广告列表", Code = "SiteADList", ModuleCode = "AD", Url = "/SiteAD/List", Visible = true)]
         public ActionResult List()
         {
             return View();
