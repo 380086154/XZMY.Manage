@@ -22,7 +22,7 @@ namespace XZMY.Manage.Service.Utils.Extendsions
             try
             {
                 if (vm.Modules == null) return null;
-                return vm.Modules.Split(",").Select(m => m.ToGuid()).Where(m => m != null).Select(m => m.Value).ToList();
+                return vm.Modules.Split(',').Select(m => m.ToGuid()).Where(m => m != null).Select(m => m.Value).ToList();
             }
             catch
             {
@@ -34,7 +34,7 @@ namespace XZMY.Manage.Service.Utils.Extendsions
             try
             {
                 if (vm.Modules == null) return null;
-                return vm.Actions.Split(",").Select(m => m.ToGuid()).Where(m => m != null).Select(m => m.Value).ToList();
+                return vm.Actions.Split(',').Select(m => m.ToGuid()).Where(m => m != null).Select(m => m.Value).ToList();
             }
             catch
             {
