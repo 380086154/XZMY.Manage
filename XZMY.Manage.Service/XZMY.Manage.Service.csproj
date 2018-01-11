@@ -145,6 +145,7 @@
     <Compile Include="Handlers\Weixin\WeixinHandler.cs" />
     <Compile Include="Project\ProjectCreateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sys\DatabaseManageService.cs" />
     <Compile Include="User\SearchUserService.cs" />
     <Compile Include="Utils\DataDictionary\DataDictionaryItem.cs" />
     <Compile Include="Utils\DataDictionary\DataDictionaryManager.cs" />
@@ -167,6 +168,7 @@
   <ItemGroup>
     <Folder Include="Handlers\NewFolder1\Planner\" />
     <Folder Include="Handlers\Sys\" />
+    <Folder Include="Sys\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

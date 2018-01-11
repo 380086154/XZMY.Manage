@@ -52,6 +52,7 @@
     <Compile Include="Query\Assessment\SearchSourceIdList.cs" />
     <Compile Include="Query\Module\ModifyActionOnModuleModified.cs" />
     <Compile Include="Query\Project\CreateProject.cs" />
+    <Compile Include="Query\Sys\DatabaseManage.cs" />
     <Compile Include="Query\User\SearchUser.cs" />
   </ItemGroup>
   <ItemGroup>

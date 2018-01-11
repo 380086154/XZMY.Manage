@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiResult.cs" />
+    <Compile Include="DataModel\BranchNameDto.cs" />
     <Compile Include="DataModel\zkkDto.cs" />
     <Compile Include="DataModel\HyxxDto.cs" />
     <Compile Include="DataModel\NewFolder1\Advisories\Advisory.cs" />

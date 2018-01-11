@@ -22,6 +22,9 @@ namespace XZMY.Manage.Web.Controllers.Sys
         {
             ViewData["AccessToken"] = AccessTokenService.GetAccessToken();
             ViewData["AccessTokenExpired"] = AccessTokenService.GetAccessTokenExpired().ToString("yyyy-MM-dd HH:mm:ss");
+
+            ViewData[""]
+
             return View();
         }
 

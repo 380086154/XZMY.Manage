@@ -52,6 +52,7 @@
     <Compile Include="Query\Assessment\ISearchSourceIdList.cs" />
     <Compile Include="Query\Module\IModifyActionOnModuleModified.cs" />
     <Compile Include="Query\Project\ICreateProject.cs" />
+    <Compile Include="Query\Sys\IDatabaseManage.cs" />
     <Compile Include="Query\Sys\ISearchLog.cs" />
     <Compile Include="Query\User\ISearchUser.cs" />
   </ItemGroup>
