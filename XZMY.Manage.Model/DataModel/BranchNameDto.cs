@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using T2M.CoastLine.Utils.Model.Attributes;
 using T2M.Common.Utils.ADONET.SQLServer;
 using T2M.Common.Utils.Models;
+using XZMY.Manage.Model.Enum;
 
 namespace XZMY.Manage.Model.DataModel
 {
@@ -14,9 +15,9 @@ namespace XZMY.Manage.Model.DataModel
     /// </summary>
     [Serializable]
     [DBTable("BranchName")]
-    public class BranchNameDto : EntityBase, IDataModel
+    public class BranchDto : EntityBase, IDataModel
     {
-        public BranchNameDto()
+        public BranchDto()
         {
         }
 
@@ -26,10 +27,14 @@ namespace XZMY.Manage.Model.DataModel
         public string Name { get; set; }
 
         /// <summary>
-        /// 判断值
+        /// 关键值
         /// <remark>通过 CpuId|DiskId|MAC 地址，外网 IP 地址等信息动态判断店名</remark>
         /// </summary>
         public string Value { get; set; }
 
+        /// <summary>
+        /// 状态 1启用 2禁用
+        /// </summary>
+        public EState State { get; set; }
     }
 }

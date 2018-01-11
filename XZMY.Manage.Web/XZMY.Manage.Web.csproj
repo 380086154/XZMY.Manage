@@ -279,6 +279,7 @@
     <Compile Include="Content\Custom\UEditor\net\App_Code\UploadHandler.cs" />
     <Compile Include="Controllers\Apis\GuessNumberController.cs" />
     <Compile Include="Controllers\Apis\WeixinController.cs" />
+    <Compile Include="Controllers\Sys\BranchController.cs" />
     <Compile Include="Controllers\WeixinController.cs" />
     <Compile Include="Controllers\Customer\HyxxController.cs" />
     <Compile Include="Controllers\NewFolder1\Albums\AlbumsController.cs" />
@@ -6838,6 +6839,8 @@
     <Content Include="Views\Hyxx\List.cshtml" />
     <Content Include="Views\Hyxx\Details.cshtml" />
     <Content Include="Views\Hyxx\Payment.cshtml" />
+    <Content Include="Views\Branch\List.cshtml" />
+    <Content Include="Views\Branch\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
@@ -6902,7 +6905,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>10001</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

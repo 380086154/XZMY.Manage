@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using XZMY.Manage.WindowsService.Utility;
 
@@ -21,11 +22,13 @@ namespace XZMY.Manage.WindowsService.Service
             logService = ls;
         }
 
+        #region Public method
+
         /// <summary>
         /// 获取分店Id
         /// </summary>
         /// <param name="hostName"></param>
-        public Guid GetBranchNameIdByValue(HardwareUtility hardware)
+        public Guid GetIdByValue(HardwareUtility hardware)
         {
             var sb = new StringBuilder();
             sb.Append("SELECT TOP 1 * FROM [BranchName] WHERE ");
@@ -38,23 +41,49 @@ namespace XZMY.Manage.WindowsService.Service
             if (dt.Rows.Count > 0)
             {
                 var dataId = dt.Rows[0]["DataId"].ToString();
-                try
+                var thread = new Thread(() =>
                 {
-                    var oldValue = dt.Rows[0]["Value"].ToString();//CPUID,DISKID,MAC
-                    var newValue = hardware.CpuID + "|" + hardware.DiskID + "|" + hardware.MacAddress;//顺序必须保持
-                    AutoUpdate(dataId, oldValue.Split('|'), newValue.Split('|'));//自动更新分店信息
+                    try
+                    {
+                        var oldValue = dt.Rows[0]["Value"].ToString();//CPUID,DISKID,MAC
+                        var newValue = hardware.CpuID + "|" + hardware.DiskID + "|" + hardware.MacAddress;//顺序必须保持
 
-                    logService.Add("自动更新分店信息", oldValue, newValue, LogLevel.Debug);
-                }
-                catch (Exception ex)
-                {
-                    logService.Add("自动更新分店信息异常", ex.Message, ex.StackTrace, LogLevel.Error);
-                }
+                        logService.Add("判断是否自动更新分店信息", "newValue：" + newValue, "oldValue：" + oldValue, LogLevel.Debug);
+                        AutoUpdate(dataId, oldValue.Split('|'), newValue.Split('|'));//自动更新分店信息
+                    }
+                    catch (Exception ex)
+                    {
+                        logService.Add("自动更新分店信息异常", ex.Message, ex.StackTrace, LogLevel.Error);
+                    }
+                }) { IsBackground = false };
+                thread.Start();
 
                 return Guid.Parse(dataId);
             }
             return Guid.Parse("e7d12da5-50d8-4a01-ae3f-cab673845db7");//测试数据
         }
+
+        /// <summary>
+        /// 获取分店名称
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public string GetNameById(string id)
+        {
+            var sql = string.Format("SELECT TOP 1 [Name] FROM [BranchName] WHERE DataId = '{0}'", id);
+
+            var dt = db.GetDataTable(sql, "BranchName", EProviderName.SqlClient);
+
+            if (dt.Rows.Count > 0)
+            {
+                return dt.Rows[0]["Name"].ToString();
+            }
+            return "未知分店";
+        }
+
+        #endregion
+
+        #region Private method
 
         /// <summary>
         /// 有硬件更新后，自动更新分店信息
@@ -86,8 +115,10 @@ namespace XZMY.Manage.WindowsService.Service
             else
             {
                 //硬件相似度太低，看起来是换电脑了，需要手动确定
-                logService.Add("出现硬件更新需手动确认", "oldValue：" + oldValue, "newValue：" + newValue, LogLevel.Warn);
+                logService.Add("出现硬件更新需手动确认更新", "newValue：" + newValue, "oldValue：" + oldValue, LogLevel.Warn);
             }
         }
+
+        #endregion
     }
 }

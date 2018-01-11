@@ -70,8 +70,8 @@ namespace XZMY.Manage.WindowsService
                 logService = new LogService(db, hardwareUtility.IpAddress, BranchNameDataId, hardwareUtility.ComputerName);
                 branchNameService = new BranchNameService(db, logService);
 
-                BranchNameDataId = branchNameService.GetBranchNameIdByValue(hardwareUtility);//获取分店Id
-                
+                BranchNameDataId = branchNameService.GetIdByValue(hardwareUtility);//获取分店Id
+
 
                 //Thread.Sleep(1000 * 10);//
                 try
@@ -87,6 +87,10 @@ namespace XZMY.Manage.WindowsService
 
                     while (true)
                     {
+                        var networkHelper = new NetworkHelper();
+                        if (!networkHelper.Status)//无网络不操作
+                            return;
+
                         FileInfo[] fileList = di.GetFiles();
                         Array.Sort(fileList, fc);//按文件创建时间排正序
 
@@ -218,7 +222,12 @@ namespace XZMY.Manage.WindowsService
                 try
                 {
                     path = CopyDataToBackup();
-                    WriteDataToServer(path);
+
+                    var networkHelper = new NetworkHelper();
+                    if (networkHelper.Status)//无网络不操作
+                    {
+                        WriteDataToServer(path);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -270,7 +279,7 @@ namespace XZMY.Manage.WindowsService
                 hardwareUtility = new HardwareUtility();
                 logService = new LogService(db, hardwareUtility.IpAddress, BranchNameDataId, hardwareUtility.ComputerName);
                 branchNameService = new BranchNameService(db, logService);
-                BranchNameDataId = branchNameService.GetBranchNameIdByValue(hardwareUtility);//获取分店Id
+                BranchNameDataId = branchNameService.GetIdByValue(hardwareUtility);//获取分店Id
             }
 #endif
 
@@ -280,7 +289,7 @@ namespace XZMY.Manage.WindowsService
             Log.Add("execute OnChanged event ChangeType = " + BranchNameDataId);
 
             //必须是 xfxx 在前面，在同步时会根据消费信息查询会员信息，为避免数据异常，所以待 xfxx 同步完成后再同步 hyxx
-            var dataTatbles = new string[] { "xfxx", "hyczk", "rz","zkk", "czk", "hyxx" };
+            var dataTatbles = new string[] { "xfxx", "hyczk", "rz", "zkk", "czk", "hyxx" };
             var needSyncHykh = new List<string>();
 
             for (int i = 0; i < dataTatbles.Length; i++)
