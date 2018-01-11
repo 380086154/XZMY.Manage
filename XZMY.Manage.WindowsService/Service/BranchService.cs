@@ -11,12 +11,12 @@ namespace XZMY.Manage.WindowsService.Service
     /// <summary>
     /// 分店 服务
     /// </summary>
-    public class BranchNameService
+    public class BranchService
     {
         public DatabaseHelper db = null;
         private LogService logService = null;
 
-        public BranchNameService(DatabaseHelper databaseHelper, LogService ls)
+        public BranchService(DatabaseHelper databaseHelper, LogService ls)
         {
             db = databaseHelper;
             logService = ls;

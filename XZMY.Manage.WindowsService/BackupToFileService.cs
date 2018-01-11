@@ -22,7 +22,7 @@ namespace XZMY.Manage.WindowsService
         private string dataPath = string.Empty;
         private string databakPath = string.Empty;
         private DatabaseHelper db;
-        private BranchNameService branchNameService = null;
+        private BranchService branchService = null;
         private XfxxService xfxxService = null;
         private HyxxService hyxxService = null;
         private LogService logService = null;
@@ -68,9 +68,9 @@ namespace XZMY.Manage.WindowsService
                 FileComparer fc = new FileComparer();
 
                 logService = new LogService(db, hardwareUtility.IpAddress, BranchNameDataId, hardwareUtility.ComputerName);
-                branchNameService = new BranchNameService(db, logService);
+                branchService = new BranchService(db, logService);
 
-                BranchNameDataId = branchNameService.GetIdByValue(hardwareUtility);//获取分店Id
+                BranchNameDataId = branchService.GetIdByValue(hardwareUtility);//获取分店Id
 
 
                 //Thread.Sleep(1000 * 10);//

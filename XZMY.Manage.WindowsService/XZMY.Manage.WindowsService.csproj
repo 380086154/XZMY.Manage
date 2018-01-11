@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\LogEntity.cs" />
-    <Compile Include="Service\BranchNameService.cs" />
+    <Compile Include="Service\BranchService.cs" />
     <Compile Include="Service\LogService.cs" />
     <Compile Include="Service\HyxxService.cs" />
     <Compile Include="Service\XfxxService.cs" />
