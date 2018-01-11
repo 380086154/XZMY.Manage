@@ -27,7 +27,7 @@ namespace XZMY.Manage.Model.DataModel
 
         /// <summary>
         /// 判断值
-        /// <remark>通过计算机名，MAC 地址，外网 IP 地址等信息动态判断店名</remark>
+        /// <remark>通过 CpuId|DiskId|MAC 地址，外网 IP 地址等信息动态判断店名</remark>
         /// </summary>
         public string Value { get; set; }
 

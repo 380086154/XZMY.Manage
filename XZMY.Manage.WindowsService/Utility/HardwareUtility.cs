@@ -26,38 +26,33 @@ namespace XZMY.Manage.WindowsService.Utility
 
         public HardwareUtility()
         {
-            CpuID = GetCpuID();
-            MacAddress = GetMacAddress();
-            DiskID = GetDiskID();
-            IpAddress = GetIPAddress();
-            LoginUserName = GetUserName();
-            SystemType = GetSystemType();
-            TotalPhysicalMemory = GetTotalPhysicalMemory();
-            ComputerName = GetComputerName();
+            CpuID = GetCpuID();//1.获取CPU序列号代码
+            MacAddress = GetMacAddress();//2.获取网卡硬件地址
+            DiskID = GetDiskID();//3.获取硬盘ID 
+            IpAddress = GetIPAddress();//4.获取IP地址
+            LoginUserName = Environment.UserName;// 5.操作系统的登录用户名 
+            ComputerName = Environment.MachineName;//6.获取计算机名
+            SystemType = GetInfo("Win32_ComputerSystem", "SystemType");//7 PC类型 
+            TotalPhysicalMemory = GetInfo("Win32_ComputerSystem", "TotalPhysicalMemory");//8.物理内存            
         }
+
+        #region Get Hardware info
 
         //1.获取CPU序列号代码
         string GetCpuID()
         {
             try
             {
-                string cpuInfo = "";//cpu序列号 
-                ManagementClass mc = new ManagementClass("Win32_Processor");
-                ManagementObjectCollection moc = mc.GetInstances();
-                foreach (ManagementObject mo in moc)
+                using (var moc = GetManagementObjectCollection("Win32_Processor"))
                 {
-                    cpuInfo = mo.Properties["ProcessorId"].Value.ToString();
+                    foreach (ManagementObject mo in moc)
+                        return mo.Properties["ProcessorId"].Value.ToString();
+                    return "unknow";
                 }
-                moc = null;
-                mc = null;
-                return cpuInfo;
             }
             catch
             {
                 return "unknow";
-            }
-            finally
-            {
             }
         }
 
@@ -66,27 +61,22 @@ namespace XZMY.Manage.WindowsService.Utility
         {
             try
             {
-                string mac = "";
-                ManagementClass mc = new ManagementClass("Win32_NetworkAdapterConfiguration");
-                ManagementObjectCollection moc = mc.GetInstances();
-                foreach (ManagementObject mo in moc)
+                using (var moc = GetManagementObjectCollection("Win32_NetworkAdapterConfiguration"))
                 {
-                    if ((bool)mo["IPEnabled"] == true)
+                    foreach (ManagementObject mo in moc)
                     {
-                        mac = mo["MacAddress"].ToString();
-                        break;
+                        if ((bool)mo["IPEnabled"] == true)
+                        {
+                            return mo["MacAddress"].ToString();
+                            break;
+                        }
                     }
                 }
-                moc = null;
-                mc = null;
-                return mac;
+                return "unknow";
             }
             catch
             {
                 return "unknow";
-            }
-            finally
-            {
             }
         }
 
@@ -95,23 +85,16 @@ namespace XZMY.Manage.WindowsService.Utility
         {
             try
             {
-                String HDid = "";
-                ManagementClass mc = new ManagementClass("Win32_DiskDrive");
-                ManagementObjectCollection moc = mc.GetInstances();
-                foreach (ManagementObject mo in moc)
+                using (var moc = GetManagementObjectCollection("Win32_DiskDrive"))
                 {
-                    HDid = (string)mo.Properties["Model"].Value;
+                    foreach (ManagementObject mo in moc)
+                        return mo.Properties["Model"].Value.ToString();
+                    return "unknow";
                 }
-                moc = null;
-                mc = null;
-                return HDid;
             }
             catch
             {
                 return "unknow";
-            }
-            finally
-            {
             }
         }
 
@@ -138,92 +121,37 @@ namespace XZMY.Manage.WindowsService.Utility
             {
                 return "unknow";
             }
-            finally
-            {
-            }
         }
 
-        /// 5.操作系统的登录用户名 
-        string GetUserName()
+        #endregion
+
+        #region Private method
+
+        private string GetInfo(string path, string name)
         {
             try
             {
-                return Environment.UserName;
-            }
-            catch
-            {
-                return "unknow";
-            }
-            finally
-            {
-            }
-        }
-
-        //6.获取计算机名
-        string GetComputerName()
-        {
-            try
-            {
-                //return Dns.GetHostName();
-                return Environment.MachineName;
-            }
-            catch
-            {
-                return "unknow";
-            }
-            finally
-            {
-            }
-        }
-
-        ///7 PC类型 
-        string GetSystemType()
-        {
-            try
-            {
-                string st = "";
-                ManagementClass mc = new ManagementClass("Win32_ComputerSystem");
-                ManagementObjectCollection moc = mc.GetInstances();
-                foreach (ManagementObject mo in moc)
+                using (var moc = GetManagementObjectCollection(path))
                 {
-                    st = mo["SystemType"].ToString();
+                    foreach (ManagementObject mo in moc)
+                        return mo[name].ToString();
+                    return "unknow";
                 }
-                moc = null;
-                mc = null;
-                return st;
             }
             catch
             {
                 return "unknow";
-            }
-            finally
-            {
             }
         }
 
-        /// 8.物理内存
-        public string GetTotalPhysicalMemory()
+        private ManagementObjectCollection GetManagementObjectCollection(string path)
         {
-            try
+            using (var mc = new ManagementClass(path))
             {
-                string st = "";
-                ManagementClass mc = new ManagementClass("Win32_ComputerSystem");
-                ManagementObjectCollection moc = mc.GetInstances();
-                foreach (ManagementObject mo in moc)
-                {
-                    st = mo["TotalPhysicalMemory"].ToString();
-                }
-                moc = null;
-                mc = null;
-                return st;
-            }
-            catch
-            {
-                return "unknow";
-            }
-            finally
-            {
+                return mc.GetInstances();
             }
         }
+
+        #endregion
     }
 }

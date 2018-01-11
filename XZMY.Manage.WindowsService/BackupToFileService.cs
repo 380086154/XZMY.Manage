@@ -34,8 +34,6 @@ namespace XZMY.Manage.WindowsService
         private FileUtility fileUtility;
         private HardwareUtility hardwareUtility;
         private Timer timer;
-        private string Ipv4 = string.Empty;
-        private string hostName = string.Empty;
         private string version = string.Empty;
         private bool IsWait = true;
         private bool IsSendLogFile = false;
@@ -64,15 +62,16 @@ namespace XZMY.Manage.WindowsService
             var thread = new Thread(() =>
             {
                 hardwareUtility = new HardwareUtility();
-                Ipv4 = hardwareUtility.IpAddress;
-                hostName = hardwareUtility.ComputerName;
                 version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
                 DirectoryInfo di = new DirectoryInfo(databakPath);
                 FileComparer fc = new FileComparer();
 
-                branchNameService = new BranchNameService(db);
-                BranchNameDataId = branchNameService.GetBranchNameIdByValue(hostName);//获取分店Id
-                logService = new LogService(db, Ipv4, BranchNameDataId, hostName);
+                logService = new LogService(db, hardwareUtility.IpAddress, BranchNameDataId, hardwareUtility.ComputerName);
+                branchNameService = new BranchNameService(db, logService);
+
+                BranchNameDataId = branchNameService.GetBranchNameIdByValue(hardwareUtility);//获取分店Id
+                
 
                 //Thread.Sleep(1000 * 10);//
                 try
@@ -268,9 +267,10 @@ namespace XZMY.Manage.WindowsService
 #if DEBUG
             if (BranchNameDataId == Guid.Empty)
             {
-                logService = new LogService(db, Ipv4, BranchNameDataId, hostName);
-                branchNameService = new BranchNameService(db);
-                BranchNameDataId = branchNameService.GetBranchNameIdByValue(hostName);//获取分店Id
+                hardwareUtility = new HardwareUtility();
+                logService = new LogService(db, hardwareUtility.IpAddress, BranchNameDataId, hardwareUtility.ComputerName);
+                branchNameService = new BranchNameService(db, logService);
+                BranchNameDataId = branchNameService.GetBranchNameIdByValue(hardwareUtility);//获取分店Id
             }
 #endif
 
@@ -431,7 +431,7 @@ namespace XZMY.Manage.WindowsService
             var emailFromAddress = "xzmjwx@163.com";
             var emailFromPassword = "abc123";
             var date = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            var entity = new LogDto(fileName, "发送成功", Ipv4, hostName);
+            var entity = new LogDto(fileName, "发送成功", hardwareUtility.IpAddress, hardwareUtility.ComputerName);
 
             try
             {
@@ -449,8 +449,8 @@ namespace XZMY.Manage.WindowsService
                 msg.Subject = "[Backup]" + attachment.Name;//邮件标题
                 msg.SubjectEncoding = System.Text.Encoding.UTF8;//邮件标题编码
                 msg.Body = "美萍会员管理系统数据备份服务：" + version//邮件内容
-                    + " <br/> 计算机：" + hostName
-                    + " <br/> IP地址：" + Ipv4
+                    + " <br/> 计算机：" + hardwareUtility.ComputerName
+                    + " <br/> IP地址：" + hardwareUtility.IpAddress
                     + " <br/> 备份时间：" + date
                     + " <br/> 备份文件：" + attachment.Name;
 
