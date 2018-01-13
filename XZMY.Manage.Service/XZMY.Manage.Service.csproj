@@ -145,6 +145,7 @@
     <Compile Include="Handlers\Weixin\WeixinHandler.cs" />
     <Compile Include="Project\ProjectCreateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sys\BranchService.cs" />
     <Compile Include="Sys\DatabaseManageService.cs" />
     <Compile Include="User\SearchUserService.cs" />
     <Compile Include="Utils\DataDictionary\DataDictionaryItem.cs" />

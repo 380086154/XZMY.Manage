@@ -20,7 +20,7 @@ namespace XZMY.Manage.Model.DataModel
         {
         }
         public Guid DataId { get; set; }
-        public Guid BranchNameDataId { get; set; }
+        public Guid BranchDataId { get; set; }
         public long id { get; set; }
         public string fid { get; set; }
         /// <summary>

@@ -18,7 +18,7 @@ namespace XZMY.Manage.WindowsService
         /// <param name="context"></param>
         public static void Add(string context)
         {
-#if DEBUG
+//#if DEBUG
             try
             {
                 var path = PathUtility.databakPath + "log.txt";
@@ -53,7 +53,7 @@ namespace XZMY.Manage.WindowsService
             {
                 var message = ex.Message;
             }
-#endif
+//#endif
         }
     }
 }

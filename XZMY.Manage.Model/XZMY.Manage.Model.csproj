@@ -52,7 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiResult.cs" />
-    <Compile Include="DataModel\BranchNameDto.cs" />
+    <Compile Include="DataModel\BranchDto.cs" />
     <Compile Include="DataModel\zkkDto.cs" />
     <Compile Include="DataModel\HyxxDto.cs" />
     <Compile Include="DataModel\NewFolder1\Advisories\Advisory.cs" />
@@ -269,6 +269,7 @@
     <Compile Include="ViewModel\SiteSetting\VmSiteADEdit.cs" />
     <Compile Include="ViewModel\SiteSetting\VmStudentTotalScore.cs" />
     <Compile Include="ViewModel\SiteSetting\VmStudyBudget.cs" />
+    <Compile Include="ViewModel\Sys\VmDataDictionaryIndex.cs" />
     <Compile Include="ViewModel\Sys\VmLog.cs" />
     <Compile Include="ViewModel\User\VmLogin.cs" />
     <Compile Include="ViewModel\User\VmUserAccountEdit.cs" />

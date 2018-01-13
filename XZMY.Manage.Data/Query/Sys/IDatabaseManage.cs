@@ -15,7 +15,7 @@ namespace XZMY.Manage.Data.Query.Sys
         /// <summary>
         /// 分店 Id
         /// </summary>
-        Guid BranchNameDataId { get; set; }
+        Guid BranchDataId { get; set; }
 
         /// <summary>
         /// 表名称集合

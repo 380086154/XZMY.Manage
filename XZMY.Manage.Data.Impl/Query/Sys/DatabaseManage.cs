@@ -26,6 +26,7 @@ namespace XZMY.Manage.Data.Impl.Query.Sys
             {
                 var condition = GetCondition();
 
+                var sqlParameter = BuildParameters();
                 var sqlStatement = string.Empty;
                 foreach (var item in TablenameList)
                 {
@@ -34,7 +35,7 @@ namespace XZMY.Manage.Data.Impl.Query.Sys
 
                 if (!string.IsNullOrWhiteSpace(sqlStatement))
                 {
-                    result += SqlServerHelper.ExecuteNonQuery(conn, CommandType.Text, sqlStatement);
+                    result += SqlServerHelper.ExecuteNonQuery(conn, CommandType.Text, sqlStatement, sqlParameter);
                 }
             }
             return result;
@@ -43,7 +44,7 @@ namespace XZMY.Manage.Data.Impl.Query.Sys
         /// <summary>
         /// 分店 Id
         /// </summary>
-        public Guid BranchNameDataId { get; set; }
+        public Guid BranchDataId { get; set; }
 
         /// <summary>
         /// 表名集合
@@ -57,7 +58,7 @@ namespace XZMY.Manage.Data.Impl.Query.Sys
         private string GetCondition()
         {
             var list = new List<string>();
-            list.Add("[BranchNameDataId] = @BranchNameDataId");
+            list.Add("[BranchDataId] = @BranchDataId");
             return string.Join(" AND ", list);
         }
 
@@ -68,7 +69,7 @@ namespace XZMY.Manage.Data.Impl.Query.Sys
         private SqlParameter[] BuildParameters()
         {
             var list = new List<SqlParameter>();
-            list.Add(SqlServerHelper.BuildInParameter("@BranchNameDataId", SqlDbType.NVarChar, BranchNameDataId));
+            list.Add(SqlServerHelper.BuildInParameter("@BranchDataId", SqlDbType.UniqueIdentifier, BranchDataId));
             return list.ToArray();
         }
     }

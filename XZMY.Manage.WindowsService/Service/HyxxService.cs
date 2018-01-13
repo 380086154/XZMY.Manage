@@ -14,7 +14,7 @@ namespace XZMY.Manage.WindowsService.Service
     public class HyxxService
     {
         public DatabaseHelper db = null;
-        public Guid BranchNameDataId = Guid.Empty;
+        public Guid BranchDataId = Guid.Empty;
 
         public HyxxService(DatabaseHelper databaseHelper)
         {
@@ -24,7 +24,7 @@ namespace XZMY.Manage.WindowsService.Service
         public HyxxService(DatabaseHelper databaseHelper, Guid branchNameDataId)
         {
             db = databaseHelper;
-            BranchNameDataId = branchNameDataId;
+            BranchDataId = branchNameDataId;
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace XZMY.Manage.WindowsService.Service
         /// <returns></returns>
         public bool IsDataOnServerByHykh(string hykh)
         {
-            var sql = string.Format("SELECT COUNT(0) FROM [Hyxx] WHERE hykh = '{0}' AND BranchNameDataId = '{1}' ", hykh, BranchNameDataId);
+            var sql = string.Format("SELECT COUNT(0) FROM [Hyxx] WHERE hykh = '{0}' AND BranchDataId = '{1}' ", hykh, BranchDataId);
             var result = db.ExecuteScalar(sql, EProviderName.SqlClient);
 
             return result > 0;
@@ -73,7 +73,7 @@ namespace XZMY.Manage.WindowsService.Service
         /// <returns></returns>
         public bool IsDataOnServer()
         {
-            var sql = string.Format("SELECT COUNT(0) FROM [Hyxx] WHERE BranchNameDataId = '{0}' ", BranchNameDataId);
+            var sql = string.Format("SELECT COUNT(0) FROM [Hyxx] WHERE BranchDataId = '{0}' ", BranchDataId);
             var result = db.ExecuteScalar(sql, EProviderName.SqlClient);
 
             return result > 0;
@@ -112,7 +112,7 @@ namespace XZMY.Manage.WindowsService.Service
             sb.AppendFormat(" Count = {0}", xfxxService.GetPaymentCountByHykh(hykh));//更新消费次数
 
             sb.AppendFormat(" WHERE hykh = '{0}'", hykh);
-            sb.AppendFormat(" AND BranchNameDataId = '{0}'", BranchNameDataId);
+            sb.AppendFormat(" AND BranchDataId = '{0}'", BranchDataId);
 
             db.ExecuteNonQuery(sb.ToString(), EProviderName.SqlClient);
         }
@@ -147,7 +147,7 @@ namespace XZMY.Manage.WindowsService.Service
                 zjhm = @zjhm,
                 lxdz = @lxdz,
                 qtxx = @qtxx
- WHERE hykh = @hykh AND BranchNameDataId = @BranchNameDataId
+ WHERE hykh = @hykh AND BranchDataId = @BranchDataId
 ";
             var sp = new SqlParameter[] {
                 new SqlParameter("@hyxm", hyxxDataRow["hyxm"]),//姓名
@@ -168,7 +168,7 @@ namespace XZMY.Manage.WindowsService.Service
                 new SqlParameter("@qtxx", hyxxDataRow["qtxx"]),//其他信息
 
                 new SqlParameter("@hykh", hykh),//会员卡号
-                new SqlParameter("@BranchNameDataId", BranchNameDataId),//其他信息
+                new SqlParameter("@BranchDataId", BranchDataId),//其他信息
             };
 
             db.ExecuteNonQuery(sql, EProviderName.SqlClient, sp);

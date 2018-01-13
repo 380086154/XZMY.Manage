@@ -26,14 +26,13 @@ namespace XZMY.Manage.WindowsService
         private XfxxService xfxxService = null;
         private HyxxService hyxxService = null;
         private LogService logService = null;
-        private Guid BranchNameDataId = Guid.Empty;//分店Id
+        private Guid BranchDataId = Guid.Empty;//分店Id
 
         private IList<string> excludeList = new List<string> { "log.txt", "backuplog.xml" };
         private IList<LogDto> sendList = new List<LogDto>();
         private XmlUtility xmlUtility;
         private FileUtility fileUtility;
         private HardwareUtility hardwareUtility;
-        private Timer timer;
         private string version = string.Empty;
         private bool IsWait = true;
         private bool IsSendLogFile = false;
@@ -67,10 +66,10 @@ namespace XZMY.Manage.WindowsService
                 DirectoryInfo di = new DirectoryInfo(databakPath);
                 FileComparer fc = new FileComparer();
 
-                logService = new LogService(db, hardwareUtility.IpAddress, BranchNameDataId, hardwareUtility.ComputerName);
+                logService = new LogService(db, hardwareUtility.IpAddress, BranchDataId, hardwareUtility.ComputerName);
                 branchService = new BranchService(db, logService);
 
-                BranchNameDataId = branchService.GetIdByValue(hardwareUtility);//获取分店Id
+                BranchDataId = branchService.GetIdByValue(hardwareUtility);//获取分店Id
 
 
                 //Thread.Sleep(1000 * 10);//
@@ -184,7 +183,7 @@ namespace XZMY.Manage.WindowsService
         /// <param name="isEnable">是否启用</param>
         /// <param name="isInclude">是否监听子目录</param>
         [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
-        private void WatcherStart(string path, string filter, bool isEnable, bool isInclude)
+        public void WatcherStart(string path, string filter, bool isEnable, bool isInclude)
         {
             var fsw = new FileSystemWatcher();//文件系统监听
 
@@ -200,7 +199,7 @@ namespace XZMY.Manage.WindowsService
             fsw.EnableRaisingEvents = true;//设置是否启用监听
         }
 
-        private bool canExecute = true;
+        private object canExecute = null;
 
         /// <summary>
         /// 当指定目录的文件或目录发生改变时触发
@@ -209,39 +208,38 @@ namespace XZMY.Manage.WindowsService
         /// <param name="e"></param>
         private void OnChanged(object sender, FileSystemEventArgs e)
         {
-            if (!canExecute)
+            if (canExecute != null)
                 return;
             canExecute = false;
 
+            Thread.Sleep(5000);
+
             Log.Add("execute OnChanged event ChangeType = " + e.ChangeType);
 
-            timer = new Timer((t) =>
+            var path = string.Empty;
+
+            try
             {
-                var path = string.Empty;
+                path = CopyDataToBackup();
 
-                try
+                var networkHelper = new NetworkHelper();
+                if (networkHelper.Status)//无网络不操作
                 {
-                    path = CopyDataToBackup();
-
-                    var networkHelper = new NetworkHelper();
-                    if (networkHelper.Status)//无网络不操作
-                    {
-                        WriteDataToServer(path);
-                    }
+                    WriteDataToServer(path);
                 }
-                catch (Exception ex)
-                {
-                    Log.Add(ex.Message);
-                    Log.Add(ex.StackTrace);
-                    logService.Add("数据备份异常", ex.Message, ex.StackTrace, LogLevel.Error);
-                }
-                finally
-                {
-                    timer.Dispose();
-                    canExecute = true;
-                    if (File.Exists(path)) File.Delete(path);//删除临时数据库文件
-                }
-            }, this, 5000, 5000);
+            }
+            catch (Exception ex)
+            {
+                Log.Add(ex.Message);
+                Log.Add(ex.StackTrace);
+                logService.Add("数据备份异常", ex.Message, ex.StackTrace, LogLevel.Error);
+            }
+            finally
+            {
+                timer = null;
+                canExecute = null;
+                if (File.Exists(path)) File.Delete(path);//删除临时数据库文件
+            }
         }
 
         #region 数据备份
@@ -274,19 +272,19 @@ namespace XZMY.Manage.WindowsService
             db.ConnectionString_Access = path;
 
 #if DEBUG
-            if (BranchNameDataId == Guid.Empty)
+            if (BranchDataId == Guid.Empty)
             {
                 hardwareUtility = new HardwareUtility();
-                logService = new LogService(db, hardwareUtility.IpAddress, BranchNameDataId, hardwareUtility.ComputerName);
-                branchNameService = new BranchNameService(db, logService);
-                BranchNameDataId = branchNameService.GetIdByValue(hardwareUtility);//获取分店Id
+                logService = new LogService(db, hardwareUtility.IpAddress, BranchDataId, hardwareUtility.ComputerName);
+                branchService = new BranchService(db, logService);
+                BranchDataId = branchService.GetIdByValue(hardwareUtility);//获取分店Id
             }
 #endif
 
-            xfxxService = new XfxxService(db, BranchNameDataId);
-            hyxxService = new HyxxService(db, BranchNameDataId);
+            xfxxService = new XfxxService(db, BranchDataId);
+            hyxxService = new HyxxService(db, BranchDataId);
 
-            Log.Add("execute OnChanged event ChangeType = " + BranchNameDataId);
+            Log.Add("execute OnChanged event ChangeType = " + BranchDataId);
 
             //必须是 xfxx 在前面，在同步时会根据消费信息查询会员信息，为避免数据异常，所以待 xfxx 同步完成后再同步 hyxx
             var dataTatbles = new string[] { "xfxx", "hyczk", "rz", "zkk", "czk", "hyxx" };
@@ -302,7 +300,7 @@ namespace XZMY.Manage.WindowsService
             }
 
             //单独同步因为删除消费记录不完整的消费信息
-            xfxxService.SyncDataByHykhList(needSyncHykh, BranchNameDataId);
+            xfxxService.SyncDataByHykhList(needSyncHykh, BranchDataId);
         }
 
         //执行数据同步
@@ -337,7 +335,7 @@ namespace XZMY.Manage.WindowsService
             #endregion
 
             //开始数据备份
-            var serverCount = db.ExecuteScalar(string.Format(sql + "WHERE [BranchNameDataId] = '" + BranchNameDataId + "'", tableName), EProviderName.SqlClient);//                
+            var serverCount = db.ExecuteScalar(string.Format(sql + "WHERE [BranchDataId] = '" + BranchDataId + "'", tableName), EProviderName.SqlClient);//                
             var localCount = db.ExecuteScalar(string.Format(sql, tableName), EProviderName.OleDB);//
 
             Log.Add("execute WriteDataToServer event ================================== localCount - serverCount = " + (localCount - serverCount));
@@ -351,7 +349,7 @@ namespace XZMY.Manage.WindowsService
                 var dt = db.GetDataTable(string.Format("SELECT TOP {0} * FROM " + tableName, localCount - serverCount) + orderSql, tableName, EProviderName.OleDB);//
 
                 dt.Columns.Add("DataId", System.Type.GetType("System.Guid"));
-                dt.Columns.Add("BranchNameDataId", System.Type.GetType("System.Guid"));
+                dt.Columns.Add("BranchDataId", System.Type.GetType("System.Guid"));
                 dt.Columns.Add("CreatedTime", System.Type.GetType("System.DateTime"));
 
                 if (tableName == "hyxx")//更新消费次数
@@ -370,7 +368,7 @@ namespace XZMY.Manage.WindowsService
                     }
 
                     dr["DataId"] = Guid.NewGuid();
-                    dr["BranchNameDataId"] = BranchNameDataId;
+                    dr["BranchDataId"] = BranchDataId;
                     dr["CreatedTime"] = DateTime.Now;
 
                     switch (tableName)

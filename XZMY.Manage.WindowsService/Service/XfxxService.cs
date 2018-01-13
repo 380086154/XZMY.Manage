@@ -13,7 +13,7 @@ namespace XZMY.Manage.WindowsService.Service
     public class XfxxService
     {
         public DatabaseHelper db = null;
-        public Guid BranchNameDataId = Guid.Empty;
+        public Guid BranchDataId = Guid.Empty;
 
         public XfxxService(DatabaseHelper databaseHelper)
         {
@@ -23,7 +23,7 @@ namespace XZMY.Manage.WindowsService.Service
         public XfxxService(DatabaseHelper databaseHelper,Guid branchNameDataId)
         {
             db = databaseHelper;
-            BranchNameDataId = branchNameDataId;
+            BranchDataId = branchNameDataId;
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace XZMY.Manage.WindowsService.Service
         /// <param name="hykh"></param>
         public void DeleteByHykh(string hykh)
         {
-            var sql = string.Format("DELETE FROM [xfxx] WHERE hykh = '{0}' AND BranchNameDataId = '{1}'", hykh, BranchNameDataId);
+            var sql = string.Format("DELETE FROM [xfxx] WHERE hykh = '{0}' AND BranchDataId = '{1}'", hykh, BranchDataId);
             db.ExecuteNonQuery(sql, EProviderName.SqlClient);
         }
 
@@ -107,13 +107,13 @@ namespace XZMY.Manage.WindowsService.Service
             var dataTables = GetPaymentByHykhList(hykhList);
 
             dataTables.Columns.Add("DataId", System.Type.GetType("System.Guid"));
-            dataTables.Columns.Add("BranchNameDataId", System.Type.GetType("System.Guid"));
+            dataTables.Columns.Add("BranchDataId", System.Type.GetType("System.Guid"));
             dataTables.Columns.Add("CreatedTime", System.Type.GetType("System.DateTime"));
 
             foreach (DataRow dr in dataTables.Rows)
             {
                 dr["DataId"] = Guid.NewGuid();
-                dr["BranchNameDataId"] = branchNameDataId;
+                dr["BranchDataId"] = branchNameDataId;
                 dr["CreatedTime"] = DateTime.Now;
             }
 

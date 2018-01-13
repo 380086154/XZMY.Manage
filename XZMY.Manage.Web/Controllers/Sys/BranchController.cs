@@ -16,6 +16,7 @@ using T2M.Common.DataServiceComponents.Data.Query;
 using T2M.Common.DataServiceComponents.Service;
 using XZMY.Manage.Model.ViewModel.Sys;
 using XZMY.Manage.Model.DataModel;
+using XZMY.Manage.Service.Sys;
 
 namespace XZMY.Manage.Web.Controllers.Sys
 {
@@ -35,13 +36,14 @@ namespace XZMY.Manage.Web.Controllers.Sys
         public ActionResult Delete(Guid? id)
         {
             var flag = false;
+            var res = 0;
             if (id.HasValue)
             {
-                var handler = new BaseDeleteService<BranchDto>(id.Value);
-                var res = handler.Invoke();
-                flag = res;
+                var databaseManageService = new DatabaseManageService();
+                res = databaseManageService.ClearDatabase(id.Value);
+                //flag = res > 0;
             }
-            return Json(new { success = flag, Id = id, errors = GetErrors() }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = flag, count = res, errors = GetErrors() }, JsonRequestBehavior.AllowGet);
         }
 
         //列表 Ajax 获取数据

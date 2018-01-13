@@ -24,7 +24,7 @@ namespace XZMY.Manage.Model.DataModel
         /// <summary>
         /// 分店Id
         /// </summary>
-        public Guid BranchNameDataId { get; set; }
+        public Guid BranchDataId { get; set; }
         
         public string id { get; set; }
         /// <summary>

@@ -7,7 +7,9 @@ using XZMY.Manage.Model.Enum;
 using XZMY.Manage.Model.ViewModel;
 using XZMY.Manage.Model.ViewModel.Program;
 using XZMY.Manage.Model.ViewModel.SiteSetting;
+using XZMY.Manage.Model.ViewModel.Sys;
 using XZMY.Manage.Service.Auth.Attributes;
+using XZMY.Manage.Service.Sys;
 using XZMY.Manage.Service.Utils.DataDictionary;
 using XZMY.Manage.Service.Weixin;
 using XZMY.Manage.Web.Controllers.Program;
@@ -20,12 +22,14 @@ namespace XZMY.Manage.Web.Controllers.Sys
         [AutoCreateAuthAction(Name = "系统参数配置", Code = "SystemList", ModuleCode = "SYSTEM", Url = "/DataDictionary/Index", Visible = true)]
         public ActionResult Index()
         {
-            ViewData["AccessToken"] = AccessTokenService.GetAccessToken();
-            ViewData["AccessTokenExpired"] = AccessTokenService.GetAccessTokenExpired().ToString("yyyy-MM-dd HH:mm:ss");
+            var model = new VmDataDictionaryIndex();
+            model.AccessToken = AccessTokenService.GetAccessToken();
+            model.AccessTokenExpired = AccessTokenService.GetAccessTokenExpired().ToString("yyyy-MM-dd HH:mm:ss");
 
-            //ViewData[""]
+            var branchService = new BranchService();
+            model.BranchList = branchService.GetAll();
 
-            return View();
+            return View(model);
         }
 
         public ActionResult List()

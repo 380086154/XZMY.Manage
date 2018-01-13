@@ -14,7 +14,7 @@ namespace XZMY.Manage.WindowsService.Service
     public class LogService
     {
         public DatabaseHelper db = null;
-        public Guid BranchNameDataId = Guid.Empty;
+        public Guid BranchDataId = Guid.Empty;
         public string IP = string.Empty;
         public string UserId = string.Empty;
         public string UserName = string.Empty;
@@ -35,7 +35,7 @@ namespace XZMY.Manage.WindowsService.Service
         public LogService(DatabaseHelper databaseHelper, Guid branchNameDataId)
         {
             db = databaseHelper;
-            BranchNameDataId = branchNameDataId;
+            BranchDataId = branchNameDataId;
         }
 
         /// <summary>

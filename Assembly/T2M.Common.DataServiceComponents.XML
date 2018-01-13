@@ -70,6 +70,11 @@
             业务实体
             </summary>
         </member>
+        <member name="F:T2M.Common.DataServiceComponents.Data.Query.SqlOperation.DateRange">
+            <summary>
+            时间区间
+            </summary>
+        </member>
         <member name="M:T2M.Common.DataServiceComponents.Data.Query.CustomSearch`1.GetCondition">
             <summary>
             条件拼接

@@ -16,15 +16,14 @@ namespace XZMY.Manage.Service.Sys
         /// 清除数据
         /// </summary>
         /// <param name="branchNameDataId"></param>
-        public void ClearDatabase(Guid branchNameDataId)
+        public int ClearDatabase(Guid branchNameDataId)
         {
             var databaseManage = new DatabaseManage();
 
-            databaseManage.BranchNameDataId = branchNameDataId;
-            databaseManage.TablenameList = new List<string>
-            {"xfxx", "hyczk", "rz","zkk", "czk", "hyxx"};
+            databaseManage.BranchDataId = branchNameDataId;
+            databaseManage.TablenameList = new List<string> { "xfxx", "hyczk", "rz", "zkk", "czk", "hyxx" };
 
-            databaseManage.Execute();
+            return databaseManage.Execute();
         }
     }
 }
