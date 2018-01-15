@@ -3,23 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using T2M.CoastLine.Utils.Model.Attributes;
-using T2M.Common.Utils.ADONET.SQLServer;
-using T2M.Common.Utils.Models;
-using XZMY.Manage.Model.Enum;
 
-namespace XZMY.Manage.Model.DataModel
+namespace XZMY.Manage.WindowsService.Model
 {
-    /// <summary>
-    /// 分店信息
-    /// </summary>
-    [Serializable]
-    [DBTable("BranchName")]
-    public class BranchDto : EntityBase, IDataModel
+    public class BranchDto
     {
-        public BranchDto()
-        {
-        }
+        //
+        // 摘要: 
+        //     获取或设置唯一标识的Id。
+        public Guid DataId { get; set; }
 
         /// <summary>
         /// 名称
@@ -51,5 +43,21 @@ namespace XZMY.Manage.Model.DataModel
         /// 发件人
         /// </summary>
         public string ToEmail { get; set; }
+
+        /// <summary>
+        /// 获取或设置用户帐户创建时间
+        /// </summary>
+        public DateTime CreatedTime { get; set; }
+    }
+
+
+    /// <summary>
+    /// 状态枚举
+    /// </summary>
+    public enum EState
+    {
+        其它 = 0,
+        启用 = 1,
+        禁用 = 2
     }
 }

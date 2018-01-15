@@ -73,7 +73,7 @@ namespace XZMY.Manage.Model.ViewModel.Assessment
             model.Title = Title;
             model.Description = Description;
             model.State = EState.启用;
-            model.EnableTime = EnableTime == DateTimePlus.GetMinDateTime() ? DateTime.Now: EnableTime;
+            model.EnableTime = EnableTime == DateTimePlus.GetMinDateTime ? DateTime.Now: EnableTime;
             model.DisableTime = DisableTime;
             model.AssessmentId = AssessmentId;
             return model;

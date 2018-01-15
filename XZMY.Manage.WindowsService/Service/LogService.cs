@@ -32,10 +32,10 @@ namespace XZMY.Manage.WindowsService.Service
             db = databaseHelper;
         }
 
-        public LogService(DatabaseHelper databaseHelper, Guid branchNameDataId)
+        public LogService(DatabaseHelper databaseHelper, Guid branchDataId)
         {
             db = databaseHelper;
-            BranchDataId = branchNameDataId;
+            BranchDataId = branchDataId;
         }
 
         /// <summary>

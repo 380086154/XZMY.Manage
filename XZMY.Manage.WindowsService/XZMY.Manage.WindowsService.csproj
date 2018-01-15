@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\BranchDto.cs" />
     <Compile Include="Model\LogEntity.cs" />
     <Compile Include="Service\BranchService.cs" />
     <Compile Include="Service\LogService.cs" />
@@ -51,6 +52,7 @@
     <Compile Include="Service\XfxxService.cs" />
     <Compile Include="Utility\AccessHelper.cs" />
     <Compile Include="Utility\ConvertUtility.cs" />
+    <Compile Include="Utility\DateTimePlus.cs" />
     <Compile Include="Utility\FileComparer.cs" />
     <Compile Include="Utility\FileUtility.cs" />
     <Compile Include="Log.cs" />

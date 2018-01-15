@@ -330,7 +330,7 @@ namespace System
         /// <returns></returns>
         public static string ToStringFormat(this string date, string format = "yyyy-MM-dd")
         {
-            return date.ToDateTime(DateTimePlus.GetMinDateTime()).ToString(format);
+            return date.ToDateTime(DateTimePlus.GetMinDateTime).ToString(format);
         }
 
         /// <summary>

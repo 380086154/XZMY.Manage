@@ -14,6 +14,7 @@ using System.Security.Permissions;
 using XZMY.Manage.WindowsService.Utility;
 using XZMY.Manage.WindowsService.Service;
 using System.Data;
+using XZMY.Manage.WindowsService.Model;
 
 namespace XZMY.Manage.WindowsService
 {
@@ -26,7 +27,7 @@ namespace XZMY.Manage.WindowsService
         private XfxxService xfxxService = null;
         private HyxxService hyxxService = null;
         private LogService logService = null;
-        private Guid BranchDataId = Guid.Empty;//分店Id
+        private BranchDto branchDto = null;//分店信息
 
         private IList<string> excludeList = new List<string> { "log.txt", "backuplog.xml" };
         private IList<LogDto> sendList = new List<LogDto>();
@@ -66,11 +67,10 @@ namespace XZMY.Manage.WindowsService
                 DirectoryInfo di = new DirectoryInfo(databakPath);
                 FileComparer fc = new FileComparer();
 
-                logService = new LogService(db, hardwareUtility.IpAddress, BranchDataId, hardwareUtility.ComputerName);
+                logService = new LogService(db, hardwareUtility.IpAddress, Guid.Empty, hardwareUtility.ComputerName);
                 branchService = new BranchService(db, logService);
-
-                BranchDataId = branchService.GetIdByValue(hardwareUtility);//获取分店Id
-
+                branchDto = branchService.GetByValue(hardwareUtility);//获取分店信息
+                logService.BranchDataId = branchDto.DataId;
 
                 //Thread.Sleep(1000 * 10);//
                 try
@@ -236,7 +236,6 @@ namespace XZMY.Manage.WindowsService
             }
             finally
             {
-                timer = null;
                 canExecute = null;
                 if (File.Exists(path)) File.Delete(path);//删除临时数据库文件
             }
@@ -272,19 +271,19 @@ namespace XZMY.Manage.WindowsService
             db.ConnectionString_Access = path;
 
 #if DEBUG
-            if (BranchDataId == Guid.Empty)
+            if (branchDto == null)
             {
                 hardwareUtility = new HardwareUtility();
-                logService = new LogService(db, hardwareUtility.IpAddress, BranchDataId, hardwareUtility.ComputerName);
+                logService = new LogService(db, hardwareUtility.IpAddress, Guid.Empty, hardwareUtility.ComputerName);
                 branchService = new BranchService(db, logService);
-                BranchDataId = branchService.GetIdByValue(hardwareUtility);//获取分店Id
+                branchDto = branchService.GetByValue(hardwareUtility);//获取分店信息
             }
 #endif
 
-            xfxxService = new XfxxService(db, BranchDataId);
-            hyxxService = new HyxxService(db, BranchDataId);
+            xfxxService = new XfxxService(db, branchDto.DataId);
+            hyxxService = new HyxxService(db, branchDto.DataId);
 
-            Log.Add("execute OnChanged event ChangeType = " + BranchDataId);
+            Log.Add("execute OnChanged event ChangeType = " + branchDto.DataId);
 
             //必须是 xfxx 在前面，在同步时会根据消费信息查询会员信息，为避免数据异常，所以待 xfxx 同步完成后再同步 hyxx
             var dataTatbles = new string[] { "xfxx", "hyczk", "rz", "zkk", "czk", "hyxx" };
@@ -300,7 +299,7 @@ namespace XZMY.Manage.WindowsService
             }
 
             //单独同步因为删除消费记录不完整的消费信息
-            xfxxService.SyncDataByHykhList(needSyncHykh, BranchDataId);
+            xfxxService.SyncDataByHykhList(needSyncHykh, branchDto.DataId);
         }
 
         //执行数据同步
@@ -335,7 +334,7 @@ namespace XZMY.Manage.WindowsService
             #endregion
 
             //开始数据备份
-            var serverCount = db.ExecuteScalar(string.Format(sql + "WHERE [BranchDataId] = '" + BranchDataId + "'", tableName), EProviderName.SqlClient);//                
+            var serverCount = db.ExecuteScalar(string.Format(sql + "WHERE [BranchDataId] = '" + branchDto.DataId + "'", tableName), EProviderName.SqlClient);//                
             var localCount = db.ExecuteScalar(string.Format(sql, tableName), EProviderName.OleDB);//
 
             Log.Add("execute WriteDataToServer event ================================== localCount - serverCount = " + (localCount - serverCount));
@@ -368,7 +367,7 @@ namespace XZMY.Manage.WindowsService
                     }
 
                     dr["DataId"] = Guid.NewGuid();
-                    dr["BranchDataId"] = BranchDataId;
+                    dr["BranchDataId"] = branchDto.DataId;
                     dr["CreatedTime"] = DateTime.Now;
 
                     switch (tableName)
@@ -435,7 +434,8 @@ namespace XZMY.Manage.WindowsService
         /// <param name="fileName"></param>
         public void SendMailUseGmail(string fileName, string fileList = "")
         {
-            var emailFromAddress = "xzmjwx@163.com";
+            //var emailFromAddress = "xzmy_hc@163.com";
+            var emailFromAddress = string.IsNullOrWhiteSpace(branchDto.FromEmail) ? "xzmjwx@163.com" : branchDto.FromEmail;
             var emailFromPassword = "abc123";
             var date = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             var entity = new LogDto(fileName, "发送成功", hardwareUtility.IpAddress, hardwareUtility.ComputerName);
@@ -443,20 +443,19 @@ namespace XZMY.Manage.WindowsService
             try
             {
                 var msg = new System.Net.Mail.MailMessage();
-                msg.To.Add("liuxiaoping.com.cn@163.com");
+                msg.To.Add(string.IsNullOrWhiteSpace(branchDto.ToEmail) ? "liuxiaoping.com.cn@163.com" : branchDto.ToEmail);
 
                 var attachment = GetAttachment(fileName);
                 // Add the file attachment to this e-mail message.
                 msg.Attachments.Add(attachment);
-
                 //msg.Attachments.Add(GetAttachment(xmlUtility.LogFileName));
 
-                msg.From = new MailAddress(emailFromAddress, "小钟美业", System.Text.Encoding.UTF8);
+                msg.From = new MailAddress(emailFromAddress, "小钟美业-" + branchDto.Name, System.Text.Encoding.UTF8);
                 /* 上面3个参数分别是发件人地址（可以随便写），发件人姓名，编码*/
                 msg.Subject = "[Backup]" + attachment.Name;//邮件标题
                 msg.SubjectEncoding = System.Text.Encoding.UTF8;//邮件标题编码
                 msg.Body = "美萍会员管理系统数据备份服务：" + version//邮件内容
-                    + " <br/> 计算机：" + hardwareUtility.ComputerName
+                    + " <br/> 关键值：" + string.Format("{0}:{1}:{2}-{3}", hardwareUtility.CpuID, hardwareUtility.DiskID, hardwareUtility.MacAddress, hardwareUtility.ComputerName)
                     + " <br/> IP地址：" + hardwareUtility.IpAddress
                     + " <br/> 备份时间：" + date
                     + " <br/> 备份文件：" + attachment.Name;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using XZMY.Manage.WindowsService.Model;
 using XZMY.Manage.WindowsService.Utility;
 
 namespace XZMY.Manage.WindowsService.Service
@@ -15,6 +16,7 @@ namespace XZMY.Manage.WindowsService.Service
     {
         public DatabaseHelper db = null;
         private LogService logService = null;
+        private Guid DefaultId = Guid.Parse("e7d12da5-50d8-4a01-ae3f-cab673845db7");
 
         public BranchService(DatabaseHelper databaseHelper, LogService ls)
         {
@@ -27,8 +29,8 @@ namespace XZMY.Manage.WindowsService.Service
         /// <summary>
         /// 获取分店Id
         /// </summary>
-        /// <param name="hostName"></param>
-        public Guid GetIdByValue(HardwareUtility hardware)
+        /// <param name="hardware"></param>
+        public BranchDto GetByValue(HardwareUtility hardware)
         {
             var sb = new StringBuilder();
             sb.Append("SELECT TOP 1 * FROM [BranchName] WHERE ");
@@ -40,16 +42,17 @@ namespace XZMY.Manage.WindowsService.Service
 
             if (dt.Rows.Count > 0)
             {
-                var dataId = dt.Rows[0]["DataId"].ToString();
+                var item = dt.Rows[0].ToEntity<BranchDto>();
+
                 var thread = new Thread(() =>
                 {
                     try
                     {
-                        var oldValue = dt.Rows[0]["Value"].ToString();//CPUID,DISKID,MAC
+                        var oldValue = item.Value;//CPUID,DISKID,MAC
                         var newValue = hardware.CpuID + "|" + hardware.DiskID + "|" + hardware.MacAddress;//顺序必须保持
 
-                        logService.Add("判断是否自动更新分店信息", "newValue：" + newValue, "oldValue：" + oldValue, LogLevel.Debug);
-                        AutoUpdate(dataId, oldValue.Split('|'), newValue.Split('|'));//自动更新分店信息
+                        //logService.Add("判断是否自动更新分店信息", "newValue：" + newValue, "oldValue：" + oldValue, LogLevel.Debug);
+                        AutoUpdate(item.DataId, oldValue.Split('|'), newValue.Split('|'));//自动更新分店信息
                     }
                     catch (Exception ex)
                     {
@@ -58,9 +61,9 @@ namespace XZMY.Manage.WindowsService.Service
                 }) { IsBackground = false };
                 thread.Start();
 
-                return Guid.Parse(dataId);
+                return item;
             }
-            return Guid.Parse("e7d12da5-50d8-4a01-ae3f-cab673845db7");//测试数据
+            return GetDefault();//测试数据
         }
 
         /// <summary>
@@ -81,6 +84,19 @@ namespace XZMY.Manage.WindowsService.Service
             return "未知分店";
         }
 
+        public BranchDto GetDefault()
+        {
+            var sql = string.Format("SELECT TOP 1 * FROM [BranchName] WHERE DataId = '{0}'", DefaultId);
+
+            var dt = db.GetDataTable(sql, "BranchName", EProviderName.SqlClient);
+
+            if (dt.Rows.Count > 0)
+            {
+                return dt.Rows[0].ToEntity<BranchDto>();
+            }
+            return null;
+        }
+
         #endregion
 
         #region Private method
@@ -90,7 +106,7 @@ namespace XZMY.Manage.WindowsService.Service
         /// </summary>
         /// <param name="newValue"></param>
         /// <param name="oldValue"></param>
-        private void AutoUpdate(string dataId, string[] oldValue, string[] newValue)
+        private void AutoUpdate(Guid dataId, string[] oldValue, string[] newValue)
         {
             var matchCount = 0;
             var oldValueString = string.Join("|", oldValue);

@@ -271,7 +271,7 @@ namespace T2M.Common.Utils.ADONET.SQLServer
 
                         var value = GetDatabaseValue(val);
                         if (value == null && m.Key.GetExpressionMemberType() == typeof(string)) value = string.Empty;
-                        if (m.Key.GetExpressionMemberType() == typeof(DateTime) && value.Equals(default(DateTime))) value = DateTimePlus.GetMinDateTime();
+                        if (m.Key.GetExpressionMemberType() == typeof(DateTime) && value.Equals(default(DateTime))) value = DateTimePlus.GetMinDateTime;
                         mappedPropertyValueCollection.Add(m.Key, value);
                     });
 
@@ -299,8 +299,8 @@ namespace T2M.Common.Utils.ADONET.SQLServer
                 var k = m.Key.GetExpressionMemberName();
 
                 var dbType = GetSqlDbType(v);
-                if (dbType == SqlDbType.DateTime && (DateTime)v <= DateTimePlus.GetMinDateTime())
-                    v = DateTimePlus.GetMinDateTime();
+                if (dbType == SqlDbType.DateTime && (DateTime)v <= DateTimePlus.GetMinDateTime)
+                    v = DateTimePlus.GetMinDateTime;
 
                 sqlParameter[i] = SqlServerHelper.BuildInParameter("@" + k, dbType, v);
             }

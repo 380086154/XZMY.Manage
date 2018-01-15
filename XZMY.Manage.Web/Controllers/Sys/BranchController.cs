@@ -35,7 +35,7 @@ namespace XZMY.Manage.Web.Controllers.Sys
         //删除
         public ActionResult Delete(Guid? id)
         {
-            var flag = false;
+            var flag = true;
             var res = 0;
             if (id.HasValue)
             {
@@ -65,11 +65,11 @@ namespace XZMY.Manage.Web.Controllers.Sys
                 SortMember = new Expression<Func<BranchDto, object>>[] { x => x.CreatedTime }
             };
 
-            if (model.State > 0)
+            if (model.State.GetHashCode() > 0)
             {
                 service.CustomConditions.Add(new CustomConditionPlus<BranchDto>
                 {
-                    Value = model.State,
+                    Value = model.State.GetHashCode(),
                     Operation = SqlOperation.Equals,
                     Member = new Expression<Func<BranchDto, object>>[] { x => x.State }
                 });

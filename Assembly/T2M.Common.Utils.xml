@@ -1004,13 +1004,13 @@
             储存常用日期数值的工具类
             </summary>
         </member>
-        <member name="M:T2M.Common.Utils.Helper.DateTimePlus.GetMinDateTime">
+        <member name="P:T2M.Common.Utils.Helper.DateTimePlus.GetMinDateTime">
             <summary>
             获取SQL数据库允许的最小时间值，用于将没有对时间属性赋值的数据库模型实例持久化到数据库
             </summary>
             <returns></returns>
         </member>
-        <member name="M:T2M.Common.Utils.Helper.DateTimePlus.GetMaxDateTime">
+        <member name="P:T2M.Common.Utils.Helper.DateTimePlus.GetMaxDateTime">
             <summary>
             获取SQL数据库允许的最大时间值，用于将没有对时间属性赋值的数据库模型实例持久化到数据库
             </summary>

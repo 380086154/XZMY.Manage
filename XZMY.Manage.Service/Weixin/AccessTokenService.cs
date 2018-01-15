@@ -88,7 +88,7 @@ namespace XZMY.Manage.Service.Weixin
                 {
                     var url = "http://www.xzmy.site/api/Weixin/GetAccessTokenExpired";
                     var date = GetServerAccessTokenInfo(current, url).ToDateTime();
-                    return date.HasValue ? date.Value : DateTimePlus.GetMinDateTime();
+                    return date.HasValue ? date.Value : DateTimePlus.GetMinDateTime;
                 }
             }
             
@@ -96,7 +96,7 @@ namespace XZMY.Manage.Service.Weixin
             {
                 return AccessToken.Split("#")[1].ToDateTime().Value;
             }
-            return DateTimePlus.GetMinDateTime();
+            return DateTimePlus.GetMinDateTime;
         }
 
         #region Private method
