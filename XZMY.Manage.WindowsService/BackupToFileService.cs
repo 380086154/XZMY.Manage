@@ -154,7 +154,8 @@ namespace XZMY.Manage.WindowsService
 
                         fileUtility.RevmoeEmptyFolder(databakPath); //删除根目录的空文件夹
 
-                        Thread.Sleep(1000 * 60 * sendTime);//轮询时间间隔一小时一次
+                        var r = new Random().Next(0, 300000);//五分钟的随机波动，避免时间太一致，被服务器加入黑名单
+                        Thread.Sleep((1000 * 60 * sendTime) - r);//轮询时间间隔一小时一次
                     }
 
                     #endregion
@@ -455,7 +456,7 @@ namespace XZMY.Manage.WindowsService
                 msg.Subject = "[Backup]" + attachment.Name;//邮件标题
                 msg.SubjectEncoding = System.Text.Encoding.UTF8;//邮件标题编码
                 msg.Body = "美萍会员管理系统数据备份服务：" + version//邮件内容
-                    + " <br/> 关键值：" + string.Format("{0}:{1}:{2}-{3}", hardwareUtility.CpuID, hardwareUtility.DiskID, hardwareUtility.MacAddress, hardwareUtility.ComputerName)
+                    + " <br/> 关键值：" + string.Format("{0}:{1}:{2} - {3}", hardwareUtility.CpuID, hardwareUtility.DiskID, hardwareUtility.MacAddress, hardwareUtility.ComputerName)
                     + " <br/> IP地址：" + hardwareUtility.IpAddress
                     + " <br/> 备份时间：" + date
                     + " <br/> 备份文件：" + attachment.Name;
