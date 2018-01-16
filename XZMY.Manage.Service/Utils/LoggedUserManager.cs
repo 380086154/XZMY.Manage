@@ -21,7 +21,21 @@ namespace XZMY.Manage.Service.Utils
         /// <summary>
         ///     测试帐号Id
         /// </summary>
-        private static readonly Guid TestGuid = Guid.Parse("A372649D-97FD-4D8F-A33F-A38800F5C489");
+        private static readonly Guid TestGuid = Guid.Parse("48f441b5-f772-4f5e-a88a-1dc37390b882");
+
+        /// <summary>
+        /// 管理员Id
+        /// </summary>
+        private static readonly Guid AdminId = Guid.Parse("48f441b5-f772-4f5e-a88a-1dc37390b882");
+
+        #region Property
+
+        /// <summary>
+        /// 是否管理员
+        /// </summary>
+        public static bool IsAdmin { get; set; }
+
+        #endregion
 
         public static CurrentUserAccountModel GetSystemAccount()
         {
@@ -60,7 +74,7 @@ namespace XZMY.Manage.Service.Utils
         /// </summary>
         /// <param name="accountid"></param>
         /// <param name="ip"></param>
-        public static void SetCurrentUserAccount(Guid accountid, string ip)
+        public static void SetCurrentUserAccount(UserAccount account, string ip)
         {
             //return;
             //var cache = new UserProfileStaticDataCache();
@@ -68,9 +82,9 @@ namespace XZMY.Manage.Service.Utils
             //var profile = cache.Find(accountid);
             //var account = acache.Find(accountid);
             //if (profile == null) return;
-            var service = new GetEntityByIdService<UserAccount>(accountid);
-            var profile = service.Invoke();
-            if (profile == null) return;
+            //var service = new GetEntityByIdService<UserAccount>(accountid);
+            //var profile = service.Invoke();
+            //if (profile == null) return;
 
             #region Planner
 
@@ -92,22 +106,23 @@ namespace XZMY.Manage.Service.Utils
             //};
             //var resultPlanner = servicePlanner.Invoke();
             //var listPlanner = resultPlanner.Results;
-            
+
             //if (resultPlanner.TotalCount > 0)
             //{
             //    modelPlanner = listPlanner[0];
             //}
 
             #endregion
-     
+            
             //var servicePlanner = new GetEntityByIdService<Planner>(Xml;
             //var profilePlanner = servicePlanner.Invoke();
             var currentAccount = new CurrentUserAccountModel
             {
-                AccountId = profile.DataId,
-                Name = profile.LoginName,
-                Email = profile.Email,
-                AccountName = profile.LoginName ?? profile.Mobile,
+                AccountId = account.DataId,
+                BranchDataId = account.BranchDataId,
+                Name = account.LoginName,
+                Email = account.Email,
+                AccountName = account.LoginName ?? account.Mobile,
                 IP = ip,
                 //PlannerId= modelPlanner.Id,
                 //PlannerName=modelPlanner.Name
@@ -117,6 +132,8 @@ namespace XZMY.Manage.Service.Utils
                 //DepartmentName = profile.DepartmentName,
                 //Position = profile.Position
             };
+
+            IsAdmin = (account.DataId == AdminId);
 
             if (HttpContext.Current.Session != null)
                 HttpContext.Current.Session[CURRENT_INFO] = currentAccount;

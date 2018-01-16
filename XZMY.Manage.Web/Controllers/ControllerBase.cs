@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using XZMY.Manage.Service;
 using XZMY.Manage.Service.Auth;
 using XZMY.Manage.Service.Auth.Attributes;
 using XZMY.Manage.Service.Utils;
@@ -18,6 +19,27 @@ namespace XZMY.Manage.Web.Controllers
     public class ControllerBase : Controller
     {
         private static Dictionary<string, Dictionary<string, AutoCreateAuthActionAttribute>> AUTH_RES;
+
+        /// <summary>
+        /// 是否管理员
+        /// </summary>
+        protected bool IsAdmin { get { return LoggedUserManager.IsAdmin; } }
+
+        /// <summary>
+        /// 当前分店 Id
+        /// </summary>
+        protected Guid CurrentBranchDataId { get { return LoggedUserManager.GetCurrentUserAccount().BranchDataId; } }
+
+        /// <summary>
+        /// 当前登录用户 Id
+        /// </summary>
+        protected Guid CurrentAccountId { get { return LoggedUserManager.GetCurrentUserAccount().AccountId; } }
+
+        /// <summary>
+        /// 当前登录用户
+        /// </summary>
+        protected CurrentUserAccountModel CurrentAccount { get { return LoggedUserManager.GetCurrentUserAccount(); } }
+
         static ControllerBase()
         {
             AUTH_RES = new Dictionary<string, Dictionary<string, AutoCreateAuthActionAttribute>>();

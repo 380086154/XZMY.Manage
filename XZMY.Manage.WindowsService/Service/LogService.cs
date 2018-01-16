@@ -18,6 +18,7 @@ namespace XZMY.Manage.WindowsService.Service
         public string IP = string.Empty;
         public string UserId = string.Empty;
         public string UserName = string.Empty;
+        public string ComputerName = string.Empty;
 
         public LogService(DatabaseHelper databaseHelper, string ip, Guid userId, string userName)
         {

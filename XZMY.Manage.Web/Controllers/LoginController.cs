@@ -70,7 +70,7 @@ namespace XZMY.Manage.Web.Controllers
             {
                 return Json(new { status = false, errors = "帐号或密码错误" });
             }
-            LoggedUserManager.SetCurrentUserAccount(account.DataId, Request.UserHostAddress);
+            LoggedUserManager.SetCurrentUserAccount(account, Request.UserHostAddress);
 
             var urlReferrer = Request.UrlReferrer;
 

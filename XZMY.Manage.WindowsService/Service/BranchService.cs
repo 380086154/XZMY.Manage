@@ -35,8 +35,8 @@ namespace XZMY.Manage.WindowsService.Service
             var sb = new StringBuilder();
             sb.Append("SELECT TOP 1 * FROM [BranchName] WHERE ");
             sb.AppendFormat("[Value] LIKE '%{0}%'", hardware.CpuID);
-            sb.AppendFormat(" OR [Value] LIKE '%{0}%'", hardware.DiskID);
             sb.AppendFormat(" OR [Value] LIKE '%{0}%'", hardware.MacAddress);
+            sb.AppendFormat(" OR [Value] LIKE '%{0}%'", hardware.DiskID);
 
             var dt = db.GetDataTable(sb.ToString(), "BranchName", EProviderName.SqlClient);
 
@@ -48,8 +48,8 @@ namespace XZMY.Manage.WindowsService.Service
                 {
                     try
                     {
-                        var oldValue = item.Value;//CPUID,DISKID,MAC
-                        var newValue = hardware.CpuID + "|" + hardware.DiskID + "|" + hardware.MacAddress;//顺序必须保持
+                        var oldValue = item.Value;//CPUID,MAC,DISKID
+                        var newValue = hardware.CpuID + "|" + hardware.MacAddress + "|" + hardware.DiskID;//顺序必须保持
 
                         //logService.Add("判断是否自动更新分店信息", "newValue：" + newValue, "oldValue：" + oldValue, LogLevel.Debug);
                         AutoUpdate(item.DataId, oldValue.Split('|'), newValue.Split('|'));//自动更新分店信息

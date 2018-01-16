@@ -17,6 +17,11 @@ namespace XZMY.Manage.Service
         public String IP { get; set; }
         public Guid AccountId { get; set; }
 
+        /// <summary>
+        /// 分店 Id
+        /// </summary>
+        public Guid BranchDataId { get; set; }
+
         public Guid CreatorId { get; set; }
 
         /// <summary>

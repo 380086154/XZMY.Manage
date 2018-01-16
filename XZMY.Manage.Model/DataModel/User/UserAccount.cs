@@ -13,6 +13,11 @@ namespace XZMY.Manage.Model.DataModel.User
     [DBTable("Sys_User")]
     public class UserAccount : EntityBase, IDataModel
     {
+        /// <summary>
+        /// 分店 Id
+        /// </summary>
+        public Guid BranchDataId { get; set; }
+
         public int Code { get; set; }
 
         /// <summary>

@@ -63,6 +63,18 @@ namespace XZMY.Manage.Web.Controllers
                 SortType = T2M.Common.DataServiceComponents.Data.Query.Interface.SortType.Desc
             };
 
+            if (!IsAdmin)
+            {
+                service.CustomConditions.Add(new CustomConditionPlus<HyxxDto>
+                {
+                    Value = CurrentBranchDataId,
+                    Operation = SqlOperation.Equals,
+                    Member = new Expression<Func<HyxxDto, object>>[] {
+                        x => x.BranchDataId
+                    }                    
+                });
+            }
+
             var result = service.Invoke();
 
             return Json(new { success = true, total = result.TotalCount, rows = result.Results, errors = GetErrors() }, JsonRequestBehavior.AllowGet);
@@ -99,6 +111,18 @@ namespace XZMY.Manage.Web.Controllers
                     Operation = SqlOperation.Equals,
                     Member = new Expression<Func<XfxxDto, object>>[] {
                         x =>x.hykh,
+                    }
+                });
+            }
+            
+            if (!IsAdmin)
+            {
+                service.CustomConditions.Add(new CustomConditionPlus<XfxxDto>
+                {
+                    Value = CurrentBranchDataId,
+                    Operation = SqlOperation.Equals,
+                    Member = new Expression<Func<XfxxDto, object>>[] {
+                        x => x.BranchDataId
                     }
                 });
             }

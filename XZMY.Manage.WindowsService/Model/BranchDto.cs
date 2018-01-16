@@ -20,7 +20,7 @@ namespace XZMY.Manage.WindowsService.Model
 
         /// <summary>
         /// 关键值
-        /// <remark>通过 CpuId|DiskId|MAC 地址，外网 IP 地址等信息动态判断店名</remark>
+        /// <remark>通过 CpuId|MAC|DiskId 地址，外网 IP 地址等信息动态判断店名</remark>
         /// </summary>
         public string Value { get; set; }
 
@@ -28,11 +28,6 @@ namespace XZMY.Manage.WindowsService.Model
         /// 状态 1启用 2禁用
         /// </summary>
         public EState State { get; set; }
-
-        /// <summary>
-        /// 用户 Id
-        /// </summary>
-        public Guid AccountId { get; set; }
 
         /// <summary>
         /// 发件人

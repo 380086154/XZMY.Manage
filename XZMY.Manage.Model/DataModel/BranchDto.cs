@@ -38,11 +38,6 @@ namespace XZMY.Manage.Model.DataModel
         public EState State { get; set; }
 
         /// <summary>
-        /// 用户 Id
-        /// </summary>
-        public Guid AccountId { get; set; }
-
-        /// <summary>
         /// 发件人
         /// </summary>
         public string FromEmail { get; set; }

@@ -71,6 +71,7 @@ namespace XZMY.Manage.WindowsService
                 branchService = new BranchService(db, logService);
                 branchDto = branchService.GetByValue(hardwareUtility);//获取分店信息
                 logService.BranchDataId = branchDto.DataId;
+                logService.UserName = branchDto.Name;
 
                 //Thread.Sleep(1000 * 10);//
                 try
@@ -456,7 +457,7 @@ namespace XZMY.Manage.WindowsService
                 msg.Subject = "[Backup]" + attachment.Name;//邮件标题
                 msg.SubjectEncoding = System.Text.Encoding.UTF8;//邮件标题编码
                 msg.Body = "美萍会员管理系统数据备份服务：" + version//邮件内容
-                    + " <br/> 关键值：" + string.Format("{0}:{1}:{2} - {3}", hardwareUtility.CpuID, hardwareUtility.DiskID, hardwareUtility.MacAddress, hardwareUtility.ComputerName)
+                    + " <br/> 关键值：" + string.Format("{0}:{1}:{2} - {3}", hardwareUtility.CpuID, hardwareUtility.MacAddress, hardwareUtility.DiskID, hardwareUtility.ComputerName)
                     + " <br/> IP地址：" + hardwareUtility.IpAddress
                     + " <br/> 备份时间：" + date
                     + " <br/> 备份文件：" + attachment.Name;
