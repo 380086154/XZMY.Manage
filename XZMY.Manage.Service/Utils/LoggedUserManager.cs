@@ -113,7 +113,7 @@ namespace XZMY.Manage.Service.Utils
             //}
 
             #endregion
-            
+
             //var servicePlanner = new GetEntityByIdService<Planner>(Xml;
             //var profilePlanner = servicePlanner.Invoke();
             var currentAccount = new CurrentUserAccountModel
@@ -134,11 +134,30 @@ namespace XZMY.Manage.Service.Utils
             };
 
             IsAdmin = (account.DataId == AdminId);
+            SetBranchDataId(account.BranchDataId);//保存分店 id，用于数据筛选
 
             if (HttpContext.Current.Session != null)
                 HttpContext.Current.Session[CURRENT_INFO] = currentAccount;
             else
                 HttpContext.Current.Items[CURRENT_INFO] = currentAccount;
+        }
+
+        /// <summary>
+        /// 获取 Cookie 中的 AccountId
+        /// </summary>
+        /// <returns></returns>
+        public static Guid GetCookieBranchDataId()
+        {
+            var current = HttpContext.Current;
+            if (current != null)
+            {
+                var cookie = current.Request.Cookies["BranchDataId"];
+                if (cookie != null)
+                {
+                    return cookie.Value.ToGuid().Value;
+                }
+            }
+            return Guid.Empty;
         }
 
         /// <summary>
@@ -165,6 +184,18 @@ namespace XZMY.Manage.Service.Utils
             else
                 HttpContext.Current.Items[CURRENT_INFO] = null;
         }
+
+        #region Private method
+
+        private static void SetBranchDataId(Guid id)
+        {
+            var cookie = new HttpCookie("BranchDataId");
+            cookie.Expires = DateTime.Now.AddHours(20);
+            cookie.Value = id.ToString();
+            HttpContext.Current.Response.Cookies.Add(cookie);
+        }
+
+        #endregion
 
         ///// <summary>
         ///// 保存用户登录信息

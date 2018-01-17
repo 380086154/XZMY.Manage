@@ -253,10 +253,11 @@
         url: undefined,
         ajax: undefined,
         cache: true,
-        contentType: 'application/json',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
         dataType: 'json',
         ajaxOptions: {},
         queryParams: function (params) {
+            params.PageIndex = params.PageIndex - 1;
             return params;
         },
         queryParamsType: 'limit', // undefined
@@ -277,6 +278,7 @@
         paginationPreText: '&lsaquo;',
         paginationNextText: '&rsaquo;',
         paginationLastText: '&raquo;',
+        autoHeight: false,
         search: false,
         strictSearch: false,
         searchAlign: 'right',
@@ -307,7 +309,7 @@
         silentSort: true,
         maintainSelected: false,
         searchTimeOut: 500,
-        keyword: '',
+        Keyword: '',
         iconSize: undefined,
         iconsPrefix: 'glyphicon', // glyphicon of fa (font awesome)
         icons: {
@@ -409,12 +411,12 @@
 
     BootstrapTable.LOCALES['en-US'] = BootstrapTable.LOCALES['en'] = {
         formatLoadingMessage: function () {
-            return '\u52A0\u8F7D\u4E2D\uFF0C\u8BF7\u7A0D\u5019 ...';//¼ÓÔØÖÐ, ÇëÉÔºò
+            return '\u52A0\u8F7D\u4E2D\uFF0C\u8BF7\u7A0D\u5019 ...';//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½Ôºï¿½
         },
         formatRecordsPerPage: function (pageBar, totalPages) {
             //var total = totalRows / pageIndex;
             //alert(totalRows + ' - ' + pageIndex)
-            return sprintf('\u6BCF\u9875\u663E\u793A %s \u884C\uFF0C\u5171 %s \u9875', pageBar, totalPages);//records per page Ã¿Ò³ÏÔÊ¾  
+            return sprintf('\u6BCF\u9875\u663E\u793A %s \u884C\uFF0C\u5171 %s \u9875', pageBar, totalPages);//records per page Ã¿Ò³ï¿½ï¿½Ê¾  
         },
         formatShowingRows: function (pageFrom, pageTo, totalRows) {
             return sprintf('\u663E\u793A %s \u5230 %s \u5171 %s \u884C', pageFrom, pageTo, totalRows);//Showing %s to %s of %s rows
@@ -423,16 +425,16 @@
             return sprintf('\u663E\u793A %s \u884C', totalRows);
         },
         formatSearch: function () {
-            return '\u5173\u952E\u5B57';//¹Ø¼ü×Ö
+            return '\u5173\u952E\u5B57';//ï¿½Ø¼ï¿½ï¿½ï¿½
         },
         formatNoMatches: function () {
-            return '\u6CA1\u6709\u627E\u5230\u5339\u914D\u7684\u8BB0\u5F55';//No matching records found Ã»ÓÐÕÒµ½Æ¥ÅäµÄ¼ÇÂ¼
+            return '\u6CA1\u6709\u627E\u5230\u5339\u914D\u7684\u8BB0\u5F55';//No matching records found Ã»ï¿½ï¿½ï¿½Òµï¿½Æ¥ï¿½ï¿½Ä¼ï¿½Â?
         },
         formatPaginationSwitch: function () {
             return 'Hide/Show pagination';
         },
         formatRefresh: function () {
-            return '\u5237\u65B0';//Refresh Ë¢ÐÂ
+            return '\u5237\u65B0';//Refresh Ë¢ï¿½ï¿½
         },
         formatToggle: function () {
             return 'Toggle';
@@ -1075,10 +1077,10 @@
             $(event.currentTarget).val(text);
         }
 
-        if (text === this.keyword) {
+        if (text === this.Keyword) {
             return;
         }
-        this.keyword = text;
+        this.Keyword = text;
 
         this.options.pageIndex = 1;
         this.initSearch();
@@ -1090,7 +1092,7 @@
         var that = this;
 
         if (this.options.sidePagination !== 'server') {
-            var s = this.keyword && this.keyword.toLowerCase();
+            var s = this.Keyword && this.Keyword.toLowerCase();
             var f = $.isEmptyObject(this.filterColumns) ? null : this.filterColumns;
 
             // Check filter
@@ -1172,13 +1174,13 @@
                 var pageLst = typeof this.options.pageList === 'string' ?
                     this.options.pageList.replace('[', '').replace(']', '')
                         .replace(/ /g, '').toLowerCase().split(',') : this.options.pageList;
-                if ($.inArray(this.options.formatAllRows().toLowerCase(), pageLst)  > -1) {
+                if ($.inArray(this.options.formatAllRows().toLowerCase(), pageLst) > -1) {
                     $allSelected = true;
                 }
             }
 
             this.totalPages = ~~((this.options.totalRows - 1) / this.options.pageSize) + 1;
-            
+
             this.options.totalPages = this.totalPages;
         }
         if (this.totalPages > 0 && this.options.pageIndex > this.totalPages) {
@@ -1214,7 +1216,7 @@
                     ' <span class="caret"></span>',
                     '</button>',
                     '<ul class="dropdown-menu" role="menu">'
-                ],
+            ],
                 pageList = this.options.pageList;
 
             if (typeof this.options.pageList === 'string') {
@@ -1227,7 +1229,7 @@
                         that.options.formatAllRows() : +value);
                 });
             }
-            
+
             $.each(pageList, function (i, page) {
                 if (!that.options.smartDisplay || i === 0 || pageList[i - 1] <= that.options.totalRows) {
                     var active;
@@ -1717,7 +1719,7 @@
             pageSize: this.options.pageSize === this.options.formatAllRows() ?
                 this.options.totalRows : this.options.pageSize,
             pageIndex: this.options.pageIndex,
-            keyword: this.keyword,
+            Keyword: this.Keyword,
             sortName: this.options.sortName,
             sortOrder: this.options.sortOrder
         };
@@ -1728,7 +1730,7 @@
 
         if (this.options.queryParamsType === 'limit') {
             params = {
-                keyword: params.keyword,
+                Keyword: params.Keyword,
                 sort: params.sortName,
                 order: params.sortOrder
             };
@@ -1759,7 +1761,7 @@
         if (!silent) {
             this.$tableLoading.show();
         }
- 
+
         request = $.extend({}, calculateObjectValue(null, this.options.ajaxOptions), {
             type: this.options.method,
             url: this.options.url,
@@ -1793,10 +1795,10 @@
 
     BootstrapTable.prototype.initSearchKeyword = function () {
         if (this.options.search) {
-            if (this.options.keyword !== '') {
+            if (this.options.Keyword !== '') {
                 var $search = this.$toolbar.find('.search input');
-                $search.val(this.options.keyword);
-                this.onSearch({currentTarget: $search});
+                $search.val(this.options.Keyword);
+                this.onSearch({ currentTarget: $search });
             }
         }
     };
@@ -2082,6 +2084,18 @@
                 paginationHeight = getRealHeight(this.$pagination),
                 height = this.options.height - toolbarHeight - paginationHeight;
 
+            if (this.options.autoHeight) {
+                //alert(this.options.autoHeight + ' - ' + this.options.pageSize);
+                if (this.options.pageSize > 10 && this.options.pageSize <= 20)
+                    height = 783;
+                else if (this.options.pageSize > 20)
+                    height = 1000;
+                else
+                    height = 413;
+
+                location.href = '#table-auto-height';
+            }
+
             this.$tableContainer.css('height', height + 'px');
         }
 
@@ -2115,7 +2129,7 @@
     };
 
     BootstrapTable.prototype.getData = function (useCurrentPage) {
-        return (this.keyword || !$.isEmptyObject(this.filterColumns) || !$.isEmptyObject(this.filterColumnsPartial)) ?
+        return (this.Keyword || !$.isEmptyObject(this.filterColumns) || !$.isEmptyObject(this.filterColumnsPartial)) ?
             (useCurrentPage ? this.data.slice(this.pageFrom - 1, this.pageTo) : this.data) :
             (useCurrentPage ? this.options.data.slice(this.pageFrom - 1, this.pageTo) : this.options.data);
     };
@@ -2204,7 +2218,7 @@
 
             if (row.hasOwnProperty(uniqueId)) { // uniqueId is a column
                 rowUniqueId = row[uniqueId];
-            } else if(row._data.hasOwnProperty(uniqueId)) { // uniqueId is a row data property
+            } else if (row._data.hasOwnProperty(uniqueId)) { // uniqueId is a row data property
                 rowUniqueId = row._data[uniqueId];
             } else {
                 continue;
@@ -2563,7 +2577,7 @@
     BootstrapTable.prototype.resetSearch = function (text) {
         var $search = this.$toolbar.find('.search input');
         $search.val(text || '');
-        this.onSearch({currentTarget: $search});
+        this.onSearch({ currentTarget: $search });
     };
 
     BootstrapTable.prototype.expandRow_ = function (expand, index) {

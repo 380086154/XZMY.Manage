@@ -28,7 +28,7 @@ namespace XZMY.Manage.Web.Controllers
         /// <summary>
         /// 当前分店 Id
         /// </summary>
-        protected Guid CurrentBranchDataId { get { return LoggedUserManager.GetCurrentUserAccount().BranchDataId; } }
+        protected Guid CurrentBranchDataId { get { return LoggedUserManager.GetCookieBranchDataId(); } }
 
         /// <summary>
         /// 当前登录用户 Id
@@ -64,7 +64,7 @@ namespace XZMY.Manage.Web.Controllers
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var current = LoggedUserManager.GetCurrentUserAccount();
-            if (String.IsNullOrEmpty(current.Name))
+            if (string.IsNullOrEmpty(current.Name))
             {
                 ViewBag.LoginName = current.AccountName;
             }
