@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>XZMY.Manage.Log</name>
+    </assembly>
+    <members>
+        <member name="P:XZMY.Manage.Log.Models.LogEntity.Level">
+            <summary>
+            日志等级
+            </summary>
+        </member>
+    </members>
+</doc>

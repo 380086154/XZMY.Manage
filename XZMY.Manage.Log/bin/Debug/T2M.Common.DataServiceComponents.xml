@@ -1,0 +1,760 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>T2M.Common.DataServiceComponents</name>
+    </assembly>
+    <members>
+        <member name="T:T2M.Common.DataServiceComponents.Data.Query.Interface.IQuery`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Query.Interface.IQuery`1.Execute">
+            <summary>
+            执行
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:T2M.Common.DataServiceComponents.Data.Query.Interface.ISubQuery`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Query.Interface.ISubQuery`1.Execute(System.Data.IDbTransaction)">
+            <summary>
+            执行
+            </summary>
+            <param name="transaction"></param>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Impl.Query.BaseCreateQuery`1.Execute">
+            <summary>
+            执行操作
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Impl.Query.BaseCreateQuery`1.Model">
+            <summary>
+            业务实体
+            </summary>
+        </member>
+        <member name="T:T2M.Common.DataServiceComponents.Data.Query.Interface.IBaseSetSingleStateQuery`2">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TP"></typeparam>
+        </member>
+        <member name="T:T2M.Common.DataServiceComponents.Data.Query.Interface.IBaseSetSingleStateByForeignIdQuery`2">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TP"></typeparam>
+        </member>
+        <member name="T:T2M.Common.DataServiceComponents.Data.Query.Interface.IBaseUpdateQuery`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Impl.Query.BaseUpdateQuery`1.Execute">
+            <summary>
+            执行操作
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Impl.Query.BaseUpdateQuery`1.Model">
+            <summary>
+            业务实体
+            </summary>
+        </member>
+        <member name="F:T2M.Common.DataServiceComponents.Data.Query.SqlOperation.DateRange">
+            <summary>
+            时间区间
+            </summary>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Query.CustomSearch`1.GetCondition">
+            <summary>
+            条件拼接
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Query.CustomSearch`1.BuildParameters">
+            <summary>
+            构建用于执行T-SQL语句的参数。
+            </summary>
+            <returns>一组用于执行T-SQL语句的参数</returns>
+        </member>
+        <member name="T:T2M.Common.DataServiceComponents.Data.Impl.Query.PaginationQuery`1">
+            <summary>
+            分页相关
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:T2M.Common.DataServiceComponents.Data.Query.Interface.IPaginationQuery`1">
+            <summary>
+            提供了根据数据库查询结果来计算分页的业务对象接口。
+            </summary>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Query.Interface.IPaginationQuery`1.PageIndex">
+            <summary>
+            获取或设置页码，页码不小于1。
+            </summary>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Query.Interface.IPaginationQuery`1.PageSize">
+            <summary>
+            获取或设置分页显示的内容条数。
+            </summary>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Query.Interface.IPaginationQuery`1.SortMember">
+            <summary>
+            排序字段
+            </summary>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Query.Interface.IPaginationQuery`1.SortType">
+            <summary>
+            排序方式
+            </summary>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Impl.Query.PaginationQuery`1.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Impl.Query.PaginationQuery`1.Execute">
+            <summary>
+            执行查询
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Impl.Query.PaginationQuery`1.GetSortTypeString">
+            <summary>
+            获取排序方式
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Impl.Query.PaginationQuery`1.InitPagedResult(System.Int32)">
+            <summary>
+            实例化分页信息
+            </summary>
+            <param name="totalCount">总数</param>
+            <returns></returns>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Impl.Query.PaginationQuery`1.PageIndex">
+            <summary>
+            页码
+            </summary>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Impl.Query.PaginationQuery`1.PageSize">
+            <summary>
+            每页行数
+            </summary>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Impl.Query.PaginationQuery`1.SortMember">
+            <summary>
+            排序字段
+            </summary>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Impl.Query.PaginationQuery`1.SortType">
+            <summary>
+            排序方式：正序/倒序
+            </summary>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Impl.Query.CustomSearchWithPagination`1.GetCondition">
+            <summary>
+            条件拼接
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Impl.Query.CustomSearchWithPagination`1.BuildParameters">
+            <summary>
+            构建用于执行T-SQL语句的参数。
+            </summary>
+            <returns>一组用于执行T-SQL语句的参数</returns>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Query.Interface.IGetEntityByForeignId`1.Execute">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Query.Interface.IGetEntityByForeignId`1.ForeignId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Impl.Query.GetEntityByForeignId`1.GetCondition">
+            <summary>
+            条件拼接
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Impl.Query.GetEntityByForeignId`1.BuildParameters">
+            <summary>
+            构建用于执行T-SQL语句的参数。
+            </summary>
+            <returns>一组用于执行T-SQL语句的参数</returns>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Query.Interface.IGetEntityByForeignIdList`1.Execute">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Query.Interface.IGetEntityByForeignIdList`1.ForeignId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Impl.Query.GetEntityByForeignIdList`1.GetCondition">
+            <summary>
+            条件拼接
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Impl.Query.GetEntityByForeignIdList`1.BuildParameters">
+            <summary>
+            构建用于执行T-SQL语句的参数。
+            </summary>
+            <returns>一组用于执行T-SQL语句的参数</returns>
+        </member>
+        <member name="T:T2M.Common.DataServiceComponents.Data.Impl.Query.GetEntityByIdList`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:T2M.Common.DataServiceComponents.Data.Query.Interface.IGetEntityByIdList`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Query.Interface.IGetEntityByIdList`1.Execute">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Query.Interface.IGetEntityByIdList`1.IdList">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:T2M.Common.DataServiceComponents.Data.Impl.Query.GetEntityById`1">
+            <summary>
+            根据Id查询业务实体
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:T2M.Common.DataServiceComponents.Data.Query.Interface.IGetEntityById`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Query.Interface.IGetEntityById`1.Execute">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Query.Interface.IGetEntityById`1.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Impl.Query.GetEntityById`1.BuildMapping">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Impl.Query.GetEntityById`1.GetCondition">
+            <summary>
+            条件拼接
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Impl.Query.GetEntityById`1.BuildParameters">
+            <summary>
+            构建用于执行T-SQL语句的参数。
+            </summary>
+            <returns>一组用于执行T-SQL语句的参数</returns>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Impl.Query.GetEntityById`1.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Query.Interface.IGetEntityByMultiColumn`1.Execute">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Impl.Query.GetEntityByMultiColumn`1.GetCondition">
+            <summary>
+            条件拼接
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Impl.Query.GetEntityByMultiColumn`1.BuildParameters">
+            <summary>
+            构建用于执行T-SQL语句的参数。
+            </summary>
+            <returns>一组用于执行T-SQL语句的参数</returns>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Query.Interface.IGetEntityByMultiForeignId`1.Execute">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Impl.Query.GetEntityByMultiForeignId`1.GetCondition">
+            <summary>
+            条件拼接
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Impl.Query.GetEntityByMultiForeignId`1.BuildParameters">
+            <summary>
+            构建用于执行T-SQL语句的参数。
+            </summary>
+            <returns>一组用于执行T-SQL语句的参数</returns>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Query.Interface.IGetEntityBySingleColumn`1.Execute">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Query.Interface.IGetEntityBySingleColumn`1.ColumnValue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Impl.Query.GetEntityBySingleColumn`1.GetCondition">
+            <summary>
+            条件拼接
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Impl.Query.GetEntityBySingleColumn`1.BuildParameters">
+            <summary>
+            构建用于执行T-SQL语句的参数。
+            </summary>
+            <returns>一组用于执行T-SQL语句的参数</returns>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Query.Interface.IGetEntityCountByForeignId`1.Execute">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Query.Interface.IGetEntityCountByForeignId`1.ForeignId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Impl.Query.GetEntityCountByForeignId`1.GetCondition">
+            <summary>
+            条件拼接
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Impl.Query.GetEntityCountByForeignId`1.BuildParameters">
+            <summary>
+            构建用于执行T-SQL语句的参数。
+            </summary>
+            <returns>一组用于执行T-SQL语句的参数</returns>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Query.Interface.IGetEntityCountByMultiForeignId`1.Execute">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Impl.Query.GetEntityCountByMultiForeignId`1.GetCondition">
+            <summary>
+            条件拼接
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Impl.Query.GetEntityCountByMultiForeignId`1.BuildParameters">
+            <summary>
+            构建用于执行T-SQL语句的参数。
+            </summary>
+            <returns>一组用于执行T-SQL语句的参数</returns>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Query.Interface.IGetPagedEntityByForeignId`1.Execute">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Query.Interface.IGetPagedEntityByForeignId`1.ForeignId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Impl.Query.GetPagedEntityByForeignId`1.GetCondition">
+            <summary>
+            条件拼接
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Impl.Query.GetPagedEntityByForeignId`1.BuildParameters">
+            <summary>
+            构建用于执行T-SQL语句的参数。
+            </summary>
+            <returns>一组用于执行T-SQL语句的参数</returns>
+        </member>
+        <member name="T:T2M.Common.DataServiceComponents.Data.Query.Interface.IQuery">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Query.Interface.IQuery.Execute">
+            <summary>
+            执行
+            </summary>
+        </member>
+        <member name="T:T2M.Common.DataServiceComponents.Data.Query.Interface.IRemoteCallRollbackQuery">
+            <summary>
+            远程调用回滚
+            </summary>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Query.Interface.IRemoteCallRollbackQuery.HasError">
+            <summary>
+            是否存在错误
+            </summary>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Query.Interface.IRemoteCallRollbackQuery.ErrorMessage">
+            <summary>
+            错误信息
+            </summary>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Query.Interface.IRemoteCallRollbackQuery.Exception">
+            <summary>
+            异常信息
+            </summary>
+        </member>
+        <member name="T:T2M.Common.DataServiceComponents.Data.Query.Interface.ISubQuery">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Query.Interface.ISubQuery.Execute(System.Data.IDbTransaction)">
+            <summary>
+            执行
+            </summary>
+            <param name="transaction"></param>
+        </member>
+        <member name="T:T2M.Common.DataServiceComponents.Data.Query.Interface.PagedResult`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Query.Interface.PagedResult`1.#ctor">
+            <summary>
+            初始化一个泛型<see>
+                    <cref>PagedResult</cref>
+                </see>
+                对象，该构造方法只能由子类调用
+            </summary>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Query.Interface.PagedResult`1.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Collections.Generic.IList{`0})">
+            <summary>
+            初始化一个泛型<see>
+                    <cref>PagedResult</cref>
+                </see>
+                对象，该构造方法只能由子类调用
+            </summary>
+            <param name="totalCount">所有信息条数</param>
+            <param name="totalPages">所有页数</param>
+            <param name="pageIndex">不小于1的页码</param>
+            <param name="pageSize">分页显示的内容条数</param>
+            <param name="results">保存分页数据集的泛型IList对象</param>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Query.Interface.PagedResult`1.TotalCount">
+            <summary>
+            获取或设置所有信息条数
+            </summary>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Query.Interface.PagedResult`1.TotalPages">
+            <summary>
+            获取或设置所有页数
+            </summary>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Query.Interface.PagedResult`1.PageIndex">
+            <summary>
+            获取或设置页码，页码不小于1
+            </summary>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Query.Interface.PagedResult`1.PageSize">
+            <summary>
+            获取或设置分页显示的内容条数
+            </summary>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Query.Interface.PagedResult`1.Results">
+            <summary>
+            获取或设置保存分页数据集的泛型<see cref="T:System.Collections.IList"/>对象
+            </summary>
+        </member>
+        <member name="T:T2M.Common.DataServiceComponents.Data.Query.Interface.SortType">
+            <summary>
+            排序方式
+            </summary>
+        </member>
+        <member name="F:T2M.Common.DataServiceComponents.Data.Query.Interface.SortType.Desc">
+            <summary>
+            降序
+            </summary>
+        </member>
+        <member name="F:T2M.Common.DataServiceComponents.Data.Query.Interface.SortType.Asc">
+            <summary>
+            升序
+            </summary>
+        </member>
+        <member name="T:T2M.Common.DataServiceComponents.Data.Utils.SqlTransactionWrapper">
+            <summary>
+            事务相关
+            </summary>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Data.Utils.SqlTransactionWrapper.Dispose">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Utils.SqlTransactionWrapper.Transaction">
+            <summary>
+            事务
+            </summary>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Utils.SqlTransactionWrapper.HasError">
+            <summary>
+            是否存在错误
+            </summary>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Utils.SqlTransactionWrapper.ErrorMessage">
+            <summary>
+            错误信息
+            </summary>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Data.Utils.SqlTransactionWrapper.Exception">
+            <summary>
+            异常信息
+            </summary>
+        </member>
+        <member name="T:T2M.Common.DataServiceComponents.Service.IInvokeService`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Service.IInvokeService`1.Invoke">
+            <summary>
+            执行
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:T2M.Common.DataServiceComponents.Service.IInvokeTransactionService`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="TResult"></typeparam>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Service.BaseCreateService`1.#ctor(`0,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Service.BaseCreateService`1.Model">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Service.BaseDeleteService`1.#ctor(System.Guid,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Service.BaseDeleteService`1.Invoke">
+            <summary>
+            执行
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Service.BaseDeleteService`1.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Service.BaseUpdateService`1.#ctor(`0,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Service.BaseUpdateService`1.Invoke">
+            <summary>
+            执行
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Service.BaseUpdateService`1.Model">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:T2M.Common.DataServiceComponents.Service.CustomSearchWithPaginationService`1">
+            <summary>
+            获取集合
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Service.CustomSearchWithPaginationService`1.Invoke">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Service.CustomSearchWithPaginationService`1.PageSize">
+            <summary>
+            获取或设置分页显示的内容条数。
+            </summary>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Service.CustomSearchWithPaginationService`1.SortMember">
+            <summary>
+            排序字段
+            </summary>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Service.CustomSearchWithPaginationService`1.SortType">
+            <summary>
+            排序方式
+            </summary>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Service.CustomSearchWithPaginationService`1.CustomConditions">
+            <summary>
+            自定义条件
+            </summary>
+        </member>
+        <member name="T:T2M.Common.DataServiceComponents.Service.GetEntityByIdListService`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:T2M.Common.DataServiceComponents.Service.IInvokeService`2">
+            <summary>
+            
+            </summary>
+            <typeparam name="TViewModel"></typeparam>
+            <typeparam name="TResult"></typeparam>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Service.GetEntityByIdListService`1.#ctor(System.Collections.Generic.IList{System.Guid},System.String)">
+            <summary>
+            
+            </summary>
+            <param name="vm"></param>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Service.GetEntityByIdListService`1.Invoke">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Service.GetEntityByIdListService`1.ViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:T2M.Common.DataServiceComponents.Service.GetEntityByIdService`1">
+            <summary>
+            Id查询基类
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Service.GetEntityByIdService`1.#ctor(System.Guid,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="vm"></param>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Service.GetEntityByIdService`1.Invoke">
+            <summary>
+            执行
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Service.GetEntityByIdService`1.ViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:T2M.Common.DataServiceComponents.Service.GetEntityListService`1">
+            <summary>
+            获取集合
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Service.GetEntityListService`1.Invoke">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Service.GetEntityListService`1.PageSize">
+            <summary>
+            获取或设置分页显示的内容条数。
+            </summary>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Service.GetEntityListService`1.SortMember">
+            <summary>
+            排序字段
+            </summary>
+        </member>
+        <member name="P:T2M.Common.DataServiceComponents.Service.GetEntityListService`1.SortType">
+            <summary>
+            排序方式
+            </summary>
+        </member>
+        <member name="T:T2M.Common.DataServiceComponents.Service.IInvokeService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:T2M.Common.DataServiceComponents.Service.IInvokeService.Invoke">
+            <summary>
+            执行
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:T2M.Common.DataServiceComponents.Service.IInvokeService`3">
+            <summary>
+            
+            </summary>
+            <typeparam name="TModel"></typeparam>
+            <typeparam name="TViewModel"></typeparam>
+            <typeparam name="TResult"></typeparam>
+        </member>
+        <member name="T:T2M.Common.DataServiceComponents.Service.IInvokeTransactionService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:T2M.Common.DataServiceComponents.Service.IInvokeTransactionService`2">
+            <summary>
+            
+            </summary>
+            <typeparam name="TModel"></typeparam>
+            <typeparam name="TViewModel"></typeparam>
+            <typeparam name="TResult"></typeparam>
+        </member>
+    </members>
+</doc>
