@@ -28,7 +28,6 @@ namespace XZMY.Manage.Service.Handlers.Action
 
             try
             {
-
                 var datamodel = Model.GetDataModel(true);
                 Model.DataId = datamodel.DataId;
                 datamodel.SetActorInfomation(LoggedUserManager.GetCurrentUserAccount().GetActorInfomationSynchronizer());
@@ -45,7 +44,6 @@ namespace XZMY.Manage.Service.Handlers.Action
                         wrapper.HasError = true;
                         throw;
                     }
-
                 }
 
                 return HandlerInvokeResult.SUCCESS_VIEWMODEL;
