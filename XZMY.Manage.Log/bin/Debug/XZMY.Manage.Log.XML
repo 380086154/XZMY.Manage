@@ -4,6 +4,27 @@
         <name>XZMY.Manage.Log</name>
     </assembly>
     <members>
+        <member name="T:XZMY.Manage.Log.SqlServerLogger">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Log.SqlServerLogger.AddLog(XZMY.Manage.Log.Models.LogEntity)">
+            <summary>
+            
+            </summary>
+            <param name="log"></param>
+        </member>
+        <member name="M:XZMY.Manage.Log.SqlServerLogger.Commit">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:XZMY.Manage.Log.SqlServerLogger.Clear">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:XZMY.Manage.Log.Models.LogEntity.Level">
             <summary>
             日志等级
