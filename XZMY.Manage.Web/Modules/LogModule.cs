@@ -29,7 +29,7 @@ namespace XZMY.Manage.Web.Modules
         }
 
         /// <summary>
-        /// 
+        /// 请求完成后自动提交
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

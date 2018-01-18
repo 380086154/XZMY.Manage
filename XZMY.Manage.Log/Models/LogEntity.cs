@@ -20,7 +20,7 @@ namespace XZMY.Manage.Log.Models
         /// 日志等级
         /// </summary>
         public LogLevel Level { get; set; }
-        public String LevelName
+        public string LevelName
         {
             get
             {

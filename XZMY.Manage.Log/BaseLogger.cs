@@ -10,8 +10,15 @@ using T2M.Common.DataServiceComponents.Service;
 
 namespace XZMY.Manage.Log
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class SqlServerLogger : ILogger
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="log"></param>
         public void AddLog(LogEntity log)
         {
             if (HttpContext.Current == null) return;
@@ -24,6 +31,9 @@ namespace XZMY.Manage.Log
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Commit()
         {
             if (HttpContext.Current == null) return;
@@ -45,6 +55,9 @@ namespace XZMY.Manage.Log
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Clear()
         {
             if (HttpContext.Current == null) return;
