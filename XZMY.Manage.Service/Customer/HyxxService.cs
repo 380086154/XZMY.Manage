@@ -23,6 +23,15 @@ namespace XZMY.Manage.Service.Customer
         /// </summary>
         public bool PhoneControl = false;
 
+        public List<string> ShowNameList = new List<string> 
+        { 
+            "oYVeUwHdKdQ9HfP6LkWu5PV2Aj80",//曾燕
+            "oYVeUwBMvqS2MPDkvKx7YcSo156I",//钟林
+            "oYVeUwIhRJoOAYybm8EYgtQOIMSM",//阳绪围
+            "oYVeUwHCe_uHP9HmKNqVHfCPT4o8",//阳绪洋
+            "oYVeUwOSNj7wCFrvZMPbW8SBA-Y8",//刘小平
+        };
+
         /// <summary>
         /// 根据会员电话查询 会员信息
         /// </summary>
@@ -56,8 +65,9 @@ namespace XZMY.Manage.Service.Customer
         /// 根据会员电话返回 余额 信息
         /// </summary>
         /// <param name="yddh"></param>
+        /// <param name="fromUserName">OpenID</param>
         /// <returns></returns>
-        public string GetDetailsByYddh(string yddh)
+        public string GetDetailsByYddh(string yddh, string fromUserName)
         {
             var result = GetByYddh(yddh);
             if (result.Results.Count == 0)
@@ -70,13 +80,19 @@ namespace XZMY.Manage.Service.Customer
             var sb = new StringBuilder();
             var zkkService = new ZkkService();
 
-            sb.AppendFormat("查询到 {0} 张会员卡：", result.Results.Count);
+            sb.AppendFormat("<p>查询到 {0} 张会员卡：", result.Results.Count);
 
             foreach (var item in result.Results)
             {
                 var isCzk = item.klxmc.Contains("储值卡");//是否充值卡
 
-                sb.AppendFormat("\r\n{0}", item.kmc);
+                sb.Append("\r\n");
+
+                sb.AppendFormat("{0}", GetBranchName(item.BranchDataId));
+                if (ShowNameList.Contains(fromUserName))
+                    sb.AppendFormat(" {0}", item.hyxm.Trim());
+
+                sb.AppendFormat(" {0}", item.kmc);
                 sb.AppendFormat(" {0} 剩余", item.klxmc);
                 sb.AppendFormat(" {0} ", item.knje.ToString("F" + (isCzk ? 2 : 0)));
                 sb.Append(isCzk ? "元" : "次");
@@ -117,10 +133,27 @@ namespace XZMY.Manage.Service.Customer
                 },
                 SortMember = new Expression<Func<HyxxDto, object>>[] { x => x.jrrq },
                 SortType = T2M.Common.DataServiceComponents.Data.Query.Interface.SortType.Desc
-                
+
             };
 
             return service.Invoke().Results;
         }
+
+        #region Private method
+
+        private string GetBranchName(Guid branchId)
+        {
+            switch (branchId.ToString())
+            {
+                case "3389ca9f-57ec-44f1-a818-61370d61f553": return "HC";
+                case "949d7d00-7c85-4080-9ee3-9e65ccae575d": return "YX";
+                case "e7d12da5-50d8-4a01-ae3f-cab673845db7": return "Test";
+                default:
+                    break;
+            }
+            return "Test";
+        }
+
+        #endregion
     }
 }
