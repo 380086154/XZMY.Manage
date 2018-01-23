@@ -84,5 +84,43 @@ namespace XZMY.Manage.Service.Customer
 
             return sb.ToString();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        public IList<HyxxDto> GetByHykhList(IList<string> list, Guid branchDataId)
+        {
+            var service = new CustomSearchWithPaginationService<HyxxDto>
+            {
+                PageIndex = 1,
+                PageSize = 20,
+                CustomConditions = new List<CustomCondition<HyxxDto>>
+                {
+                    new CustomConditionPlus<HyxxDto>
+                    {
+                        Value = branchDataId,
+                        Operation = SqlOperation.Equals,
+                        Member = new Expression<Func<HyxxDto, object>>[] {
+                            x => x.BranchDataId,
+                        },
+                    },
+                    new CustomConditionPlus<HyxxDto>
+                    {
+                        Value = string.Join(",", list.Select(m => "'" + m + "'")),
+                        Operation = SqlOperation.In,
+                        Member = new Expression<Func<HyxxDto, object>>[] {
+                            x => x.hykh,
+                        }
+                    }
+                },
+                SortMember = new Expression<Func<HyxxDto, object>>[] { x => x.jrrq },
+                SortType = T2M.Common.DataServiceComponents.Data.Query.Interface.SortType.Desc
+                
+            };
+
+            return service.Invoke().Results;
+        }
     }
 }

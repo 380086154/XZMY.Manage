@@ -28,6 +28,25 @@ namespace XZMY.Manage.WindowsService.Service
         }
 
         /// <summary>
+        /// 获取消费次数
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="hykh"></param>
+        /// <returns></returns>
+        public string GetHyxm(DataTable dt, string hykh)
+        {
+            var result = "";
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (dr["hykh"].ToString().Trim() == hykh.Trim())
+                    result = dr["hyxm"].ToString();
+            }
+            return result;
+        }
+
+        #region Local
+
+        /// <summary>
         /// 根据会员姓名 获取会员卡号
         /// </summary>
         /// <param name="hyxm"></param>
@@ -41,7 +60,7 @@ namespace XZMY.Manage.WindowsService.Service
                 ? string.Empty
                 : table.Rows[0][0].ToString().Trim();
         }
-
+        
         /// <summary>
         /// 根据卡号获取本地会员信息
         /// </summary>
@@ -52,6 +71,32 @@ namespace XZMY.Manage.WindowsService.Service
             var sql = string.Format("SELECT * FROM [Hyxx] WHERE hykh = '{0}' ", hykh);
             return db.GetDataTable(sql, "Hyxx", EProviderName.OleDB);
         }
+
+        /// <summary>
+        /// 根据卡号获取本地会员信息
+        /// </summary>
+        /// <param name="hykh"></param>
+        /// <returns></returns>
+        public DataTable GetByHykhList(string str)
+        {
+            var sql = string.Format("SELECT * FROM [Hyxx] WHERE hykh IN ({0}) ", str);
+            return db.GetDataTable(sql, "Hyxx", EProviderName.OleDB);
+        }
+
+        /// <summary>
+        /// 根据会员姓名获取本地会员信息
+        /// </summary>
+        /// <param name="hyxm"></param>
+        /// <returns></returns>
+        public DataTable GetByHyxm(string hyxm)
+        {
+            var sql = string.Format("SELECT * FROM [Hyxx] WHERE hyxm = '{0}'", hyxm);
+            return db.GetDataTable(sql, "Hyxx", EProviderName.OleDB);
+        }
+
+        #endregion
+
+        #region Server
 
         /// <summary>
         /// 判断服务器中是否有数据
@@ -77,17 +122,6 @@ namespace XZMY.Manage.WindowsService.Service
             var result = db.ExecuteScalar(sql, EProviderName.SqlClient);
 
             return result > 0;
-        }
-
-        /// <summary>
-        /// 根据会员姓名获取本地会员信息
-        /// </summary>
-        /// <param name="hyxm"></param>
-        /// <returns></returns>
-        public DataTable GetByHyxm(string hyxm)
-        {
-            var sql = string.Format("SELECT * FROM [Hyxx] WHERE hyxm = '{0}'", hyxm);
-            return db.GetDataTable(sql, "Hyxx", EProviderName.OleDB);
         }
 
         /// <summary>
@@ -173,5 +207,7 @@ namespace XZMY.Manage.WindowsService.Service
 
             db.ExecuteNonQuery(sql, EProviderName.SqlClient, sp);
         }
+
+        #endregion
     }
 }

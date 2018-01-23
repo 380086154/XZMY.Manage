@@ -12,15 +12,20 @@ using XZMY.Manage.Model.Utils;
 namespace XZMY.Manage.Model.ViewModel.Assessment
 {
     /// <summary>
-    /// 问题答案
+    /// 会员信息
     /// </summary>
     [Serializable]
-    public class VmPayment : ViewBase, IActionViewModel<XfxxDto>
+    public class VmCustomer : ViewBase, IActionViewModel<XfxxDto>
     {
         /// <summary>
         /// 会员卡号
         /// </summary>
         public string Id { get; set; }
+
+        /// <summary>
+        /// 分店Id
+        /// </summary>
+        public Guid BranchDataId { get; set; }     
 
         public XfxxDto CreateNewDataModel()
         {

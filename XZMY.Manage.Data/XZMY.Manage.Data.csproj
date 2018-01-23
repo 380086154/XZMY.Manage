@@ -57,7 +57,7 @@
     <Compile Include="Query\User\ISearchUser.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Query\Member\" />
+    <Folder Include="Query\Customer\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\XZMY.Manage.Model\XZMY.Manage.Model.csproj">

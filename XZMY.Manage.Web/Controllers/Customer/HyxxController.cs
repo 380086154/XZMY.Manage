@@ -16,6 +16,10 @@ using T2M.Common.DataServiceComponents.Data.Query;
 using T2M.Common.DataServiceComponents.Service;
 using XZMY.Manage.Model.DataModel;
 using XZMY.Manage.Model.ViewModel.Assessment;
+using T2M.Common.DataServiceComponents.Data.Query.Interface;
+using XZMY.Manage.Service.Sys;
+using XZMY.Manage.Service.Customer;
+using XZMY.Manage.Model.Enum;
 
 namespace XZMY.Manage.Web.Controllers
 {
@@ -28,6 +32,7 @@ namespace XZMY.Manage.Web.Controllers
         [AutoCreateAuthAction(Name = "客户管理", Code = "HyxxList", ModuleCode = "SYSTEM", Url = "/Hyxx/List", Visible = true, Remark = "")]
         public ActionResult List()
         {
+            GetBranch();
             return View();
         }
 
@@ -35,11 +40,41 @@ namespace XZMY.Manage.Web.Controllers
         public ActionResult Payment(string id)
         {
             ViewBag.Id = id;
+            GetBranch();
             return View();
         }
 
+        [AutoCreateAuthAction(Name = "跨店查询", Code = "HyxxSearch", ModuleCode = "HyxxSearch", Url = "/Hyxx/Search", Visible = true, Remark = "")]
+        public ActionResult Search(string id)
+        {
+            return View();
+        }
+
+        private void GetBranch()
+        {
+            ViewBag.IsAdmin = IsAdmin;
+            if (!IsAdmin) return;
+
+            var service = new CustomSearchWithPaginationService<BranchDto>
+            {
+                PageIndex = 1,
+                PageSize = 20,
+                CustomConditions = new List<CustomCondition<BranchDto>>
+                {
+                    new CustomConditionPlus<BranchDto>
+                    {
+                        Value = EState.启用,
+                        Operation = SqlOperation.Equals,
+                        Member = new Expression<Func<BranchDto, object>>[] { x => x.State }
+                    }
+                },
+                SortMember = new Expression<Func<BranchDto, object>>[] { x => x.Name }
+            };
+            ViewBag.BranchList = service.Invoke().Results;
+        }
+
         //客户列表 Ajax 获取数据
-        public ActionResult AjaxCustomerList(VmSearchBase model)
+        public ActionResult AjaxCustomerList(VmCustomer model)
         {
             var service = new CustomSearchWithPaginationService<HyxxDto>
             {
@@ -52,12 +87,12 @@ namespace XZMY.Manage.Web.Controllers
                         Value = model.Keyword ?? string.Empty,
                         Operation = SqlOperation.Like,
                         Member = new Expression<Func<HyxxDto, object>>[] {
-                        x => x.yddh,
-                        x => x.hyxm,
-                        x => x.xmjm,
-                        x => x.hykh,
+                            x => x.yddh,
+                            x => x.hyxm,
+                            x => x.xmjm,
+                            x => x.hykh,
+                        }
                     }
-                }
                 },
                 SortMember = new Expression<Func<HyxxDto, object>>[] { x => x.jrrq },
                 SortType = T2M.Common.DataServiceComponents.Data.Query.Interface.SortType.Desc
@@ -71,7 +106,19 @@ namespace XZMY.Manage.Web.Controllers
                     Operation = SqlOperation.Equals,
                     Member = new Expression<Func<HyxxDto, object>>[] {
                         x => x.BranchDataId
-                    }                    
+                    }
+                });
+            }
+
+            if (model.BranchDataId != Guid.Empty)
+            {
+                service.CustomConditions.Add(new CustomConditionPlus<HyxxDto>
+                {
+                    Value = model.BranchDataId,
+                    Operation = SqlOperation.Equals,
+                    Member = new Expression<Func<HyxxDto, object>>[] {
+                        x =>x.BranchDataId,
+                    }
                 });
             }
 
@@ -81,7 +128,7 @@ namespace XZMY.Manage.Web.Controllers
         }
 
         //消费列表 Ajax 获取数据
-        public ActionResult AjaxPaymentList(VmPayment model)
+        public ActionResult AjaxPaymentList(VmCustomer model)
         {
             var service = new CustomSearchWithPaginationService<XfxxDto>
             {
@@ -114,22 +161,79 @@ namespace XZMY.Manage.Web.Controllers
                     }
                 });
             }
-            
-            if (!IsAdmin)
+
+            if (model.BranchDataId != Guid.Empty)
             {
                 service.CustomConditions.Add(new CustomConditionPlus<XfxxDto>
                 {
-                    Value = CurrentBranchDataId,
+                    Value = model.BranchDataId,
                     Operation = SqlOperation.Equals,
                     Member = new Expression<Func<XfxxDto, object>>[] {
-                        x => x.BranchDataId
+                        x =>x.BranchDataId,
                     }
                 });
             }
 
+            if (!IsAdmin)
+            {
+                if (string.IsNullOrWhiteSpace(model.Id) && CurrentBranchDataId != Guid.Empty)
+                    service.CustomConditions.Add(new CustomConditionPlus<XfxxDto>
+                    {
+                        Value = CurrentBranchDataId,
+                        Operation = SqlOperation.Equals,
+                        Member = new Expression<Func<XfxxDto, object>>[] {
+                        x => x.BranchDataId
+                    }
+                    });
+            }
+
+            var result = service.Invoke();
+            
+            return Json(new { success = true, total = result.TotalCount, rows = result.Results, errors = GetErrors() }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult AjaxSearchList(VmSearchBase model)
+        {
+            if (string.IsNullOrWhiteSpace(model.Keyword)) return null;
+
+            var service = new CustomSearchWithPaginationService<HyxxDto>
+            {
+                PageIndex = model.PageIndex,
+                PageSize = model.PageSize,
+                CustomConditions = new List<CustomCondition<HyxxDto>>
+                {
+                    new CustomConditionPlus<HyxxDto>
+                    {
+                        Value = model.Keyword ?? string.Empty,
+                        Operation = SqlOperation.Like,
+                        Member = new Expression<Func<HyxxDto, object>>[] {
+                            x => x.yddh,
+                            x => x.hyxm,
+                            x => x.xmjm,
+                            x => x.hykh,
+                        }
+                    }
+                },
+                SortMember = new Expression<Func<HyxxDto, object>>[] { x => x.jrrq },
+                SortType = T2M.Common.DataServiceComponents.Data.Query.Interface.SortType.Desc
+            };
+
             var result = service.Invoke();
 
-            return Json(new { success = true, total = result.TotalCount, rows = result.Results, errors = GetErrors() }, JsonRequestBehavior.AllowGet);
+            var branchService = new BranchService();
+            var branchList = branchService.GetByIdList(result.Results.Select(x => x.BranchDataId).Distinct().ToList());
+
+            var list = new List<VmSearch>();
+            foreach (var item in result.Results)
+            {
+                var vmSearch = item.ConvertTo<VmSearch>();
+
+                var entity = branchList.Where(x => x.DataId == item.BranchDataId).FirstOrDefault();
+                vmSearch.BranchName = entity != null ? entity.Name : "未知";
+                list.Add(vmSearch);
+            }
+
+            return Json(new { success = true, total = result.TotalCount, rows = list, errors = GetErrors() }, JsonRequestBehavior.AllowGet);
         }
 
         //详细

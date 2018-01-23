@@ -37,12 +37,22 @@
                     <!-- BEGIN FORM-->
                     <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
                         <div class="mt-checkbox-inline" style="margin-top: -37px">
-                            <div class="pull-left" style="margin-top: 20px">
-                                状态：
-                                <select class="form-control input-inline" name="State" id="State">
-                                    <option value="0">全部</option>
-                                </select>
-                            </div>
+                            @if (ViewBag.IsAdmin)
+                            {
+                                <div class="pull-left" style="margin-top: 20px">
+                                    分店：
+                                    <select class="form-control input-inline" name="BranchDataId" id="BranchDataId">
+                                        <option value="00000000-0000-0000-0000-000000000000">全部</option>
+                                        @if (ViewBag.BranchList != null)
+                                        {
+                                            foreach (var item in ViewBag.BranchList)
+                                            {
+                                                <option value="@item.DataId">@item.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            }
                         </div>
                     </form>
                     <!-- END FORM-->

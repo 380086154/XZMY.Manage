@@ -58,6 +58,7 @@
     <Compile Include="Data\Query\CustomSearch.cs" />
     <Compile Include="Data\Query\CustomSearchWithPagination.cs" />
     <Compile Include="Data\Query\GetEntityByForeignId.cs" />
+    <Compile Include="Data\Query\GetEntityByCustomFieldList.cs" />
     <Compile Include="Data\Query\GetEntityByIdList.cs" />
     <Compile Include="Data\Query\GetEntityById`1.cs" />
     <Compile Include="Data\Query\GetEntityByMultiColumn.cs" />

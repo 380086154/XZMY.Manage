@@ -6841,6 +6841,7 @@
     <Content Include="Views\Hyxx\Payment.cshtml" />
     <Content Include="Views\Branch\List.cshtml" />
     <Content Include="Views\Branch\Details.cshtml" />
+    <Content Include="Views\Hyxx\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />

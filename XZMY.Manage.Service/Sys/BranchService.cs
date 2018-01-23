@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using T2M.Common.DataServiceComponents.Data.Impl.Query;
 using T2M.Common.DataServiceComponents.Data.Query;
 using T2M.Common.DataServiceComponents.Data.Query.Interface;
 using T2M.Common.DataServiceComponents.Service;
@@ -37,6 +38,17 @@ namespace XZMY.Manage.Service.Sys
                     }
             };
 
+            return service.Invoke();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        public IList<BranchDto> GetByIdList(IList<Guid> list)
+        {
+            var service = new GetEntityByIdListService<BranchDto>(list);
             return service.Invoke();
         }
     }

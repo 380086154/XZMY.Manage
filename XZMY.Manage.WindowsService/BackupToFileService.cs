@@ -98,7 +98,7 @@ namespace XZMY.Manage.WindowsService
 
                         sendTime = remaining > 9 ? 1 : 60;//当未备份文件总数超过10个文件，每1分钟发送一个备份，尽快处理了
 
-                        if (remaining > 3)//打包发送
+                        if (remaining > 3 && !branchDto.Value.Contains("BFEBFBFF000506E3"))//打包发送
                         {
                             var dataFolder = DateTime.Now.ToString("yyyy-MM-dd-HHmm");
                             var folder = databakPath + dataFolder;
@@ -173,8 +173,7 @@ namespace XZMY.Manage.WindowsService
 
                     logService.Add("数据备份异常", ex.Message, ex.StackTrace, LogLevel.Error);
                 }
-            })
-            { IsBackground = true };
+            }) { IsBackground = true };
             thread.Start();
         }
 
@@ -316,6 +315,7 @@ namespace XZMY.Manage.WindowsService
         {
             var sql = "SELECT COUNT(0) FROM [{0}] ";
             var hykhList = new List<string>();//需要再次同步的 消费信息 会员卡号
+            var hyxxDataTable = new DataTable();
             var paymentCountDataTable = new DataTable();
             var isDataOnServer = hyxxService.IsDataOnServer();
 
@@ -366,6 +366,12 @@ namespace XZMY.Manage.WindowsService
                     var hykhs = string.Join(",", dt.Rows.OfType<DataRow>().Select(x => string.Format("'{0}'", x["hykh"])));
                     paymentCountDataTable = xfxxService.GetPaymentCountDataTable(hykhs);
                 }
+                else if (tableName == "xfxx")
+                {
+                    var hykhs = string.Join(",",dt.Rows.OfType<DataRow>().Select(x => string.Format("'{0}'", x["hykh"])));
+                    hyxxDataTable = hyxxService.GetByHykhList(hykhs);
+                    dt.Columns.Add("hyxm", System.Type.GetType("System.String"));
+                }
 
                 foreach (DataRow dr in dt.Rows)
                 {
@@ -385,7 +391,11 @@ namespace XZMY.Manage.WindowsService
                             dr["Count"] = xfxxService.GetPaymentCount(paymentCountDataTable, hykh);//获取并赋值消费次数
                             break;
                         case "xfxx"://消费信息
+                            
+                            dr["hyxm"] = hyxxService.GetHyxm(hyxxDataTable, hykh);//会员姓名赋值
+                            
                             if (!isDataOnServer) continue;
+
                             //根据 xfxx 更新 hyxx （主要是 金额 信息）
                             hyxxService.UpdateDigitByHykh(hykh);
                             break;

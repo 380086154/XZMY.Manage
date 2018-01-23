@@ -37,5 +37,6 @@ namespace T2M.Common.DataServiceComponents.Data.Query
         /// 时间区间
         /// </summary>
         DateRange = 9,
+        In = 10,
     }
 }

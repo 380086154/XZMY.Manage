@@ -186,7 +186,9 @@
     <Compile Include="Utils\PlanQuery.cs" />
     <Compile Include="Utils\StringHelper.cs" />
     <Compile Include="Utils\ViewBase.cs" />
-    <Compile Include="ViewModel\Customer\VmPayment.cs" />
+    <Compile Include="ViewModel\Customer\VmPaymentList.cs" />
+    <Compile Include="ViewModel\Customer\VmSearch.cs" />
+    <Compile Include="ViewModel\Customer\VmCustomer.cs" />
     <Compile Include="ViewModel\NewFolder1\Advisories\VmAdvisory.cs" />
     <Compile Include="ViewModel\NewFolder1\Agent\VmAgentEdit.cs" />
     <Compile Include="ViewModel\NewFolder1\Agent\VmAgent.cs" />

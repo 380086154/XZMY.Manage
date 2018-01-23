@@ -32,6 +32,10 @@ namespace XZMY.Manage.Model.DataModel
         /// </summary>
         public string hykh { get; set; }
         /// <summary>
+        /// 会员姓名
+        /// </summary>
+        public string hyxm { get; set; }
+        /// <summary>
         /// 消费金额
         /// </summary>
         public decimal xfje { get; set; }

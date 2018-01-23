@@ -57,6 +57,9 @@ namespace T2M.Common.DataServiceComponents.Data.Impl.Query
         /// <returns></returns>
         private String GetCondition()
         {
+            if (CustomConditions == null)
+                return " 1=1 ";
+
             return String.Join(" AND ",
                 CustomConditions.Select((m, index) =>
                 {
@@ -83,6 +86,7 @@ namespace T2M.Common.DataServiceComponents.Data.Impl.Query
             if (m == SqlOperation.Like) return "LIKE @value" + index;
             if (m == SqlOperation.StartWith) return "LIKE @value" + index;
             if (m == SqlOperation.EndWith) return "LIKE @value" + index;
+            if (m == SqlOperation.In) return "IN (@value" + index + ")";
             throw new NotSupportedException("Invalid SqlOperation Parameter");
         }
 
