@@ -22,6 +22,11 @@ namespace XZMY.Manage.Service
         /// </summary>
         public Guid BranchDataId { get; set; }
 
+        /// <summary>
+        /// 是否管理员
+        /// </summary>
+        public bool IsAdmin { get; set; }  
+
         public Guid CreatorId { get; set; }
 
         /// <summary>

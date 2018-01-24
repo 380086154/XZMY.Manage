@@ -80,7 +80,8 @@ namespace XZMY.Manage.Service.Customer
             var sb = new StringBuilder();
             var zkkService = new ZkkService();
 
-            sb.AppendFormat("<p>查询到 {0} 张会员卡：", result.Results.Count);
+            //sb.Append"<p style='font-size:10px'>");
+            sb.AppendFormat("查询到 {0} 张会员卡：", result.Results.Count);
 
             foreach (var item in result.Results)
             {
@@ -97,6 +98,7 @@ namespace XZMY.Manage.Service.Customer
                 sb.AppendFormat(" {0} ", item.knje.ToString("F" + (isCzk ? 2 : 0)));
                 sb.Append(isCzk ? "元" : "次");
             }
+            //sb.Append("</p>");
 
             return sb.ToString();
         }
@@ -145,9 +147,9 @@ namespace XZMY.Manage.Service.Customer
         {
             switch (branchId.ToString())
             {
-                case "3389ca9f-57ec-44f1-a818-61370d61f553": return "HC";
-                case "949d7d00-7c85-4080-9ee3-9e65ccae575d": return "YX";
-                case "e7d12da5-50d8-4a01-ae3f-cab673845db7": return "Test";
+                case "3389ca9f-57ec-44f1-a818-61370d61f553": return "华创";
+                case "949d7d00-7c85-4080-9ee3-9e65ccae575d": return "渝西";
+                case "e7d12da5-50d8-4a01-ae3f-cab673845db7": return "测试";
                 default:
                     break;
             }

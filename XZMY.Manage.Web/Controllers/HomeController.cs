@@ -14,7 +14,7 @@ namespace XZMY.Manage.Web.Controllers
     {
         public ActionResult Index()
         {
-           
+
             return View();
         }
 
@@ -118,6 +118,11 @@ namespace XZMY.Manage.Web.Controllers
             }
 
             return Json(new { success = true, rows = resourceList }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Knock()
+        {
+            return Json(new { reply = "Who's knocking at the door." }, JsonRequestBehavior.AllowGet);
         }
     }
 }

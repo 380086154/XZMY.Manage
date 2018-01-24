@@ -20,7 +20,7 @@ namespace XZMY.Manage.WindowsService.Service
             db = databaseHelper;
         }
 
-        public XfxxService(DatabaseHelper databaseHelper,Guid branchNameDataId)
+        public XfxxService(DatabaseHelper databaseHelper, Guid branchNameDataId)
         {
             db = databaseHelper;
             BranchDataId = branchNameDataId;
@@ -97,23 +97,25 @@ namespace XZMY.Manage.WindowsService.Service
         /// <summary>
         /// 根据会员卡号集合同步消费信息
         /// </summary>
-        /// <param name="list"></param>
-        /// /// <param name="branchNameDataId"></param>
-        public void SyncDataByHykhList(List<string> list, Guid branchNameDataId)
+        /// <param name="dict"></param>
+        /// /// <param name="branchDataId"></param>
+        public void SyncDataByHykhList(Dictionary<string, string> dict, Guid branchDataId)
         {
-            if (list == null || list.Count == 0) return;
+            if (dict == null || dict.Count == 0) return;
 
-            var hykhList = string.Join(",", list.Select(x => string.Format("'{0}'", x)));
+            var hykhList = string.Join(",", dict.Keys.Select(x => string.Format("'{0}'", x)));
             var dataTables = GetPaymentByHykhList(hykhList);
 
+            dataTables.Columns.Add("hyxm", System.Type.GetType("System.String"));
             dataTables.Columns.Add("DataId", System.Type.GetType("System.Guid"));
             dataTables.Columns.Add("BranchDataId", System.Type.GetType("System.Guid"));
             dataTables.Columns.Add("CreatedTime", System.Type.GetType("System.DateTime"));
 
             foreach (DataRow dr in dataTables.Rows)
             {
+                dr["hyxm"] = dict[dr["hykh"].ToString()];
                 dr["DataId"] = Guid.NewGuid();
-                dr["BranchDataId"] = branchNameDataId;
+                dr["BranchDataId"] = branchDataId;
                 dr["CreatedTime"] = DateTime.Now;
             }
 

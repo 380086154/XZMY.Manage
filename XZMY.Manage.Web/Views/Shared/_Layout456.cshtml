@@ -1364,6 +1364,11 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             });
 
             //$('select').select2({ allowClear: true });
+            setInterval(function () {
+                $.get('/home/knock/', function (data) {
+                    console.log('server reply: ' + data.reply);
+                });
+            }, 600000);
         });
     </script>
     @RenderSection("JavaScript", false)

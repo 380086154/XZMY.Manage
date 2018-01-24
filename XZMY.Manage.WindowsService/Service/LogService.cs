@@ -75,13 +75,24 @@ namespace XZMY.Manage.WindowsService.Service
             Add(new LogEntity
             {
                 Title = title,
-                Message =message,
-                Exception =exception,
-                Level =level,
+                Message = message,
+                Exception = exception,
+                Level = level,
                 IP = IP,
                 UserId = UserId,
                 UserName = UserName
             });
+        }
+
+        /// <summary>
+        /// 保存日志
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="message"></param>
+        /// <param name="level"></param>
+        public void Add(string title, string message, LogLevel level = LogLevel.Normal)
+        {
+            Add(title, message, "", level);
         }
     }
 }

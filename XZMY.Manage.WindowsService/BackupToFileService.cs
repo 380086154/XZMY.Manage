@@ -204,7 +204,7 @@ namespace XZMY.Manage.WindowsService
             fsw.NotifyFilter = NotifyFilters.LastWrite;
 
             fsw.Changed += new FileSystemEventHandler(OnChanged);
-            fsw.EnableRaisingEvents = true;//设置是否启用监听
+            fsw.EnableRaisingEvents = isEnable;//设置是否启用监听
         }
 
         private object canExecute = null;
@@ -216,30 +216,29 @@ namespace XZMY.Manage.WindowsService
         /// <param name="e"></param>
         private void OnChanged(object sender, FileSystemEventArgs e)
         {
+            Thread.Sleep(3000);
+            logService.Add("数据备份触发 OnChanged", "canExecute = " + canExecute);
+
             if (canExecute != null)
                 return;
             canExecute = false;
 
-            Thread.Sleep(5000);
-
-            Log.Add("execute OnChanged event ChangeType = " + e.ChangeType);
+            Thread.Sleep(3000);
+            logService.Add("数据备份触发 OnChanged", "canExecute = false");
 
             var path = string.Empty;
 
             try
             {
-                path = CopyDataToBackup();
-
                 var networkHelper = new NetworkHelper();
                 if (networkHelper.Status)//无网络不操作
                 {
+                    path = CopyDataToBackup();
                     WriteDataToServer(path);
                 }
             }
             catch (Exception ex)
             {
-                Log.Add(ex.Message);
-                Log.Add(ex.StackTrace);
                 logService.Add("数据备份异常", ex.Message, ex.StackTrace, LogLevel.Error);
             }
             finally
@@ -295,15 +294,13 @@ namespace XZMY.Manage.WindowsService
 
             //必须是 xfxx 在前面，在同步时会根据消费信息查询会员信息，为避免数据异常，所以待 xfxx 同步完成后再同步 hyxx
             var dataTatbles = new string[] { "xfxx", "hyczk", "rz", "zkk", "czk", "hyxx" };
-            var needSyncHykh = new List<string>();
+            var needSyncHykh = new Dictionary<string, string>();//需要再次同步的 消费信息 会员卡号
 
             for (int i = 0; i < dataTatbles.Length; i++)
             {
                 var tableName = dataTatbles[i];
 
-                var hykhList = Execute(tableName); //执行数据同步
-
-                needSyncHykh.AddRange(hykhList);
+                Execute(tableName, needSyncHykh); //执行数据同步
             }
 
             //单独同步因为删除消费记录不完整的消费信息
@@ -311,13 +308,12 @@ namespace XZMY.Manage.WindowsService
         }
 
         //执行数据同步
-        private List<string> Execute(string tableName)
+        private void Execute(string tableName, Dictionary<string, string> dict)
         {
             var sql = "SELECT COUNT(0) FROM [{0}] ";
-            var hykhList = new List<string>();//需要再次同步的 消费信息 会员卡号
-            var hyxxDataTable = new DataTable();
-            var paymentCountDataTable = new DataTable();
-            var isDataOnServer = hyxxService.IsDataOnServer();
+            var paymentCountDataTable = new DataTable();//消费信息
+            var hyxxDataTable = new DataTable();//会员信息
+            var isDataOnServer = hyxxService.IsDataOnServer();//获取服务器是否有数据
 
             #region 排序设置，为了获取最新的数据
 
@@ -346,15 +342,18 @@ namespace XZMY.Manage.WindowsService
             var serverCount = db.ExecuteScalar(string.Format(sql + "WHERE [BranchDataId] = '" + branchDto.DataId + "'", tableName), EProviderName.SqlClient);//                
             var localCount = db.ExecuteScalar(string.Format(sql, tableName), EProviderName.OleDB);//
 
-            Log.Add("execute WriteDataToServer event ================================== localCount - serverCount = " + (localCount - serverCount));
-            logService.Add(string.Format("备份[{0}]表", tableName),
-                string.Format("localCount({0}) - serverCount({1}) = {2}", localCount, serverCount, localCount - serverCount),
-                "", LogLevel.Normal);
-
             var reuslt = localCount - serverCount;
+            if (reuslt != 0)
+            {
+                Log.Add("execute WriteDataToServer event ================================== localCount - serverCount = " + reuslt);
+                logService.Add(string.Format("备份[{0}]表", tableName),
+                    string.Format("localCount({0}) - serverCount({1}) = {2}", localCount, serverCount, reuslt),
+                    "", LogLevel.Normal);
+            }
+
             if (reuslt > 0)//新增
             {
-                var dt = db.GetDataTable(string.Format("SELECT TOP {0} * FROM " + tableName, localCount - serverCount) + orderSql, tableName, EProviderName.OleDB);//
+                var dt = db.GetDataTable(string.Format("SELECT TOP {0} * FROM " + tableName, reuslt) + orderSql, tableName, EProviderName.OleDB);//
 
                 dt.Columns.Add("DataId", System.Type.GetType("System.Guid"));
                 dt.Columns.Add("BranchDataId", System.Type.GetType("System.Guid"));
@@ -368,7 +367,7 @@ namespace XZMY.Manage.WindowsService
                 }
                 else if (tableName == "xfxx")
                 {
-                    var hykhs = string.Join(",",dt.Rows.OfType<DataRow>().Select(x => string.Format("'{0}'", x["hykh"])));
+                    var hykhs = string.Join(",", dt.Rows.OfType<DataRow>().Select(x => string.Format("'{0}'", x["hykh"])));
                     hyxxDataTable = hyxxService.GetByHykhList(hykhs);
                     dt.Columns.Add("hyxm", System.Type.GetType("System.String"));
                 }
@@ -391,9 +390,13 @@ namespace XZMY.Manage.WindowsService
                             dr["Count"] = xfxxService.GetPaymentCount(paymentCountDataTable, hykh);//获取并赋值消费次数
                             break;
                         case "xfxx"://消费信息
-                            
+
                             dr["hyxm"] = hyxxService.GetHyxm(hyxxDataTable, hykh);//会员姓名赋值
-                            
+
+                            var fdid = dr["fdid"].ToString().Trim();
+                            var ss = fdid.Length > 0 ? fdid.Substring(fdid.Length - 2) : "00";
+                            dr["xfrq"] = dr["xfrq"].ToString().ToDateTime().Value.ToString("yyyy-MM-dd HH:mm:" + ss);
+
                             if (!isDataOnServer) continue;
 
                             //根据 xfxx 更新 hyxx （主要是 金额 信息）
@@ -419,9 +422,9 @@ namespace XZMY.Manage.WindowsService
                                     xfxxService.DeleteByHykh(hykh);//删除指定消费数据
                                     hyxxService.UpdateDigitByHykh(hykh);//更新金额相关信息
 
-                                    if (!hykhList.Contains(hykh))
+                                    if (!dict.Keys.Contains(hykh))
                                     {
-                                        hykhList.Add(hykh);//记录需要同步的会员卡号
+                                        dict.Add(hykh, hyxm);//记录需要同步的会员卡号
                                     }
                                 }
                             }
@@ -437,8 +440,6 @@ namespace XZMY.Manage.WindowsService
             {
                 //删除消费信息已在同步 rz 表时处理
             }
-
-            return hykhList;
         }
 
         #endregion

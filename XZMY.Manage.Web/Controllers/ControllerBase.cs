@@ -23,7 +23,7 @@ namespace XZMY.Manage.Web.Controllers
         /// <summary>
         /// 是否管理员
         /// </summary>
-        protected bool IsAdmin { get { return LoggedUserManager.IsAdmin; } }
+        protected bool IsAdmin { get { return CurrentAccount.IsAdmin; } }
 
         /// <summary>
         /// 当前分店 Id
@@ -33,7 +33,7 @@ namespace XZMY.Manage.Web.Controllers
         /// <summary>
         /// 当前登录用户 Id
         /// </summary>
-        protected Guid CurrentAccountId { get { return LoggedUserManager.GetCurrentUserAccount().AccountId; } }
+        protected Guid CurrentAccountId { get { return CurrentAccount.AccountId; } }
 
         /// <summary>
         /// 当前登录用户

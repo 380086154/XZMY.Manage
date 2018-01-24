@@ -120,6 +120,7 @@ namespace XZMY.Manage.Service.Utils
             {
                 AccountId = account.DataId,
                 BranchDataId = account.BranchDataId,
+                IsAdmin = (account.DataId == AdminId),
                 Name = account.LoginName,
                 Email = account.Email,
                 AccountName = account.LoginName ?? account.Mobile,
@@ -133,7 +134,6 @@ namespace XZMY.Manage.Service.Utils
                 //Position = profile.Position
             };
 
-            IsAdmin = (account.DataId == AdminId);
             SetBranchDataId(account.BranchDataId);//保存分店 id，用于数据筛选
 
             if (HttpContext.Current.Session != null)
