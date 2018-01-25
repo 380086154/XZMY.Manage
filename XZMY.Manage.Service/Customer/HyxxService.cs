@@ -29,6 +29,7 @@ namespace XZMY.Manage.Service.Customer
             "oYVeUwBMvqS2MPDkvKx7YcSo156I",//钟林
             "oYVeUwIhRJoOAYybm8EYgtQOIMSM",//阳绪围
             "oYVeUwHCe_uHP9HmKNqVHfCPT4o8",//阳绪洋
+            "oYVeUwOvEkDuA6kMOuG2Csp_KvCE",//胡月
             "oYVeUwOSNj7wCFrvZMPbW8SBA-Y8",//刘小平
         };
 
@@ -73,34 +74,71 @@ namespace XZMY.Manage.Service.Customer
             if (result.Results.Count == 0)
             {
                 var r = new Random();
-                var phone = string.Format(PhoneControl ? "{0} / {1}" : "{1} / {0}", "13609423790", "18523038870");
+                var phone = string.Format(PhoneControl ? "{0} / {1}" : "{1} / {0}", "13609423790", "17130955511");
                 return "没有查询到会员卡信息。\r\n如果已办理会员卡，请致电 " + phone + "更新信息。";
             }
 
             var sb = new StringBuilder();
             var zkkService = new ZkkService();
+            var list = new List<HyxxDto>();
 
-            //sb.Append"<p style='font-size:10px'>");
-            sb.AppendFormat("查询到 {0} 张会员卡：", result.Results.Count);
+            sb.AppendFormat("查询到 {0} 张会员卡：\r\n", result.Results.Count);
 
             foreach (var item in result.Results)
+            {//合并多张卡，对普通客户只显示一张
+                var entity = list.FirstOrDefault(x =>
+                    x.yddh == item.yddh &&
+                    x.hyxm == item.hyxm &&
+                    x.klxmc == item.klxmc);
+
+                if (entity != null)
+                {
+                    entity.knje += item.knje;
+                }
+                else
+                {
+                    list.Add(item);
+                }
+            }
+
+            //sb.Append"<p style='font-size:10px'>");
+            var carCount = 0;
+            //foreach (var item in list)
+            for (int i = 0; i < list.Count; i++)
             {
+                var item = list[i];
                 var isCzk = item.klxmc.Contains("储值卡");//是否充值卡
 
-                sb.Append("\r\n");
-
-                sb.AppendFormat("{0}", GetBranchName(item.BranchDataId));
                 if (ShowNameList.Contains(fromUserName))
-                    sb.AppendFormat(" {0}", item.hyxm.Trim());
+                {
+                    sb.AppendFormat("{0}", GetBranchName(item.BranchDataId));//分店名称
+                    sb.AppendFormat(" {0}", item.hyxm.Trim());//会员姓名
+                }
+                else
+                {
+                    if (item.knje == 0) continue;
+                }
+                carCount++;
+                var kmc = item.kmc;
+                float zk = 0;
+                if (float.TryParse(item.kmc, out zk))
+                {
+                    if (zk <= 1)
+                    {
+                        kmc = (zk * 10) + "折";
+                    }
+                }
 
-                sb.AppendFormat(" {0}", item.kmc);
-                sb.AppendFormat(" {0} 剩余", item.klxmc);
-                sb.AppendFormat(" {0} ", item.knje.ToString("F" + (isCzk ? 2 : 0)));
+                sb.AppendFormat(" {0}", kmc);
+                sb.AppendFormat(" {0} ", item.klxmc);
+                sb.AppendFormat("剩余 {0} ", item.knje.ToString("F" + (isCzk ? 2 : 0)));
                 sb.Append(isCzk ? "元" : "次");
+
+                if (i != list.Count -1) sb.Append("\r\n");
             }
             //sb.Append("</p>");
 
-            return sb.ToString();
+            return sb.ToString().Replace("到 " + result.Results.Count + " 张", "到 " + carCount + " 张");
         }
 
         /// <summary>

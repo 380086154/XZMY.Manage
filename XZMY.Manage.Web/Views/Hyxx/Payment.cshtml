@@ -66,6 +66,7 @@
                            data-search="true">
                         <thead>
                             <tr>
+                                <th data-formatter="RowNumber" data-width="50">序号</th>
                                 <th data-field="hykh">卡号</th>
                                 <th data-field="hyxm">姓名</th>
                                 <th data-field="xfje">金额</th>
@@ -90,4 +91,30 @@
     var opColumns = function (value, row, index) {
         return '<a href="details/_id_">详细</a> | <a onclick="deletelog(this)" href="xfxx/details/_id_" id="_id_">消费记录</a>'.replace(/_id_/ig, row.DataId);//
     };
+
+    var checkNumber = function (num) {
+        return num > 9 ? num : '0' + num;
+    };
+
+    $('#table-pagination').onLoadSuccess(function (row) {
+        console.log(JSON.stringify(row));
+    });
+
+    //var paymentDate = function(value, row, index) {
+    //    var d = new Date();
+    //    var date = (d.getFullYear() + '-' + checkNumber(d.getMonth() + 1) + '-' + checkNumber(d.getDate()));
+        
+    //    var reg = /\/Date\(([-]?\d+)\)\//gi;
+    //    var value = '';
+    //    if (reg.test(row.xfrq)) {
+    //        var msec = row.xfrq.toString().replace(reg, "$1");
+    //        value = new Date(parseInt(msec)).Format('yyyy-MM-dd hh:mm:ss');
+    //    }
+    //    if (value.indexOf(date) != -1)
+    //    {
+    //        console.log(index + " - " + JSON.stringify(row));
+    //        $('tr[data-index=' + index + ']').attr('style', 'background-color: #ecfded;');
+    //    }
+    //    return value;//data-field="xfrq"
+    //};
 </script>

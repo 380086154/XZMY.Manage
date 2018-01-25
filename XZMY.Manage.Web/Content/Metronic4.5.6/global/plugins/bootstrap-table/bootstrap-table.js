@@ -257,7 +257,7 @@
         dataType: 'json',
         ajaxOptions: {},
         queryParams: function (params) {
-            params.PageIndex = params.PageIndex - 1;
+            //params.PageIndex = params.PageIndex - 1;
             return params;
         },
         queryParamsType: 'limit', // undefined
