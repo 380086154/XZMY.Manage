@@ -23,7 +23,7 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
             XmlDirectoryPath = AppDomain.CurrentDomain.BaseDirectory + "/App_Data/DataDictionary";
             if (!Directory.Exists(XmlDirectoryPath))
                 Directory.CreateDirectory(XmlDirectoryPath);
-            
+
             var xmlpaths = Directory.GetFiles(XmlDirectoryPath, "*.xml");
             foreach (var file in xmlpaths)
             {//读取所有分类
@@ -33,7 +33,7 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
                 }
                 catch { continue; }
             }
-            
+
             #endregion
         }
 
@@ -126,7 +126,7 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
             var issys = false;
             Boolean.TryParse(isdefaultstr, out isdefault);
             Boolean.TryParse(issysstr, out issys);
-            
+
             var data = new DataDictionaryItem()
             {
                 DataId = gid,
@@ -187,7 +187,7 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
             }
             return res;
         }
-
+        
         /// <summary>
         /// 获取数据字典是否包含此分类信息
         /// </summary>
@@ -373,7 +373,7 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
 
             return result;
         }
-        
+
         private static Boolean ValidFuzzySearch(DataDictionaryItem item, string name)
         {
             return item.Name.Contains(name) ||

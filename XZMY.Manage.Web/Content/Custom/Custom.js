@@ -64,10 +64,9 @@ var RowNumber = function (value, row, index) {
 
 //bootstrap-table 显示分店名称
 var showBranchName = function (value, row, index) {
-
-    if (value === '3389ca9f-57ec-44f1-a818-61370d61f553')
+    if (row.BranchDataId === '3389ca9f-57ec-44f1-a818-61370d61f553')
         return '华创';
-    if (value === '949d7d00-7c85-4080-9ee3-9e65ccae575d')
+    if (row.BranchDataId === '949d7d00-7c85-4080-9ee3-9e65ccae575d')
         return '渝西';
     return '测试';
 };

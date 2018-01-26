@@ -67,11 +67,22 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">关键值：</label>
+                                    <label class="control-label col-md-3">发件人：</label>
                                     <div class="col-md-9">
                                         <div class="input-icon right">
                                             <i class="fa"></i>
-                                            <p class="form-control-static"> @Model.Value </p>
+                                            <p class="form-control-static"> @Model.FromEmail </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">收件人：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.ToEmail </p>
                                         </div>
                                     </div>
                                 </div>
@@ -98,6 +109,20 @@
                                         <div class="input-icon right">
                                             <i class="fa"></i>
                                             <p class="form-control-static"> @Model.CreatedTime.ToString("yyyy-MM-dd HH:mm:ss") </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">特征值：</label>
+                                    <div class="col-md-9">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <p class="form-control-static"> @Model.Value </p>
                                         </div>
                                     </div>
                                 </div>

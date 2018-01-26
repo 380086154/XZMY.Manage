@@ -76,7 +76,6 @@
 </div>
 <script type="text/javascript">
     var opColumns = function (value, row, index) {
-        //<a onclick="deletelog(this)" href="javascript:void(0)" id="_id_">删除</a> | 
-        return '<a href="details/_id_">查看</a>'.replace(/_id_/ig, row.DataId);//
+        return '<a href="edit/_id_">编辑</a> | <a href="details/_id_">查看</a>'.replace(/_id_/ig, row.DataId);//
     };
 </script>

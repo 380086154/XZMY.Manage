@@ -139,6 +139,8 @@
     <Compile Include="Handlers\Role\RoleModifyHandler.cs" />
     <Compile Include="Handlers\SiteSetting\SiteADCreateHandler.cs" />
     <Compile Include="Handlers\SiteSetting\SiteADModifyHandler.cs" />
+    <Compile Include="Handlers\Sys\BranchModifyHandler.cs" />
+    <Compile Include="Handlers\Sys\BranchCreateHandler.cs" />
     <Compile Include="Handlers\UserRole\UserRoleModifyHandler.cs" />
     <Compile Include="Handlers\User\UserAccountCreateHandler.cs" />
     <Compile Include="Handlers\User\UserAccountModifyHandler.cs" />
@@ -168,7 +170,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Handlers\NewFolder1\Planner\" />
-    <Folder Include="Handlers\Sys\" />
     <Folder Include="Sys\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>

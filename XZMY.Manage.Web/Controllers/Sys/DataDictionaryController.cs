@@ -55,13 +55,14 @@ namespace XZMY.Manage.Web.Controllers.Sys
 
             return View();
         }
+
         /// <summary>
         /// AJAX 获取数据字典
         /// </summary>
         /// <param name="model"></param>
         /// <param name="CatagoryKey">数据字典类型KEY</param>
         /// <returns></returns>
-        public ActionResult AjaxDataDictionaryItemList(VmSearchBase model, String CatagoryKey, Int32? State)
+        public ActionResult AjaxDataDictionaryItemList(VmSearchBase model, String CatagoryKey, Int32? State)//VmDataDictionaryList
         {
             int iState = 1;
             if (State.HasValue)
@@ -79,6 +80,7 @@ namespace XZMY.Manage.Web.Controllers.Sys
             }
             return Json(new { success = true, total = listItem.Count, rows = listItem, errors = GetErrors() }, JsonRequestBehavior.AllowGet);
         }
+
         /// <summary>
         /// 添加或编辑数据字典 页面
         /// </summary>
@@ -117,14 +119,7 @@ namespace XZMY.Manage.Web.Controllers.Sys
             model.Sort = 0;
             bool b = DataDictionaryManager.SaveOrUpdateData(CatagoryKey, model);
 
-            if (b)
-            {
-                return Json(new { success = b, Id = model.DataId, errors = GetErrors() });
-            }
-            else
-            {
-                return Json(new { success = b, Id = model.DataId, errors = GetErrors() });
-            }
+            return Json(new { success = b, Id = model.DataId, errors = GetErrors() });
         }
 
         public ActionResult DefaultDataPage()

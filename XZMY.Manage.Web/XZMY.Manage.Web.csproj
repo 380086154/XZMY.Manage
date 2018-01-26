@@ -366,6 +366,7 @@
     <Content Include="ApiTest.html" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Areas\HelpPage\TestClient.css" />
+    <Content Include="Content\Custom\Custom.js" />
     <Content Include="Content\Custom\share.js" />
     <Content Include="Content\Custom\UEditor\dialogs\anchor\anchor.html" />
     <Content Include="Content\Custom\UEditor\dialogs\attachment\attachment.css" />
@@ -6842,6 +6843,7 @@
     <Content Include="Views\Branch\List.cshtml" />
     <Content Include="Views\Branch\Details.cshtml" />
     <Content Include="Views\Hyxx\Search.cshtml" />
+    <Content Include="Views\Branch\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />

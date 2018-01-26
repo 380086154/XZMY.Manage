@@ -17,6 +17,8 @@ using T2M.Common.DataServiceComponents.Service;
 using XZMY.Manage.Model.ViewModel.Sys;
 using XZMY.Manage.Model.DataModel;
 using XZMY.Manage.Service.Sys;
+using XZMY.Manage.Model.ViewModel.SiteSetting;
+using XZMY.Manage.Service.Handlers.Sys;
 
 namespace XZMY.Manage.Web.Controllers.Sys
 {
@@ -32,6 +34,19 @@ namespace XZMY.Manage.Web.Controllers.Sys
             return View();
         }
 
+        //创建/编辑        
+        public ActionResult Edit(Guid? id)
+        {
+            var entity = new BranchDto();
+            if (id.HasValue)
+            {
+                var service = new GetEntityByIdService<BranchDto>(id.Value);
+                entity = service.Invoke();
+            }
+
+            return View(entity.CreateViewModel<BranchDto, VmBranchEdit>());
+        }
+        
         //删除
         public ActionResult Delete(Guid? id)
         {
@@ -44,6 +59,20 @@ namespace XZMY.Manage.Web.Controllers.Sys
                 //flag = res > 0;
             }
             return Json(new { success = flag, count = res, errors = GetErrors() }, JsonRequestBehavior.AllowGet);
+        }
+
+        //详细
+        public ActionResult Details(Guid? id)
+        {
+            var entity = new BranchDto();
+
+            if (id.HasValue)
+            {
+                var service = new GetEntityByIdService<BranchDto>(id.Value);
+                entity = service.Invoke() ?? new BranchDto();
+            }
+
+            return View(entity);
         }
 
         //列表 Ajax 获取数据
@@ -80,18 +109,45 @@ namespace XZMY.Manage.Web.Controllers.Sys
             return Json(new { success = true, total = result.TotalCount, rows = result.Results, errors = GetErrors() }, JsonRequestBehavior.AllowGet);
         }
 
-        //详细
-        public ActionResult Details(Guid? id)
+        //保存 创建/编辑
+        [HttpPost]
+        public ActionResult AjaxEdit(VmBranchEdit model)
         {
-            var entity = new BranchDto();
-
-            if (id.HasValue)
+            if (model.DataId == Guid.Empty)
             {
-                var service = new GetEntityByIdService<BranchDto>(id.Value);
-                entity = service.Invoke() ?? new BranchDto();
+                var handler = new BranchCreateHandler(model);
+                var res = handler.Invoke();
+
+                if (res.Code != 0)
+                {
+                    return Json(new { success = false, errors = GetErrors() });
+                }
+
+                return Json(new { success = res.Success, Id = model.DataId, errors = GetErrors() });
+            }
+            else
+            {
+                var handler = new BranchModifyHandler(model);
+                var res = handler.Invoke();
+
+                return Json(new { success = res.Success, Id = model.DataId, errors = GetErrors() });
+            }
+        }
+
+        //验证 是否重复
+        public ActionResult AjaxIsExist(Guid? id, string name)
+        {
+            var service = new GetEntityBySingleColumnService<BranchDto> { ColumnMember = x => x.Name, ColumnValue = name };
+
+            var result = service.Invoke();
+            var flag = false;
+            var entity = result.FirstOrDefault(x => x.DataId != id);
+            if (result.Count > 0 && entity != null && id != entity.DataId)
+            {
+                flag = true;
             }
 
-            return View(entity);
+            return Json(flag ? "已存在" : "true", JsonRequestBehavior.AllowGet);
         }
     }
 }

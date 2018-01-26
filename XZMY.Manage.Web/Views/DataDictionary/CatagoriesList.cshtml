@@ -43,15 +43,16 @@
                         </div>
                     </form>
                     <!-- END FORM-->
-                    <table id="table-pagination" data-toggle="table" data-url="/Course/AjaxList/"
+                    <table id="table-pagination" data-toggle="table" data-url="/DataDictionary/AjaxList/"
                            data-height="526"
                            data-form-id="defaultForm"
                            data-show-refresh="true"
-                           data-page-size="10"
+                           data-page-size="20"
                            data-page-list="[5, 10, 20, 50, 100, 200]"
                            data-search="true">
                         <thead>
                             <tr>
+                                <th data-formatter="RowNumber" data-width="50">序号</th>
                                 <th data-field="CourseName" data-align="lift">课程名称</th>
                                 <th data-field="CoursePlaceName" data-align="lift">区域</th>
                                 <th data-field="BeginDate" data-align="center" data-formatter="yyyy_mm_dd">开始时间</th>

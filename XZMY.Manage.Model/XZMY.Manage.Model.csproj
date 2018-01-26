@@ -271,8 +271,10 @@
     <Compile Include="ViewModel\SiteSetting\VmSiteADEdit.cs" />
     <Compile Include="ViewModel\SiteSetting\VmStudentTotalScore.cs" />
     <Compile Include="ViewModel\SiteSetting\VmStudyBudget.cs" />
+    <Compile Include="ViewModel\Sys\VmDataDictionaryList.cs" />
     <Compile Include="ViewModel\Sys\VmDataDictionaryIndex.cs" />
     <Compile Include="ViewModel\Sys\VmLog.cs" />
+    <Compile Include="ViewModel\Sys\VmBranchEdit.cs" />
     <Compile Include="ViewModel\User\VmLogin.cs" />
     <Compile Include="ViewModel\User\VmUserAccountEdit.cs" />
     <Compile Include="ViewModel\User\VmUserRole.cs" />

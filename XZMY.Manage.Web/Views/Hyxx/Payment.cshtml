@@ -24,21 +24,21 @@
         <div class="col-md-12">
             <div class="portlet light bordered">
                 @*<div class="portlet-title">
-                    <div class="caption">
-                        <span style="font-size: 25px;color: #000"></span>
-                    </div>
-                    <div class="actions">
-                        <a class="btn btn-default" href="/CourseTemplate/Edit">
-                            <i class="fa fa-plus"></i> 创建
-                        </a>
-                    </div>
-                </div>*@
+                        <div class="caption">
+                            <span style="font-size: 25px;color: #000"></span>
+                        </div>
+                        <div class="actions">
+                            <a class="btn btn-default" href="/CourseTemplate/Edit">
+                                <i class="fa fa-plus"></i> 创建
+                            </a>
+                        </div>
+                    </div>*@
                 <div class="portlet-body">
                     <!-- BEGIN FORM-->
                     <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
                         <div class="mt-checkbox-inline" style="margin-top: -37px">
                             @if (ViewBag.IsAdmin)
-                            { 
+                            {
                                 <div class="pull-left" style="margin-top: 20px">
                                     分店：
                                     <select class="form-control input-inline" name="BranchDataId" id="BranchDataId">
@@ -67,14 +67,18 @@
                         <thead>
                             <tr>
                                 <th data-formatter="RowNumber" data-width="50">序号</th>
+                                @if (ViewBag.IsAdmin)
+                                {
+                                    <th data-formatter="showBranchName">分店</th>
+                                }
                                 <th data-field="hykh">卡号</th>
                                 <th data-field="hyxm">姓名</th>
                                 <th data-field="xfje">金额</th>
                                 <th data-field="sdjf">积分</th>
                                 <th data-field="bz">备注</th>
                                 <th data-field="xfrq">消费时间</th>
-                                @if (ViewBag.IsAdmin) 
-                                { 
+                                @if (ViewBag.IsAdmin)
+                                {
                                     <th data-field="CreatedTime">同步时间</th>
                                 }
                                 <th data-field="czy">操作人</th>
@@ -87,6 +91,11 @@
         </div>
     </div>
 </div>
+<style>
+    .background-color {
+        background-color: #ecfded !important;
+    }
+</style>
 <script type="text/javascript">
     var opColumns = function (value, row, index) {
         return '<a href="details/_id_">详细</a> | <a onclick="deletelog(this)" href="xfxx/details/_id_" id="_id_">消费记录</a>'.replace(/_id_/ig, row.DataId);//
@@ -96,25 +105,23 @@
         return num > 9 ? num : '0' + num;
     };
 
-    $('#table-pagination').onLoadSuccess(function (row) {
-        console.log(JSON.stringify(row));
-    });
+    //突出显示当天消费信息
+    $('#table-pagination').bootstrapTable({
+        rowStyle: function (row, index) {
+            var d = new Date();
+            var date = (d.getFullYear() + '-' + checkNumber(d.getMonth() + 1) + '-' + checkNumber(d.getDate()));
 
-    //var paymentDate = function(value, row, index) {
-    //    var d = new Date();
-    //    var date = (d.getFullYear() + '-' + checkNumber(d.getMonth() + 1) + '-' + checkNumber(d.getDate()));
-        
-    //    var reg = /\/Date\(([-]?\d+)\)\//gi;
-    //    var value = '';
-    //    if (reg.test(row.xfrq)) {
-    //        var msec = row.xfrq.toString().replace(reg, "$1");
-    //        value = new Date(parseInt(msec)).Format('yyyy-MM-dd hh:mm:ss');
-    //    }
-    //    if (value.indexOf(date) != -1)
-    //    {
-    //        console.log(index + " - " + JSON.stringify(row));
-    //        $('tr[data-index=' + index + ']').attr('style', 'background-color: #ecfded;');
-    //    }
-    //    return value;//data-field="xfrq"
-    //};
+            var reg = /\/Date\(([-]?\d+)\)\//gi;
+            var value = '';
+            if (reg.test(row.xfrq)) {
+                var msec = row.xfrq.toString().replace(reg, "$1");
+                value = new Date(parseInt(msec)).Format('yyyy-MM-dd hh:mm:ss');
+            }
+
+            if (value.indexOf(date) != -1) {
+                return { classes: 'background-color' };
+            }
+            return {};
+        }
+    });
 </script>

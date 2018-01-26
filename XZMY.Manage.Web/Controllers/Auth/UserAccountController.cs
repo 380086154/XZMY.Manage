@@ -95,7 +95,7 @@ namespace XZMY.Manage.Web.Controllers.Auth
         [HttpPost]
         public ActionResult AjaxEdit(VmUserAccountEdit model)
         {
-            //if (ModelState.IsValid)11
+            //if (ModelState.IsValid)
             //{
             if (model.DataId == Guid.Empty)
             {
