@@ -40,7 +40,14 @@ namespace XZMY.Manage.Model.DataModel
         /// </summary>
         public decimal xfje { get; set; }
         public DateTime xfrq { get; set; }
+        /// <summary>
+        /// 打折后金额
+        /// </summary>
         public decimal dzhje { get; set; }
+        /// <summary>
+        /// 当前余额
+        /// </summary>
+        public decimal Balance { get; set; }
         public decimal sdjf { get; set; }
         public decimal sdje { get; set; }
         public string bz { get; set; }

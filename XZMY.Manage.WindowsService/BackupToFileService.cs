@@ -330,7 +330,7 @@ namespace XZMY.Manage.WindowsService
                     orderSql = " ORDER BY sj desc";
                     break;
                 case "hyxx":
-                    //orderSql = " ORDER BY sj desc";
+                    orderSql = " ORDER BY fdid desc";
                     break;
                 default:
                     break;
@@ -370,6 +370,7 @@ namespace XZMY.Manage.WindowsService
                     var hykhs = string.Join(",", dt.Rows.OfType<DataRow>().Select(x => string.Format("'{0}'", x["hykh"])));
                     hyxxDataTable = hyxxService.GetByHykhList(hykhs);
                     dt.Columns.Add("hyxm", System.Type.GetType("System.String"));
+                    dt.Columns.Add("Balance", System.Type.GetType("System.Decimal"));
                 }
 
                 foreach (DataRow dr in dt.Rows)
@@ -387,20 +388,31 @@ namespace XZMY.Manage.WindowsService
                     switch (tableName)
                     {
                         case "hyxx"://会员信息
-                            dr["Count"] = xfxxService.GetPaymentCount(paymentCountDataTable, hykh);//获取并赋值消费次数
+                            {
+                                dr["Count"] = xfxxService.GetPaymentCount(paymentCountDataTable, hykh);//获取并赋值消费次数
+
+                                var fdid = dr["fdid"].ToString().Trim();
+                                var ss = fdid.Length > 0 ? fdid.Substring(fdid.Length - 2) : "00";
+                                var mm = fdid.Length > 0 ? fdid.Substring(fdid.Length - 4, 2) : "00";
+                                var hh = fdid.Length > 0 ? fdid.Substring(fdid.Length - 6, 2) : "00";
+                                dr["jrrq"] = dr["jrrq"].ToString().ToDateTime().Value.ToString(string.Format("yyyy-MM-dd {0}:{1}:{2}", hh, mm, ss));
+                            }
                             break;
                         case "xfxx"://消费信息
+                            {
+                                dr["hyxm"] = hyxxService.GetHyxm(hyxxDataTable, hykh);//会员姓名赋值
 
-                            dr["hyxm"] = hyxxService.GetHyxm(hyxxDataTable, hykh);//会员姓名赋值
+                                var fdid = dr["fdid"].ToString().Trim();
+                                var ss = fdid.Length > 0 ? fdid.Substring(fdid.Length - 2) : "00";
+                                dr["xfrq"] = dr["xfrq"].ToString().ToDateTime().Value.ToString("yyyy-MM-dd HH:mm:" + ss);
 
-                            var fdid = dr["fdid"].ToString().Trim();
-                            var ss = fdid.Length > 0 ? fdid.Substring(fdid.Length - 2) : "00";
-                            dr["xfrq"] = dr["xfrq"].ToString().ToDateTime().Value.ToString("yyyy-MM-dd HH:mm:" + ss);
+                                dr["Balance"] = hyxxService.GetBalance(hyxxDataTable, hykh);//余额
 
-                            if (!isDataOnServer) continue;
+                                if (!isDataOnServer) continue;
 
-                            //根据 xfxx 更新 hyxx （主要是 金额 信息）
-                            hyxxService.UpdateDigitByHykh(hykh);
+                                //根据 xfxx 更新 hyxx （主要是 金额 信息）
+                                hyxxService.UpdateDigitByHykh(hykh);
+                            }
                             break;
                         case "rz"://日志信息
                             if (!isDataOnServer) continue;

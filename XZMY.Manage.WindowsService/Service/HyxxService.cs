@@ -28,10 +28,10 @@ namespace XZMY.Manage.WindowsService.Service
         }
 
         /// <summary>
-        /// 获取消费次数
+        /// 获取姓名
         /// </summary>
         /// <param name="dt"></param>
-        /// <param name="hykh"></param>
+        /// <param name="hykh">会员卡号</param>
         /// <returns></returns>
         public string GetHyxm(DataTable dt, string hykh)
         {
@@ -40,6 +40,23 @@ namespace XZMY.Manage.WindowsService.Service
             {
                 if (dr["hykh"].ToString().Trim() == hykh.Trim())
                     result = dr["hyxm"].ToString();
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 获取当前余额
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="hykh">会员卡号</param>
+        /// <returns></returns>
+        public decimal GetBalance(DataTable dt, string hykh)
+        {
+            decimal result = 0;
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (dr["hykh"].ToString().Trim() == hykh.Trim())
+                    result = dr["knje"].ToString().ToDecimal(0);
             }
             return result;
         }
@@ -60,7 +77,7 @@ namespace XZMY.Manage.WindowsService.Service
                 ? string.Empty
                 : table.Rows[0][0].ToString().Trim();
         }
-        
+
         /// <summary>
         /// 根据卡号获取本地会员信息
         /// </summary>
