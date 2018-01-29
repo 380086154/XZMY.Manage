@@ -9,6 +9,7 @@ using T2M.Common.DataServiceComponents.Data.Query.Interface;
 using T2M.Common.DataServiceComponents.Service;
 using XZMY.Manage.Model;
 using XZMY.Manage.Model.DataModel;
+using XZMY.Manage.Service.Customer;
 using XZMY.Manage.Web.Models.Api;
 
 namespace XZMY.Manage.Web.Controllers.Apis
@@ -71,6 +72,16 @@ namespace XZMY.Manage.Web.Controllers.Apis
         {
             DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1));
             return (int)(DateTime.Now - startTime).TotalSeconds;
+        }
+
+        [HttpGet]
+        public ApiResult GetDetailsByKeywords(string keywords)
+        {
+
+            var hyxxService = new HyxxService();
+            var str = hyxxService.GetDetailsByYddh(keywords, "oYVeUwOSNj7wCFrvZMPbW8SBA-Y8");
+
+            return Success("str", str);
         }
     }
 }

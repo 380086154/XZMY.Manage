@@ -34,10 +34,7 @@ namespace XZMY.Manage.WindowsService
             //var path = b2fs.CopyDataToBackup();
             //b2fs.WriteDataToServer(path);
             //return;
-
-            var str = "20180129113450";//
-            var adsf = str.Substring(str.Length -4);
-
+            
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {

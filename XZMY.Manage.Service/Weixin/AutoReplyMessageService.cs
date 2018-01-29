@@ -28,6 +28,7 @@ namespace XZMY.Manage.Service.Weixin
             var content = "";//返回内容
 
             var text = WeixinXml.GetFromXml(doc, "Content").Trim();
+            var fromUserName = WeixinXml.GetFromXml(doc, "FromUserName");
 
             LogHelper.Log("查询余额 text：", text, LogLevel.Debug);
 
@@ -38,10 +39,17 @@ namespace XZMY.Manage.Service.Weixin
                 var phoneNumber = text.Length == 13
                                 ? text.Substring(2, 11)
                                 : text;
-                LogHelper.Log("查询余额 日志：", phoneNumber + " - FromUserName：" + WeixinXml.GetFromXml(doc, "FromUserName"), LogLevel.Debug);
+                LogHelper.Log("查询余额 日志：", phoneNumber + " - FromUserName：" + fromUserName, LogLevel.Debug);
 
                 hyxxService.PhoneControl = !hyxxService.PhoneControl;
-                return hyxxService.GetDetailsByYddh(phoneNumber, WeixinXml.GetFromXml(doc, "FromUserName"));
+                return hyxxService.GetDetailsByYddh(phoneNumber, fromUserName);
+            }
+
+            if (hyxxService.IsShopAssistant.Contains(fromUserName)
+                && text.ToUpper().Contains("CX"))//查询客户信息
+            {
+                var keywords = text.Substring(2, text.Length - 2);
+                return hyxxService.GetDetailsByKeywords(keywords, fromUserName);
             }
 
             switch (text.ToLower())
@@ -70,7 +78,7 @@ namespace XZMY.Manage.Service.Weixin
                 case "营业额":
                 case "今日营业额":
 
-                    //break;
+                //break;
                 case "本周营业额":
                 case "本月营业额":
                 case "当月营业额":

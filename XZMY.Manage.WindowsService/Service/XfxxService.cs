@@ -69,10 +69,6 @@ namespace XZMY.Manage.WindowsService.Service
             return db.GetDataTable(sql, "xfxx", EProviderName.OleDB);
         }
 
-        #endregion
-
-        #region Server
-
         /// <summary>
         /// 查询消费次数
         /// </summary>
@@ -81,8 +77,12 @@ namespace XZMY.Manage.WindowsService.Service
         public DataTable GetPaymentCountDataTable(string str)
         {
             var sql = string.Format("SELECT COUNT(0),hykh FROM [xfxx] WHERE hykh IN({0}) GROUP BY hykh", str);
-            return db.GetDataTable(sql, "xfxx", EProviderName.SqlClient);
+            return db.GetDataTable(sql, "xfxx", EProviderName.OleDB);
         }
+
+        #endregion
+
+        #region Server
 
         /// <summary>
         /// 删除消费信息

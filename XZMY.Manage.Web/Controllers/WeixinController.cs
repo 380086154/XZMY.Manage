@@ -74,6 +74,9 @@ namespace XZMY.Manage.Web.Controllers
             switch (type)
             {
                 case "event"://
+                    {
+                        var url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxdfadf3e2ae2aeb01&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect";
+                    }
                     break;
                 case "subscribe"://订阅
                     break;
@@ -88,7 +91,8 @@ namespace XZMY.Manage.Web.Controllers
                     break;
             }
 
-            LogHelper.Log("WeixinController 日志：" + type, "说：“" + text + "”  Reply：" + content, LogLevel.Debug);
+            LogHelper.Log("XmlDocument：" + type, Newtonsoft.Json.JsonConvert.SerializeXmlNode(doc), LogLevel.Debug);
+            //LogHelper.Log("WeixinController 日志：" + type, "说：“" + text + "”  Reply：" + content, LogLevel.Debug);
 
             if (!string.IsNullOrWhiteSpace(content))
             {
