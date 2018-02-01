@@ -29,6 +29,5 @@ C:\Users\Administrator\Source\Repos\XZMY.Manage\XZMY.Manage.Log\bin\Release\Newt
 C:\Users\Administrator\Source\Repos\XZMY.Manage\XZMY.Manage.Log\bin\Release\T2M.Common.DataServiceComponents.xml
 C:\Users\Administrator\Source\Repos\XZMY.Manage\XZMY.Manage.Log\bin\Release\T2M.Common.Utils.xml
 C:\Users\Administrator\Source\Repos\XZMY.Manage\XZMY.Manage.Log\bin\Release\Newtonsoft.Json.xml
-C:\Users\Administrator\Source\Repos\XZMY.Manage\XZMY.Manage.Log\obj\Release\XZMY.Manage.Log.csprojResolveAssemblyReference.cache
 C:\Users\Administrator\Source\Repos\XZMY.Manage\XZMY.Manage.Log\obj\Release\XZMY.Manage.Log.dll
 C:\Users\Administrator\Source\Repos\XZMY.Manage\XZMY.Manage.Log\obj\Release\XZMY.Manage.Log.pdb
