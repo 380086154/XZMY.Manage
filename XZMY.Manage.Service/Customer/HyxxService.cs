@@ -54,9 +54,9 @@ namespace XZMY.Manage.Service.Customer
                         Value = yddh ?? string.Empty,
                         Operation = SqlOperation.Equals,
                         Member = new Expression<Func<HyxxDto, object>>[] {
-                        x => x.yddh,
+                            x => x.yddh,
+                        }
                     }
-                }
                 },
                 SortMember = new Expression<Func<HyxxDto, object>>[] { x => x.jrrq },
                 SortType = T2M.Common.DataServiceComponents.Data.Query.Interface.SortType.Desc
@@ -87,8 +87,8 @@ namespace XZMY.Manage.Service.Customer
                             x => x.hyxm,
                             x => x.xmjm,
                             x => x.hykh,
+                        }
                     }
-                }
                 },
                 SortMember = new Expression<Func<HyxxDto, object>>[] { x => x.jrrq },
                 SortType = T2M.Common.DataServiceComponents.Data.Query.Interface.SortType.Desc

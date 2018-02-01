@@ -16,7 +16,7 @@ namespace XZMY.Manage.WindowsService
 
         private string formatString = "PRovider=Microsoft.Jet.OLEDB.4.0;Data Source={0};Jet OLEDB:Database PassWord=mp61";
 
-        public const string connectionString_SqlServer = "Data Source=qds118399686.my3w.com;Initial Catalog = qds118399686_db; Persist Security Info=True;User ID = qds118399686; Password=E17680A936674932B358;MultipleActiveResultSets=true";
+        public const string connectionString_SqlServer = "Data Source=sds209635357.my3w.com;Initial Catalog=sds209635357_db; Persist Security Info=True;User ID=sds209635357; Password=E17680A936674932B358;MultipleActiveResultSets=true";
         //public const string connectionString_SqlServer = "Server=101.37.25.133;Initial Catalog=qds118399686_debug;User ID=CollegeSa;Password=Aa123456;MultipleActiveResultSets=True;";
 
         private string connectionString_Access = string.Empty;

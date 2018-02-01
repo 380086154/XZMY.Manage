@@ -278,6 +278,7 @@
     <Compile Include="Content\Custom\UEditor\net\App_Code\NotSupportedHandler.cs" />
     <Compile Include="Content\Custom\UEditor\net\App_Code\PathFormater.cs" />
     <Compile Include="Content\Custom\UEditor\net\App_Code\UploadHandler.cs" />
+    <Compile Include="Controllers\Apis\SysController.cs" />
     <Compile Include="Controllers\Apis\GuessNumberController.cs" />
     <Compile Include="Controllers\Apis\WeixinController.cs" />
     <Compile Include="Controllers\Sys\BranchController.cs" />
