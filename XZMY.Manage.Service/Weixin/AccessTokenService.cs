@@ -174,6 +174,7 @@ namespace XZMY.Manage.Service.Weixin
             AccessToken = token + "#" + date;
 
             LogHelper.Log(AccessToken, "获取新 access_token：" + date);
+            LogHelper.Commit();
 
             return token;
         }

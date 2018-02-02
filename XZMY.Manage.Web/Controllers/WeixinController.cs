@@ -15,6 +15,7 @@ using System.Xml;
 using XZMY.Manage.Service.Weixin.Tools;
 using XZMY.Manage.Service.Weixin;
 using XZMY.Manage.Log.Models;
+using XZMY.Manage.Service.Sys;
 
 namespace XZMY.Manage.Web.Controllers
 {
@@ -71,17 +72,19 @@ namespace XZMY.Manage.Web.Controllers
             var type = WeixinXml.GetFromXml(doc, "MsgType");
             var text = WeixinXml.GetFromXml(doc, "Content");
 
+            LogHelper.Log("ResponseMessage", type + " - " + text, LogLevel.Debug);
+
             switch (type)
             {
                 case "event"://
                     {
-                        var url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxdfadf3e2ae2aeb01&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect";
+                        var url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxdfadf3e2ae2aeb01&redirect_uri=www.baidu.com&response_type=code&scope=SCOPE&state=STATE#wechat_redirect";
+                        var result = HttpRequestUtil.RequestUrl(url, "GET");
+
+                        var eventService = new EventService();
+                        content = eventService.Do(doc);
+                        break;
                     }
-                    break;
-                case "subscribe"://订阅
-                    break;
-                case "unsubscribe"://取消订阅
-                    break;
                 case "CLICK":
                     break;
                 case "text":

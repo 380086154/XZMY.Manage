@@ -1,23 +1,30 @@
 ﻿using System;
+using System.Linq;
 using XZMY.Manage.Log.Models;
-using XZMY.Manage.Service.Auth;
+using XZMY.Manage.Model.DataModel.User;
+using XZMY.Manage.Model.ViewModel.User;
 using XZMY.Manage.Service.Auth.Models.DataModels.SqlServer;
-using XZMY.Manage.Service.Auth.Models.ViewModel;
 using XZMY.Manage.Service.Utils;
-using XZMY.Manage.Service.Utils.Extendsions;
 using T2M.Common.DataServiceComponents.Data.Utils;
 using T2M.Common.DataServiceComponents.Service;
+using XZMY.Manage.Model.ViewModel.WeixinUserInfo;
+using XZMY.Manage.Model.DataModel;
 
-namespace XZMY.Manage.Service.Handlers.Action
+namespace XZMY.Manage.Service.Handlers.WeixinUserInfo
 {
-    public class ActionModifyHandler
+    public class CreateHandler
     {
-        public ActionModifyHandler(VmActionEdit vm)
+        public CreateHandler(VmWeixinUserInfoEdit vm)
         {
             Model = vm;
         }
 
-        public VmActionEdit Model { get; set; }
+        public CreateHandler(Guid id)
+        {
+            Model = new VmWeixinUserInfoEdit { DataId = id };
+        }
+
+        public VmWeixinUserInfoEdit Model { get; set; }
 
         public HandlerInvokeResult Invoke()
         {
@@ -25,14 +32,15 @@ namespace XZMY.Manage.Service.Handlers.Action
 
             try
             {
-                var datamodel = Model.GetDataModel();
-                datamodel.SetModifier(LoggedUserManager.GetCurrentUserAccount().GetActorInfomationSynchronizer());
+                var datamodel = Model.CreateNewDataModel();
+                Model.DataId = datamodel.DataId;
+                datamodel.SetActorInfomation(LoggedUserManager.GetCurrentUserAccount().GetActorInfomationSynchronizer());
 
                 using (var wrapper = new SqlTransactionWrapper())
                 {
                     try
                     {
-                        var createservice = new BaseUpdateService<Sys_Action>(datamodel);
+                        var createservice = new BaseCreateService<WeixinUserInfoDto>(datamodel);
                         createservice.Invoke(wrapper.Transaction);
                     }
                     catch
@@ -41,13 +49,13 @@ namespace XZMY.Manage.Service.Handlers.Action
                         throw;
                     }
                 }
-                AuthCenter.ClearAllCache();
+
                 return HandlerInvokeResult.SUCCESS_VIEWMODEL;
             }
             catch (Exception ex)
             {
-                LogHelper.LogException("ActionModifyHandler", "编辑失败", LogLevel.Error, ex);
-                return new HandlerInvokeResult()
+                LogHelper.LogException("WeixinUserInfoCreateHandler", "创建失败", LogLevel.Error, ex);
+                return new HandlerInvokeResult
                 {
                     Code = (int)HandlerInvokeResultCode.服务器异常,
                     Message = ex.Message,

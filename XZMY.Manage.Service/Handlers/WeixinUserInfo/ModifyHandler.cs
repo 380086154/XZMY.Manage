@@ -1,4 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using XZMY.Manage.Data.Impl.Query.Module;
+using XZMY.Manage.Data.Query.Module;
 using XZMY.Manage.Log.Models;
 using XZMY.Manage.Service.Auth;
 using XZMY.Manage.Service.Auth.Models.DataModels.SqlServer;
@@ -7,17 +13,19 @@ using XZMY.Manage.Service.Utils;
 using XZMY.Manage.Service.Utils.Extendsions;
 using T2M.Common.DataServiceComponents.Data.Utils;
 using T2M.Common.DataServiceComponents.Service;
+using XZMY.Manage.Model.ViewModel.WeixinUserInfo;
+using XZMY.Manage.Model.DataModel;
 
-namespace XZMY.Manage.Service.Handlers.Action
+namespace XZMY.Manage.Service.Handlers.WeixinUserInfo
 {
-    public class ActionModifyHandler
+    public class ModifyHandler
     {
-        public ActionModifyHandler(VmActionEdit vm)
+        public ModifyHandler(VmWeixinUserInfoEdit vm)
         {
             Model = vm;
         }
 
-        public VmActionEdit Model { get; set; }
+        public VmWeixinUserInfoEdit Model { get; set; }
 
         public HandlerInvokeResult Invoke()
         {
@@ -25,14 +33,17 @@ namespace XZMY.Manage.Service.Handlers.Action
 
             try
             {
-                var datamodel = Model.GetDataModel();
+                var goservice = new GetEntityByIdService<WeixinUserInfoDto>(Model.DataId);
+                var oldmodel = goservice.Invoke();
+
+                var datamodel = Model.MergeDataModel(oldmodel);
                 datamodel.SetModifier(LoggedUserManager.GetCurrentUserAccount().GetActorInfomationSynchronizer());
 
                 using (var wrapper = new SqlTransactionWrapper())
                 {
                     try
                     {
-                        var createservice = new BaseUpdateService<Sys_Action>(datamodel);
+                        var createservice = new BaseUpdateService<WeixinUserInfoDto>(datamodel);
                         createservice.Invoke(wrapper.Transaction);
                     }
                     catch
@@ -41,13 +52,13 @@ namespace XZMY.Manage.Service.Handlers.Action
                         throw;
                     }
                 }
-                AuthCenter.ClearAllCache();
+
                 return HandlerInvokeResult.SUCCESS_VIEWMODEL;
             }
             catch (Exception ex)
             {
-                LogHelper.LogException("ActionModifyHandler", "编辑失败", LogLevel.Error, ex);
-                return new HandlerInvokeResult()
+                LogHelper.LogException("WeixinUserInfoModifyHandler", "编辑异常", LogLevel.Error, ex);
+                return new HandlerInvokeResult
                 {
                     Code = (int)HandlerInvokeResultCode.服务器异常,
                     Message = ex.Message,

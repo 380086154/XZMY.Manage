@@ -145,9 +145,12 @@
     <Compile Include="Handlers\UserRole\UserRoleModifyHandler.cs" />
     <Compile Include="Handlers\User\UserAccountCreateHandler.cs" />
     <Compile Include="Handlers\User\UserAccountModifyHandler.cs" />
+    <Compile Include="Handlers\WeixinUserInfo\CreateHandler.cs" />
+    <Compile Include="Handlers\WeixinUserInfo\ModifyHandler.cs" />
     <Compile Include="Handlers\Weixin\WeixinHandler.cs" />
     <Compile Include="Project\ProjectCreateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sys\WeixinUserInfoService.cs" />
     <Compile Include="Sys\BranchService.cs" />
     <Compile Include="Sys\DatabaseManageService.cs" />
     <Compile Include="User\SearchUserService.cs" />
@@ -164,6 +167,7 @@
     <Compile Include="WebApiHandlers\Order\IncomeCreateHandler.cs" />
     <Compile Include="Weixin\AccessTokenService.cs" />
     <Compile Include="Weixin\AutoReplyMessageService.cs" />
+    <Compile Include="Weixin\EventService.cs" />
     <Compile Include="Weixin\Message\MessageBase.cs" />
     <Compile Include="Weixin\Tools\HttpRequestUtil.cs" />
     <Compile Include="Weixin\Tools\TuringRobot.cs" />

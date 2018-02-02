@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="ApiResult.cs" />
     <Compile Include="DataModel\BranchDto.cs" />
+    <Compile Include="DataModel\WeixinUserInfoDto.cs" />
     <Compile Include="DataModel\zkkDto.cs" />
     <Compile Include="DataModel\HyxxDto.cs" />
     <Compile Include="DataModel\NewFolder1\Advisories\Advisory.cs" />
@@ -280,6 +281,7 @@
     <Compile Include="ViewModel\User\VmUserAccountEdit.cs" />
     <Compile Include="ViewModel\User\VmUserRole.cs" />
     <Compile Include="ViewModel\VmGetListBase.cs" />
+    <Compile Include="ViewModel\WeixinUserInfo\VmWeixinUserInfoEdit.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModel\NewFolder1\Auth\" />
