@@ -29,7 +29,7 @@ namespace XZMY.Manage.Service.Weixin
                 weixinUserInfoService.SaveOrUpdate(doc);
 
                 LogHelper.Log("订阅", "Event：" + eventType, LogLevel.Debug);
-                content = "亲爱的，终于等到你。\r\n现在可以在这里查询余额了，回复手机号即可。";
+                content = @"亲爱的，终于等到你。\r\n现在可以在这里查询余额了，回复手机号即可。\r\n最新优惠活动也会在这里第一时间告诉你。";
             }
             else if (eventType == "unsubscribe")
             { //取消订阅
