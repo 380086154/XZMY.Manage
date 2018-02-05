@@ -241,3 +241,5 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 /XZMY.Manage.Web/App_Data/AuthCache
+/XZMY.Manage.Web/App_Data/DataDictionary
+/XZMY.Manage.Web/App_Data/DataDictionary

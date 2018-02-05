@@ -35,7 +35,7 @@ namespace XZMY.Manage.WindowsService.Model
         public string FromEmail { get; set; }
 
         /// <summary>
-        /// 发件人
+        /// 收件人
         /// </summary>
         public string ToEmail { get; set; }
 

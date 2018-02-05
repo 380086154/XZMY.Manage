@@ -17,10 +17,33 @@ namespace XZMY.Manage.Service.Weixin.Tools
         /// <returns></returns>
         public static string CreateTextMessage(XmlDocument xml, string content)
         {
+            //    var sb = new StringBuilder();
+            //    sb.Append("<xml>");
+            //    sb.AppendFormat("<ToUserName><![CDATA[{0}]]></ToUserName>", GetFromXml(xml, "FromUserName"));
+            //    sb.AppendFormat("<FromUserName><![CDATA[{0}]]></FromUserName>", GetFromXml(xml, "ToUserName"));
+            //    sb.AppendFormat("<CreateTime>{0}</CreateTime>", DateTime2Int(DateTime.Now));
+            //    sb.Append("<MsgType><![CDATA[text]]></MsgType>");
+            //    sb.AppendFormat("<Content><![CDATA[{0}]]></Content>", content);
+            //    sb.Append("</xml>");
+
+            //    return sb.ToString();
+
+
+            return CreateTextMessage(GetFromXml(xml, "FromUserName"), GetFromXml(xml, "ToUserName"), content);
+        }
+
+        /// <summary>
+        /// 返回消息 Xml
+        /// </summary>
+        /// <param name="openId"></param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public static string CreateTextMessage(string fromUserName, string toUserName, string content)
+        {
             var sb = new StringBuilder();
             sb.Append("<xml>");
-            sb.AppendFormat("<ToUserName><![CDATA[{0}]]></ToUserName>", GetFromXml(xml, "FromUserName"));
-            sb.AppendFormat("<FromUserName><![CDATA[{0}]]></FromUserName>", GetFromXml(xml, "ToUserName"));
+            sb.AppendFormat("<ToUserName><![CDATA[{0}]]></ToUserName>", fromUserName);
+            sb.AppendFormat("<FromUserName><![CDATA[{0}]]></FromUserName>", toUserName);
             sb.AppendFormat("<CreateTime>{0}</CreateTime>", DateTime2Int(DateTime.Now));
             sb.Append("<MsgType><![CDATA[text]]></MsgType>");
             sb.AppendFormat("<Content><![CDATA[{0}]]></Content>", content);

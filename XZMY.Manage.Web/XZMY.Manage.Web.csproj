@@ -326,6 +326,7 @@
     <Compile Include="Controllers\Sys\DataDictionaryController.cs" />
     <Compile Include="Controllers\Sys\LogController.cs" />
     <Compile Include="Controllers\Sys\LocationController.cs" />
+    <Compile Include="Controllers\Weixin\WeixinManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -6846,6 +6847,7 @@
     <Content Include="Views\Branch\Details.cshtml" />
     <Content Include="Views\Hyxx\Search.cshtml" />
     <Content Include="Views\Branch\Edit.cshtml" />
+    <Content Include="Views\WeixinManage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />

@@ -281,6 +281,7 @@
     <Compile Include="ViewModel\User\VmUserAccountEdit.cs" />
     <Compile Include="ViewModel\User\VmUserRole.cs" />
     <Compile Include="ViewModel\VmGetListBase.cs" />
+    <Compile Include="ViewModel\WeixinManage\VmWeixinManageIndex.cs" />
     <Compile Include="ViewModel\WeixinUserInfo\VmWeixinUserInfoEdit.cs" />
   </ItemGroup>
   <ItemGroup>
