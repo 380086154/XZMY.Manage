@@ -111,11 +111,11 @@ namespace XZMY.Manage.Service.Weixin
             }
             else
             {//更新
-                AccessToken = item.Name;
-                if (AccessToken.Split('#')[1].ToDateTime() > DateTime.Now) return;
+                AccessToken = item.Value;
+                if (string.IsNullOrWhiteSpace(AccessToken) || AccessToken.Split('#')[1].ToDateTime() > DateTime.Now) return;
 
                 GetNewAccessToken();
-                item.Name = AccessToken;
+                item.Value = AccessToken;
                 Update(item);
             }
         }
@@ -129,8 +129,9 @@ namespace XZMY.Manage.Service.Weixin
             var item = new DataDictionaryItem
             {
                 DataId = DataId,
-                Name = AccessToken,
+                Name = "微信 AccessToken",
                 EName = "AccessToken",
+                Value = AccessToken,
                 IsDefault = false,
                 IsSystem = true,
                 Sort = 0,

@@ -90,6 +90,7 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
                 node.SetAttribute("DataId", data.DataId.ToString());
                 node.SetAttribute("Name", data.Name);
                 node.SetAttribute("EName", data.EName);
+                node.SetAttribute("Value", data.Value);
                 node.SetAttribute("Default", data.IsDefault.ToString());
                 node.SetAttribute("Sys", data.IsSystem.ToString());
                 node.SetAttribute("State", data.State.ToString());
@@ -117,6 +118,7 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
 
             var name = node.Attributes["Name"].InnerText;
             var ename = node.Attributes["EName"].InnerText;
+            var value = node.Attributes["Value"].InnerText;
             var isdefaultstr = node.Attributes["Default"].InnerText;
             var issysstr = node.Attributes["Sys"].InnerText;
             var sort = node.Attributes["Sort"].InnerText;
@@ -132,6 +134,7 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
                 DataId = gid,
                 Name = name,
                 EName = ename,
+                Value = value,
                 State = Int32.Parse(state),//状态 
                 Sort = Int32.Parse(sort),//排序
                 IsDefault = isdefault,
@@ -187,7 +190,7 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
             }
             return res;
         }
-        
+
         /// <summary>
         /// 获取数据字典是否包含此分类信息
         /// </summary>

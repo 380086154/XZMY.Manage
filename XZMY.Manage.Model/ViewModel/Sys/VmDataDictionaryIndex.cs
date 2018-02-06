@@ -9,10 +9,6 @@ namespace XZMY.Manage.Model.ViewModel.Sys
 {
     public class VmDataDictionaryIndex
     {
-        public string AccessToken { get; set; }
-
-        public string AccessTokenExpired { get; set; }
-
         public IList<BranchDto> BranchList { get; set; }
     }
 }

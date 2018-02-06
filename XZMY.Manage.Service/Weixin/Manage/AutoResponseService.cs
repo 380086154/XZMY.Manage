@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using XZMY.Manage.Service.Utils.DataDictionary;
 
 namespace XZMY.Manage.Service.Weixin.Manage
@@ -31,7 +32,7 @@ namespace XZMY.Manage.Service.Weixin.Manage
             }
             else
             {
-                item.Name = content;
+                item.Value = content;
                 Update(item);
             }
         }
@@ -43,7 +44,7 @@ namespace XZMY.Manage.Service.Weixin.Manage
         public static string GetContent()
         {
             var item = DataDictionaryManager.GetDataById(Key, DataId);
-            return item != null ? item.Name : string.Empty;
+            return item != null ? HttpUtility.UrlDecode(item.Value) : string.Empty;
         }
 
         #region Private method
@@ -57,8 +58,9 @@ namespace XZMY.Manage.Service.Weixin.Manage
             var item = new DataDictionaryItem
             {
                 DataId = DataId,
-                Name = content,
+                Name = "关注自动回复",
                 EName = Key,
+                Value = content,
                 IsDefault = false,
                 IsSystem = true,
                 Sort = 0,

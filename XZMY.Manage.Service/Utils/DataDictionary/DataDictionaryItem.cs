@@ -26,6 +26,12 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
         public String EName { get; set; }
 
         /// <summary>
+        /// 数据
+        /// </summary>
+        [DataMember]
+        public string Value { get; set; }
+
+        /// <summary>
         /// 是否默认字典项
         /// </summary>
         [DataMember]

@@ -157,7 +157,7 @@ namespace XZMY.Manage.WindowsService
 
                         var r = new Random().Next(0, 300000);//五分钟的随机波动，避免时间太一致，被服务器加入黑名单
                         var sleepNumber = 1000 * 60 * sendTime;
-                        Log.Add("随机数：" + r);
+                        //Log.Add("随机数：" + r);
                         if (sleepNumber > r)
                         {
                             sleepNumber = sleepNumber - r;
@@ -217,14 +217,14 @@ namespace XZMY.Manage.WindowsService
         private void OnChanged(object sender, FileSystemEventArgs e)
         {
             Thread.Sleep(3000);
-            logService.Add("数据备份触发 OnChanged", "canExecute = " + canExecute);
+            //logService.Add("数据备份触发 OnChanged", "canExecute = " + canExecute);
 
             if (canExecute != null)
                 return;
             canExecute = false;
 
             Thread.Sleep(3000);
-            logService.Add("数据备份触发 OnChanged", "canExecute = false");
+            //logService.Add("数据备份触发 OnChanged", "canExecute = false");
 
             var path = string.Empty;
 

@@ -8,6 +8,11 @@ namespace XZMY.Manage.Model.ViewModel.WeixinManage
 {
     public class VmWeixinManageIndex
     {
+
+        public string AccessToken { get; set; }
+
+        public string AccessTokenExpired { get; set; }
+
         /// <summary>
         /// 关注自动回复内容
         /// </summary>

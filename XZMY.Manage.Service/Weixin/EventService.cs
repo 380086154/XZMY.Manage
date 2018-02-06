@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Xml;
 using XZMY.Manage.Log.Models;
 using XZMY.Manage.Service.Sys;
@@ -30,9 +31,10 @@ namespace XZMY.Manage.Service.Weixin
                 weixinUserInfoService.SaveOrUpdate(doc);
 
                 LogHelper.Log("订阅", "Event：" + eventType, LogLevel.Debug);
-                //content = "亲爱的，终于等到你。\r\n最新优惠活动将在这里第一时间告诉你。\r\n还可以在这里查询余额，回复手机号即可。";
-
                 content = AutoResponseService.GetContent();
+
+                if (string.IsNullOrWhiteSpace(content))
+                    content = "亲爱的，终于等到你。\r\n最新优惠活动将在这里第一时间告诉你。\r\n还可以在这里查询余额，回复手机号即可。";
             }
             else if (eventType == "unsubscribe")
             {//取消订阅

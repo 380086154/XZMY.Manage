@@ -23,6 +23,8 @@ using XZMY.Manage.Service.Utils.DataDictionary;
 using XZMY.Manage.Service.Weixin.Manage;
 using XZMY.Manage.Service.Weixin.Tools;
 using XZMY.Manage.Model.ViewModel.WeixinManage;
+using XZMY.Manage.Service.Weixin;
+using System.Web;
 
 namespace XZMY.Manage.Web.Controllers.Weixin
 {
@@ -36,6 +38,8 @@ namespace XZMY.Manage.Web.Controllers.Weixin
         public ActionResult Index()
         {
             var model = new VmWeixinManageIndex();
+            model.AccessToken = AccessTokenService.GetAccessToken();
+            model.AccessTokenExpired = AccessTokenService.GetAccessTokenExpired().ToString("yyyy-MM-dd HH:mm:ss");
             model.AutoResponseContent = AutoResponseService.GetContent();
             return View(model);
         }
@@ -47,7 +51,7 @@ namespace XZMY.Manage.Web.Controllers.Weixin
             if (string.IsNullOrWhiteSpace(content))
                 return Json(new { success = false, errors = "不能为空" });
 
-            AutoResponseService.CreateOrUpdate(content.Trim());
+            AutoResponseService.CreateOrUpdate(content.Trim().Replace("&#xA;", "\\r\\n"));
 
             return Json(new { success = true, errors = GetErrors() });
         }

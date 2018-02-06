@@ -23,9 +23,6 @@ namespace XZMY.Manage.Web.Controllers.Sys
         public ActionResult Index()
         {
             var model = new VmDataDictionaryIndex();
-            model.AccessToken = AccessTokenService.GetAccessToken();
-            model.AccessTokenExpired = AccessTokenService.GetAccessTokenExpired().ToString("yyyy-MM-dd HH:mm:ss");
-
             var branchService = new BranchService();
             model.BranchList = branchService.GetAll();
 
