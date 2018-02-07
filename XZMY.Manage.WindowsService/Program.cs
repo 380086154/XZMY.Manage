@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ServiceProcess;
 using System.Text;
 using System.IO;
+using XZMY.Manage.WindowsService.Service;
+using System.Threading;
 
 namespace XZMY.Manage.WindowsService
 {

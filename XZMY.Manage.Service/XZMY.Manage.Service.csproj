@@ -150,12 +150,14 @@
     <Compile Include="Handlers\Weixin\WeixinHandler.cs" />
     <Compile Include="Project\ProjectCreateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sys\BackupEmailManageService.cs" />
     <Compile Include="Sys\WeixinUserInfoService.cs" />
     <Compile Include="Sys\BranchService.cs" />
     <Compile Include="Sys\DatabaseManageService.cs" />
     <Compile Include="User\SearchUserService.cs" />
     <Compile Include="Utils\DataDictionary\DataDictionaryItem.cs" />
     <Compile Include="Utils\DataDictionary\DataDictionaryManager.cs" />
+    <Compile Include="Utils\DataDictionary\DataDictionarySingleItemBase.cs" />
     <Compile Include="Utils\ExcelHelper.cs" />
     <Compile Include="Utils\Extendsions\AuthViewModelExtendsions.cs" />
     <Compile Include="Utils\LoggedUserManager.cs" />

@@ -23,6 +23,14 @@ namespace XZMY.Manage.Web.Controllers.Sys
         public ActionResult Index()
         {
             var model = new VmDataDictionaryIndex();
+
+            //数据备份收发邮件管理
+            var backupEmailManageService = new BackupEmailManageService();
+            var arr = backupEmailManageService.GetValue().Split('|');
+            model.FromEmail = arr[0] ?? string.Empty;
+            model.ToEmail = arr.Length > 1 ? arr[1] : string.Empty;
+
+            //分店数据库
             var branchService = new BranchService();
             model.BranchList = branchService.GetAll();
 
@@ -51,6 +59,20 @@ namespace XZMY.Manage.Web.Controllers.Sys
         {
 
             return View();
+        }
+
+        #region Ajax method
+
+        public ActionResult AjaxSaveEmailList(VmDataDictionaryIndex model)
+        {
+            var fromEmail = model.FromEmail.Trim();
+            var toEmail = model.ToEmail.Trim();
+
+            var service = new BackupEmailManageService();
+            service.SingleItem.Value = fromEmail + "|" + toEmail;
+            service.SaveOrUpdate();
+
+            return Json(new { success = true, errors = GetErrors() }, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -118,6 +140,8 @@ namespace XZMY.Manage.Web.Controllers.Sys
 
             return Json(new { success = b, Id = model.DataId, errors = GetErrors() });
         }
+
+        #endregion
 
         public ActionResult DefaultDataPage()
         {

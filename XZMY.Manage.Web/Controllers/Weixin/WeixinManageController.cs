@@ -40,7 +40,7 @@ namespace XZMY.Manage.Web.Controllers.Weixin
             var model = new VmWeixinManageIndex();
             model.AccessToken = AccessTokenService.GetAccessToken();
             model.AccessTokenExpired = AccessTokenService.GetAccessTokenExpired().ToString("yyyy-MM-dd HH:mm:ss");
-            model.AutoResponseContent = AutoResponseService.GetContent();
+            model.AutoResponseContent = new AutoResponseService().GetValue();
             return View(model);
         }
 
@@ -51,7 +51,9 @@ namespace XZMY.Manage.Web.Controllers.Weixin
             if (string.IsNullOrWhiteSpace(content))
                 return Json(new { success = false, errors = "不能为空" });
 
-            AutoResponseService.CreateOrUpdate(content.Trim().Replace("&#xA;", "\\r\\n"));
+            var service = new AutoResponseService();
+            service.SingleItem.Value = content.Trim().Replace("&#xA;", "\\r\\n");
+            service.SaveOrUpdate();
 
             return Json(new { success = true, errors = GetErrors() });
         }

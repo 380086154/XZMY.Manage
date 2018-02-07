@@ -11,6 +11,7 @@ using T2M.Common.DataServiceComponents.Service;
 using XZMY.Manage.Model;
 using XZMY.Manage.Model.DataModel;
 using XZMY.Manage.Service.Customer;
+using XZMY.Manage.Service.Sys;
 using XZMY.Manage.Web.Models.Api;
 
 namespace XZMY.Manage.Web.Controllers.Apis
@@ -29,6 +30,17 @@ namespace XZMY.Manage.Web.Controllers.Apis
         {
             var connectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
             return Success("connectionString", connectionString);
+        }
+
+        /// <summary>
+        /// 获取邮件列表
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ApiResult GetEmailList()
+        {
+            var service = new BackupEmailManageService();
+            return Success("Email", service.GetValue());
         }
 
         /// <summary>

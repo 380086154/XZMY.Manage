@@ -27,6 +27,9 @@ namespace XZMY.Manage.WindowsService
         private XfxxService xfxxService = null;
         private HyxxService hyxxService = null;
         private LogService logService = null;
+        private EmailService emailService = null;
+        private ConnectionStringService connectionStringService = null;
+        private RandomTimeService randomTimeService = null;
         private BranchDto branchDto = null;//分店信息
 
         private IList<string> excludeList = new List<string> { "log.txt", "backuplog.xml" };
@@ -49,7 +52,9 @@ namespace XZMY.Manage.WindowsService
 
             dataPath = PathUtility.dataPath;
             databakPath = PathUtility.databakPath;
-            db = new DatabaseHelper(dataPath + "mphygl.mdb");
+            connectionStringService = new ConnectionStringService();
+
+            db = connectionStringService.InitDatabaseHelper(dataPath + "mphygl.mdb");
 
             //读取已发送列表
             xmlUtility = new XmlUtility(databakPath);
@@ -64,6 +69,7 @@ namespace XZMY.Manage.WindowsService
                 hardwareUtility = new HardwareUtility();
                 version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
+                randomTimeService = new RandomTimeService();
                 DirectoryInfo di = new DirectoryInfo(databakPath);
                 FileComparer fc = new FileComparer();
 
@@ -155,12 +161,14 @@ namespace XZMY.Manage.WindowsService
 
                         fileUtility.RevmoeEmptyFolder(databakPath); //删除根目录的空文件夹
 
-                        var r = new Random().Next(0, 300000);//五分钟的随机波动，避免时间太一致，被服务器加入黑名单
+                        var r = randomTimeService.Minute * (1000 * 60);//1-10分钟的随机波动，避免时间太一致，被服务器加入黑名单
                         var sleepNumber = 1000 * 60 * sendTime;
                         //Log.Add("随机数：" + r);
                         if (sleepNumber > r)
                         {
-                            sleepNumber = sleepNumber - r;
+                            sleepNumber = DateTime.Now.Millisecond % 2 == 0
+                                ? sleepNumber - r
+                                : sleepNumber + r;
                         }
                         Thread.Sleep(sleepNumber);//轮询时间间隔一小时一次
                     }
@@ -274,7 +282,9 @@ namespace XZMY.Manage.WindowsService
         {
             //先从服务器中获取总数，然后再从本地获取总数，两相对比计算差值，以这样的方式获取需要备份的行数
 
-            //db = new DatabaseHelper(path);
+            if (string.IsNullOrWhiteSpace(db.ConnectionString_SqlServer))
+                connectionStringService.InitDatabaseHelper(path);
+
             db.ConnectionString_Access = path;
 
 #if DEBUG
@@ -466,8 +476,14 @@ namespace XZMY.Manage.WindowsService
         /// <param name="fileName"></param>
         public void SendMailUseGmail(string fileName, string fileList = "")
         {
-            //var emailFromAddress = "xzmy_hc@163.com";
-            var emailFromAddress = string.IsNullOrWhiteSpace(branchDto.FromEmail) ? "xzmjwx@163.com" : branchDto.FromEmail;
+            if (emailService == null) emailService = new EmailService();
+
+            var fromEmailAddress = emailService.FromEmail;
+            var toEmailAddress = emailService.ToEmail;
+
+            if (string.IsNullOrWhiteSpace(fromEmailAddress)) fromEmailAddress = "xzmjwx@163.com";
+            if (string.IsNullOrWhiteSpace(toEmailAddress)) toEmailAddress = "liuxiaoping.com.cn@163.com";
+            
             var emailFromPassword = "abc123";
             var date = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             var entity = new LogDto(fileName, "发送成功", hardwareUtility.IpAddress, hardwareUtility.ComputerName);
@@ -475,14 +491,14 @@ namespace XZMY.Manage.WindowsService
             try
             {
                 var msg = new System.Net.Mail.MailMessage();
-                msg.To.Add(string.IsNullOrWhiteSpace(branchDto.ToEmail) ? "liuxiaoping.com.cn@163.com" : branchDto.ToEmail);
+                msg.To.Add(toEmailAddress);
 
                 var attachment = GetAttachment(fileName);
                 // Add the file attachment to this e-mail message.
                 msg.Attachments.Add(attachment);
                 //msg.Attachments.Add(GetAttachment(xmlUtility.LogFileName));
 
-                msg.From = new MailAddress(emailFromAddress, "小钟美业-" + branchDto.Name, System.Text.Encoding.UTF8);
+                msg.From = new MailAddress(fromEmailAddress, "小钟美业-" + branchDto.Name, System.Text.Encoding.UTF8);
                 /* 上面3个参数分别是发件人地址（可以随便写），发件人姓名，编码*/
                 msg.Subject = "[Backup]" + attachment.Name;//邮件标题
                 msg.SubjectEncoding = System.Text.Encoding.UTF8;//邮件标题编码
@@ -504,7 +520,7 @@ namespace XZMY.Manage.WindowsService
                 SmtpClient client = new SmtpClient();
                 //client.SendCompleted += new SendCompletedEventHandler(SendCompletedCallback);
                 client.UseDefaultCredentials = true;
-                client.Credentials = new System.Net.NetworkCredential(emailFromAddress, emailFromPassword);
+                client.Credentials = new System.Net.NetworkCredential(fromEmailAddress, emailFromPassword);
                 //上述写你的GMail邮箱和密码   
                 client.Port = 25;//Gmail使用的端口
                 client.Host = "smtp.163.com";

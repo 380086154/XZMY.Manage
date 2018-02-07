@@ -1,5 +1,4 @@
-﻿
-@model XZMY.Manage.Model.ViewModel.Sys.VmDataDictionaryIndex
+﻿@model XZMY.Manage.Model.ViewModel.Sys.VmDataDictionaryIndex
 @{
     Layout = "~/Views/Shared/_Layout456.cshtml";
     ViewBag.Title = "创建/编辑";
@@ -25,20 +24,21 @@
     <div class="col-md-12">
         <!-- BEGIN VALIDATION STATES-->
         <div class="portlet light bordered" id="form_wizard_1">
-            
+
             <div class="portlet-body form">
                 <!-- BEGIN FORM-->
-                <form id="defaultForm" class="form-horizontal" method="post" novalidate="novalidate">
-                   
-                    <div class="form-body">
+                <div class="form-body">
+                    <h3 class="form-section">数据备份收发邮件管理</h3>
+                    <form id="emailManageForm" class="form-horizontal" method="post" novalidate="novalidate">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">初始化数据：</label>
+                                    <label class="control-label col-md-3">发件人：</label>
                                     <div class="col-md-9">
                                         <div class="input-icon right">
                                             <span class="form-control-static">
-                                                <a href="#">点击初始化</a>
+                                                <textarea id="FromEmail" name="FromEmail" rows="5" cols="50">@Model.FromEmail</textarea>
+                                                <span class="help-block">一行一个邮件地址</span>
                                             </span>
                                         </div>
                                     </div>
@@ -46,46 +46,60 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label col-md-3"></label>
+                                    <label class="control-label col-md-3">收件人：</label>
                                     <div class="col-md-9">
                                         <div class="input-icon right">
-                                            <span class="form-control-static"> </span>
+                                            <span class="form-control-static">
+                                                <textarea id="ToEmail" name="ToEmail" rows="5" cols="50">@Model.ToEmail</textarea>
+                                                <span class="help-block">一行一个邮件地址</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2"></label>
+                                    <div class="col-md-10">
+                                        <div class="input-icon right">
+                                            <span class="form-control-static">
+                                                <button type="button" onclick="saveEmailList()" class=" btn green ">保存</button>
+                                                <button type="reset" class=" btn default">重置</button>
+                                            </span>
+                                            <span class="help-block">注：保存成功后，将在客户端电脑重启后生效</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
+                    </form>
 
-                        <h3 class="form-section">数据库管理</h3>
-                        <div class="row">
-                            @{
-                                if (Model.BranchList != null && Model.BranchList.Count > 0)
+                    <h3 class="form-section">数据库管理</h3>
+                    <div class="row">
+                        @{
+                            if (Model.BranchList != null && Model.BranchList.Count > 0)
+                            {
+                                for (int i = 0; i < Model.BranchList.Count; i++)
                                 {
-                                    for (int i = 0; i < Model.BranchList.Count; i++)
-                                    {
-                                        var item = Model.BranchList[i];
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label col-md-3">@item.Name</label>
-                                                <div class="col-md-9">
-                                                    <div class="input-icon right">
-                                                        <span class="form-control-static">
-                                                            <a onclick="clearData('@item.DataId', '@item.Name')" href="javascript:void(0)">清除数据</a>
-                                                        </span>
-                                                    </div>
+                                    var item = Model.BranchList[i];
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3">@item.Name</label>
+                                            <div class="col-md-9">
+                                                <div class="input-icon right">
+                                                    <span class="form-control-static">
+                                                        <a onclick="clearData('@item.DataId', '@item.Name')" href="javascript:void(0)">清除数据</a>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
-                                    }
+                                    </div>
                                 }
                             }
-                        </div>
-
-
-
+                        }
                     </div>
-                </form>
+
+                </div>
                 <!-- END FORM-->
             </div>
         </div>
@@ -94,6 +108,24 @@
 </div>
 @section JavaScript{
     <script>
+        var saveEmailList = function () {
+            var data = $('#emailManageForm').serializeObject();
+            
+            $.ajax({
+                type: 'POST',
+                url: '/DataDictionary/AjaxSaveEmailList',
+                data: data,
+                dataType: 'JSON',
+                success: function (result) {
+                    showToast(0, '系统消息', '操作成功');
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    showToast(3, '系统消息', JSON.stringify(errorThrown));//错误信息
+                },
+                async: false
+            });
+        };
+
         var clearData = function (id, name) {
             var name = '【' + name + '】'
             bootbox.confirm("确定清除" + name + "数据吗？清除后请等待下次数据同步成功后才能有可用数据。", function (result) {

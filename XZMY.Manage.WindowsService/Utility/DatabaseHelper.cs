@@ -16,7 +16,8 @@ namespace XZMY.Manage.WindowsService
 
         private string formatString = "PRovider=Microsoft.Jet.OLEDB.4.0;Data Source={0};Jet OLEDB:Database PassWord=mp61";
 
-        public const string connectionString_SqlServer = "Data Source=sds209635357.my3w.com;Initial Catalog=sds209635357_db; Persist Security Info=True;User ID=sds209635357; Password=E17680A936674932B358;MultipleActiveResultSets=true";
+        public string ConnectionString_SqlServer = string.Empty;
+        //public const string connectionString_SqlServer = "Data Source=sds209635357.my3w.com;Initial Catalog=sds209635357_db; Persist Security Info=True;User ID=sds209635357; Password=E17680A936674932B358;MultipleActiveResultSets=true";
         //public const string connectionString_SqlServer = "Server=101.37.25.133;Initial Catalog=qds118399686_debug;User ID=CollegeSa;Password=Aa123456;MultipleActiveResultSets=True;";
 
         private string connectionString_Access = string.Empty;
@@ -33,9 +34,10 @@ namespace XZMY.Manage.WindowsService
 
         public DatabaseHelper() { }
 
-        public DatabaseHelper(string path)
+        public DatabaseHelper(string path, string connectionString)
         {
             connectionString_Access = string.Format(formatString, path);
+            ConnectionString_SqlServer = connectionString;
         }
 
         /// <summary>
@@ -165,7 +167,7 @@ namespace XZMY.Manage.WindowsService
 
             //根据 providerName 动态选择连接字符串
             if (providerName == EProviderName.SqlClient)
-                connection.ConnectionString = connectionString_SqlServer;
+                connection.ConnectionString = ConnectionString_SqlServer;
             else if (providerName == EProviderName.OleDB)
                 connection.ConnectionString = connectionString_Access;
 

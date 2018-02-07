@@ -11,75 +11,25 @@ namespace XZMY.Manage.Service.Weixin.Manage
     /// <summary>
     /// 自动回复内容管理
     /// </summary>
-    public class AutoResponseService
+    public class AutoResponseService : DataDictionarySingleItemBase
     {
-        private static Guid DataId = Guid.Parse("CBA56F06-950F-4DB7-B881-A17CE09EB900");//
-        private static string Key = "SubscribeAutoResponse";//关注自动回复
+        private Guid DataId = Guid.Parse("CBA56F06-950F-4DB7-B881-A17CE09EB900");//
+        private string Key = "SubscribeAutoResponse";//关注自动回复
 
-        /// <summary>
-        /// 保存更新内容
-        /// </summary>
-        /// <param name="content"></param>
-        public static void CreateOrUpdate(string content)
+        public AutoResponseService()
         {
-            if (string.IsNullOrWhiteSpace(content)) return;
-
-            var item = DataDictionaryManager.GetDataById(Key, DataId);
-
-            if (item == null)
-            {
-                Create(content);
-            }
-            else
-            {
-                item.Value = content;
-                Update(item);
-            }
-        }
-
-        /// <summary>
-        /// 获取关注自动回复内容
-        /// </summary>
-        /// <returns></returns>
-        public static string GetContent()
-        {
-            var item = DataDictionaryManager.GetDataById(Key, DataId);
-            return item != null ? HttpUtility.UrlDecode(item.Value) : string.Empty;
-        }
-
-        #region Private method
-
-        /// <summary>
-        /// 创建
-        /// </summary>
-        /// <returns></returns>
-        private static void Create(string content)
-        {
-            var item = new DataDictionaryItem
+            this.SingleItem = new DataDictionaryItem
             {
                 DataId = DataId,
                 Name = "关注自动回复",
                 EName = Key,
-                Value = content,
+                Value = string.Empty,
                 IsDefault = false,
                 IsSystem = true,
                 Sort = 0,
                 State = 1,
                 Descr = "用户关注后自动回复内容"
             };
-
-            DataDictionaryManager.SaveOrUpdateData(Key, item);
         }
-
-        /// <summary>
-        /// 更新
-        /// </summary>
-        /// <param name="item"></param>
-        private static void Update(DataDictionaryItem item)
-        {
-            DataDictionaryManager.SaveOrUpdateData(Key, item);
-        }
-
-        #endregion
     }
 }

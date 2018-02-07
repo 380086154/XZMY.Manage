@@ -26,16 +26,16 @@ namespace XZMY.Manage.Service.Sys
             var service = new CustomSearchService<BranchDto>
             {
                 CustomConditions = new List<CustomCondition<BranchDto>>
+                {
+                    new CustomConditionPlus<BranchDto>
                     {
-                        new CustomConditionPlus<BranchDto>
-                        {
-                            Value = string.Empty,
-                            Operation = SqlOperation.Like,
-                            Member = new Expression<Func<BranchDto, object>>[] {
-                                x => x.Name,
-                            }
+                        Value = string.Empty,
+                        Operation = SqlOperation.Like,
+                        Member = new Expression<Func<BranchDto, object>>[] {
+                            x => x.Name,
                         }
                     }
+                }
             };
 
             return service.Invoke();
