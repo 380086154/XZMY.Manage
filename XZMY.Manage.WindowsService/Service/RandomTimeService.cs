@@ -68,14 +68,23 @@ namespace XZMY.Manage.WindowsService.Service
                 return obj.Key;
             }
 
-            RandomList = new Dictionary<int, bool>();
+            dict.Clear();
             var list = DefaultList.GetRandomList();
             foreach (var item in list)
             {
-                RandomList.Add(item, true);
+                dict.Add(item, true);
             }
 
-            return Get(RandomList);
+            return Get(dict);
+
+            //RandomList = new Dictionary<int, bool>();
+            //var list = DefaultList.GetRandomList();
+            //foreach (var item in list)
+            //{
+            //    RandomList.Add(item, true);
+            //}
+
+            //return Get(RandomList);
         }
 
         #endregion

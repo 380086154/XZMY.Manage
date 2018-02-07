@@ -36,7 +36,14 @@ namespace XZMY.Manage.WindowsService
             //var path = b2fs.CopyDataToBackup();
             //b2fs.WriteDataToServer(path);
             //return;
-            
+
+            //var erre = new RandomTimeService();
+            //for (int i = 0; i < 20; i++)
+            //{
+            //    Console.WriteLine(erre.Minute);
+            //}
+            //return;
+
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
