@@ -21,6 +21,13 @@ namespace XZMY.Manage.Web.Controllers.Auth
 {
     public class UserAccountController : ControllerBase
     {
+        //列表
+        [AutoCreateAuthAction(Name = "人员管理", Code = "UserAccountList", ModuleCode = "SYSTEM", Url = "/UserAccount/List", Visible = true, Remark = "")]
+        public ActionResult List()
+        {
+            return View();
+        }
+
         //角色赋值
         public ActionResult Assignment(Guid? id)
         {
@@ -69,13 +76,6 @@ namespace XZMY.Manage.Web.Controllers.Auth
             var result = handler.Invoke();
 
             return Json(new { success = result.Success, message = result.Message }, JsonRequestBehavior.AllowGet);
-        }
-
-        //列表
-        [AutoCreateAuthAction(Name = "平台管理员", Code = "UserAccountList", ModuleCode = "SYSTEM", Url = "/UserAccount/List", Visible = true, Remark = "")]
-        public ActionResult List()
-        {
-            return View();
         }
 
         //创建/编辑

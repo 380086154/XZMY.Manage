@@ -42,7 +42,7 @@ namespace XZMY.Manage.Web
 
                         var list = DataDictionaryManager.GetAll();
                         //var sb = list.Select(item => $@"{{DataId:'{item.DataId}',Name:'{item.Name}'}}").ToList();
-                        var sb = list.Select(x=>string.Format("{DataId:'{0}',Name:'{1}'}", x.DataId, x.Name)).ToList();
+                        var sb = list.Select(x => string.Format("{DataId:'{0}',Name:'{1}'}", x.DataId, x.Name)).ToList();
 
                         sw.Write("var dataDictionary =[");
                         sw.Write(string.Join(",", sb));
@@ -55,7 +55,7 @@ namespace XZMY.Manage.Web
             catch (Exception ex) { }
             finally
             {
-                if(fs!=null) fs.Close();
+                if (fs != null) fs.Close();
             }
 
             #endregion

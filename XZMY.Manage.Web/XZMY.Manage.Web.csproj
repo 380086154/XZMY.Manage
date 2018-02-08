@@ -282,6 +282,7 @@
     <Compile Include="Controllers\Apis\GuessNumberController.cs" />
     <Compile Include="Controllers\Apis\WeixinController.cs" />
     <Compile Include="Controllers\Sys\BranchController.cs" />
+    <Compile Include="Controllers\ErrorsController.cs" />
     <Compile Include="Controllers\WeixinController.cs" />
     <Compile Include="Controllers\Customer\HyxxController.cs" />
     <Compile Include="Controllers\NewFolder1\Albums\AlbumsController.cs" />
@@ -6706,6 +6707,7 @@
     <Content Include="UploadCode\webuploader\webuploader.css" />
     <Content Include="UploadCode\webuploader\webuploader.js" />
     <Content Include="UploadCode\webuploader\webuploader.min.js" />
+    <Content Include="Views\Errors\Index.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -6857,7 +6859,6 @@
     <Folder Include="Content\Metronic4.5.6\global\plugins\angularjs\plugins\angular-file-upload\uploads\" />
     <Folder Include="Controllers\NewFolder1\WebApis\" />
     <Folder Include="Images\" />
-    <Folder Include="ueditor\net\upload\image\" />
     <Folder Include="Upload\Plan\Word\" />
     <Folder Include="Views\Auth\Module\" />
   </ItemGroup>

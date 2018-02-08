@@ -72,12 +72,20 @@ namespace XZMY.Manage.Web.Controllers
             {
                 ViewBag.LoginName = current.Name;
             }
-            var bl = AuthorityCheck();
-            var controllerName = ((ReflectedActionDescriptor)filterContext.ActionDescriptor).ControllerDescriptor.ControllerName;
-            if (controllerName != "Login")
+            var haveAuth = AuthorityCheck();
+
+            if (!haveAuth)
             {
-                if (!LoggedUserManager.IsLogin())
-                    filterContext.Result = RedirectToRoute(new { Controller = "Login", Action = "Index", go = Request.Url.ToString() });
+                filterContext.Result = RedirectToRoute(new { Controller = "errors", Action = "index" });
+            }
+            else
+            {
+                var controllerName = ((ReflectedActionDescriptor)filterContext.ActionDescriptor).ControllerDescriptor.ControllerName;
+                if (controllerName != "Login")
+                {
+                    if (!LoggedUserManager.IsLogin())
+                        filterContext.Result = RedirectToRoute(new { Controller = "login", Action = "index", go = Request.Url.ToString() });
+                }
             }
             base.OnActionExecuting(filterContext);
         }

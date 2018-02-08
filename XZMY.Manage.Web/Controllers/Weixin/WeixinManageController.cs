@@ -34,7 +34,7 @@ namespace XZMY.Manage.Web.Controllers.Weixin
     public class WeixinManageController : ControllerBase
     {
         //列表
-        [AutoCreateAuthAction(Name = "微信设置", Code = "WeixinIndex", ModuleCode = "WeixinIndex", Url = "/Weixin/Index", Visible = true, Remark = "")]
+        [AutoCreateAuthAction(Name = "微信设置", Code = "WeixinManageIndex", ModuleCode = "WEIXIN", Url = "/WeixinManage/Index", Visible = true, Remark = "")]
         public ActionResult Index()
         {
             var model = new VmWeixinManageIndex();

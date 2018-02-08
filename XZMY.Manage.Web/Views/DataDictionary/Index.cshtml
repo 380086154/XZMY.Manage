@@ -128,7 +128,7 @@
 
         var clearData = function (id, name) {
             var name = '【' + name + '】'
-            bootbox.confirm("确定清除" + name + "数据吗？清除后请等待下次数据同步成功后才能有可用数据。", function (result) {
+            bootbox.confirm("确定清除" + name + "数据吗？请谨慎操作，如有任何疑问请咨询管理员。", function (result) {
                 if (!result) return;
 
                 $.ajax({

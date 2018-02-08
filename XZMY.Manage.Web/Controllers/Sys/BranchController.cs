@@ -28,7 +28,7 @@ namespace XZMY.Manage.Web.Controllers.Sys
     public class BranchController : ControllerBase
     {
         //列表
-        [AutoCreateAuthAction(Name = "分店管理", Code = "BranchList", ModuleCode = "BranchList", Url = "/Branch/List", Visible = true, Remark = "")]
+        [AutoCreateAuthAction(Name = "分店管理", Code = "BranchList", ModuleCode = "SYSTEM", Url = "/Branch/List", Visible = true, Remark = "")]
         public ActionResult List()
         {
             return View();

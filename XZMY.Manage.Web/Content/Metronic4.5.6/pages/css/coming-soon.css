@@ -3,6 +3,7 @@
 Coming Soon Page
 ***/
 body {
+      background: url(../img/bg-white-lock.png) repeat;
   background-color: #ddd;
   padding: 0;
   margin: 0; }

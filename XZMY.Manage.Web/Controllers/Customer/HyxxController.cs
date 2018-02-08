@@ -29,14 +29,14 @@ namespace XZMY.Manage.Web.Controllers
     public class HyxxController : ControllerBase
     {
         //客户列表
-        [AutoCreateAuthAction(Name = "客户管理", Code = "HyxxList", ModuleCode = "SYSTEM", Url = "/Hyxx/List", Visible = true, Remark = "")]
+        [AutoCreateAuthAction(Name = "会员信息", Code = "HyxxList", ModuleCode = "CUSTOMER", Url = "/Hyxx/List", Visible = true, Remark = "")]
         public ActionResult List()
         {
             GetBranch();
             return View();
         }
 
-        [AutoCreateAuthAction(Name = "消费信息", Code = "PaymentList", ModuleCode = "SYSTEM", Url = "/Hyxx/Payment", Visible = true, Remark = "")]
+        [AutoCreateAuthAction(Name = "消费信息", Code = "HyxxPayment", ModuleCode = "CUSTOMER", Url = "/Hyxx/Payment", Visible = true, Remark = "")]
         public ActionResult Payment(string id)
         {
             ViewBag.Id = id;
@@ -44,7 +44,7 @@ namespace XZMY.Manage.Web.Controllers
             return View();
         }
 
-        [AutoCreateAuthAction(Name = "跨店查询", Code = "HyxxSearch", ModuleCode = "HyxxSearch", Url = "/Hyxx/Search", Visible = true, Remark = "")]
+        [AutoCreateAuthAction(Name = "跨店查询", Code = "HyxxSearch", ModuleCode = "CUSTOMER", Url = "/Hyxx/Search", Visible = true, Remark = "")]
         public ActionResult Search(string id)
         {
             return View();

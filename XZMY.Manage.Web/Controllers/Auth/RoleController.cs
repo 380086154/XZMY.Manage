@@ -24,6 +24,13 @@ namespace XZMY.Manage.Web.Controllers.Auth
     /// </summary>
     public class RoleController : ControllerBase
     {
+        //列表
+        [AutoCreateAuthAction(Name = "角色管理", Code = "RoleList", ModuleCode = "SYSTEM", Url = "/Role/List", Visible = true, Remark = "")]
+        public ActionResult List()
+        {
+            return View();
+        }
+
         //赋值
         public ActionResult Assignment(Guid? id)
         {
@@ -242,14 +249,7 @@ namespace XZMY.Manage.Web.Controllers.Auth
 
             return Json(new { success = res.Success, errors = GetErrors() }, JsonRequestBehavior.AllowGet);
         }
-
-        //列表
-        [AutoCreateAuthAction(Name = "角色管理", Code = "RoleList", ModuleCode = "SYSTEM", Url = "/Role/List", Visible = true, Remark = "")]
-        public ActionResult List()
-        {
-            return View();
-        }
-
+        
         //创建/编辑
         [HttpGet]
         public ActionResult Edit(Guid? id)

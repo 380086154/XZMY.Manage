@@ -19,7 +19,7 @@ namespace XZMY.Manage.Web.Controllers.Sys
 {
     public class DataDictionaryController : ControllerBase
     {
-        [AutoCreateAuthAction(Name = "系统参数配置", Code = "SystemList", ModuleCode = "SYSTEM", Url = "/DataDictionary/Index", Visible = true)]
+        [AutoCreateAuthAction(Name = "系统设置", Code = "DataDictionaryList", ModuleCode = "SYSTEM", Url = "/DataDictionary/Index", Visible = true)]
         public ActionResult Index()
         {
             var model = new VmDataDictionaryIndex();
