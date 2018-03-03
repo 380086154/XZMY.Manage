@@ -11,6 +11,7 @@ using T2M.Common.DataServiceComponents.Data.Query;
 using T2M.Common.DataServiceComponents.Service;
 using XZMY.Manage.Model.DataModel;
 using System.Web.Security;
+using XZMY.Manage.Service.Customer;
 
 namespace XZMY.Manage.Web.Controllers
 {

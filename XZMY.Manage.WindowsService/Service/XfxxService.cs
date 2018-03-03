@@ -18,6 +18,7 @@ namespace XZMY.Manage.WindowsService.Service
         public XfxxService(DatabaseHelper databaseHelper)
         {
             db = databaseHelper;
+            CheckCustomFieldIsExits();
         }
 
         public XfxxService(DatabaseHelper databaseHelper, Guid branchNameDataId)
@@ -44,6 +45,20 @@ namespace XZMY.Manage.WindowsService.Service
         }
 
         #region Local
+
+        /// <summary>
+        /// 判断自定义字段是否存在
+        /// </summary>
+        public void CheckCustomFieldIsExits()
+        {
+            var sql = "SELECT TOP 1 * FROM [xfxx]";
+            var dt = db.GetDataTable(sql, "xfxx", EProviderName.OleDB);
+
+            if (!dt.Columns.Contains("CreatedTime"))
+            {
+                db.ExecuteNonQuery("ALTER TABLE xfxx ADD COLUMN CreatedTime datetime default now()", EProviderName.OleDB);
+            }
+        }
 
         /// <summary>
         /// 查询消费次数
@@ -80,6 +95,40 @@ namespace XZMY.Manage.WindowsService.Service
             return db.GetDataTable(sql, "xfxx", EProviderName.OleDB);
         }
 
+        /// <summary>
+        /// 获取数据总数
+        /// </summary>
+        /// <returns></returns>
+        public int GetTotalCount()
+        {
+            return db.ExecuteScalar("SELECT COUNT(0) FROM [xfxx]", EProviderName.OleDB);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public DataTable GetLastData(int pageSize)
+        {
+            var totalCount = GetTotalCount();
+
+            var sql = "SELECT TOP " + pageSize + " * FROM [xfxx] WHERE fdid not in (SELECT TOP " + (totalCount - pageSize) + " fdid FROM [xfxx] )";
+            return db.GetDataTable(sql, "xfxx", EProviderName.OleDB);
+        }
+
+        ///// <summary>
+        ///// 更新同步状态
+        ///// </summary>
+        ///// <param name="list"></param>
+        //public void UpdateSyncStatus(List<string> list)
+        //{
+        //    if (list.Count == 0) return;
+
+        //    var sql = string.Format("UPDATE [xfxx] SET IsSync = 1 WHERE fdid IN ({0})", string.Join(",", list.Select(x => string.Format("'{0}'", x))));
+        //    db.ExecuteNonQuery(sql, EProviderName.OleDB);
+        //}
+
         #endregion
 
         #region Server
@@ -105,18 +154,22 @@ namespace XZMY.Manage.WindowsService.Service
 
             var hykhList = string.Join(",", dict.Keys.Select(x => string.Format("'{0}'", x)));
             var dataTables = GetPaymentByHykhList(hykhList);
+            var havaCustomerField = !dataTables.Columns.Contains("CreatedTime");
 
             dataTables.Columns.Add("hyxm", System.Type.GetType("System.String"));
             dataTables.Columns.Add("DataId", System.Type.GetType("System.Guid"));
             dataTables.Columns.Add("BranchDataId", System.Type.GetType("System.Guid"));
-            dataTables.Columns.Add("CreatedTime", System.Type.GetType("System.DateTime"));
+
+            if (havaCustomerField) //判断自定义字段是否存在
+                dataTables.Columns.Add("CreatedTime", System.Type.GetType("System.DateTime"));
 
             foreach (DataRow dr in dataTables.Rows)
             {
                 dr["hyxm"] = dict[dr["hykh"].ToString()];
                 dr["DataId"] = Guid.NewGuid();
                 dr["BranchDataId"] = branchDataId;
-                dr["CreatedTime"] = DateTime.Now;
+
+                if (havaCustomerField) dr["CreatedTime"] = DateTime.Now;
             }
 
             db.SqlBulkCopyByDataTable(dataTables, "Xfxx", EProviderName.SqlClient);

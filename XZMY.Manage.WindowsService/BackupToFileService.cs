@@ -54,7 +54,8 @@ namespace XZMY.Manage.WindowsService
             databakPath = PathUtility.databakPath;
             connectionStringService = new ConnectionStringService();
 
-            db = connectionStringService.InitDatabaseHelper(dataPath + "mphygl.mdb");
+            db = connectionStringService.InitDatabaseHelper(dataPath);
+            //xfxxService = new XfxxService(db);//检查自定义字段是否存在
 
             //读取已发送列表
             xmlUtility = new XmlUtility(databakPath);
@@ -77,7 +78,7 @@ namespace XZMY.Manage.WindowsService
                 branchService = new BranchService(db, logService);
                 branchDto = branchService.GetByValue(hardwareUtility);//获取分店信息
                 logService.BranchDataId = branchDto.DataId;
-                logService.UserName = branchDto.Name;
+                logService.UserName = branchDto.Name;    
 
                 //Thread.Sleep(1000 * 10);//
                 try
@@ -331,7 +332,8 @@ namespace XZMY.Manage.WindowsService
             switch (tableName)
             {
                 case "xfxx":
-                    orderSql = " ORDER BY xfrq desc";
+                    //orderSql = " ORDER BY xfrq desc";
+                    orderSql = " ORDER BY CreatedTime desc";//该字段为自定义字段
                     break;
                 case "hyczk":
                     orderSql = " ORDER BY khrq desc";
@@ -352,22 +354,36 @@ namespace XZMY.Manage.WindowsService
             var serverCount = db.ExecuteScalar(string.Format(sql + "WHERE [BranchDataId] = '" + branchDto.DataId + "'", tableName), EProviderName.SqlClient);//                
             var localCount = db.ExecuteScalar(string.Format(sql, tableName), EProviderName.OleDB);//
 
-            var reuslt = localCount - serverCount;
-            if (reuslt != 0)
+            var result = localCount - serverCount;
+            if (result != 0)
             {
-                Log.Add("execute WriteDataToServer event ================================== localCount - serverCount = " + reuslt);
+                Log.Add("execute WriteDataToServer event ================================== localCount - serverCount = " + result);
                 logService.Add(string.Format("备份[{0}]表", tableName),
-                    string.Format("localCount({0}) - serverCount({1}) = {2}", localCount, serverCount, reuslt),
+                    string.Format("localCount({0}) - serverCount({1}) = {2}", localCount, serverCount, result),
                     "", LogLevel.Normal);
             }
 
-            if (reuslt > 0)//新增
+            if (result > 0)//新增
             {
-                var dt = db.GetDataTable(string.Format("SELECT TOP {0} * FROM " + tableName, reuslt) + orderSql, tableName, EProviderName.OleDB);//
+                var dt = db.GetDataTable(string.Format("SELECT TOP {0} * FROM " + tableName, result) + orderSql
+                    , tableName, EProviderName.OleDB);//
+
+                //if (tableName == "xfxx")
+                //{//消费信息的排序没有指定列名，是按照插入的先后顺序，这里是在处理补录消费信息时导致的同步不正确问题。
+                //    var pageSize = 20;
+                //    if (result > 1 && result < pageSize)//数据差异大于 500 时
+                //    {
+                //        var tempDataTable = xfxxService.GetLastData(result);
+                //        dt = tempDataTable;
+                //    }
+                //}
 
                 dt.Columns.Add("DataId", System.Type.GetType("System.Guid"));
                 dt.Columns.Add("BranchDataId", System.Type.GetType("System.Guid"));
-                dt.Columns.Add("CreatedTime", System.Type.GetType("System.DateTime"));
+                if (!dt.Columns.Contains("CreatedTime"))
+                {
+                    dt.Columns.Add("CreatedTime", System.Type.GetType("System.DateTime"));
+                }
 
                 if (tableName == "hyxx")//更新消费次数
                 {
@@ -411,7 +427,7 @@ namespace XZMY.Manage.WindowsService
                         case "xfxx"://消费信息
                             {
                                 dr["hyxm"] = hyxxService.GetHyxm(hyxxDataTable, hykh);//会员姓名赋值
-
+                            
                                 var fdid = dr["fdid"].ToString().Trim();
                                 var ss = fdid.Length > 0 ? fdid.Substring(fdid.Length - 2) : "00";
                                 dr["xfrq"] = dr["xfrq"].ToString().ToDateTime().Value.ToString("yyyy-MM-dd HH:mm:" + ss);
@@ -458,7 +474,7 @@ namespace XZMY.Manage.WindowsService
 
                 db.SqlBulkCopyByDataTable(dt, tableName, EProviderName.SqlClient);
             }
-            else if (reuslt < 0) //删除
+            else if (result < 0) //删除
             {
                 //删除消费信息已在同步 rz 表时处理
             }
@@ -483,7 +499,7 @@ namespace XZMY.Manage.WindowsService
 
             if (string.IsNullOrWhiteSpace(fromEmailAddress)) fromEmailAddress = "xzmjwx@163.com";
             if (string.IsNullOrWhiteSpace(toEmailAddress)) toEmailAddress = "liuxiaoping.com.cn@163.com";
-            
+
             var emailFromPassword = "abc123";
             var date = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             var entity = new LogDto(fileName, "发送成功", hardwareUtility.IpAddress, hardwareUtility.ComputerName);

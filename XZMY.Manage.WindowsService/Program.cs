@@ -44,6 +44,24 @@ namespace XZMY.Manage.WindowsService
             //}
             //return;
 
+            var dataPath = PathUtility.dataPath;
+            var connectionStringService = new ConnectionStringService();
+            var db = connectionStringService.InitDatabaseHelper(dataPath);
+            var xfxxService = new XfxxService(db);//检查自定义字段是否存在
+
+            //var totalCount = xfxxService.GetTotalCount();
+            //var pageSize = 3;
+            //var pageIndex = (int)Math.Ceiling((double)(totalCount / pageSize));
+            //pageIndex = pageIndex == 0 ? 1 : pageIndex;
+
+            //var sql = "SELECT TOP " + pageSize + " * FROM [xfxx] WHERE fdid not in (SELECT TOP " + (pageIndex * pageSize) + " fdid FROM [xfxx] )";
+            //var dt = db.GetDataTable(sql, "xfxx", EProviderName.OleDB);
+
+
+
+            //return;
+
+
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {

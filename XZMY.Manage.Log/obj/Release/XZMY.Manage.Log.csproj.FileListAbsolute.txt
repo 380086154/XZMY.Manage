@@ -20,6 +20,7 @@ D:\TDDOWNLOAD\Source\ME\XZMY.Manage\XZMY.Manage.Log\obj\Release\XZMY.Manage.Log.
 D:\TDDOWNLOAD\Source\ME\XZMY.Manage\XZMY.Manage.Log\obj\Release\XZMY.Manage.Log.dll
 D:\TDDOWNLOAD\Source\ME\XZMY.Manage\XZMY.Manage.Log\obj\Release\XZMY.Manage.Log.pdb
 D:\TDDOWNLOAD\Source\XZMY.Manage\XZMY.Manage.Log\bin\Release\XZMY.Manage.Log.XML
+D:\TDDOWNLOAD\Source\XZMY.Manage\XZMY.Manage.Log\obj\Release\XZMY.Manage.Log.csprojResolveAssemblyReference.cache
 C:\Users\Administrator\Source\Repos\XZMY.Manage\XZMY.Manage.Log\bin\Release\XZMY.Manage.Log.XML
 C:\Users\Administrator\Source\Repos\XZMY.Manage\XZMY.Manage.Log\bin\Release\XZMY.Manage.Log.dll
 C:\Users\Administrator\Source\Repos\XZMY.Manage\XZMY.Manage.Log\bin\Release\XZMY.Manage.Log.pdb
@@ -29,6 +30,6 @@ C:\Users\Administrator\Source\Repos\XZMY.Manage\XZMY.Manage.Log\bin\Release\Newt
 C:\Users\Administrator\Source\Repos\XZMY.Manage\XZMY.Manage.Log\bin\Release\T2M.Common.DataServiceComponents.xml
 C:\Users\Administrator\Source\Repos\XZMY.Manage\XZMY.Manage.Log\bin\Release\T2M.Common.Utils.xml
 C:\Users\Administrator\Source\Repos\XZMY.Manage\XZMY.Manage.Log\bin\Release\Newtonsoft.Json.xml
+C:\Users\Administrator\Source\Repos\XZMY.Manage\XZMY.Manage.Log\obj\Release\XZMY.Manage.Log.csprojResolveAssemblyReference.cache
 C:\Users\Administrator\Source\Repos\XZMY.Manage\XZMY.Manage.Log\obj\Release\XZMY.Manage.Log.dll
 C:\Users\Administrator\Source\Repos\XZMY.Manage\XZMY.Manage.Log\obj\Release\XZMY.Manage.Log.pdb
-D:\TDDOWNLOAD\Source\XZMY.Manage\XZMY.Manage.Log\obj\Release\XZMY.Manage.Log.csprojResolveAssemblyReference.cache
