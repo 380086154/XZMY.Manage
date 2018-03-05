@@ -23,6 +23,7 @@ namespace XZMY.Manage.WindowsService
         private string dataPath = string.Empty;
         private string databakPath = string.Empty;
         private DatabaseHelper db;
+        private DatabaseHelper originDb = null;
         private BranchService branchService = null;
         private XfxxService xfxxService = null;
         private HyxxService hyxxService = null;
@@ -55,7 +56,8 @@ namespace XZMY.Manage.WindowsService
             connectionStringService = new ConnectionStringService();
 
             db = connectionStringService.InitDatabaseHelper(dataPath);
-            //xfxxService = new XfxxService(db);//检查自定义字段是否存在
+            xfxxService = new XfxxService(db);//检查自定义字段是否存在
+            originDb = db.DeepClone();
 
             //读取已发送列表
             xmlUtility = new XmlUtility(databakPath);
@@ -78,7 +80,7 @@ namespace XZMY.Manage.WindowsService
                 branchService = new BranchService(db, logService);
                 branchDto = branchService.GetByValue(hardwareUtility);//获取分店信息
                 logService.BranchDataId = branchDto.DataId;
-                logService.UserName = branchDto.Name;    
+                logService.UserName = branchDto.Name;
 
                 //Thread.Sleep(1000 * 10);//
                 try
@@ -192,6 +194,8 @@ namespace XZMY.Manage.WindowsService
 
         #region 备份至数据库
 
+        private FileSystemWatcher fsw = null;
+
         /// <summary>
         /// 初始化监听
         /// </summary>
@@ -202,7 +206,7 @@ namespace XZMY.Manage.WindowsService
         [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
         public void WatcherStart(string path, string filter, bool isEnable, bool isInclude)
         {
-            var fsw = new FileSystemWatcher();//文件系统监听
+            fsw = new FileSystemWatcher();//文件系统监听
 
             //fsw.BeginInit();//初始化监听
             fsw.Path = path;//设置监听路径
@@ -225,15 +229,17 @@ namespace XZMY.Manage.WindowsService
         /// <param name="e"></param>
         private void OnChanged(object sender, FileSystemEventArgs e)
         {
-            Thread.Sleep(3000);
-            //logService.Add("数据备份触发 OnChanged", "canExecute = " + canExecute);
+            Thread.Sleep(1000);
+            //logService.Add("数据备份触发 OnChanged", "------------------- Update() ：" + DateTime.Now);
+            UpdateBalance();//实时更新余额
+
+            Thread.Sleep(2000);
 
             if (canExecute != null)
                 return;
             canExecute = false;
 
             Thread.Sleep(3000);
-            //logService.Add("数据备份触发 OnChanged", "canExecute = false");
 
             var path = string.Empty;
 
@@ -285,7 +291,6 @@ namespace XZMY.Manage.WindowsService
 
             if (string.IsNullOrWhiteSpace(db.ConnectionString_SqlServer))
                 connectionStringService.InitDatabaseHelper(path);
-
             db.ConnectionString_Access = path;
 
 #if DEBUG
@@ -301,7 +306,7 @@ namespace XZMY.Manage.WindowsService
             xfxxService = new XfxxService(db, branchDto.DataId);
             hyxxService = new HyxxService(db, branchDto.DataId);
 
-            Log.Add("execute OnChanged event ChangeType = " + branchDto.DataId);
+            //Log.Add("execute OnChanged event ChangeType = " + branchDto.DataId);
 
             //必须是 xfxx 在前面，在同步时会根据消费信息查询会员信息，为避免数据异常，所以待 xfxx 同步完成后再同步 hyxx
             var dataTatbles = new string[] { "xfxx", "hyczk", "rz", "zkk", "czk", "hyxx" };
@@ -368,16 +373,6 @@ namespace XZMY.Manage.WindowsService
                 var dt = db.GetDataTable(string.Format("SELECT TOP {0} * FROM " + tableName, result) + orderSql
                     , tableName, EProviderName.OleDB);//
 
-                //if (tableName == "xfxx")
-                //{//消费信息的排序没有指定列名，是按照插入的先后顺序，这里是在处理补录消费信息时导致的同步不正确问题。
-                //    var pageSize = 20;
-                //    if (result > 1 && result < pageSize)//数据差异大于 500 时
-                //    {
-                //        var tempDataTable = xfxxService.GetLastData(result);
-                //        dt = tempDataTable;
-                //    }
-                //}
-
                 dt.Columns.Add("DataId", System.Type.GetType("System.Guid"));
                 dt.Columns.Add("BranchDataId", System.Type.GetType("System.Guid"));
                 if (!dt.Columns.Contains("CreatedTime"))
@@ -396,7 +391,7 @@ namespace XZMY.Manage.WindowsService
                     var hykhs = string.Join(",", dt.Rows.OfType<DataRow>().Select(x => string.Format("'{0}'", x["hykh"])));
                     hyxxDataTable = hyxxService.GetByHykhList(hykhs);
                     dt.Columns.Add("hyxm", System.Type.GetType("System.String"));
-                    dt.Columns.Add("Balance", System.Type.GetType("System.Decimal"));
+                    //dt.Columns.Add("Balance", System.Type.GetType("System.Decimal"));
                 }
 
                 foreach (DataRow dr in dt.Rows)
@@ -427,12 +422,12 @@ namespace XZMY.Manage.WindowsService
                         case "xfxx"://消费信息
                             {
                                 dr["hyxm"] = hyxxService.GetHyxm(hyxxDataTable, hykh);//会员姓名赋值
-                            
+
                                 var fdid = dr["fdid"].ToString().Trim();
                                 var ss = fdid.Length > 0 ? fdid.Substring(fdid.Length - 2) : "00";
                                 dr["xfrq"] = dr["xfrq"].ToString().ToDateTime().Value.ToString("yyyy-MM-dd HH:mm:" + ss);
 
-                                dr["Balance"] = hyxxService.GetBalance(hyxxDataTable, hykh);//余额
+                                logService.Add("数据备份触发 OnChanged", "------------------- Execute() ：" + dr["Balance"]);
 
                                 if (!isDataOnServer) continue;
 
@@ -572,6 +567,39 @@ namespace XZMY.Manage.WindowsService
             disposition.ReadDate = System.IO.File.GetLastAccessTime(fileName);
 
             return data;
+        }
+
+        #endregion
+
+        #region 本地数据库操作
+
+        /// <summary>
+        /// 实时更新消费信息中的余额
+        /// </summary>
+        private void UpdateBalance()
+        {
+            try
+            {
+                fsw.EnableRaisingEvents = false;
+
+                var XfxxService = new XfxxService(originDb);
+                var HyxxService = new HyxxService(originDb);
+                var dt = XfxxService.GetLastData();
+                if (dt.Rows.Count > 0)
+                {
+                    var hykh = dt.Rows[0]["hykh"].ToString().Trim();
+                    var balance = HyxxService.GetBalance(hykh);//余额
+                    XfxxService.UpdateBalance(hykh, dt.Rows[0]["id"].ToString(), balance);
+                }
+            }
+            catch (Exception ex)
+            {
+                logService.Add("实时更新余额异常 UpdateBalance", "------------------- UpdateBalance() ：" + DateTime.Now);
+            }
+            finally
+            {
+                fsw.EnableRaisingEvents = true;
+            }
         }
 
         #endregion

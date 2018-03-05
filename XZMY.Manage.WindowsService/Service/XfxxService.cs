@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,9 +56,16 @@ namespace XZMY.Manage.WindowsService.Service
             var sql = "SELECT TOP 1 * FROM [xfxx]";
             var dt = db.GetDataTable(sql, "xfxx", EProviderName.OleDB);
 
-            if (!dt.Columns.Contains("CreatedTime"))
+            if (!dt.Columns.Contains("CreatedTime"))//创建时间
             {
                 db.ExecuteNonQuery("ALTER TABLE xfxx ADD COLUMN CreatedTime datetime default now()", EProviderName.OleDB);
+            }
+
+            if (!dt.Columns.Contains("Balance"))//余额
+            {
+                //db.ExecuteNonQuery("ALTER TABLE xfxx ADD COLUMN Balance Currency default 0", EProviderName.OleDB);
+                //db.ExecuteNonQuery("ALTER TABLE xfxx ADD COLUMN Balance money", EProviderName.OleDB);
+                db.ExecuteNonQuery("ALTER TABLE xfxx ADD COLUMN Balance varchar(10) ", EProviderName.OleDB);
             }
         }
 
@@ -109,26 +118,42 @@ namespace XZMY.Manage.WindowsService.Service
         /// </summary>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public DataTable GetLastData(int pageSize)
+        public DataTable GetLastData()
         {
-            var totalCount = GetTotalCount();
-
-            var sql = "SELECT TOP " + pageSize + " * FROM [xfxx] WHERE fdid not in (SELECT TOP " + (totalCount - pageSize) + " fdid FROM [xfxx] )";
+            var sql = "SELECT TOP 1 * FROM [xfxx] ORDER BY CreatedTime DESC";
             return db.GetDataTable(sql, "xfxx", EProviderName.OleDB);
         }
 
-        ///// <summary>
-        ///// 更新同步状态
-        ///// </summary>
-        ///// <param name="list"></param>
-        //public void UpdateSyncStatus(List<string> list)
+        /// <summary>
+        /// 更新会员当前余额
+        /// </summary>
+        /// <param name="hykh"></param>
+        /// <param name="id"></param>
+        /// <param name="balance">余额</param>
+        public decimal UpdateBalance(string hykh, string id, decimal balance)
+        {
+            var sql = "UPDATE xfxx SET Balance=@Balance WHERE id=@id;";
+            var op = new OleDbParameter[] {
+                new OleDbParameter("@Balance", balance),//余额
+                new OleDbParameter("@id", id)//id
+            };
+            var result = db.ExecuteNonQuery(sql, EProviderName.OleDB, op);
+            return result > 0 ? balance : 0;
+        }
+
+        //public void UpdateBalance(Dictionary<string, decimal> dict)
         //{
-        //    if (list.Count == 0) return;
+        //    foreach (var item in dict)
+        //    {
+        //        var sb = new StringBuilder();
+        //        sb.Append("UPDATE [xfxx] SET");
+        //        sb.AppendFormat(" Balance = '{0}'", item.Value);
+        //        sb.AppendFormat(" WHERE fdid = '{0}'",  item.Key);
 
-        //    var sql = string.Format("UPDATE [xfxx] SET IsSync = 1 WHERE fdid IN ({0})", string.Join(",", list.Select(x => string.Format("'{0}'", x))));
-        //    db.ExecuteNonQuery(sql, EProviderName.OleDB);
+        //        db.ExecuteNonQuery(sb.ToString(), EProviderName.OleDB);
+        //    }
         //}
-
+        
         #endregion
 
         #region Server

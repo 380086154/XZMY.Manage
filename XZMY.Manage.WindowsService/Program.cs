@@ -44,10 +44,11 @@ namespace XZMY.Manage.WindowsService
             //}
             //return;
 
-            var dataPath = PathUtility.dataPath;
-            var connectionStringService = new ConnectionStringService();
-            var db = connectionStringService.InitDatabaseHelper(dataPath);
-            var xfxxService = new XfxxService(db);//检查自定义字段是否存在
+            //var dataPath = PathUtility.dataPath;
+            //var connectionStringService = new ConnectionStringService();
+            //var db = connectionStringService.InitDatabaseHelper(dataPath);
+            //var xfxxService = new XfxxService(db);//检查自定义字段是否存在
+            //xfxxService.UpdateBalance("1", "20180131004", 99.99M);
 
             //var totalCount = xfxxService.GetTotalCount();
             //var pageSize = 3;

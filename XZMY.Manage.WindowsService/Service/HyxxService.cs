@@ -111,6 +111,21 @@ namespace XZMY.Manage.WindowsService.Service
             return db.GetDataTable(sql, "Hyxx", EProviderName.OleDB);
         }
 
+        /// <summary>
+        /// 根据会员卡号获取当前余额
+        /// </summary>
+        /// <param name="hykh"></param>
+        /// <returns></returns>
+        public decimal GetBalance(string hykh)
+        {
+            var sql = string.Format("SELECT * FROM [Hyxx] WHERE hykh = '{0}'", hykh);
+            var dt = db.GetDataTable(sql, "Hyxx", EProviderName.OleDB);
+            if (dt.Rows.Count == 0)
+                return 0;
+
+            return dt.Rows[0]["knje"].ToString().Trim().ToInt32(0);
+        }
+
         #endregion
 
         #region Server

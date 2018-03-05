@@ -4,12 +4,14 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Data.OleDb;
 
 namespace XZMY.Manage.WindowsService
 {
     /// <summary>
     /// Provides sets of methods for Microsoft SQL Server access.
     /// </summary>
+    [Serializable]
     public class DatabaseHelper
     {
         #region Fileds
@@ -72,6 +74,20 @@ namespace XZMY.Manage.WindowsService
             using (DbConnection connection = GetConnection(providerName))
             {
                 DbCommand command = GetCommand(sqlCommand, CommandType.Text, connection, sqlParams);
+
+                connection.Open();
+                result = command.ExecuteNonQuery();
+                command.Parameters.Clear();
+                return result;
+            }
+        }
+
+        public int ExecuteNonQuery(string sqlCommand, EProviderName providerName, params OleDbParameter[] oleDbParameter)
+        {
+            int result = 0;
+            using (DbConnection connection = GetConnection(providerName))
+            {
+                DbCommand command = GetCommand(sqlCommand, CommandType.Text, connection, oleDbParameter);
 
                 connection.Open();
                 result = command.ExecuteNonQuery();
@@ -191,6 +207,19 @@ namespace XZMY.Manage.WindowsService
             if (sqlParams != null && sqlParams.Count > 0)
             {
                 foreach (SqlParameter param in sqlParams)
+                    command.Parameters.Add(param);
+            }
+            return command;
+        }
+
+        private DbCommand GetCommand(string commandText, CommandType commandType, DbConnection connection, IList<OleDbParameter> oleDbParameter)
+        {
+            DbCommand command = connection.CreateCommand();
+            command.CommandText = commandText;
+            command.CommandType = commandType;
+            if (oleDbParameter != null && oleDbParameter.Count > 0)
+            {
+                foreach (OleDbParameter param in oleDbParameter)
                     command.Parameters.Add(param);
             }
             return command;

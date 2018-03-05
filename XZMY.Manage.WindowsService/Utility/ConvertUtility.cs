@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using XZMY.Manage.WindowsService.Utility;
@@ -11,6 +13,26 @@ namespace System
 {
     public static class ConvertUtility
     {
+        /// <summary>
+        /// 创建对象的深度克隆，对象类型必须标记为可序列化
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static T DeepClone<T>(this T obj)
+        {
+            if (obj == null) return obj;
+
+            using (var ms = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(ms, obj);
+                ms.Position = 0;
+
+                return (T)formatter.Deserialize(ms);
+            }
+        }
+
         #region ToDecimal
 
         /// <summary>
