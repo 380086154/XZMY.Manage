@@ -123,7 +123,7 @@ namespace XZMY.Manage.WindowsService.Service
             if (dt.Rows.Count == 0)
                 return 0;
 
-            return dt.Rows[0]["knje"].ToString().Trim().ToInt32(0);
+            return dt.Rows[0]["knje"].ToString().Trim().ToDecimal(0);
         }
 
         #endregion

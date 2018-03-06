@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XZMY.Manage.WindowsService.Utility;
 
 namespace XZMY.Manage.WindowsService.Service
 {
@@ -79,6 +80,9 @@ namespace XZMY.Manage.WindowsService.Service
             var sql = string.Format("SELECT COUNT(0),hykh FROM [xfxx] WHERE hykh = '{0}' GROUP BY hykh", hykh);
             var table = db.GetDataTable(sql, "xfxx", EProviderName.OleDB);
 
+            if (table.Rows.Count == 0)
+                return 0;
+
             return table.Rows[0][0].ToString().ToInt32(0);
         }
 
@@ -125,6 +129,42 @@ namespace XZMY.Manage.WindowsService.Service
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public decimal GetLastDataById(string id)
+        {
+            var sql = string.Format("SELECT * FROM [xfxx] WHERE id='{0}' ORDER BY CreatedTime DESC", id);
+            var dt = db.GetDataTable(sql, "xfxx", EProviderName.OleDB);
+            if (dt.Rows.Count == 0)
+                return 0;
+
+            return dt.Rows[0]["Balance"].ToString().ToDecimal(0);
+        }
+
+        /// <summary>
+        /// 获取最后的消费信息
+        /// </summary>
+        /// <param name="hykh"></param>
+        /// <returns></returns>
+        public Tuple<bool, DataTable> GetLastData(string hykh)
+        {
+            var sql = string.Format("SELECT TOP 2 * FROM [xfxx] WHERE hykh = '{0}' ORDER BY CreatedTime DESC", hykh);
+            var dt = db.GetDataTable(sql, "xfxx", EProviderName.OleDB);
+
+            if (dt.Rows.Count < 2)
+                return new Tuple<bool, DataTable>(false, dt);
+
+            var time1 = dt.Rows.Count >= 1 ? dt.Rows[0]["CreatedTime"].ToString().ToDateTime().Value : DateTimePlus.GetMinDateTime;
+            var time2 = dt.Rows.Count >= 2 ? dt.Rows[1]["CreatedTime"].ToString().ToDateTime().Value : DateTimePlus.GetMaxDateTime;
+
+            var flag = time1.ToString("yyyyMMddHH") == time2.ToString("yyyyMMddHH") && (time1.Second - time2.Second) < 5;//两次时间间隔必须很小
+
+            return new Tuple<bool, DataTable>(flag, dt);
+        }
+
+        /// <summary>
         /// 更新会员当前余额
         /// </summary>
         /// <param name="hykh"></param>
@@ -141,19 +181,6 @@ namespace XZMY.Manage.WindowsService.Service
             return result > 0 ? balance : 0;
         }
 
-        //public void UpdateBalance(Dictionary<string, decimal> dict)
-        //{
-        //    foreach (var item in dict)
-        //    {
-        //        var sb = new StringBuilder();
-        //        sb.Append("UPDATE [xfxx] SET");
-        //        sb.AppendFormat(" Balance = '{0}'", item.Value);
-        //        sb.AppendFormat(" WHERE fdid = '{0}'",  item.Key);
-
-        //        db.ExecuteNonQuery(sb.ToString(), EProviderName.OleDB);
-        //    }
-        //}
-        
         #endregion
 
         #region Server

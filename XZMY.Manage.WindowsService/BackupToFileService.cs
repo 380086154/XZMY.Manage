@@ -229,15 +229,13 @@ namespace XZMY.Manage.WindowsService
         /// <param name="e"></param>
         private void OnChanged(object sender, FileSystemEventArgs e)
         {
-            Thread.Sleep(1000);
-            //logService.Add("数据备份触发 OnChanged", "------------------- Update() ：" + DateTime.Now);
-            UpdateBalance();//实时更新余额
-
             Thread.Sleep(2000);
 
             if (canExecute != null)
                 return;
             canExecute = false;
+
+            UpdateBalance();//实时更新余额
 
             Thread.Sleep(3000);
 
@@ -427,7 +425,40 @@ namespace XZMY.Manage.WindowsService
                                 var ss = fdid.Length > 0 ? fdid.Substring(fdid.Length - 2) : "00";
                                 dr["xfrq"] = dr["xfrq"].ToString().ToDateTime().Value.ToString("yyyy-MM-dd HH:mm:" + ss);
 
-                                logService.Add("数据备份触发 OnChanged", "------------------- Execute() ：" + dr["Balance"]);
+                                if (result < 10 && dr["Balance"].ToString().ToInt32(0) == 0)//更新消费信息中的余额信息
+                                {
+                                    var XfxxService = new XfxxService(originDb);
+                                    var HyxxService = new HyxxService(originDb);
+
+                                    var balance = HyxxService.GetBalance(hykh);//余额
+                                    var lastData = XfxxService.GetLastData(hykh);
+
+                                    if (lastData.Item1)
+                                        balance -= lastData.Item2.Rows[1]["dzhje"].ToString().ToDecimal(0);
+
+                                    try
+                                    {
+                                        fsw.EnableRaisingEvents = false;
+
+                                        XfxxService.UpdateBalance(hykh, dr["id"].ToString(), balance);
+                                        xfxxService.UpdateBalance(hykh, dr["id"].ToString(), balance);
+                                    }
+                                    catch (Exception)
+                                    {
+
+                                    }
+                                    finally
+                                    {
+                                        fsw.EnableRaisingEvents = true;
+                                    }
+
+                                    //dr["Balance"] = XfxxService.GetLastDataById(dr["id"].ToString());
+                                    dr["Balance"] = balance;
+
+                                    logService.Add("余额数据对比",
+                                        " xfxxService.UpdateBalance ========= " + balance + " - " + dr["Balance"] + " - " + hyxxService.GetBalance(hyxxDataTable, hykh)
+                                        );
+                                }
 
                                 if (!isDataOnServer) continue;
 
@@ -573,6 +604,8 @@ namespace XZMY.Manage.WindowsService
 
         #region 本地数据库操作
 
+        private bool asdf = true;
+
         /// <summary>
         /// 实时更新消费信息中的余额
         /// </summary>
@@ -581,6 +614,10 @@ namespace XZMY.Manage.WindowsService
             try
             {
                 fsw.EnableRaisingEvents = false;
+                if (!asdf)
+                    return;
+                asdf = false;
+
 
                 var XfxxService = new XfxxService(originDb);
                 var HyxxService = new HyxxService(originDb);
@@ -599,6 +636,7 @@ namespace XZMY.Manage.WindowsService
             finally
             {
                 fsw.EnableRaisingEvents = true;
+                asdf = true;
             }
         }
 
