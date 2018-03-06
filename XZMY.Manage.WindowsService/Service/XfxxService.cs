@@ -60,6 +60,7 @@ namespace XZMY.Manage.WindowsService.Service
             if (!dt.Columns.Contains("CreatedTime"))//创建时间
             {
                 db.ExecuteNonQuery("ALTER TABLE xfxx ADD COLUMN CreatedTime datetime default now()", EProviderName.OleDB);
+                db.ExecuteNonQuery(@"UPDATE xfxx SET CreatedTime = '1900-01-01 12:00:00'", EProviderName.OleDB);
             }
 
             if (!dt.Columns.Contains("Balance"))//余额
