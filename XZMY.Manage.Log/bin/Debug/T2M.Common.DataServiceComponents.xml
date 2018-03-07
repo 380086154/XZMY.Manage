@@ -62,6 +62,12 @@
             </summary>
             <returns>一组用于执行T-SQL语句的参数</returns>
         </member>
+        <member name="T:T2M.Common.DataServiceComponents.Data.Impl.Query.GetEntityByCustomFieldList`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
         <member name="T:T2M.Common.DataServiceComponents.Data.Impl.Query.GetEntityByIdList`1">
             <summary>
             
