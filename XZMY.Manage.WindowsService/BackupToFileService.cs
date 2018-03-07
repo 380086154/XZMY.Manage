@@ -456,7 +456,7 @@ namespace XZMY.Manage.WindowsService
                                     dr["Balance"] = balance;
 
                                     logService.Add("余额数据对比",
-                                        " xfxxService.UpdateBalance ========= " + balance + " - " + dr["Balance"] + " - " + hyxxService.GetBalance(hyxxDataTable, hykh)
+                                        " xfxxService.UpdateBalance ========= 会员卡号：" + hykh + "   余额：" + balance + " - " + dr["Balance"] + " - " + hyxxService.GetBalance(hyxxDataTable, hykh)
                                         );
                                 }
 
@@ -474,23 +474,49 @@ namespace XZMY.Manage.WindowsService
                             if (rznr.Contains("修改会员"))
                             {//操作员：admin，修改会员：蒋小鹿路信息
                                 var hyxm = rznr.Split("修改会员")[1].Replace("：", "").Replace("信息", "");//截取会员名称
-                                hykh = hyxxService.GetHykhByHyxm(hyxm);
-                                hyxxService.UpdateInfoByHyxm(hykh);
+
+                                var tb = hyxxService.GetHykhByHyxm(hyxm);
+                                foreach (DataRow item in tb.Rows)
+                                {
+                                    hykh = item[0].ToString();
+                                    hyxxService.UpdateInfoByHyxm(hykh);
+                                }
+                            
+
+                                //hykh = hyxxService.GetHykhByHyxm(hyxm);
+                                //hyxxService.UpdateInfoByHyxm(hykh);
                             }
                             else if (rznr.Contains("删除会员") && rznr.Contains("的消费记录"))
                             {//操作员：admin，删除会员蒋冬梅                 的消费记录，消费金额为：18元
                                 var hyxm = rznr.Split("删除会员")[1].Replace("：", "").Split("的消费记录")[0].Trim();
-                                hykh = hyxxService.GetHykhByHyxm(hyxm);
-                                if (hykh.Length > 0)
-                                {
-                                    xfxxService.DeleteByHykh(hykh);//删除指定消费数据
-                                    hyxxService.UpdateDigitByHykh(hykh);//更新金额相关信息
 
-                                    if (!dict.Keys.Contains(hykh))
+                                var tb = hyxxService.GetHykhByHyxm(hyxm);
+                                foreach (DataRow item in tb.Rows)
+                                {
+                                    hykh = item[0].ToString();
+                                    if (!string.IsNullOrWhiteSpace(hykh))
                                     {
-                                        dict.Add(hykh, hyxm);//记录需要同步的会员卡号
+                                        xfxxService.DeleteByHykh(hykh);//删除指定消费数据
+                                        hyxxService.UpdateDigitByHykh(hykh);//更新金额相关信息
+
+                                        if (!dict.Keys.Contains(hykh))
+                                        {
+                                            dict.Add(hykh, hyxm);//记录需要同步的会员卡号
+                                        }
                                     }
                                 }
+
+                                //hykh = hyxxService.GetHykhByHyxm(hyxm);
+                                //if (hykh.Length > 0)
+                                //{
+                                //    xfxxService.DeleteByHykh(hykh);//删除指定消费数据
+                                //    hyxxService.UpdateDigitByHykh(hykh);//更新金额相关信息
+
+                                //    if (!dict.Keys.Contains(hykh))
+                                //    {
+                                //        dict.Add(hykh, hyxm);//记录需要同步的会员卡号
+                                //    }
+                                //}
                             }
                             break;
                         default:

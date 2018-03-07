@@ -65,9 +65,9 @@ namespace XZMY.Manage.WindowsService.Service
 
             if (!dt.Columns.Contains("Balance"))//余额
             {
-                //db.ExecuteNonQuery("ALTER TABLE xfxx ADD COLUMN Balance Currency default 0", EProviderName.OleDB);
+                db.ExecuteNonQuery("ALTER TABLE xfxx ADD COLUMN Balance Currency default 0", EProviderName.OleDB);
                 //db.ExecuteNonQuery("ALTER TABLE xfxx ADD COLUMN Balance money", EProviderName.OleDB);
-                db.ExecuteNonQuery("ALTER TABLE xfxx ADD COLUMN Balance varchar(10) ", EProviderName.OleDB);
+                //db.ExecuteNonQuery("ALTER TABLE xfxx ADD COLUMN Balance varchar(10) ", EProviderName.OleDB);
             }
         }
 

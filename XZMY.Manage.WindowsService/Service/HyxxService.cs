@@ -68,14 +68,15 @@ namespace XZMY.Manage.WindowsService.Service
         /// </summary>
         /// <param name="hyxm"></param>
         /// <returns></returns>
-        public string GetHykhByHyxm(string hyxm)
+        public DataTable GetHykhByHyxm(string hyxm)
         {
             var sql = string.Format("SELECT hykh FROM [Hyxx] WHERE hyxm = '{0}' ", hyxm);
-            var table = db.GetDataTable(sql, "Hyxx", EProviderName.OleDB);
+            var tb = db.GetDataTable(sql, "Hyxx", EProviderName.OleDB);
 
-            return table.Rows.Count == 0
-                ? string.Empty
-                : table.Rows[0][0].ToString().Trim();
+            return tb;//因为存在同名的情况，所以将所涉及到的同名的会员全部重新同步，以保证数据准确性
+            //return table.Rows.Count == 0
+            //    ? string.Empty
+            //    : table.Rows[0][0].ToString().Trim();
         }
 
         /// <summary>
