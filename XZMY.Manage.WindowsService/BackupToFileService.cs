@@ -481,10 +481,6 @@ namespace XZMY.Manage.WindowsService
                                     hykh = item[0].ToString();
                                     hyxxService.UpdateInfoByHyxm(hykh);
                                 }
-                            
-
-                                //hykh = hyxxService.GetHykhByHyxm(hyxm);
-                                //hyxxService.UpdateInfoByHyxm(hykh);
                             }
                             else if (rznr.Contains("删除会员") && rznr.Contains("的消费记录"))
                             {//操作员：admin，删除会员蒋冬梅                 的消费记录，消费金额为：18元
@@ -505,18 +501,6 @@ namespace XZMY.Manage.WindowsService
                                         }
                                     }
                                 }
-
-                                //hykh = hyxxService.GetHykhByHyxm(hyxm);
-                                //if (hykh.Length > 0)
-                                //{
-                                //    xfxxService.DeleteByHykh(hykh);//删除指定消费数据
-                                //    hyxxService.UpdateDigitByHykh(hykh);//更新金额相关信息
-
-                                //    if (!dict.Keys.Contains(hykh))
-                                //    {
-                                //        dict.Add(hykh, hyxm);//记录需要同步的会员卡号
-                                //    }
-                                //}
                             }
                             break;
                         default:
