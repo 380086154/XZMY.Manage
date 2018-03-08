@@ -4735,7 +4735,6 @@
   <ItemGroup>
     <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
-    <Folder Include="Assessment\" />
     <Folder Include="Content\Metronic4.5.6\apps\img\" />
     <Folder Include="Content\Metronic4.5.6\global\plugins\angularjs\plugins\angular-file-upload\uploads\" />
     <Folder Include="Controllers\NewFolder1\WebApis\" />
