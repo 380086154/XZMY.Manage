@@ -21,7 +21,7 @@ namespace XZMY.Manage.WindowsService.Service
         public XfxxService(DatabaseHelper databaseHelper)
         {
             db = databaseHelper;
-            CheckCustomFieldIsExits();
+            //CheckCustomFieldIsExits();
         }
 
         public XfxxService(DatabaseHelper databaseHelper, Guid branchNameDataId)

@@ -56,7 +56,7 @@ namespace XZMY.Manage.WindowsService
             connectionStringService = new ConnectionStringService();
 
             db = connectionStringService.InitDatabaseHelper(dataPath);
-            xfxxService = new XfxxService(db);//检查自定义字段是否存在
+            //xfxxService = new XfxxService(db);//检查自定义字段是否存在
             originDb = db.DeepClone();
 
             //读取已发送列表
