@@ -1,9 +1,0 @@
-<Data>
-  <Item Id="fc31e4a0-38da-4071-932f-b0990331b9e5" Name="留学中介" EName="Normal" Default="True" Sys="True" State="2" Sort="0" Descr="描述留学中介描述描述" />
-  <Item Id="daaa6591-6da7-474a-9dee-43b114b6b777" Name="语培机构" EName="Middle" Default="False" Sys="False" State="1" Sort="1" Descr="语培机构" />
-  <Item Id="bf9d5773-1b7a-4328-8c87-e533b60de038" Name="国际学校" EName="Advanced" Default="False" Sys="False" State="1" Sort="1" Descr="国际学校" />
-  <Item Id="138820dd-9779-4a02-84e9-9b0aec58bf9b" Name="移民公司" EName="Advanced" Default="False" Sys="False" State="1" Sort="1" Descr="移民公司" />
-  <Item Id="ce310122-58ba-4581-bfeb-6c47eef8e97a" Name="其他渠道" EName="Advanced" Default="False" Sys="False" State="1" Sort="1" Descr="其他渠道" />
-  <Item Id="00000000-0000-0000-0000-000000000000" Name="11123" EName="3434" Default="True" Sys="True" State="1" Sort="0" Descr="34333" />
-  <Item Id="5f24b5f5-3829-48e0-8e4a-76f5c05a654d" Name="是的范德萨" EName="23223" Default="True" Sys="True" State="1" Sort="0" Descr="23232" />
-</Data>

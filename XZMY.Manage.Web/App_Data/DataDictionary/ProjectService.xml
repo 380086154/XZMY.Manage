@@ -1,5 +1,0 @@
-<Data>
-  <Item ID="1bf3bae4-0c64-45ab-8292-719b548c7e2f" Name="住宿" EName="ProjectService001" Default="False" Sys="False" State="1" Sort="1" Descr="住宿" />
-  <Item ID="fdda6e49-f819-4a04-9d02-f9d5fdd23042" Name="签证" EName="ProjectService002" Default="False" Sys="False" State="1" Sort="1" Descr="签证" />
-  <Item ID="4c5e651f-cdb6-4eca-acbd-63958d115c76" Name="保险" EName="ProjectService002" Default="False" Sys="False" State="1" Sort="1" Descr="保险" />
-</Data>

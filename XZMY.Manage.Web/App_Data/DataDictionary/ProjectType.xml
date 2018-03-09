@@ -1,5 +1,0 @@
-<Data>
-  <Item Id="a82456ef-bf63-4edc-ab51-dec22fdb7420" Name="夏令营" EName="SummerCamp" Default="False" Sys="False" State="1" Sort="1" Descr="夏令营" />
-  <Item Id="bda3e825-31fc-4c9d-af06-b010b40eef13" Name="冬令营" EName="WinterCamp" Default="False" Sys="False" State="1" Sort="1" Descr="冬令营" />
-  <Item Id="0699d17b-6d04-4de6-8e50-0b0beec36e7a" Name="军训" EName="MilitaryTraining" Default="False" Sys="False" State="1" Sort="1" Descr="军训" />
-</Data>

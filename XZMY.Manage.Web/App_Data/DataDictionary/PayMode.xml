@@ -1,5 +1,0 @@
-<Data>
-  <Item Id="04c95e38-dbd4-4010-a708-dcae7ab31c00" Name="支付宝" EName="alipay" Default="True" Sys="True" State="1" Sort="0" Descr="" />
-  <Item Id="0ac75bca-7961-4346-9605-e2b6180b4fc7" Name="工商银行" EName="acbc" Default="True" Sys="True" State="1" Sort="0" Descr="" />
-  <Item Id="bdf5c4bb-a0c6-4f65-8076-08eeed524a6a" Name="现场付钱" EName="a" Default="True" Sys="True" State="1" Sort="0" Descr="" />
-</Data>

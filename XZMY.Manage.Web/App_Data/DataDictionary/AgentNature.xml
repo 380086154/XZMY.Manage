@@ -1,5 +1,0 @@
-<Data>
-  <Item Id="09beaefa-ac72-410a-a2ab-6e2cd4d20cf7" Name="普通" EName="Normal" Default="False" Sys="False" State="1" Sort="1" Descr="普通" />
-  <Item Id="bf35af44-cdca-4b6e-b157-77d561540604" Name="中级" EName="Middle" Default="False" Sys="False" State="1" Sort="1" Descr="中级" />
-  <Item Id="6d0f08c0-0752-4ecf-92a9-dd9efde4ab33" Name="高级" EName="Advanced" Default="False" Sys="False" State="1" Sort="1" Descr="高级" />
-</Data>

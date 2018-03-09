@@ -1,5 +1,0 @@
-<Data>
-  <Item Id="72b40dcf-be0f-4a37-91df-d1ef71b1ac1d" Name="超级规划师" EName="P001" Default="True" Sys="True" State="1" Sort="0" Descr="超级规划师" />
-  <Item Id="8e8e372b-20c6-4fe2-be14-474a205a280b" Name="低级规划师" EName="P002" Default="False" Sys="False" State="1" Sort="1" Descr="低级规划师" />
-  <Item Id="ec336a21-9503-44dd-9d4b-0746a819d386" Name="一般规划师" EName="P003" Default="False" Sys="False" State="1" Sort="1" Descr="一般规划师" />
-</Data>

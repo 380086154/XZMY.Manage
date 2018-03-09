@@ -49,8 +49,7 @@ namespace XZMY.Manage.Service.Weixin
 
                     Thread.Sleep(60000);//每1分钟检查一次是否过期
                 }
-            })
-            { IsBackground = true };
+            }) { IsBackground = true };
             thread.Start();
         }
 
@@ -91,7 +90,7 @@ namespace XZMY.Manage.Service.Weixin
                     return date.HasValue ? date.Value : DateTimePlus.GetMinDateTime;
                 }
             }
-            
+
             if (!string.IsNullOrWhiteSpace(AccessToken))
             {
                 return AccessToken.Split("#")[1].ToDateTime().Value;
@@ -112,7 +111,8 @@ namespace XZMY.Manage.Service.Weixin
             else
             {//更新
                 AccessToken = item.Value;
-                if (string.IsNullOrWhiteSpace(AccessToken) || AccessToken.Split('#')[1].ToDateTime() > DateTime.Now) return;
+                var sp = AccessToken.Split('#');
+                if (!string.IsNullOrWhiteSpace(sp[0]) && !string.IsNullOrWhiteSpace(AccessToken) && sp[1].ToDateTime() > DateTime.Now) return;
 
                 GetNewAccessToken();
                 item.Value = AccessToken;

@@ -1,5 +1,0 @@
-<Data>
-  <Item Id="83b653bd-abbc-4c3f-bc42-03ed04622146" Name="一般资质" EName="PZ001" Default="False" Sys="False" State="1" Sort="1" Descr="一般资质" />
-  <Item Id="ec343652-2795-4697-888f-4cd0068576e3" Name="没有资质" EName="PZ002" Default="False" Sys="False" State="1" Sort="1" Descr="没有资质" />
-  <Item Id="c4f3b819-9315-4f9c-8081-61a6a86e6557" Name="有资质" EName="PZ003" Default="False" Sys="False" State="1" Sort="1" Descr="有资质" />
-</Data>

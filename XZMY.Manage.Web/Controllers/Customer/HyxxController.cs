@@ -50,6 +50,9 @@ namespace XZMY.Manage.Web.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 获取分店信息
+        /// </summary>
         private void GetBranch()
         {
             ViewBag.IsAdmin = IsAdmin;

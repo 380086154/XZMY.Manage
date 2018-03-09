@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
+using T2M.Common.DataServiceComponents.Data.Query;
+using T2M.Common.DataServiceComponents.Service;
+using XZMY.Manage.Model.DataModel;
 using XZMY.Manage.Model.Enum;
 using XZMY.Manage.Service.Auth;
 using XZMY.Manage.Service.Auth.Models.ViewModel;
@@ -14,7 +18,7 @@ namespace XZMY.Manage.Web.Controllers
     {
         public ActionResult Index()
         {
-
+            GetBranch();
             return View();
         }
 
@@ -30,6 +34,32 @@ namespace XZMY.Manage.Web.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        /// <summary>
+        /// 获取分店信息
+        /// </summary>
+        private void GetBranch()
+        {
+            ViewBag.IsAdmin = IsAdmin;
+            if (!IsAdmin) return;
+
+            var service = new CustomSearchWithPaginationService<BranchDto>
+            {
+                PageIndex = 1,
+                PageSize = 20,
+                CustomConditions = new List<CustomCondition<BranchDto>>
+                {
+                    new CustomConditionPlus<BranchDto>
+                    {
+                        Value = EState.启用,
+                        Operation = SqlOperation.Equals,
+                        Member = new Expression<Func<BranchDto, object>>[] { x => x.State }
+                    }
+                },
+                SortMember = new Expression<Func<BranchDto, object>>[] { x => x.Name }
+            };
+            ViewBag.BranchList = service.Invoke().Results;
         }
 
         //加载 菜单 内容

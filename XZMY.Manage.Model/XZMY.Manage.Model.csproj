@@ -188,6 +188,7 @@
     <Compile Include="Utils\PlanQuery.cs" />
     <Compile Include="Utils\StringHelper.cs" />
     <Compile Include="Utils\ViewBase.cs" />
+    <Compile Include="ViewModel\Customer\VmHyxxDetails.cs" />
     <Compile Include="ViewModel\Customer\VmPaymentList.cs" />
     <Compile Include="ViewModel\Customer\VmSearch.cs" />
     <Compile Include="ViewModel\Customer\VmCustomer.cs" />

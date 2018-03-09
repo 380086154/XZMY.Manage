@@ -1,7 +1,0 @@
-<Data>
-  <Item Id="42aba2bd-dbdc-4eaf-97f9-55b21643129e" Name="课程" EName="Normal" Default="False" Sys="False" State="1" Sort="1" Descr="课程" />
-  <Item Id="e695d7a4-c1da-4a01-ac46-21dc77a71329" Name="活动" EName="Middle" Default="False" Sys="False" State="1" Sort="1" Descr="活动" />
-  <Item Id="d7c64166-8712-4ebf-9a18-255ee28deefd" Name="服务" EName="Advanced" Default="False" Sys="False" State="1" Sort="1" Descr="服务" />
-  <Item Id="d3182786-e4d0-4645-9966-db87154e474b" Name="留学规划" EName="Advanced" Default="False" Sys="False" State="1" Sort="1" Descr="留学规划" />
-  <Item Id="b18afbfe-735c-46f8-9fe4-47f28e5a5f2e" Name="其它" EName="Advanced" Default="False" Sys="False" State="1" Sort="1" Descr="其它" />
-</Data>
