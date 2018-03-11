@@ -30,7 +30,7 @@ namespace XZMY.Manage.Service.Weixin
             var text = WeixinXml.GetFromXml(doc, "Content").Trim();
             var fromUserName = WeixinXml.GetFromXml(doc, "FromUserName");
 
-            LogHelper.Log("查询余额 text：", text, LogLevel.Debug);
+            //LogHelper.Log("查询余额 text：", text, LogLevel.Debug);
 
             //查询余额
             if ((text.Length == 11 && text.ToInt64(0) > 0) ||

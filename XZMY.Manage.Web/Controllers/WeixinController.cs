@@ -72,7 +72,7 @@ namespace XZMY.Manage.Web.Controllers
             var type = WeixinXml.GetFromXml(doc, "MsgType");
             var text = WeixinXml.GetFromXml(doc, "Content");
 
-            LogHelper.Log("ResponseMessage", type + " - " + text, LogLevel.Debug);
+            //LogHelper.Log("ResponseMessage", type + " - " + text, LogLevel.Debug);
 
             switch (type)
             {

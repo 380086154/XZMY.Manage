@@ -52,23 +52,31 @@ namespace XZMY.Manage.WindowsService.Service
         /// <summary>
         /// 判断自定义字段是否存在
         /// </summary>
-        public void CheckCustomFieldIsExits()
+        public bool CheckCustomFieldIsExits()
         {
-            var sql = "SELECT TOP 1 * FROM [xfxx]";
-            var dt = db.GetDataTable(sql, "xfxx", EProviderName.OleDB);
-
-            if (!dt.Columns.Contains("CreatedTime"))//创建时间
+            try
             {
-                db.ExecuteNonQuery("ALTER TABLE xfxx ADD COLUMN CreatedTime datetime default now()", EProviderName.OleDB);
-                db.ExecuteNonQuery(@"UPDATE xfxx SET CreatedTime = '1900-01-01 12:00:00'", EProviderName.OleDB);
-            }
+                var sql = "SELECT TOP 1 * FROM [xfxx]";
+                var dt = db.GetDataTable(sql, "xfxx", EProviderName.OleDB);
 
-            if (!dt.Columns.Contains("Balance"))//余额
-            {
-                db.ExecuteNonQuery("ALTER TABLE xfxx ADD COLUMN Balance Currency default 0", EProviderName.OleDB);
-                //db.ExecuteNonQuery("ALTER TABLE xfxx ADD COLUMN Balance money", EProviderName.OleDB);
-                //db.ExecuteNonQuery("ALTER TABLE xfxx ADD COLUMN Balance varchar(10) ", EProviderName.OleDB);
+                if (!dt.Columns.Contains("CreatedTime"))//创建时间
+                {
+                    db.ExecuteNonQuery("ALTER TABLE xfxx ADD COLUMN CreatedTime datetime default now()", EProviderName.OleDB);
+                    db.ExecuteNonQuery(@"UPDATE xfxx SET CreatedTime = '1900-01-01 12:00:00'", EProviderName.OleDB);
+                }
+
+                if (!dt.Columns.Contains("Balance"))//余额
+                {
+                    db.ExecuteNonQuery("ALTER TABLE xfxx ADD COLUMN Balance Currency default 0", EProviderName.OleDB);
+                    //db.ExecuteNonQuery("ALTER TABLE xfxx ADD COLUMN Balance money", EProviderName.OleDB);
+                    //db.ExecuteNonQuery("ALTER TABLE xfxx ADD COLUMN Balance varchar(10) ", EProviderName.OleDB);
+                }
             }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
         }
 
         /// <summary>

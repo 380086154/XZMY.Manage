@@ -41,6 +41,7 @@ namespace XZMY.Manage.WindowsService
         private string version = string.Empty;
         private bool IsWait = true;
         private bool IsSendLogFile = false;
+        private bool IsCheckCustomFieldIsExits = false;//确保检查自定义字段功能只执行一次
 
         //时间及文件数控制
         private int size = 168;//保留文件数量（假设电脑全天开启，就保留7天的文件数）
@@ -51,18 +52,26 @@ namespace XZMY.Manage.WindowsService
         {
             InitializeComponent();
 
-            dataPath = PathUtility.dataPath;
-            databakPath = PathUtility.databakPath;
-            connectionStringService = new ConnectionStringService();
+            try
+            {
+                dataPath = PathUtility.dataPath;
+                databakPath = PathUtility.databakPath;
+                connectionStringService = new ConnectionStringService();
 
-            db = connectionStringService.InitDatabaseHelper(dataPath);
-            //xfxxService = new XfxxService(db);//检查自定义字段是否存在
-            originDb = db.DeepClone();
+                db = connectionStringService.InitDatabaseHelper(dataPath);
+                //xfxxService = new XfxxService(db);//检查自定义字段是否存在
+                //originDb = db.DeepClone();
+                originDb = connectionStringService.InitDatabaseHelper(dataPath);
 
-            //读取已发送列表
-            xmlUtility = new XmlUtility(databakPath);
-            fileUtility = new FileUtility();
-            sendList = xmlUtility.GetAll();
+                //读取已发送列表
+                xmlUtility = new XmlUtility(databakPath);
+                fileUtility = new FileUtility();
+                sendList = xmlUtility.GetAll();
+            }
+            catch (Exception ex)
+            {
+                logService.Add("BackupToEmail 启动异常：", ex.Message, ex.StackTrace, LogLevel.Error);
+            }
         }
 
         protected override void OnStart(string[] args)
@@ -180,16 +189,21 @@ namespace XZMY.Manage.WindowsService
                 }
                 catch (Exception ex)
                 {
-                    Log.Add(ex.Message + "\r\n" + ex.StackTrace);
-
+                    Log.Add("数据备份异常：" + ex.Message + "\r\n" + ex.StackTrace);
                     logService.Add("数据备份异常", ex.Message, ex.StackTrace, LogLevel.Error);
                 }
-            }) { IsBackground = true };
+            })
+            { IsBackground = true };
             thread.Start();
         }
 
         protected override void OnStop()
         {
+            if (logService != null)
+            {
+                var name = branchDto != null ? branchDto.Name : hardwareUtility.ComputerName;
+                logService.Add("服务停止", name + "-服务停止", "", LogLevel.Error);
+            }
         }
 
         #region 备份至数据库
@@ -253,6 +267,7 @@ namespace XZMY.Manage.WindowsService
             catch (Exception ex)
             {
                 logService.Add("数据备份异常", ex.Message, ex.StackTrace, LogLevel.Error);
+                Log.Add("数据备份异常：" + ex.Message);
             }
             finally
             {
@@ -360,7 +375,7 @@ namespace XZMY.Manage.WindowsService
             var result = localCount - serverCount;
             if (result != 0)
             {
-                Log.Add("execute WriteDataToServer event ================================== localCount - serverCount = " + result);
+                //Log.Add("execute WriteDataToServer event ================================== localCount - serverCount = " + result);
                 logService.Add(string.Format("备份[{0}]表", tableName),
                     string.Format("localCount({0}) - serverCount({1}) = {2}", localCount, serverCount, result),
                     "", LogLevel.Normal);
@@ -628,9 +643,14 @@ namespace XZMY.Manage.WindowsService
                     return;
                 asdf = false;
 
-
                 var XfxxService = new XfxxService(originDb);
                 var HyxxService = new HyxxService(originDb);
+
+                if (!IsCheckCustomFieldIsExits)//检查自定义字段是否存在
+                {
+                    IsCheckCustomFieldIsExits = XfxxService.CheckCustomFieldIsExits();
+                }
+
                 var dt = XfxxService.GetLastData();
                 if (dt.Rows.Count > 0)
                 {
@@ -641,7 +661,7 @@ namespace XZMY.Manage.WindowsService
             }
             catch (Exception ex)
             {
-                logService.Add("实时更新余额异常 UpdateBalance", "------------------- UpdateBalance() ：" + DateTime.Now);
+                logService.Add("实时更新余额异常", "UpdateBalance：" + ex.Message, ex.StackTrace, LogLevel.Error);
             }
             finally
             {

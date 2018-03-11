@@ -161,6 +161,11 @@ namespace XZMY.Manage.Service.Customer
 
         #region Private method
 
+        /// <summary>
+        /// 获取分店名称
+        /// </summary>
+        /// <param name="branchId"></param>
+        /// <returns></returns>
         private string GetBranchName(Guid branchId)
         {
             switch (branchId.ToString())
@@ -174,6 +179,12 @@ namespace XZMY.Manage.Service.Customer
             return "Test";
         }
 
+        /// <summary>
+        /// 获取自动回复内容
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <param name="fromUserName"></param>
+        /// <returns></returns>
         public string GetReply(IList<HyxxDto> collection, string fromUserName)
         {
             if (collection.Count == 0)
