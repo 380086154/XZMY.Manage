@@ -70,8 +70,14 @@ namespace XZMY.Manage.WindowsService
             }
             catch (Exception ex)
             {
-                logService.Add("BackupToEmail 启动异常：", ex.Message, ex.StackTrace, LogLevel.Error);
+                if (logService == null)
+                {
+                    logService = new LogService(db);
+                    logService.Add("BackupToEmail 启动异常：", ex.Message, ex.StackTrace, LogLevel.Error);
+                }
+                Log.Add("BackupToEmail 启动异常：" + ex.Message + "\r\n\r\n" + ex.StackTrace);
             }
+
         }
 
         protected override void OnStart(string[] args)
@@ -90,6 +96,8 @@ namespace XZMY.Manage.WindowsService
                 branchDto = branchService.GetByValue(hardwareUtility);//获取分店信息
                 logService.BranchDataId = branchDto.DataId;
                 logService.UserName = branchDto.Name;
+
+                logService.Add("BackupToEmail 服务：", "尝试启动成功", LogLevel.Debug);
 
                 //Thread.Sleep(1000 * 10);//
                 try
@@ -192,8 +200,7 @@ namespace XZMY.Manage.WindowsService
                     Log.Add("数据备份异常：" + ex.Message + "\r\n" + ex.StackTrace);
                     logService.Add("数据备份异常", ex.Message, ex.StackTrace, LogLevel.Error);
                 }
-            })
-            { IsBackground = true };
+            }) { IsBackground = true };
             thread.Start();
         }
 
@@ -202,7 +209,7 @@ namespace XZMY.Manage.WindowsService
             if (logService != null)
             {
                 var name = branchDto != null ? branchDto.Name : hardwareUtility.ComputerName;
-                logService.Add("服务停止", name + "-服务停止", "", LogLevel.Error);
+                logService.Add("BackupToEmail 服务", name + "-服务停止", "", LogLevel.Debug);
             }
         }
 

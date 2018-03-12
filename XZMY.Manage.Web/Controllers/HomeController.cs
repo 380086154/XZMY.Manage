@@ -10,6 +10,7 @@ using XZMY.Manage.Model.DataModel;
 using XZMY.Manage.Model.Enum;
 using XZMY.Manage.Service.Auth;
 using XZMY.Manage.Service.Auth.Models.ViewModel;
+using XZMY.Manage.Service.Customer;
 using XZMY.Manage.Service.Utils;
 
 namespace XZMY.Manage.Web.Controllers
@@ -148,6 +149,15 @@ namespace XZMY.Manage.Web.Controllers
             }
 
             return Json(new { success = true, rows = resourceList }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetKeywords(string keywords)
+        {
+            var service = new HyxxQuickSearchService();
+
+            var list = service.GetKeywords(keywords);
+
+            return Json(new { success = true, rows = list }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Knock()

@@ -58,8 +58,7 @@ namespace XZMY.Manage.WindowsService
             //var sql = "SELECT TOP " + pageSize + " * FROM [xfxx] WHERE fdid not in (SELECT TOP " + (pageIndex * pageSize) + " fdid FROM [xfxx] )";
             //var dt = db.GetDataTable(sql, "xfxx", EProviderName.OleDB);
 
-
-
+            
             //return;
 
 

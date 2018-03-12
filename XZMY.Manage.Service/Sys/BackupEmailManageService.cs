@@ -35,10 +35,11 @@ namespace XZMY.Manage.Service.Sys
         /// 获取过滤后的列表，主要是排除注释的邮件
         /// </summary>
         /// <returns></returns>
-        public string[] GetFilterList()
+        public string GetFilterList()
         {
             var arr = GetValue().Split('|');
-            
+
+            var result = string.Empty;
             for (int i = 0; i < arr.Length; i++)
             {
                 var item = arr[i];
@@ -48,7 +49,7 @@ namespace XZMY.Manage.Service.Sys
                 }
             }
 
-            return arr;
+            return string.Join("|", arr);
         }
     }
 }

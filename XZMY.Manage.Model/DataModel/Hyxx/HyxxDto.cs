@@ -20,6 +20,9 @@ namespace XZMY.Manage.Model.DataModel
         {
         }
         public Guid DataId { get; set; }
+        /// <summary>
+        /// 分店Id
+        /// </summary>
         public Guid BranchDataId { get; set; }
         public long id { get; set; }
         public string fid { get; set; }

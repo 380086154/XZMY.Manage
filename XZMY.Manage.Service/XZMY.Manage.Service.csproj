@@ -111,6 +111,7 @@
     <Compile Include="Auth\Models\ViewModel\VmModuleEdit.cs" />
     <Compile Include="Auth\Models\ViewModel\VmRoleEdit.cs" />
     <Compile Include="CurrentUserAccountModel.cs" />
+    <Compile Include="Customer\HyxxQuickSearchService.cs" />
     <Compile Include="Customer\ZkkService.cs" />
     <Compile Include="Customer\CzkService.cs" />
     <Compile Include="Customer\HyxxService.cs" />

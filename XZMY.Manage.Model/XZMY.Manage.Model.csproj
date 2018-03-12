@@ -54,9 +54,10 @@
   <ItemGroup>
     <Compile Include="ApiResult.cs" />
     <Compile Include="DataModel\BranchDto.cs" />
+    <Compile Include="DataModel\Hyxx\HyxxQuickSearchDto.cs" />
     <Compile Include="DataModel\WeixinUserInfoDto.cs" />
     <Compile Include="DataModel\zkkDto.cs" />
-    <Compile Include="DataModel\HyxxDto.cs" />
+    <Compile Include="DataModel\Hyxx\HyxxDto.cs" />
     <Compile Include="DataModel\NewFolder1\Advisories\Advisory.cs" />
     <Compile Include="DataModel\NewFolder1\Agent\Agent.cs" />
     <Compile Include="DataModel\NewFolder1\Agent\AgentContact.cs" />
@@ -190,6 +191,7 @@
     <Compile Include="Utils\ViewBase.cs" />
     <Compile Include="ViewModel\Customer\VmHyxxDetails.cs" />
     <Compile Include="ViewModel\Customer\VmPaymentList.cs" />
+    <Compile Include="ViewModel\Customer\VmQuickSearch.cs" />
     <Compile Include="ViewModel\Customer\VmSearch.cs" />
     <Compile Include="ViewModel\Customer\VmCustomer.cs" />
     <Compile Include="ViewModel\NewFolder1\Advisories\VmAdvisory.cs" />
