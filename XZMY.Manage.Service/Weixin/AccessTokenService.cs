@@ -63,7 +63,7 @@ namespace XZMY.Manage.Service.Weixin
             if (current != null)
             {//如果是在本地调试，则尝试获取远程服务器中的 access_token
                 var request = current.Request;
-                if (request != null && !request.Url.Host.Contains("xzmy.site"))
+                if (request != null && !request.Url.Host.ToLower().Contains("xzmy.site"))
                 {
                     var url = "http://www.xzmy.site/api/Weixin/GetAccessToken";
                     return GetServerAccessTokenInfo(current, url);

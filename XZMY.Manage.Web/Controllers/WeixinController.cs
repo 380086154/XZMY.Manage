@@ -94,7 +94,7 @@ namespace XZMY.Manage.Web.Controllers
                     break;
             }
 
-            LogHelper.Log("XmlDocument：" + type, Newtonsoft.Json.JsonConvert.SerializeXmlNode(doc), LogLevel.Debug);
+            //LogHelper.Log("XmlDocument：" + type, Newtonsoft.Json.JsonConvert.SerializeXmlNode(doc), LogLevel.Debug);
             //LogHelper.Log("WeixinController 日志：" + type, "说：“" + text + "”  Reply：" + content, LogLevel.Debug);
 
             if (!string.IsNullOrWhiteSpace(content))

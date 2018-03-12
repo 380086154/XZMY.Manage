@@ -40,7 +40,7 @@ namespace XZMY.Manage.Web.Controllers.Apis
         public ApiResult GetEmailList()
         {
             var service = new BackupEmailManageService();
-            return Success("Email", service.GetValue());
+            return Success("Email", service.GetFilterList());
         }
 
         /// <summary>

@@ -39,7 +39,7 @@ namespace XZMY.Manage.Service.Weixin
                 var phoneNumber = text.Length == 13
                                 ? text.Substring(2, 11)
                                 : text;
-                LogHelper.Log("查询余额 日志：", phoneNumber + " - FromUserName：" + fromUserName, LogLevel.Debug);
+                LogHelper.Log("余额查询：", phoneNumber + " - FromUserName：" + fromUserName, LogLevel.Debug);
 
                 hyxxService.PhoneControl = !hyxxService.PhoneControl;
                 return hyxxService.GetDetailsByYddh(phoneNumber, fromUserName);

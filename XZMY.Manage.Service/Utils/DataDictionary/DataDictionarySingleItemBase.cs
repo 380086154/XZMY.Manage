@@ -44,6 +44,6 @@ namespace XZMY.Manage.Service.Utils.DataDictionary
         {
             var item = DataDictionaryManager.GetDataById(SingleItem.EName, SingleItem.DataId);
             return item != null ? HttpUtility.UrlDecode(item.Value) : string.Empty;
-        }
+        }  
     }
 }

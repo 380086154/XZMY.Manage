@@ -30,5 +30,25 @@ namespace XZMY.Manage.Service.Sys
                 Descr = "数据备份收发邮件管理"
             };
         }
+
+        /// <summary>
+        /// 获取过滤后的列表，主要是排除注释的邮件
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetFilterList()
+        {
+            var arr = GetValue().Split('|');
+            
+            for (int i = 0; i < arr.Length; i++)
+            {
+                var item = arr[i];
+                if (item.Contains("//") || item.Contains("--"))
+                {
+                    arr[i] = string.Join("\r\n", arr[i].Split("\r\n").Where(x => (!x.Contains("--") || item.Contains("//"))).ToArray());
+                }
+            }
+
+            return arr;
+        }
     }
 }
