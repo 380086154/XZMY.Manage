@@ -73,7 +73,7 @@ namespace XZMY.Manage.Web.Controllers.Assessment
                 {
                     new CustomConditionPlus<AssessmentQuestions>
                     {
-                        Value = model.Keyword ?? string.Empty,
+                        Value = model.Keywords ?? string.Empty,
                         Operation = SqlOperation.Like,
                         Member = new Expression<Func<AssessmentQuestions, object>>[] { x => x.Title,x=>x.Description }
                     },
@@ -113,7 +113,7 @@ namespace XZMY.Manage.Web.Controllers.Assessment
                 {
                     new CustomConditionPlus<AssessmentQuestions>
                     {
-                        Value = model.Keyword ?? string.Empty,
+                        Value = model.Keywords ?? string.Empty,
                         Operation = SqlOperation.Like,
                         Member = new Expression<Func<AssessmentQuestions, object>>[] { x => x.Title,x=>x.Description }
                     },

@@ -82,7 +82,7 @@ namespace XZMY.Manage.Web.Controllers.Question
                 {
                     new CustomConditionBase<ProblemPlanner>
                     {
-                        Value = model.Keyword ?? string.Empty,
+                        Value = model.Keywords ?? string.Empty,
                         Operation = SqlOperation.Like,
                         Member = x => x.MemberName
                     }

@@ -39,7 +39,7 @@ namespace XZMY.Manage.WindowsService.Service
             foreach (DataRow dr in dt.Rows)
             {
                 if (dr["hykh"].ToString().Trim() == hykh.Trim())
-                    result = dr["hyxm"].ToString();
+                    result = dr["hyxm"].ToString().Trim();
             }
             return result;
         }

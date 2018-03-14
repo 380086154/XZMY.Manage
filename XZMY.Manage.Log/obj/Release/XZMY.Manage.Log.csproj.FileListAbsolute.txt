@@ -32,3 +32,4 @@ C:\Users\Administrator\Source\Repos\XZMY.Manage\XZMY.Manage.Log\bin\Release\Newt
 C:\Users\Administrator\Source\Repos\XZMY.Manage\XZMY.Manage.Log\obj\Release\XZMY.Manage.Log.csprojResolveAssemblyReference.cache
 C:\Users\Administrator\Source\Repos\XZMY.Manage\XZMY.Manage.Log\obj\Release\XZMY.Manage.Log.dll
 C:\Users\Administrator\Source\Repos\XZMY.Manage\XZMY.Manage.Log\obj\Release\XZMY.Manage.Log.pdb
+D:\TDDOWNLOAD\Source\XZMY.Manage\XZMY.Manage.Log\obj\Release\XZMY.Manage.Log.csprojResolveAssemblyReference.cache

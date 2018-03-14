@@ -4033,6 +4033,7 @@
     <Content Include="Content\Metronic4.5.6\pages\scripts\form-validation.min.js" />
     <Content Include="Content\Metronic4.5.6\pages\scripts\form-wizard.js" />
     <Content Include="Content\Metronic4.5.6\pages\scripts\form-wizard.min.js" />
+    <Content Include="Content\Metronic4.5.6\pages\scripts\home-index.js" />
     <Content Include="Content\Metronic4.5.6\pages\scripts\inbox.js" />
     <Content Include="Content\Metronic4.5.6\pages\scripts\inbox.min.js" />
     <Content Include="Content\Metronic4.5.6\pages\scripts\jquery-gantt.js" />

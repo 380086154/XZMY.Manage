@@ -31,8 +31,6 @@ namespace XZMY.Manage.Model.Utils
         /// <summary>
         /// 关键字搜索
         /// </summary>
-        public string Keyword { get; set; }
-
-      
+        public string Keywords { get; set; }      
     }
 }

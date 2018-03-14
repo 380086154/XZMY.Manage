@@ -110,7 +110,7 @@ namespace XZMY.Manage.Web.Controllers.OnlineAssessment
         public ActionResult AjaxList(VmOnlineAssessmentTranscript model)
         {
             int TotalCount = 0;
-            List<VmOnlineAssessmentTranscript> list = GetList(model.PageIndex, model.State, model.Keyword, "", "", out TotalCount);
+            List<VmOnlineAssessmentTranscript> list = GetList(model.PageIndex, model.State, model.Keywords, "", "", out TotalCount);
             return Json(new { success = true, total = TotalCount, rows = list, errors = GetErrors() });
         }
 

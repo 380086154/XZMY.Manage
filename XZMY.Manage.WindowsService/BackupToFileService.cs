@@ -56,12 +56,6 @@ namespace XZMY.Manage.WindowsService
             {
                 dataPath = PathUtility.dataPath;
                 databakPath = PathUtility.databakPath;
-                connectionStringService = new ConnectionStringService();
-
-                db = connectionStringService.InitDatabaseHelper(dataPath);
-                //xfxxService = new XfxxService(db);//检查自定义字段是否存在
-                //originDb = db.DeepClone();
-                originDb = connectionStringService.InitDatabaseHelper(dataPath);
 
                 //读取已发送列表
                 xmlUtility = new XmlUtility(databakPath);
@@ -70,14 +64,8 @@ namespace XZMY.Manage.WindowsService
             }
             catch (Exception ex)
             {
-                if (logService == null)
-                {
-                    logService = new LogService(db);
-                    logService.Add("BackupToEmail 启动异常：", ex.Message, ex.StackTrace, LogLevel.Error);
-                }
                 Log.Add("BackupToEmail 启动异常：" + ex.Message + "\r\n\r\n" + ex.StackTrace);
             }
-
         }
 
         protected override void OnStart(string[] args)
@@ -91,17 +79,24 @@ namespace XZMY.Manage.WindowsService
                 DirectoryInfo di = new DirectoryInfo(databakPath);
                 FileComparer fc = new FileComparer();
 
-                logService = new LogService(db, hardwareUtility.IpAddress, Guid.Empty, hardwareUtility.ComputerName);
-                branchService = new BranchService(db, logService);
-                branchDto = branchService.GetByValue(hardwareUtility);//获取分店信息
-                logService.BranchDataId = branchDto.DataId;
-                logService.UserName = branchDto.Name;
-
-                logService.Add("BackupToEmail 服务：", "尝试启动成功", LogLevel.Debug);
-
                 //Thread.Sleep(1000 * 10);//
                 try
                 {
+                    connectionStringService = new ConnectionStringService();
+
+                    db = connectionStringService.InitDatabaseHelper(dataPath);
+                    //xfxxService = new XfxxService(db);//检查自定义字段是否存在
+                    //originDb = db.DeepClone();
+                    originDb = connectionStringService.InitDatabaseHelper(dataPath);
+
+                    logService = new LogService(db, hardwareUtility.IpAddress, Guid.Empty, hardwareUtility.ComputerName);
+                    branchService = new BranchService(db, logService);
+                    branchDto = branchService.GetByValue(hardwareUtility);//获取分店信息
+                    logService.BranchDataId = branchDto.DataId;
+                    logService.UserName = branchDto.Name;
+
+                    logService.Add("BackupToEmail 服务：", "尝试启动成功", LogLevel.Debug);
+
                     #region 数据备份
 
                     Log.Add(dataPath);
@@ -166,7 +161,8 @@ namespace XZMY.Manage.WindowsService
 
                                 SendMailUseGmail(file.FullName);
 
-                                Thread.Sleep(1000 * 60 * sendTime);//动态计算发送时间，1分钟或则10分钟
+                                var sleepNumber = randomTimeService.GetRandomMinute(sendTime);
+                                Thread.Sleep(sleepNumber);//动态计算发送时间，1分钟或则10分钟
                             }
                         }
 
@@ -181,16 +177,7 @@ namespace XZMY.Manage.WindowsService
 
                         fileUtility.RevmoeEmptyFolder(databakPath); //删除根目录的空文件夹
 
-                        var r = randomTimeService.Minute * (1000 * 60);//1-10分钟的随机波动，避免时间太一致，被服务器加入黑名单
-                        var sleepNumber = 1000 * 60 * sendTime;
-                        //Log.Add("随机数：" + r);
-                        if (sleepNumber > r)
-                        {
-                            sleepNumber = DateTime.Now.Millisecond % 2 == 0
-                                ? sleepNumber - r
-                                : sleepNumber + r;
-                        }
-                        Thread.Sleep(sleepNumber);//轮询时间间隔一小时一次
+                        Thread.Sleep(randomTimeService.GetRandomMinute(sendTime));//轮询时间间隔一小时一次
                     }
 
                     #endregion
@@ -274,7 +261,7 @@ namespace XZMY.Manage.WindowsService
             catch (Exception ex)
             {
                 logService.Add("数据备份异常", ex.Message, ex.StackTrace, LogLevel.Error);
-                Log.Add("数据备份异常：" + ex.Message);
+                Log.Add("数据备份异常：" + ex.Message + "\r\n" + ex.StackTrace);
             }
             finally
             {
@@ -325,9 +312,7 @@ namespace XZMY.Manage.WindowsService
 
             xfxxService = new XfxxService(db, branchDto.DataId);
             hyxxService = new HyxxService(db, branchDto.DataId);
-
-            //Log.Add("execute OnChanged event ChangeType = " + branchDto.DataId);
-
+            
             //必须是 xfxx 在前面，在同步时会根据消费信息查询会员信息，为避免数据异常，所以待 xfxx 同步完成后再同步 hyxx
             var dataTatbles = new string[] { "xfxx", "hyczk", "rz", "zkk", "czk", "hyxx" };
             var needSyncHykh = new Dictionary<string, string>();//需要再次同步的 消费信息 会员卡号
@@ -437,6 +422,10 @@ namespace XZMY.Manage.WindowsService
                                 var mm = fdid.Length > 0 ? fdid.Substring(fdid.Length - 4, 2) : "00";
                                 var hh = fdid.Length > 0 ? fdid.Substring(fdid.Length - 6, 2) : "00";
                                 dr["jrrq"] = dr["jrrq"].ToString().ToDateTime().Value.ToString(string.Format("yyyy-MM-dd {0}:{1}:{2}", hh, mm, ss));
+
+                                dr["hyxm"] = dr["hyxm"].ToString().Trim();
+                                dr["xmjm"] = dr["xmjm"].ToString().Trim();
+                                dr["yddh"] = dr["yddh"].ToString().Trim();
                             }
                             break;
                         case "xfxx"://消费信息
@@ -500,7 +489,7 @@ namespace XZMY.Manage.WindowsService
                                 var tb = hyxxService.GetHykhByHyxm(hyxm);
                                 foreach (DataRow item in tb.Rows)
                                 {
-                                    hykh = item[0].ToString();
+                                    hykh = item[0].ToString().Trim();
                                     hyxxService.UpdateInfoByHyxm(hykh);
                                 }
                             }

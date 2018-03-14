@@ -3302,7 +3302,7 @@ S2.define('select2/data/ajax',[
     }
 
     var options = $.extend({
-      type: 'GET'
+      type: 'POST'
     }, this.ajaxOptions);
 
     if (typeof options.url === 'function') {
@@ -4223,7 +4223,7 @@ S2.define('select2/dropdown/closeOnSelect',[
   return CloseOnSelect;
 });
 
-S2.define('select2/i18n/en',[],function () {
+S2.define('select2/i18n/zh-CN', [], function () {
   // English
   return {
     errorLoading: function () {
@@ -4243,7 +4243,7 @@ S2.define('select2/i18n/en',[],function () {
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'Please enter ' + remainingChars + ' or more characters';
+      var message = '\u8BF7\u8F93\u5165 ' + remainingChars + ' \u6216\u591A\u4E2A\u5B57\u7B26';//Please enter 1 or more characters
 
       return message;
     },
@@ -4263,7 +4263,7 @@ S2.define('select2/i18n/en',[],function () {
       return 'No results found';
     },
     searching: function () {
-      return 'Searching…';
+        return '\u67E5\u8BE2\u4E2D…'; //Searching
     }
   };
 });
@@ -4303,7 +4303,7 @@ S2.define('select2/defaults',[
   './dropdown/selectOnClose',
   './dropdown/closeOnSelect',
 
-  './i18n/en'
+  './i18n/zh-CN'
 ], function ($, require,
 
              ResultsList,

@@ -120,7 +120,7 @@ namespace XZMY.Manage.Web.Controllers.SiteSetting
                 {
                     new CustomConditionPlus<SiteAD>
                     {
-                        Value = model.Keyword ?? string.Empty,
+                        Value = model.Keywords ?? string.Empty,
                         Operation = SqlOperation.Like,
                         Member = new Expression<Func<SiteAD, object>>[] { x => x.Name,x=>x.Code }
                     }

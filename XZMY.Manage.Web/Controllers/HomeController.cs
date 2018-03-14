@@ -8,6 +8,7 @@ using T2M.Common.DataServiceComponents.Data.Query;
 using T2M.Common.DataServiceComponents.Service;
 using XZMY.Manage.Model.DataModel;
 using XZMY.Manage.Model.Enum;
+using XZMY.Manage.Model.ViewModel.Customer;
 using XZMY.Manage.Service.Auth;
 using XZMY.Manage.Service.Auth.Models.ViewModel;
 using XZMY.Manage.Service.Customer;
@@ -155,9 +156,21 @@ namespace XZMY.Manage.Web.Controllers
         {
             var service = new HyxxQuickSearchService();
 
-            var list = service.GetKeywords(keywords);
+            var result = service.GetKeywords(new VmQuickSearch
+            {
+                PageIndex = 1,
+                PageSize = 50,
+                Keywords = keywords,
+                BranchDataId = this.CurrentBranchDataId
+            });
 
-            return Json(new { success = true, rows = list }, JsonRequestBehavior.AllowGet);
+            //var list = new List<string>();
+            //foreach (var item in result.Results)
+            //{
+            //    list.Add(item.hykh.Trim() + "-" + item.hyxm.Trim());
+            //}
+
+            return Json(new { success = true, total = result.TotalCount, rows = result.Results, errors = GetErrors() }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Knock()

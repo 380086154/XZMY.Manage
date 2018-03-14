@@ -40,6 +40,25 @@ namespace XZMY.Manage.WindowsService.Service
             get { return Get(RandomList); }
         }
 
+        /// <summary>
+        /// 获取随机时间（毫秒）
+        /// </summary>
+        /// <param name="time">时间</param>
+        /// <returns></returns>
+        public int GetRandomMinute(int time)
+        {
+            var r = Minute * (1000 * 60);//1-10分钟的随机波动，避免时间太一致，被服务器加入黑名单
+            var sleepNumber = 1000 * 60 * time;
+  
+            if (sleepNumber > r)
+            {
+                sleepNumber = DateTime.Now.Millisecond % 2 == 0
+                    ? sleepNumber - r
+                    : sleepNumber + r;
+            }
+            return sleepNumber;
+        }
+
         #region Private method
 
         /// <summary>
@@ -76,15 +95,6 @@ namespace XZMY.Manage.WindowsService.Service
             }
 
             return Get(dict);
-
-            //RandomList = new Dictionary<int, bool>();
-            //var list = DefaultList.GetRandomList();
-            //foreach (var item in list)
-            //{
-            //    RandomList.Add(item, true);
-            //}
-
-            //return Get(RandomList);
         }
 
         #endregion

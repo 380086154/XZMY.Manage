@@ -153,7 +153,7 @@ namespace XZMY.Manage.Web.Controllers.Auth
                 {
                     new CustomConditionPlus<UserAccount>
                     {
-                        Value = model.Keyword ?? string.Empty,
+                        Value = model.Keywords ?? string.Empty,
                         Operation = SqlOperation.Like,
                         Member = new Expression<Func<UserAccount, object>>[] { x => x.LoginName,x=>x.RealName }
                     }

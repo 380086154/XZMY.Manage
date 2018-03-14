@@ -4243,7 +4243,7 @@ S2.define('select2/i18n/en',[],function () {
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'Please enter ' + remainingChars + ' or more characters';
+      var message = '\u8BF7\u8F93\u5165 ' + remainingChars + ' \u6216\u591A\u4E2A\u5B57\u7B26';//Please enter 1 or more characters
 
       return message;
     },

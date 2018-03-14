@@ -19,18 +19,18 @@ namespace XZMY.Manage.Service.Customer
     {
         public static IList<HyxxQuickSearchDto> list = new List<HyxxQuickSearchDto>();
 
-        public PagedResult<HyxxQuickSearchDto> GetKeywords(string keywords)
+        public PagedResult<HyxxQuickSearchDto> GetKeywords(VmQuickSearch model)
         {
             var service = new CustomSearchWithPaginationService<HyxxQuickSearchDto>
             {
-                PageIndex = 1,
-                PageSize = 50,
+                PageIndex = model.PageIndex,
+                PageSize = model.PageSize,
                 CustomConditions = new List<CustomCondition<HyxxQuickSearchDto>>
                 {
                     new CustomConditionPlus<HyxxQuickSearchDto>
                     {
-                        Value = keywords ?? string.Empty,
-                        Operation = SqlOperation.Equals,
+                        Value = model.Keywords ?? string.Empty,
+                        Operation = SqlOperation.Like,
                         Member = new Expression<Func<HyxxQuickSearchDto, object>>[] {
                             x => x.hykh,
                             x => x.hyxm,
@@ -42,6 +42,18 @@ namespace XZMY.Manage.Service.Customer
                 SortMember = new Expression<Func<HyxxQuickSearchDto, object>>[] { x => x.hyxm },
                 SortType = T2M.Common.DataServiceComponents.Data.Query.Interface.SortType.Desc
             };
+
+            if (model.BranchDataId != Guid.Empty)
+            {
+                service.CustomConditions.Add(new CustomConditionPlus<HyxxQuickSearchDto>
+                {
+                    Value = model.BranchDataId,
+                    Operation = SqlOperation.Equals,
+                    Member = new Expression<Func<HyxxQuickSearchDto, object>>[] {
+                    x => x.BranchDataId
+                }
+                });
+            }
 
             return service.Invoke();
         }

@@ -40,11 +40,9 @@ namespace XZMY.Manage.Model.ViewModel
                 var resType = typeof(TV);
                 var properties = GetPropertyInfos(resType);
                 var modeltypePs = GetPropertyInfos(typeof(T));
-
-
+                
                 foreach (var property in properties)
                 {
-
                     if (!property.CanWrite || !property.CanRead ||// 排除忽略字段
                         !property.PropertyType.IsValueType && property.PropertyType != typeof(string)
                         )
@@ -74,6 +72,7 @@ namespace XZMY.Manage.Model.ViewModel
                 return default(TV);
             }
         }
+
         private static Dictionary<Type, PropertyInfo[]> PropertyInfoCache = new Dictionary<Type, PropertyInfo[]>();
         /// <summary>
         /// 

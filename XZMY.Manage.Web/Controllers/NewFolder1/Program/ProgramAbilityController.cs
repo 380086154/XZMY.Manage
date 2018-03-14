@@ -132,7 +132,7 @@ namespace XZMY.Manage.Web.Controllers.Program
                     {
                         new CustomConditionPlus<ProgramAbility>
                         {
-                            Value = model.Keyword??String.Empty,
+                            Value = model.Keywords??String.Empty,
                             Operation = SqlOperation.Like,
                             Member = new Expression<Func<ProgramAbility, object>>[]
                             {

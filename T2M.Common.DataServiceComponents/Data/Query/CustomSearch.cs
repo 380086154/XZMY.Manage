@@ -31,12 +31,9 @@ namespace T2M.Common.DataServiceComponents.Data.Query
             var sqlStatement = String.Format(QueryTemplate.QUERY_SELECT_WITH_CLAUSE,
                 String.Join(",", properties), TableName, condition);
 
-
             using (var conn = new SqlConnection(SqlServerHelper.CONNECTION_STRING))
             {
-
-                using (
-                    var reader = SqlServerHelper.ExecuteReader(conn, CommandType.Text,
+                using (var reader = SqlServerHelper.ExecuteReader(conn, CommandType.Text,
                         sqlStatement, sqlParameter))
                 {
                     var res = new List<T>();

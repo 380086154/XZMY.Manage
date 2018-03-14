@@ -123,7 +123,7 @@ namespace XZMY.Manage.Web.Controllers.SiteSetting
                     {
                         new CustomConditionPlus<StudyBudget>
                         {
-                            Value = model.Keyword??String.Empty,
+                            Value = model.Keywords??String.Empty,
                             Operation = SqlOperation.Like,
                             Member = new Expression<Func<StudyBudget, object>>[]
                             {

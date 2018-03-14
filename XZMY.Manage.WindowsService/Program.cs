@@ -40,7 +40,7 @@ namespace XZMY.Manage.WindowsService
             //var erre = new RandomTimeService();
             //for (int i = 0; i < 20; i++)
             //{
-            //    Console.WriteLine(erre.Minute);
+            //    Console.WriteLine(erre.GetRandomMinute(60));
             //}
             //return;
 

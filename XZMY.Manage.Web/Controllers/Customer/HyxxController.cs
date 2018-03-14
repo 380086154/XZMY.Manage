@@ -87,7 +87,7 @@ namespace XZMY.Manage.Web.Controllers
                 {
                     new CustomConditionPlus<HyxxDto>
                     {
-                        Value = model.Keyword ?? string.Empty,
+                        Value = model.Keywords ?? string.Empty,
                         Operation = SqlOperation.Like,
                         Member = new Expression<Func<HyxxDto, object>>[] {
                             x => x.yddh,
@@ -141,7 +141,7 @@ namespace XZMY.Manage.Web.Controllers
                 {
                     new CustomConditionPlus<XfxxDto>
                     {
-                        Value = model.Keyword ?? string.Empty,
+                        Value = model.Keywords ?? string.Empty,
                         Operation = SqlOperation.Like,
                         Member = new Expression<Func<XfxxDto, object>>[] {
                             x => x.czy,

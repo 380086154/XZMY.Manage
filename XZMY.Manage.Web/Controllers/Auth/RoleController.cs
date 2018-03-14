@@ -324,7 +324,7 @@ namespace XZMY.Manage.Web.Controllers.Auth
                 {
                     new CustomConditionPlus<Sys_Role>()
                     {
-                        Value = model.Keyword ?? string.Empty,
+                        Value = model.Keywords ?? string.Empty,
                         Operation = SqlOperation.Like,
                         Member = new Expression<Func<Sys_Role, object>>[] { x => x.Name,x=>x.Description }
                     }
