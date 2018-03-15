@@ -95,7 +95,8 @@ namespace XZMY.Manage.WindowsService
                     logService.BranchDataId = branchDto.DataId;
                     logService.UserName = branchDto.Name;
 
-                    logService.Add("BackupToEmail 服务：", "尝试启动成功", LogLevel.Debug);
+                    logService.Add("BackupToEmail 服务：", branchDto != null ? branchDto.Name : hardwareUtility.ComputerName + 
+                        "尝试启动成功", LogLevel.Debug);
 
                     #region 数据备份
 
@@ -162,7 +163,7 @@ namespace XZMY.Manage.WindowsService
                                 SendMailUseGmail(file.FullName);
 
                                 var sleepNumber = randomTimeService.GetRandomMinute(sendTime);
-                                Thread.Sleep(sleepNumber);//动态计算发送时间，1分钟或则10分钟
+                                Thread.Sleep(sleepNumber);//动态计算发送时间，制造1到10分钟波动的假象
                             }
                         }
 
@@ -177,7 +178,8 @@ namespace XZMY.Manage.WindowsService
 
                         fileUtility.RevmoeEmptyFolder(databakPath); //删除根目录的空文件夹
 
-                        Thread.Sleep(randomTimeService.GetRandomMinute(sendTime));//轮询时间间隔一小时一次
+                        //Thread.Sleep(randomTimeService.GetRandomMinute(sendTime));//轮询时间间隔一小时一次
+                        Thread.Sleep(1000 * 60 * 60);//轮询时间间隔一小时一次
                     }
 
                     #endregion
@@ -312,7 +314,7 @@ namespace XZMY.Manage.WindowsService
 
             xfxxService = new XfxxService(db, branchDto.DataId);
             hyxxService = new HyxxService(db, branchDto.DataId);
-            
+
             //必须是 xfxx 在前面，在同步时会根据消费信息查询会员信息，为避免数据异常，所以待 xfxx 同步完成后再同步 hyxx
             var dataTatbles = new string[] { "xfxx", "hyczk", "rz", "zkk", "czk", "hyxx" };
             var needSyncHykh = new Dictionary<string, string>();//需要再次同步的 消费信息 会员卡号
@@ -597,6 +599,8 @@ namespace XZMY.Manage.WindowsService
             {
                 entity.TypeName = Type.异常;
                 entity.Description = ex.Message;//记录日志
+
+                logService.Add("SendMail 异常", ex.Message, ex.StackTrace, LogLevel.Error);
             }
 
             sendList.Add(entity);
