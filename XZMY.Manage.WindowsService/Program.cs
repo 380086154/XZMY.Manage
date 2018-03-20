@@ -58,16 +58,18 @@ namespace XZMY.Manage.WindowsService
             //var sql = "SELECT TOP " + pageSize + " * FROM [xfxx] WHERE fdid not in (SELECT TOP " + (pageIndex * pageSize) + " fdid FROM [xfxx] )";
             //var dt = db.GetDataTable(sql, "xfxx", EProviderName.OleDB);
 
-            
+
             //return;
 
+            //var str = @"C:\Program Files (x86)\美萍会员管理系统\databak\2018-03-20-2056（164）.zip";
+            //var length = str.LastIndexOf('\\') + 1;
+            //var afd = str.Substring(length);
 
-            ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[]
+            var servicesToRun = new ServiceBase[]
             {
                 new BackupToFileService()
             };
-            ServiceBase.Run(ServicesToRun);
+            ServiceBase.Run(servicesToRun);
         }
     }
 }

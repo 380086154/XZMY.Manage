@@ -75,29 +75,19 @@ namespace XZMY.Manage.WindowsService
                 hardwareUtility = new HardwareUtility();
                 version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
-                randomTimeService = new RandomTimeService();
-                DirectoryInfo di = new DirectoryInfo(databakPath);
-                FileComparer fc = new FileComparer();
+                var di = new DirectoryInfo(databakPath);
+                var fc = new FileComparer();
+                var networkHelper = new NetworkHelper();
 
                 //Thread.Sleep(1000 * 10);//
                 try
                 {
-                    connectionStringService = new ConnectionStringService();
+                    connectionStringService = new ConnectionStringService(networkHelper.Status);
 
-                    db = connectionStringService.InitDatabaseHelper(dataPath);
-                    //xfxxService = new XfxxService(db);//检查自定义字段是否存在
-                    //originDb = db.DeepClone();
-                    originDb = connectionStringService.InitDatabaseHelper(dataPath);
-
-                    logService = new LogService(db, hardwareUtility.IpAddress, Guid.Empty, hardwareUtility.ComputerName);
-                    branchService = new BranchService(db, logService);
-                    branchDto = branchService.GetByValue(hardwareUtility);//获取分店信息
-                    logService.BranchDataId = branchDto.DataId;
-                    logService.UserName = branchDto.Name;
-
-                    logService.Add("BackupToEmail 服务：", branchDto != null ? branchDto.Name : hardwareUtility.ComputerName + 
-                        "尝试启动成功", LogLevel.Debug);
-
+                    db = connectionStringService.InitDatabaseHelper(dataPath, networkHelper.Status);
+                    //用于更新余额
+                    originDb = connectionStringService.InitDatabaseHelper(dataPath, networkHelper.Status);
+                    
                     #region 数据备份
 
                     Log.Add(dataPath);
@@ -109,61 +99,64 @@ namespace XZMY.Manage.WindowsService
 
                     while (true)
                     {
-                        var networkHelper = new NetworkHelper();
-                        if (!networkHelper.Status)//无网络不操作
-                            return;
+                        Thread.Sleep(1000 * 10);
+
+                        InitInstance(networkHelper.Status);//初始化实例
 
                         FileInfo[] fileList = di.GetFiles();
                         Array.Sort(fileList, fc);//按文件创建时间排正序
-
-                        var remaining = fileList.Length - sendList.Count(x => x.TypeName == Type.正常);//剩余未发送文件数
-
-                        sendTime = remaining > 9 ? 1 : 60;//当未备份文件总数超过10个文件，每1分钟发送一个备份，尽快处理了
-
-                        if (remaining > 3 && !branchDto.Value.Contains("BFEBFBFF000506E3"))//打包发送
+                        
+                        if (InitInstanceSuccess && networkHelper.Status)
                         {
-                            var dataFolder = DateTime.Now.ToString("yyyy-MM-dd-HHmm");
-                            var folder = databakPath + dataFolder;
-                            var currentSendList = new List<string>();
+                            var remaining = fileList.Length - sendList.Count(x => x.TypeName == Type.正常);//剩余未发送文件数
 
-                            if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
+                            sendTime = remaining > 9 ? 1 : 60;//当未备份文件总数超过10个文件，每1分钟发送一个备份，尽快处理了
 
-                            foreach (var file in fileList)
+                            if (remaining > 3 && !branchDto.Value.Contains("BFEBFBFF000506E3"))//打包发送
                             {
-                                var fileNewName = folder + "/" + file.Name;
+                                var dataFolder = DateTime.Now.ToString("yyyy-MM-dd-HHmm");
+                                var folder = databakPath + dataFolder;
+                                var currentSendList = new List<string>();
 
-                                if (File.Exists(fileNewName) || sendList != null && sendList.Any(x => x.FileName == file.FullName)
-                                    || excludeList.Contains(file.Name)
-                                    || file.Name.Contains(".zip")) continue;
+                                if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
 
-                                File.Copy(file.FullName, fileNewName, true);
-
-                                currentSendList.Add(file.FullName);
-                                fileUtility.DeleteFile(file.FullName);//删除已复制文件
-                            }
-
-                            var fileName = string.Format("{0}（{1}）.zip", dataFolder, currentSendList.Count);
-                            fileUtility.CompressRar(folder, databakPath, fileName);//压缩文件
-
-                            SendMailUseGmail(databakPath + fileName, string.Join("<br/>", currentSendList));//发送邮件
-
-                            fileUtility.DeleteFolder(folder);//删除文件夹
-                        }
-                        else//一个一个发送
-                        {
-                            foreach (var file in fileList)
-                            {
-                                if (sendList.Any(x => x.FileName == file.FullName)) continue;
-
-                                if (!IsSendLogFile && file.FullName.Contains(".xml"))
+                                foreach (var file in fileList)
                                 {
-                                    IsSendLogFile = true;//每次开机只发送一次日志文件
+                                    var fileNewName = folder + "/" + file.Name;
+
+                                    if (File.Exists(fileNewName) || sendList != null && sendList.Any(x => x.FileName == file.FullName)
+                                        || excludeList.Contains(file.Name)
+                                        || file.Name.Contains(".zip")) continue;
+
+                                    File.Copy(file.FullName, fileNewName, true);
+
+                                    currentSendList.Add(file.FullName);
+                                    fileUtility.DeleteFile(file.FullName);//删除已复制文件
                                 }
 
-                                SendMailUseGmail(file.FullName);
+                                var fileName = string.Format("{0}（{1}）.zip", dataFolder, currentSendList.Count);
+                                fileUtility.CompressRar(folder, databakPath, fileName);//压缩文件
 
-                                var sleepNumber = randomTimeService.GetRandomMinute(sendTime);
-                                Thread.Sleep(sleepNumber);//动态计算发送时间，制造1到10分钟波动的假象
+                                SendMailUseGmail(databakPath + fileName, string.Join("<br/>", currentSendList));//发送邮件
+
+                                fileUtility.DeleteFolder(folder);//删除文件夹
+                            }
+                            else//一个一个发送
+                            {
+                                foreach (var file in fileList)
+                                {
+                                    if (sendList.Any(x => x.FileName == file.FullName)) continue;
+
+                                    if (!IsSendLogFile && file.FullName.Contains(".xml"))
+                                    {
+                                        IsSendLogFile = true;//每次开机只发送一次日志文件
+                                    }
+
+                                    SendMailUseGmail(file.FullName);
+
+                                    var sleepNumber = randomTimeService.GetRandomMinute(sendTime);
+                                    Thread.Sleep(sleepNumber);//动态计算发送时间，制造1到10分钟波动的假象
+                                }
                             }
                         }
 
@@ -178,7 +171,6 @@ namespace XZMY.Manage.WindowsService
 
                         fileUtility.RevmoeEmptyFolder(databakPath); //删除根目录的空文件夹
 
-                        //Thread.Sleep(randomTimeService.GetRandomMinute(sendTime));//轮询时间间隔一小时一次
                         Thread.Sleep(1000 * 60 * 60);//轮询时间间隔一小时一次
                     }
 
@@ -189,13 +181,16 @@ namespace XZMY.Manage.WindowsService
                     Log.Add("数据备份异常：" + ex.Message + "\r\n" + ex.StackTrace);
                     logService.Add("数据备份异常", ex.Message, ex.StackTrace, LogLevel.Error);
                 }
-            }) { IsBackground = true };
+            })
+            { IsBackground = true };
             thread.Start();
         }
 
         protected override void OnStop()
         {
-            if (logService != null)
+            var networkHelper = new NetworkHelper();
+
+            if (logService != null && networkHelper.Status)
             {
                 var name = branchDto != null ? branchDto.Name : hardwareUtility.ComputerName;
                 logService.Add("BackupToEmail 服务", name + "-服务停止", "", LogLevel.Debug);
@@ -254,7 +249,7 @@ namespace XZMY.Manage.WindowsService
             try
             {
                 var networkHelper = new NetworkHelper();
-                if (networkHelper.Status)//无网络不操作
+                if (networkHelper.Status)//有网络才操作
                 {
                     path = CopyDataToBackup();
                     WriteDataToServer(path);
@@ -627,6 +622,8 @@ namespace XZMY.Manage.WindowsService
 
         #endregion
 
+        #region 公共方法
+
         #region 本地数据库操作
 
         private bool asdf = true;
@@ -667,6 +664,40 @@ namespace XZMY.Manage.WindowsService
             {
                 fsw.EnableRaisingEvents = true;
                 asdf = true;
+            }
+        }
+
+        #endregion
+
+        private bool InitInstanceSuccess = false;
+        /// <summary>
+        /// 初始化实例（需要访问网络的实例）
+        /// </summary>
+        /// <param name="havaNetwork">True：有网络，False：无网络</param>
+        private void InitInstance(bool havaNetwork = false)
+        {
+            if (!havaNetwork) return;
+
+            if (InitInstanceSuccess) return;
+            InitInstanceSuccess = true;
+
+            try
+            {
+                randomTimeService = new RandomTimeService();//初始化随机时间
+
+                logService = new LogService(db, hardwareUtility.IpAddress, Guid.Empty, hardwareUtility.ComputerName);
+                branchService = new BranchService(db, logService);
+                branchDto = branchService.GetByValue(hardwareUtility);//获取分店信息
+                logService.BranchDataId = branchDto.DataId;
+                logService.UserName = branchDto.Name;
+
+                //因为向服务器发送日志需要网络，所以这个启动日志放在实例化后
+                logService.Add("BackupToEmail 服务：", (branchDto != null ? branchDto.Name : hardwareUtility.ComputerName) +
+                    "-尝试启动成功", LogLevel.Debug);
+            }
+            catch (Exception ex)
+            {
+                Log.Add("实例初始化异常：" + ex.Message + "\r\n" + ex.StackTrace);
             }
         }
 

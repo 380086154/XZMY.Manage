@@ -28,7 +28,7 @@ namespace XZMY.Manage.WindowsService.Utility
         private extern static bool InternetGetConnectedState(out int connectionDescription, int reservedValue);
 
         /// <summary>
-        /// 获取当前计算机联网状态
+        /// 获取当前计算机联网状态（True：有网络，False：无网络）
         /// </summary>
         public bool Status
         {
