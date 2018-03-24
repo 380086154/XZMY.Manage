@@ -193,7 +193,7 @@ namespace XZMY.Manage.WindowsService
             if (logService != null && networkHelper.Status)
             {
                 var name = branchDto != null ? branchDto.Name : hardwareUtility.ComputerName;
-                logService.Add("BackupToEmail 服务", name + "-服务停止", "", LogLevel.Debug);
+                logService.Add("服务", name + "-BackupToEmail-服务停止", "", LogLevel.Debug);
             }
         }
 
@@ -464,7 +464,7 @@ namespace XZMY.Manage.WindowsService
                                     dr["Balance"] = balance;
 
                                     logService.Add("余额数据对比",
-                                        " xfxxService.UpdateBalance ========= 会员卡号：" + hykh + "   余额：" + balance + " - " + dr["Balance"] + " - " + hyxxService.GetBalance(hyxxDataTable, hykh)
+                                        " UpdateBalance ====== 会员卡号：" + hykh + "   余额：" + balance + " - " + dr["Balance"] + " - " + hyxxService.GetBalance(hyxxDataTable, hykh)
                                         );
                                 }
 
@@ -692,8 +692,8 @@ namespace XZMY.Manage.WindowsService
                 logService.UserName = branchDto.Name;
 
                 //因为向服务器发送日志需要网络，所以这个启动日志放在实例化后
-                logService.Add("BackupToEmail 服务：", (branchDto != null ? branchDto.Name : hardwareUtility.ComputerName) +
-                    "-尝试启动成功", LogLevel.Debug);
+                logService.Add("服务", (branchDto != null ? branchDto.Name : hardwareUtility.ComputerName) +
+                    "-BackupToEmail-尝试启动成功", LogLevel.Debug);
             }
             catch (Exception ex)
             {

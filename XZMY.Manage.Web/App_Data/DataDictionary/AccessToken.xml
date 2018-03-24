@@ -1,3 +1,3 @@
 <Data>
-  <Item DataId="9adbe702-88fc-4c65-83cd-752ba7578fde" Name="微信 AccessToken" EName="AccessToken" Value="7_JzzCVJunyO87FYQW0xEljtA3ht6PuWCsI2EEs1kQ_sUCNxRsVKyz3rW_Id1UArz66CWR3sSzc70tstEWMk26iinL43SORisoXuueJSl5KWiUulcEyChQodx1kssBWObAEASNF#2018-03-15 19:15:48" Default="False" Sys="True" State="1" Sort="0" Descr="微信 Access_Token，站点启动后会定期检查并更新" />
+  <Item DataId="9adbe702-88fc-4c65-83cd-752ba7578fde" Name="微信 AccessToken" EName="AccessToken" Value="#2018-03-20 22:26:23" Default="False" Sys="True" State="1" Sort="0" Descr="微信 Access_Token，站点启动后会定期检查并更新" />
 </Data>
