@@ -99,7 +99,7 @@ namespace XZMY.Manage.WindowsService
 
                     while (true)
                     {
-                        Thread.Sleep(1000 * 10);
+                        Thread.Sleep(1000 * 5);
 
                         InitInstance(networkHelper.Status);//初始化实例
 

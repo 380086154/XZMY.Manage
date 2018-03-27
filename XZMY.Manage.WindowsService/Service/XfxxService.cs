@@ -165,8 +165,8 @@ namespace XZMY.Manage.WindowsService.Service
             if (dt.Rows.Count < 2)
                 return new Tuple<bool, DataTable>(false, dt);
 
-            var time1 = dt.Rows.Count >= 1 ? dt.Rows[0]["CreatedTime"].ToString().ToDateTime().Value : DateTimePlus.GetMinDateTime;
-            var time2 = dt.Rows.Count >= 2 ? dt.Rows[1]["CreatedTime"].ToString().ToDateTime().Value : DateTimePlus.GetMaxDateTime;
+            var time1 = dt.Rows.Count >= 1 ? GetDateTime(dt.Rows[0]["CreatedTime"].ToString()) : DateTimePlus.GetMinDateTime;
+            var time2 = dt.Rows.Count >= 2 ? GetDateTime(dt.Rows[1]["CreatedTime"].ToString()) : DateTimePlus.GetMaxDateTime;
 
             var flag = time1.ToString("yyyyMMddHH") == time2.ToString("yyyyMMddHH") && (time1.Second - time2.Second) < 5;//两次时间间隔必须很小
 
@@ -234,6 +234,22 @@ namespace XZMY.Manage.WindowsService.Service
             }
 
             db.SqlBulkCopyByDataTable(dataTables, "Xfxx", EProviderName.SqlClient);
+        }
+
+        #endregion
+
+        #region Private
+
+        /// <summary>
+        /// 时间转换
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        private DateTime GetDateTime(string str)
+        {
+            if (str == null) return DateTimePlus.GetMinDateTime;
+            var result = str.ToDateTime();
+            return result ?? DateTimePlus.GetMinDateTime;
         }
 
         #endregion
