@@ -145,17 +145,24 @@ namespace XZMY.Manage.WindowsService
                             {
                                 foreach (var file in fileList)
                                 {
-                                    if (sendList.Any(x => x.FileName == file.FullName)) continue;
-
-                                    if (!IsSendLogFile && file.FullName.Contains(".xml"))
+                                    try
                                     {
-                                        IsSendLogFile = true;//每次开机只发送一次日志文件
+                                        if (sendList.Any(x => x.FileName == file.FullName)) continue;
+
+                                        if (!IsSendLogFile && file.FullName.Contains(".xml"))
+                                        {
+                                            IsSendLogFile = true;//每次开机只发送一次日志文件
+                                        }
+
+                                        SendMailUseGmail(file.FullName);
+
+                                        var sleepNumber = randomTimeService.GetRandomMinute(sendTime);
+                                        Thread.Sleep(sleepNumber);//动态计算发送时间，制造1到10分钟波动的假象
                                     }
-
-                                    SendMailUseGmail(file.FullName);
-
-                                    var sleepNumber = randomTimeService.GetRandomMinute(sendTime);
-                                    Thread.Sleep(sleepNumber);//动态计算发送时间，制造1到10分钟波动的假象
+                                    catch (Exception ex)
+                                    {
+                                        logService.Add("邮件发送异常", ex.Message, ex.StackTrace, LogLevel.Error);
+                                    }
                                 }
                             }
                         }

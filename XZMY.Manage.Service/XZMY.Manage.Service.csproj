@@ -173,6 +173,7 @@
     <Compile Include="Weixin\EventService.cs" />
     <Compile Include="Weixin\Manage\AutoResponseService.cs" />
     <Compile Include="Weixin\Message\MessageBase.cs" />
+    <Compile Include="Weixin\Message\Third\TodayOilPrice.cs" />
     <Compile Include="Weixin\Tools\HttpRequestUtil.cs" />
     <Compile Include="Weixin\Tools\TuringRobot.cs" />
     <Compile Include="Weixin\Tools\WeixinXml.cs" />
