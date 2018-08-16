@@ -54,11 +54,20 @@ namespace XZMY.Manage.WindowsService
 
                 data.AppendChild(item);//子项添加到 Data 根节点中
                 xmlDoc.Save(LogFileName);//保存
+
+                CheckData();//检查数据上限，并删除超过的数据
             }
             catch (Exception ex)
             {
 
             }
+        }
+
+        //检查数据上限，并删除超过的数据
+        public void CheckData()
+        {
+            //保留最多 166 条数据
+
         }
 
         /// <summary>
