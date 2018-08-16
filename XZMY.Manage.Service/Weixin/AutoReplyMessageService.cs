@@ -46,13 +46,19 @@ namespace XZMY.Manage.Service.Weixin
             }
 
             if (hyxxService.IsShopAssistant.Contains(fromUserName)
-                && text.ToUpper().Contains("CX"))//查询客户信息
+                && text.ToUpper().StartsWith("CX"))//查询客户信息
             {
                 var keywords = text.Substring(2, text.Length - 2);
 
                 LogHelper.Log("查询日志：", keywords + " - FromUserName：" + fromUserName, LogLevel.Debug);
 
                 return hyxxService.GetDetailsByKeywords(keywords, fromUserName);
+            }
+
+            //今日油价
+            if (text.ToUpper().StartsWith("JRYJ"))
+            {
+
             }
 
             switch (text.ToLower())

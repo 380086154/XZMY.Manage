@@ -334,8 +334,7 @@ namespace System
         /// <summary>
         /// 把字符串用默认的密钥解密
         /// </summary>
-        /// <param name="DecryptStr"></param>
-        /// <param name="Key"></param>
+        /// <param name="str"></param>
         /// <returns></returns>
         public static String DecryptBySimpleDES(this String str)
         {
